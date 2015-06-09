@@ -3,7 +3,7 @@ package com.mediateka.model;
 import java.sql.Timestamp;
 
 import com.mediateka.annotation.Column;
-import com.mediateka.enums.State;
+import com.mediateka.model.enums.State;
 
 public class FormRecord {
 
