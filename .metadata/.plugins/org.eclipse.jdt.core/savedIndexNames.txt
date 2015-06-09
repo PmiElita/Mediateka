@@ -1,3 +1,0 @@
-INDEX VERSION 1.127+E:\Java\mediateka\trunk\.metadata\.plugins\org.eclipse.jdt.core
-366604548.index
-3729534246.index
