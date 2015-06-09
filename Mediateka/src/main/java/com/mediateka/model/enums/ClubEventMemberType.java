@@ -1,5 +1,5 @@
 package com.mediateka.model.enums;
 
-public enum ClubEventUserType {
+public enum ClubEventMemberType {
    CREATOR , MODERATOR, MEMBER;
 }

@@ -1,9 +1,10 @@
 package com.mediateka.model;
 
 import com.mediateka.annotation.Column;
-import com.mediateka.model.enums.ClubEventUserType;
+import com.mediateka.model.enums.ClubEventMemberType;
+import com.mediateka.model.enums.State;
 
-public class ClubEventUser {
+public class ClubEventMember {
 	
 	@Column(name = "id")
 	private Integer id;
@@ -18,7 +19,19 @@ public class ClubEventUser {
 	private Integer eventId;
 	
 	@Column(name = "type")
-	private ClubEventUserType type;
+	private ClubEventMemberType type;
+
+	@Column(name ="state")
+	private State state;
+	
+	
+	public State getState() {
+		return state;
+	}
+
+	public void setState(State state) {
+		this.state = state;
+	}
 
 	public Integer getId() {
 		return id;
@@ -52,11 +65,13 @@ public class ClubEventUser {
 		this.eventId = eventId;
 	}
 
-	public ClubEventUserType getType() {
+
+
+	public ClubEventMemberType getType() {
 		return type;
 	}
 
-	public void setType(ClubEventUserType type) {
+	public void setType(ClubEventMemberType type) {
 		this.type = type;
 	}
 
