@@ -11,6 +11,7 @@ import java.util.List;
 import com.mediateka.annotation.Column;
 
 public class Transformer {
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static <T> List<T> transformResultSetIntoList(ResultSet rs, 
 			Class<T> classT) throws SQLException,ReflectiveOperationException {
 	     List<T> result=new ArrayList<T>();
@@ -30,7 +31,7 @@ public class Transformer {
 			for (int i = 0; i < annotatedFields.size(); i++) {
 				String columnName = annotatedFields.get(i)
 						.getAnnotation(Column.class).name();
-				if (annotatedFields.get(i).isEnumConstant()){
+				if (annotatedFields.get(i).getType().isEnum()){
 					
 					setMethods.get(i).invoke(temp, Enum.valueOf((Class<Enum>) annotatedFields.get(i).getType(), (String)rs.getObject(columnName)));
 				} else {
@@ -68,7 +69,7 @@ public class Transformer {
 		for (int i=0; i<queue.length; i++){
 			int index=findFieldByColumnName(annotatedFields, queue[i]);
 			if (index==-1) throw new RuntimeException("wrong value order in statement");
-			if (annotatedFields.get(index).isEnumConstant()){
+			if (annotatedFields.get(index).getType().isEnum()){
 				ps.setObject(i+1,getMethods.get(index).invoke(value).toString());			
 			} else {
 			ps.setObject(i+1,getMethods.get(index).invoke(value));
