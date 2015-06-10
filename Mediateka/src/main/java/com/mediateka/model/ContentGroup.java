@@ -3,6 +3,7 @@ package com.mediateka.model;
 import java.sql.Timestamp;
 
 import com.mediateka.annotation.Column;
+import com.mediateka.model.enums.ContentGroupType;
 import com.mediateka.model.enums.State;
 
 public class ContentGroup {
@@ -11,7 +12,7 @@ public class ContentGroup {
 	private Integer id;
 
 	@Column(name = "type")
-	private String type;
+	private ContentGroupType type;
 
 	@Column(name = "name")
 	private String name;
@@ -75,11 +76,11 @@ public class ContentGroup {
 		this.creationDate = creationDate;
 	}
 
-	public void setType(String type) {
+	public void setType(ContentGroupType type) {
 		this.type = type;
 	}
 
-	public String getType() {
+	public ContentGroupType getType() {
 		return type;
 	}
 
