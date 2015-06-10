@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 import com.mediateka.dao.statement.BookMeaningStatements;
 import com.mediateka.model.BookMeaning;
@@ -12,7 +13,7 @@ import com.mediateka.util.Transformer;
 
 public class BookMeaningDAO {
 
-	public void saveBookMeaning(BookMeaning bookMeaning)
+	public static void saveBookMeaning(BookMeaning bookMeaning)
 			throws SQLException, ReflectiveOperationException {
 
 		try (Connection connection = ConnectionManager.getConnection()) {
@@ -28,10 +29,7 @@ public class BookMeaningDAO {
 		}
 	}
 
-	
-	
-	
-	public void updateBookMeaning(BookMeaning bookMeaning)
+	public static void updateBookMeaning(BookMeaning bookMeaning)
 			throws SQLException, ReflectiveOperationException {
 
 		try (Connection connection = ConnectionManager.getConnection()) {
@@ -47,14 +45,12 @@ public class BookMeaningDAO {
 		}
 	}
 
-	
-	
-	public BookMeaning getBookMeaningById(Integer id)
+	public static BookMeaning getBookMeaningById(Integer id)
 			throws SQLException, ReflectiveOperationException {
 
 		BookMeaning bookMeaning = new BookMeaning();
 		bookMeaning.setId(id);
-		
+
 		try (Connection connection = ConnectionManager.getConnection()) {
 
 			PreparedStatement statement = connection
@@ -64,22 +60,19 @@ public class BookMeaningDAO {
 					BookMeaningStatements.SELECT_BOOK_MEANING_BY_ID_ORDER);
 
 			ResultSet rs = statement.executeQuery();
-			
-			return Transformer.transformResultSetIntoObject(rs, BookMeaning.class);
+
+			return Transformer.transformResultSetIntoObject(rs,
+					BookMeaning.class);
 
 		}
 	}
 
-	
-	
-	
-	
-	public BookMeaning getBookMeaningByName(String name)
+	public static List<BookMeaning> getBookMeaningByName(String name)
 			throws SQLException, ReflectiveOperationException {
 
 		BookMeaning bookMeaning = new BookMeaning();
 		bookMeaning.setName(name);
-		
+
 		try (Connection connection = ConnectionManager.getConnection()) {
 
 			PreparedStatement statement = connection
@@ -89,15 +82,11 @@ public class BookMeaningDAO {
 					BookMeaningStatements.SELECT_BOOK_MEANING_BY_NAME_ORDER);
 
 			ResultSet rs = statement.executeQuery();
-			
-			return Transformer.transformResultSetIntoObject(rs, BookMeaning.class);
+
+			return Transformer.transformResultSetIntoList(rs,
+					BookMeaning.class);
 
 		}
 	}
 
-	
-	
-	
-		
-	
 }

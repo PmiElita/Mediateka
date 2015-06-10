@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 import com.mediateka.dao.statement.BookTypeStatements;
 import com.mediateka.model.BookType;
@@ -12,8 +13,8 @@ import com.mediateka.util.Transformer;
 
 public class BookTypeDAO {
 
-	public void saveBookType(BookType BookType)
-			throws SQLException, ReflectiveOperationException {
+	public static void saveBookType(BookType BookType) throws SQLException,
+			ReflectiveOperationException {
 
 		try (Connection connection = ConnectionManager.getConnection()) {
 
@@ -28,11 +29,8 @@ public class BookTypeDAO {
 		}
 	}
 
-	
-	
-	
-	public void updateBookType(BookType BookType)
-			throws SQLException, ReflectiveOperationException {
+	public static void updateBookType(BookType BookType) throws SQLException,
+			ReflectiveOperationException {
 
 		try (Connection connection = ConnectionManager.getConnection()) {
 
@@ -47,14 +45,12 @@ public class BookTypeDAO {
 		}
 	}
 
-	
-	
-	public BookType getBookTypeById(Integer id)
-			throws SQLException, ReflectiveOperationException {
+	public static BookType getBookTypeById(Integer id) throws SQLException,
+			ReflectiveOperationException {
 
 		BookType BookType = new BookType();
 		BookType.setId(id);
-		
+
 		try (Connection connection = ConnectionManager.getConnection()) {
 
 			PreparedStatement statement = connection
@@ -64,22 +60,18 @@ public class BookTypeDAO {
 					BookTypeStatements.SELECT_BOOK_TYPE_BY_ID_ORDER);
 
 			ResultSet rs = statement.executeQuery();
-			
+
 			return Transformer.transformResultSetIntoObject(rs, BookType.class);
 
 		}
 	}
 
-	
-	
-	
-	
-	public BookType getBookTypeByName(String name)
-			throws SQLException, ReflectiveOperationException {
+	public static List<BookType> getBookTypeByName(String name) throws SQLException,
+			ReflectiveOperationException {
 
 		BookType BookType = new BookType();
 		BookType.setName(name);
-		
+
 		try (Connection connection = ConnectionManager.getConnection()) {
 
 			PreparedStatement statement = connection
@@ -89,15 +81,10 @@ public class BookTypeDAO {
 					BookTypeStatements.SELECT_BOOK_TYPE_BY_NAME_ORDER);
 
 			ResultSet rs = statement.executeQuery();
-			
-			return Transformer.transformResultSetIntoObject(rs, BookType.class);
+
+			return Transformer.transformResultSetIntoList(rs, BookType.class);
 
 		}
 	}
 
-	
-	
-	
-		
-	
 }

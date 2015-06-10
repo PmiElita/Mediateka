@@ -1,51 +1,52 @@
 package com.mediateka.service;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import com.mediateka.dao.BookDAO;
 import com.mediateka.model.Book;
 
 public class BookService {
-	private BookDAO bookDAO = new BookDAO();
 
-	public void saveBook(Book book) throws SQLException,
+
+	public static void saveBook(Book book) throws SQLException,
 			ReflectiveOperationException {
-		bookDAO.saveBook(book);
+		BookDAO.saveBook(book);
 	}
 
-	public void updateBook(Book book) throws SQLException,
+	public static void updateBook(Book book) throws SQLException,
 			ReflectiveOperationException {
-		bookDAO.updateBook(book);
+		BookDAO.updateBook(book);
 	}
 
-	public Book getBookById(Integer bookId)
+	public static Book getBookById(Integer bookId)
 			throws ReflectiveOperationException, SQLException {
-		return bookDAO.getBookById(bookId);
+		return BookDAO.getBookById(bookId);
 	}
 
-	public Book getBookByName(String name) throws SQLException,
+	public static List<Book> getBookByName(String name) throws SQLException,
 			ReflectiveOperationException {
-		return bookDAO.getBookByName(name);
+		return BookDAO.getBookByName(name);
 	}
 
-	public Book getBookByAuthor(String author) throws SQLException,
+	public static List<Book> getBookByAuthor(String author) throws SQLException,
 			ReflectiveOperationException {
-		return bookDAO.getBookByAuthor(author);
+		return BookDAO.getBookByAuthor(author);
 	}
 
-	public Book getBookByType(String type) throws SQLException,
+	public static List<Book> getBookByType(String type) throws SQLException,
 			ReflectiveOperationException {
-		return bookDAO.getBookByType(type);
+		return BookDAO.getBookByType(type);
 	}
 
-	public Book getBookByMeaning(String meaning) throws SQLException,
+	public static List<Book> getBookByMeaning(String meaning) throws SQLException,
 			ReflectiveOperationException {
-		return bookDAO.getBookByMeaning(meaning);
+		return BookDAO.getBookByMeaning(meaning);
 	}
 
-	public Book getBookByLanguage(String language) throws SQLException,
+	public static List<Book> getBookByLanguage(String language) throws SQLException,
 			ReflectiveOperationException {
-		return bookDAO.getBookByLanguage(language);
+		return BookDAO.getBookByLanguage(language);
 	}
 
 }

@@ -1,32 +1,31 @@
 package com.mediateka.service;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import com.mediateka.dao.BookLanguageDAO;
 import com.mediateka.model.BookLanguage;
 
 public class BookLanguageService {
 
-	private BookLanguageDAO bookLanguageDAO = new BookLanguageDAO();
-
-	public void saveBookLanguage(BookLanguage bookLanguage)
+	public static void saveBookLanguage(BookLanguage bookLanguage)
 			throws SQLException, ReflectiveOperationException {
-		bookLanguageDAO.saveBookLanguage(bookLanguage);
+		BookLanguageDAO.saveBookLanguage(bookLanguage);
 	}
 
-	public void updateBookLanguage(BookLanguage bookLanguage)
+	public static void updateBookLanguage(BookLanguage bookLanguage)
 			throws SQLException, ReflectiveOperationException {
-		bookLanguageDAO.updateBookLanguage(bookLanguage);
+		BookLanguageDAO.updateBookLanguage(bookLanguage);
 	}
 
-	public BookLanguage getBookLanguageById(Integer id) throws SQLException,
+	public static BookLanguage getBookLanguageById(Integer id) throws SQLException,
 			ReflectiveOperationException {
-		return bookLanguageDAO.getBookLanguageById(id);
+		return BookLanguageDAO.getBookLanguageById(id);
 	}
 
-	public BookLanguage getBookLanguageByName(String name) throws SQLException,
+	public static List<BookLanguage> getBookLanguageByName(String name) throws SQLException,
 			ReflectiveOperationException {
-		return bookLanguageDAO.getBookLanguageByName(name);
+		return BookLanguageDAO.getBookLanguageByName(name);
 	}
 
 }
