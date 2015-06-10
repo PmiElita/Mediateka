@@ -8,6 +8,8 @@ import com.mediateka.model.enums.State;
 
 public class User {
 	
+	@Column(name = "id")
+	private Integer id;
 
 	@Column(name = "form_id")
 	private Integer formId;
@@ -57,8 +59,7 @@ public class User {
 	@Column(name = "state")
 	private State state;
 	
-	@Column(name = "id")
-	private Integer id;
+
 	
 	public Integer getId() {
 		return id;

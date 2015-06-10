@@ -40,6 +40,9 @@ public class Transformer {
 			}
 			result.add(temp);
 		}
+		if (result.size()==0){
+			return null;
+		}
        return result;
 	}
     
