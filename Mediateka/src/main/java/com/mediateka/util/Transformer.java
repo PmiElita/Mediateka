@@ -49,7 +49,7 @@ public class Transformer {
     
 	public static <T> T transformResultSetIntoObject(ResultSet rs, Class<T> classT) throws SQLException, ReflectiveOperationException{
 		List<T> resultList=transformResultSetIntoList(rs, classT);
-		if (resultList.size()>0){
+		if (resultList!= null&&resultList.size()>0){
 			return resultList.get(0);
 		}
 		return null;
