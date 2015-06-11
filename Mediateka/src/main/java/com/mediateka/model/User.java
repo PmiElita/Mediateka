@@ -15,7 +15,7 @@ public class User {
 	private Integer formId;
 	
 	@Column(name = "first_name")
-	private String fistName;
+	private String firstName;
 	
 	@Column(name = "last_name")
 	private String lastName;
@@ -59,6 +59,8 @@ public class User {
 	@Column(name = "state")
 	private State state;
 	
+	@Column(name = "is_form_active")
+	private Boolean isFormActive;
 
 	
 	public Integer getId() {
@@ -77,12 +79,12 @@ public class User {
 		this.formId = formId;
 	}
 
-	public String getFistName() {
-		return fistName;
+	public String getFirstName() {
+		return firstName;
 	}
 
-	public void setFistName(String fistName) {
-		this.fistName = fistName;
+	public void setFirstName(String fistName) {
+		this.firstName = fistName;
 	}
 
 	public String getLastName() {
@@ -197,9 +199,17 @@ public class User {
 		this.state = state;
 	}
 
+	public Boolean getIsFormActive() {
+		return isFormActive;
+	}
+
+	public void setIsFormActive(Boolean isFormActive) {
+		this.isFormActive = isFormActive;
+	}
+
 	@Override
 	public String toString() {
-		return "User [formId=" + formId + ", fistName=" + fistName
+		return "User [formId=" + formId + ", firstName=" + firstName
 				+ ", lastName=" + lastName + ", middleName=" + middleName
 				+ ", birthDate=" + birthDate + ", nationality=" + nationality
 				+ ", education=" + education + ", professionId=" + professionId
