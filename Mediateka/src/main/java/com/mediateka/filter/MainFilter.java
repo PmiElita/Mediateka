@@ -2,7 +2,10 @@ package com.mediateka.filter;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Set;
+import java.util.regex.Matcher;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -13,10 +16,11 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.reflections.Reflections;
+import org.reflections.*;
 
 import com.mediateka.annotation.Controller;
 import com.mediateka.annotation.Request;
+import com.sun.jndi.toolkit.url.Uri;
 
 /**
  * Servlet Filter implementation class MainFilter
@@ -49,17 +53,11 @@ public class MainFilter implements Filter {
 			chain.doFilter(request, response);
 		}
 		else {
-			String url;
-             			
-			if (uri.indexOf('?') != -1) {
-				url = uri.substring(uri.lastIndexOf('/') + 1, uri.indexOf('?'));
-			} else {
-				url = uri.substring(uri.lastIndexOf('/') + 1);
-			}
-			
+			System.err.println(findPathUri(uri));
 			String method = httpRequest.getMethod().toLowerCase();
 			try {
-				executeAction(httpRequest, httpResponse, url, method);
+				System.out.println(uri + method);
+				executeAction(httpRequest, httpResponse, findPathUri(uri), method);
 			} catch (Exception e){
 				e.printStackTrace();
 				httpResponse.sendError(404);
@@ -67,11 +65,27 @@ public class MainFilter implements Filter {
 		}
 
 	}
+	
+	private String findPathUri(String uri){
+		System.out.println(uri);
+		
+		String urlString;
+		
+		urlString = uri.substring(uri.indexOf('/',1));
+		System.out.println(urlString);
+		urlString = urlString.substring(1);
+		System.out.println(urlString);
+		if(urlString.equals("")){
+			return "index";
+		}
+		return urlString;
+		
+	}
 
 	
 	private void executeAction(HttpServletRequest httpRequest,
 			HttpServletResponse httpResponse, String url, String method)
-			throws Exception {
+			throws Exception {		
 		Reflections reflections = new Reflections(  // set package with controller classes
 				"com.mediateka.controller");
 
