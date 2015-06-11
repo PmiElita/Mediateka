@@ -12,3 +12,27 @@ section {
 	width:73%;
 	margin:auto;
 }
+
+
+
+#register_user_form p{
+	color: grey;
+	font-family: Cursive;
+}
+
+#register_user_form{
+	margin-top: 1em;
+}
+
+#register_user_form .container .row{
+	margin-top: -2em;
+}
+
+#register_user_form .container{
+	margin-top: 5em;
+}
+
+.titler{
+	display:inline;
+	margin-left:5em;
+}
