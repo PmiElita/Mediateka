@@ -36,7 +36,7 @@ public class ContentGroupStatements {
 	public static final String SELECT_CONTENT_GROUP_BY_NAME_REGEX = "SELECT * FROM content_group WHERE name REGEXP ?";
 	public static final String[] SELECT_CONTENT_GROUP_BY_NAME_REGEX_ORDER = { "name" };
 
-	public static final String SELECT_ALL = "SELECT * FROM content_group";
+	public static final String SELECT_CONTENT_GROUP_ALL = "SELECT * FROM content_group";
 
 	// update
 	public static final String UPDATE_CONTENT_GROUP = "UPDATE content_group SET "

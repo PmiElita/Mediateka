@@ -7,28 +7,28 @@ import com.mediateka.model.enums.*;
 
 public class Event {
 
-	@Column(name="id")
+	@Column(name = "id")
 	private Integer id;
-	
-	@Column(name="type")
+
+	@Column(name = "type")
 	private EventType type;
-	
-	@Column(name="name")
+
+	@Column(name = "name")
 	private String name;
-	
-	@Column(name="date_from")
+
+	@Column(name = "date_from")
 	private Timestamp dateFrom;
-	
-	@Column(name="date_till")
+
+	@Column(name = "date_till")
 	private Timestamp dateTill;
-	
-	@Column(name="club_id")
+
+	@Column(name = "club_id")
 	private Integer clubId;
-	
-	@Column(name="state")
+
+	@Column(name = "state")
 	private State state;
-	
-	@Column(name="description")
+
+	@Column(name = "description")
 	private String description;
 
 	public Integer getId() {
@@ -101,5 +101,5 @@ public class Event {
 				+ ", dateFrom=" + dateFrom + ", dateTill=" + dateTill
 				+ ", clubId=" + clubId + ", description=" + description + "]";
 	}
-	
+
 }

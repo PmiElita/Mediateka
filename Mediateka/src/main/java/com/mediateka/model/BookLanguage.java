@@ -4,14 +4,13 @@ import com.mediateka.annotation.Column;
 import com.mediateka.model.enums.State;
 
 public class BookLanguage {
-
-	@Column(name="id")
+	@Column(name = "id")
 	private Integer id;
-	
-	@Column(name="name")
+
+	@Column(name = "name")
 	private String name;
-	
-	@Column(name="state")
+
+	@Column(name = "state")
 	private State state;
 
 	public Integer getId() {
@@ -43,7 +42,4 @@ public class BookLanguage {
 		return "BookLanguage [id=" + id + ", name=" + name + ", state=" + state
 				+ "]";
 	}
-	
-	
-	
 }

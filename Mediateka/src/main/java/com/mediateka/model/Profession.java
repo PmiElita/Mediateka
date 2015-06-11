@@ -4,14 +4,13 @@ import com.mediateka.annotation.Column;
 import com.mediateka.model.enums.State;
 
 public class Profession {
-
-	@Column(name="id")
+	@Column(name = "id")
 	private Integer id;
 
-	@Column(name="name")
+	@Column(name = "name")
 	private String name;
-	
-	@Column(name="state")
+
+	@Column(name = "state")
 	private State state;
 
 	public Integer getId() {
@@ -43,6 +42,4 @@ public class Profession {
 		return "Profession [id=" + id + ", name=" + name + ", state=" + state
 				+ "]";
 	}
-	
-	
 }

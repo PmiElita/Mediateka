@@ -8,12 +8,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import com.mediateka.model.enums.MediaType;
+import com.mediateka.model.enums.State;
 import com.mediateka.model.Media;
 import com.mediateka.util.ConnectionManager;
 import com.mediateka.util.Transformer;
 
 public class MediaDAO {
-
 	public static void saveMedia(Media media) throws SQLException,
 			ReflectiveOperationException {
 		try (Connection connection = ConnectionManager.getConnection()) {
@@ -66,4 +67,44 @@ public class MediaDAO {
 		}
 	}
 
+	public static List<Media> getMediaByType(MediaType type)
+			throws SQLException, ReflectiveOperationException {
+		try (Connection connection = ConnectionManager.getConnection()) {
+			PreparedStatement statement = connection
+					.prepareStatement(SELECT_MEDIA_BY_TYPE);
+			Media media = new Media();
+			media.setType(type);
+			Transformer.valueIntoPreparedStatement(statement, media,
+					SELECT_MEDIA_BY_TYPE_ORDER);
+			ResultSet resultSet = statement.executeQuery();
+			return Transformer.transformResultSetIntoList(resultSet,
+					Media.class);
+		}
+	}
+
+	public static List<Media> getMediaByState(State state) throws SQLException,
+			ReflectiveOperationException {
+		try (Connection connection = ConnectionManager.getConnection()) {
+			PreparedStatement statement = connection
+					.prepareStatement(SELECT_MEDIA_BY_STATE);
+			Media media = new Media();
+			media.setState(state);
+			Transformer.valueIntoPreparedStatement(statement, media,
+					SELECT_MEDIA_BY_STATE_ORDER);
+			ResultSet resultSet = statement.executeQuery();
+			return Transformer.transformResultSetIntoList(resultSet,
+					Media.class);
+		}
+	}
+
+	public static List<Media> getMediaAll() throws SQLException,
+			ReflectiveOperationException {
+		try (Connection connection = ConnectionManager.getConnection()) {
+			PreparedStatement statement = connection
+					.prepareStatement(SELECT_MEDIA_ALL);
+			ResultSet resultSet = statement.executeQuery();
+			return Transformer.transformResultSetIntoList(resultSet,
+					Media.class);
+		}
+	}
 }

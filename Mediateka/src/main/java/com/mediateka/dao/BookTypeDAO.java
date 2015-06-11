@@ -8,6 +8,7 @@ import java.util.List;
 
 import com.mediateka.dao.statement.BookTypeStatements;
 import com.mediateka.model.BookType;
+import com.mediateka.model.enums.State;
 import com.mediateka.util.ConnectionManager;
 import com.mediateka.util.Transformer;
 
@@ -66,8 +67,8 @@ public class BookTypeDAO {
 		}
 	}
 
-	public static List<BookType> getBookTypeByName(String name) throws SQLException,
-			ReflectiveOperationException {
+	public static List<BookType> getBookTypeByNameRegex(String name)
+			throws SQLException, ReflectiveOperationException {
 
 		BookType BookType = new BookType();
 		BookType.setName(name);
@@ -75,10 +76,10 @@ public class BookTypeDAO {
 		try (Connection connection = ConnectionManager.getConnection()) {
 
 			PreparedStatement statement = connection
-					.prepareStatement(BookTypeStatements.SELECT_BOOK_TYPE_BY_NAME);
+					.prepareStatement(BookTypeStatements.SELECT_BOOK_TYPE_BY_NAME_REGEX);
 
 			Transformer.valueIntoPreparedStatement(statement, BookType,
-					BookTypeStatements.SELECT_BOOK_TYPE_BY_NAME_ORDER);
+					BookTypeStatements.SELECT_BOOK_TYPE_BY_NAME_REGEX_ORDER);
 
 			ResultSet rs = statement.executeQuery();
 
@@ -87,4 +88,38 @@ public class BookTypeDAO {
 		}
 	}
 
+	public static List<BookType> getBookTypeByState(State state)
+			throws SQLException, ReflectiveOperationException {
+
+		BookType BookType = new BookType();
+		BookType.setState(state);
+
+		try (Connection connection = ConnectionManager.getConnection()) {
+
+			PreparedStatement statement = connection
+					.prepareStatement(BookTypeStatements.SELECT_BOOK_TYPE_BY_STATE);
+
+			Transformer.valueIntoPreparedStatement(statement, BookType,
+					BookTypeStatements.SELECT_BOOK_TYPE_BY_STATE_ORDER);
+
+			ResultSet rs = statement.executeQuery();
+
+			return Transformer.transformResultSetIntoList(rs, BookType.class);
+
+		}
+	}
+
+	public static List<BookType> getBookTypeAll() throws SQLException,
+			ReflectiveOperationException {
+		try (Connection connection = ConnectionManager.getConnection()) {
+
+			PreparedStatement statement = connection
+					.prepareStatement(BookTypeStatements.SELECT_BOOK_TYPE_ALL);
+
+			ResultSet rs = statement.executeQuery();
+
+			return Transformer.transformResultSetIntoList(rs, BookType.class);
+
+		}
+	}
 }

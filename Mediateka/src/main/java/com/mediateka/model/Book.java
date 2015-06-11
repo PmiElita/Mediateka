@@ -4,29 +4,28 @@ import com.mediateka.annotation.Column;
 import com.mediateka.model.enums.State;
 
 public class Book {
-
-	@Column(name="id")
+	@Column(name = "id")
 	private Integer id;
-	
-	@Column(name="name")
+
+	@Column(name = "name")
 	private String name;
-	
-	@Column(name="author")
+
+	@Column(name = "author")
 	private String author;
-	
-	@Column(name="state")
+
+	@Column(name = "state")
 	private State state;
-	
-	@Column(name="type_id")
+
+	@Column(name = "type_id")
 	private Integer typeId;
-	
-	@Column(name="meaning_id")
+
+	@Column(name = "meaning_id")
 	private Integer meaningId;
-	
-	@Column(name="language_id")
+
+	@Column(name = "language_id")
 	private Integer languageId;
-	
-	@Column(name="media_id")
+
+	@Column(name = "media_id")
 	private Integer mediaId;
 
 	public Integer getId() {
@@ -100,7 +99,4 @@ public class Book {
 				+ meaningId + ", languageId=" + languageId + ", mediaId="
 				+ mediaId + "]";
 	}
-	
-	
-	
 }

@@ -5,9 +5,9 @@ import java.util.List;
 
 import com.mediateka.dao.ClubDAO;
 import com.mediateka.model.Club;
+import com.mediateka.model.enums.State;
 
 public class ClubService {
-
 
 	public static void saveClub(Club book) throws SQLException,
 			ReflectiveOperationException {
@@ -24,11 +24,18 @@ public class ClubService {
 		return ClubDAO.getClubById(bookId);
 	}
 
-	public static List<Club> getClubByName(String name) throws SQLException,
-			ReflectiveOperationException {
-		return ClubDAO.getClubByName(name);
+	public static List<Club> getClubByNameRegex(String name)
+			throws SQLException, ReflectiveOperationException {
+		return ClubDAO.getClubByNameRegex(name);
 	}
 
+	public static List<Club> getClubByState(State state) throws SQLException,
+			ReflectiveOperationException {
+		return ClubDAO.getClubByState(state);
+	}
 
-	
+	public static List<Club> getClubAll() throws SQLException,
+			ReflectiveOperationException {
+		return ClubDAO.getClubAll();
+	}
 }

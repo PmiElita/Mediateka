@@ -2,11 +2,14 @@ package com.mediateka.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
+import com.mediateka.model.Profession;
 import com.mediateka.model.User;
+import com.mediateka.model.enums.Role;
+import com.mediateka.model.enums.State;
 
 import static com.mediateka.dao.statement.UserStatements.*;
 
@@ -63,6 +66,107 @@ public class UserDAO {
 			ResultSet resultSet = statement.executeQuery();
 			return Transformer.transformResultSetIntoObject(resultSet,
 					User.class);
+		}
+	}
+
+	public static List<User> getUserByState(State state)
+			throws ReflectiveOperationException, SQLException {
+		try (Connection connection = ConnectionManager.getConnection()) {
+			PreparedStatement statement = connection
+					.prepareStatement(SELECT_USER_BY_STATE);
+			User user = new User();
+			user.setState(state);
+			Transformer.valueIntoPreparedStatement(statement, user,
+					SELECT_USER_BY_STATE_ORDER);
+			ResultSet resultSet = statement.executeQuery();
+			return Transformer
+					.transformResultSetIntoList(resultSet, User.class);
+		}
+	}
+
+	public static List<User> getUserByFormActivity(Boolean formActivity)
+			throws ReflectiveOperationException, SQLException {
+		try (Connection connection = ConnectionManager.getConnection()) {
+			PreparedStatement statement = connection
+					.prepareStatement(SELECT_USER_BY_FORM_ACTIVITY);
+			User user = new User();
+			user.setIsFormActive(formActivity);
+			Transformer.valueIntoPreparedStatement(statement, user,
+					SELECT_USER_BY_FORM_ACTIVITY_ORDER);
+			ResultSet resultSet = statement.executeQuery();
+			return Transformer
+					.transformResultSetIntoList(resultSet, User.class);
+		}
+	}
+
+	public static List<User> getUserByRole(Role role)
+			throws ReflectiveOperationException, SQLException {
+		try (Connection connection = ConnectionManager.getConnection()) {
+			PreparedStatement statement = connection
+					.prepareStatement(SELECT_USER_BY_ROLE);
+			User user = new User();
+			user.setRole(role);
+			Transformer.valueIntoPreparedStatement(statement, user,
+					SELECT_USER_BY_ROLE_ORDER);
+			ResultSet resultSet = statement.executeQuery();
+			return Transformer
+					.transformResultSetIntoList(resultSet, User.class);
+		}
+	}
+
+	public static List<User> getUserByFormId(Integer formId)
+			throws ReflectiveOperationException, SQLException {
+		try (Connection connection = ConnectionManager.getConnection()) {
+			PreparedStatement statement = connection
+					.prepareStatement(SELECT_USER_BY_FORM_ID);
+			User user = new User();
+			user.setFormId(formId);
+			Transformer.valueIntoPreparedStatement(statement, user,
+					SELECT_USER_BY_FORM_ID_ORDER);
+			ResultSet resultSet = statement.executeQuery();
+			return Transformer
+					.transformResultSetIntoList(resultSet, User.class);
+		}
+	}
+
+	public static List<User> getUserByProfession(String professionName)
+			throws ReflectiveOperationException, SQLException {
+		try (Connection connection = ConnectionManager.getConnection()) {
+			PreparedStatement statement = connection
+					.prepareStatement(SELECT_USER_BY_PROFESSION);
+			Profession profession = new Profession();
+			profession.setName(professionName);
+			Transformer.valueIntoPreparedStatement(statement, profession,
+					SELECT_USER_BY_FORM_ID_ORDER);
+			ResultSet resultSet = statement.executeQuery();
+			return Transformer
+					.transformResultSetIntoList(resultSet, User.class);
+		}
+	}
+
+	public static List<User> getUserByNationality(String nationality)
+			throws ReflectiveOperationException, SQLException {
+		try (Connection connection = ConnectionManager.getConnection()) {
+			PreparedStatement statement = connection
+					.prepareStatement(SELECT_USER_BY_NATIONALITY);
+			User user = new User();
+			user.setNationality(nationality);
+			Transformer.valueIntoPreparedStatement(statement, user,
+					SELECT_USER_BY_NATIONALITY_ORDER);
+			ResultSet resultSet = statement.executeQuery();
+			return Transformer
+					.transformResultSetIntoList(resultSet, User.class);
+		}
+	}
+
+	public static List<User> getUserAll() throws ReflectiveOperationException,
+			SQLException {
+		try (Connection connection = ConnectionManager.getConnection()) {
+			PreparedStatement statement = connection
+					.prepareStatement(SELECT_USER_ALL);
+			ResultSet resultSet = statement.executeQuery();
+			return Transformer
+					.transformResultSetIntoList(resultSet, User.class);
 		}
 	}
 }

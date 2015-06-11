@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.mediateka.dao.BookLanguageDAO;
 import com.mediateka.model.BookLanguage;
+import com.mediateka.model.enums.State;
 
 public class BookLanguageService {
 
@@ -18,14 +19,23 @@ public class BookLanguageService {
 		BookLanguageDAO.updateBookLanguage(bookLanguage);
 	}
 
-	public static BookLanguage getBookLanguageById(Integer id) throws SQLException,
-			ReflectiveOperationException {
+	public static BookLanguage getBookLanguageById(Integer id)
+			throws SQLException, ReflectiveOperationException {
 		return BookLanguageDAO.getBookLanguageById(id);
 	}
 
-	public static List<BookLanguage> getBookLanguageByName(String name) throws SQLException,
-			ReflectiveOperationException {
-		return BookLanguageDAO.getBookLanguageByName(name);
+	public static List<BookLanguage> getBookLanguageByNameRegex(String name)
+			throws SQLException, ReflectiveOperationException {
+		return BookLanguageDAO.getBookLanguageByNameRegex(name);
 	}
 
+	public static List<BookLanguage> getBookLanguageByState(State state)
+			throws SQLException, ReflectiveOperationException {
+		return BookLanguageDAO.getBookLanguageByState(state);
+	}
+
+	public static List<BookLanguage> getBookLanguageAll() throws SQLException,
+			ReflectiveOperationException {
+		return BookLanguageDAO.getBookLanguageAll();
+	}
 }

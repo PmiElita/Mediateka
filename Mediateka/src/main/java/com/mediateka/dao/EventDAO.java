@@ -9,6 +9,7 @@ import java.util.List;
 import static com.mediateka.dao.statement.EventStatements.*;
 
 import com.mediateka.model.Event;
+import com.mediateka.model.enums.EventType;
 import com.mediateka.util.ConnectionManager;
 import com.mediateka.util.Transformer;
 
@@ -55,6 +56,21 @@ public class EventDAO {
 		}
 	}
 
+	public static List<Event> getEventByNameRegex(String name)
+			throws SQLException, ReflectiveOperationException {
+		try (Connection connection = ConnectionManager.getConnection()) {
+			PreparedStatement statement = connection
+					.prepareStatement(SELECT_EVENT_BY_NAME_REGEX);
+			Event event = new Event();
+			event.setName(name);
+			Transformer.valueIntoPreparedStatement(statement, event,
+					SELECT_EVENT_BY_NAME_REGEX_ORDER);
+			ResultSet resultSet = statement.executeQuery();
+			return Transformer.transformResultSetIntoList(resultSet,
+					Event.class);
+		}
+	}
+
 	public static void updateEventById(Event event) throws SQLException,
 			ReflectiveOperationException {
 		try (Connection connection = ConnectionManager.getConnection()) {
@@ -66,4 +82,29 @@ public class EventDAO {
 		}
 	}
 
+	public static List<Event> getEventByType(EventType type)
+			throws SQLException, ReflectiveOperationException {
+		try (Connection connection = ConnectionManager.getConnection()) {
+			PreparedStatement statement = connection
+					.prepareStatement(SELECT_EVENT_BY_TYPE);
+			Event event = new Event();
+			event.setType(type);
+			Transformer.valueIntoPreparedStatement(statement, event,
+					SELECT_EVENT_BY_TYPE_ORDER);
+			ResultSet resultSet = statement.executeQuery();
+			return Transformer.transformResultSetIntoList(resultSet,
+					Event.class);
+		}
+	}
+
+	public static List<Event> getEventAll() throws SQLException,
+			ReflectiveOperationException {
+		try (Connection connection = ConnectionManager.getConnection()) {
+			PreparedStatement statement = connection
+					.prepareStatement(SELECT_EVENT_ALL);
+			ResultSet resultSet = statement.executeQuery();
+			return Transformer.transformResultSetIntoList(resultSet,
+					Event.class);
+		}
+	}
 }

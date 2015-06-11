@@ -153,7 +153,7 @@ public class ContentGroupDAO {
 			throws ReflectiveOperationException, SQLException {
 		try (Connection connection = ConnectionManager.getConnection()) {
 			PreparedStatement statement = connection
-					.prepareStatement(SELECT_ALL);
+					.prepareStatement(SELECT_CONTENT_GROUP_ALL);
 			ResultSet resultSet = statement.executeQuery();
 			return Transformer.transformResultSetIntoList(resultSet,
 					ContentGroup.class);

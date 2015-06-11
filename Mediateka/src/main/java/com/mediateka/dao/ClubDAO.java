@@ -8,6 +8,7 @@ import java.util.List;
 
 import com.mediateka.dao.statement.ClubStatements;
 import com.mediateka.model.Club;
+import com.mediateka.model.enums.State;
 import com.mediateka.util.ConnectionManager;
 import com.mediateka.util.Transformer;
 
@@ -65,8 +66,8 @@ public class ClubDAO {
 		}
 	}
 
-	public static List<Club> getClubByName(String name) throws SQLException,
-			ReflectiveOperationException {
+	public static List<Club> getClubByNameRegex(String name)
+			throws SQLException, ReflectiveOperationException {
 
 		Club Club = new Club();
 		Club.setName(name);
@@ -74,10 +75,10 @@ public class ClubDAO {
 		try (Connection connection = ConnectionManager.getConnection()) {
 
 			PreparedStatement statement = connection
-					.prepareStatement(ClubStatements.SELECT_CLUB_BY_NAME);
+					.prepareStatement(ClubStatements.SELECT_CLUB_BY_NAME_REGEX);
 
 			Transformer.valueIntoPreparedStatement(statement, Club,
-					ClubStatements.SELECT_CLUB_BY_NAME_ORDER);
+					ClubStatements.SELECT_CLUB_BY_NAME_REGEX_ORDER);
 
 			ResultSet rs = statement.executeQuery();
 			return Transformer.transformResultSetIntoList(rs, Club.class);
@@ -85,4 +86,36 @@ public class ClubDAO {
 		}
 	}
 
+	public static List<Club> getClubByState(State state) throws SQLException,
+			ReflectiveOperationException {
+
+		Club Club = new Club();
+		Club.setState(state);
+
+		try (Connection connection = ConnectionManager.getConnection()) {
+
+			PreparedStatement statement = connection
+					.prepareStatement(ClubStatements.SELECT_CLUB_BY_STATE);
+
+			Transformer.valueIntoPreparedStatement(statement, Club,
+					ClubStatements.SELECT_CLUB_BY_STATE_ORDER);
+
+			ResultSet rs = statement.executeQuery();
+			return Transformer.transformResultSetIntoList(rs, Club.class);
+
+		}
+	}
+
+	public static List<Club> getClubAll() throws SQLException,
+			ReflectiveOperationException {
+		try (Connection connection = ConnectionManager.getConnection()) {
+
+			PreparedStatement statement = connection
+					.prepareStatement(ClubStatements.SELECT_CLUB_ALL);
+
+			ResultSet rs = statement.executeQuery();
+			return Transformer.transformResultSetIntoList(rs, Club.class);
+
+		}
+	}
 }

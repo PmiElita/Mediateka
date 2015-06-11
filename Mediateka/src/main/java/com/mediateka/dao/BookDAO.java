@@ -11,11 +11,11 @@ import com.mediateka.model.Book;
 import com.mediateka.model.BookLanguage;
 import com.mediateka.model.BookMeaning;
 import com.mediateka.model.BookType;
+import com.mediateka.model.enums.State;
 import com.mediateka.util.ConnectionManager;
 import com.mediateka.util.Transformer;
 
 public class BookDAO {
-
 	public static void saveBook(Book book) throws SQLException,
 			ReflectiveOperationException {
 
@@ -68,8 +68,8 @@ public class BookDAO {
 		}
 	}
 
-	public static List<Book> getBookByName(String name) throws SQLException,
-			ReflectiveOperationException {
+	public static List<Book> getBookByNameRegex(String name)
+			throws SQLException, ReflectiveOperationException {
 
 		Book book = new Book();
 		book.setName(name);
@@ -77,10 +77,10 @@ public class BookDAO {
 		try (Connection connection = ConnectionManager.getConnection()) {
 
 			PreparedStatement statement = connection
-					.prepareStatement(BookStatements.SELECT_BOOK_BY_NAME);
+					.prepareStatement(BookStatements.SELECT_BOOK_BY_NAME_REGEX);
 
 			Transformer.valueIntoPreparedStatement(statement, book,
-					BookStatements.SELECT_BOOK_BY_NAME_ORDER);
+					BookStatements.SELECT_BOOK_BY_NAME_REGEX_ORDER);
 
 			ResultSet rs = statement.executeQuery();
 			return Transformer.transformResultSetIntoList(rs, Book.class);
@@ -88,8 +88,8 @@ public class BookDAO {
 		}
 	}
 
-	public static List<Book> getBookByAuthor(String author) throws SQLException,
-			ReflectiveOperationException {
+	public static List<Book> getBookByAuthorRegex(String author)
+			throws SQLException, ReflectiveOperationException {
 
 		Book book = new Book();
 		book.setAuthor(author);
@@ -97,10 +97,10 @@ public class BookDAO {
 		try (Connection connection = ConnectionManager.getConnection()) {
 
 			PreparedStatement statement = connection
-					.prepareStatement(BookStatements.SELECT_BOOK_BY_AUTHOR);
+					.prepareStatement(BookStatements.SELECT_BOOK_BY_AUTHOR_REGEX);
 
 			Transformer.valueIntoPreparedStatement(statement, book,
-					BookStatements.SELECT_BOOK_BY_AUTHOR_ORDER);
+					BookStatements.SELECT_BOOK_BY_AUTHOR_REGEX_ORDER);
 
 			ResultSet rs = statement.executeQuery();
 			return Transformer.transformResultSetIntoList(rs, Book.class);
@@ -128,8 +128,8 @@ public class BookDAO {
 		}
 	}
 
-	public static List<Book> getBookByMeaning(String meaning) throws SQLException,
-			ReflectiveOperationException {
+	public static List<Book> getBookByMeaning(String meaning)
+			throws SQLException, ReflectiveOperationException {
 
 		BookMeaning bookMeaning = new BookMeaning();
 		bookMeaning.setName(meaning);
@@ -148,8 +148,8 @@ public class BookDAO {
 		}
 	}
 
-	public static List<Book> getBookByLanguage(String language) throws SQLException,
-			ReflectiveOperationException {
+	public static List<Book> getBookByLanguage(String language)
+			throws SQLException, ReflectiveOperationException {
 
 		BookLanguage bookLanguage = new BookLanguage();
 		bookLanguage.setName(language);
@@ -168,4 +168,33 @@ public class BookDAO {
 		}
 	}
 
+	public static List<Book> getBookByState(State state) throws SQLException,
+			ReflectiveOperationException {
+
+		Book book = new Book();
+		book.setState(state);
+
+		try (Connection connection = ConnectionManager.getConnection()) {
+
+			PreparedStatement statement = connection
+					.prepareStatement(BookStatements.SELECT_BOOK_BY_STATE);
+
+			Transformer.valueIntoPreparedStatement(statement, book,
+					BookStatements.SELECT_BOOK_BY_STATE_ORDER);
+
+			ResultSet rs = statement.executeQuery();
+			return Transformer.transformResultSetIntoList(rs, Book.class);
+
+		}
+	}
+
+	public static List<Book> getBookAll() throws SQLException,
+			ReflectiveOperationException {
+		try (Connection connection = ConnectionManager.getConnection()) {
+			PreparedStatement statement = connection
+					.prepareStatement(BookStatements.SELECT_BOOK_ALL);
+			ResultSet rs = statement.executeQuery();
+			return Transformer.transformResultSetIntoList(rs, Book.class);
+		}
+	}
 }

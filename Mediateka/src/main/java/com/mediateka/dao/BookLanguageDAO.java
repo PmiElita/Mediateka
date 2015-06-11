@@ -8,11 +8,11 @@ import java.util.List;
 
 import com.mediateka.dao.statement.BookLanguageStatements;
 import com.mediateka.model.BookLanguage;
+import com.mediateka.model.enums.State;
 import com.mediateka.util.ConnectionManager;
 import com.mediateka.util.Transformer;
 
 public class BookLanguageDAO {
-
 	public static void saveBookLanguage(BookLanguage bookLanguage)
 			throws SQLException, ReflectiveOperationException {
 
@@ -67,19 +67,19 @@ public class BookLanguageDAO {
 		}
 	}
 
-	public static List<BookLanguage> getBookLanguageByName(String name)
+	public static List<BookLanguage> getBookLanguageByState(State state)
 			throws SQLException, ReflectiveOperationException {
 
 		BookLanguage bookLanguage = new BookLanguage();
-		bookLanguage.setName(name);
+		bookLanguage.setState(state);
 
 		try (Connection connection = ConnectionManager.getConnection()) {
 
 			PreparedStatement statement = connection
-					.prepareStatement(BookLanguageStatements.SELECT_BOOK_LANGUAGE_BY_NAME);
+					.prepareStatement(BookLanguageStatements.SELECT_BOOK_LANGUAGE_BY_STATE);
 
 			Transformer.valueIntoPreparedStatement(statement, bookLanguage,
-					BookLanguageStatements.SELECT_BOOK_LANGUAGE_BY_NAME_ORDER);
+					BookLanguageStatements.SELECT_BOOK_LANGUAGE_BY_STATE_ORDER);
 
 			ResultSet rs = statement.executeQuery();
 
@@ -89,4 +89,43 @@ public class BookLanguageDAO {
 		}
 	}
 
+	public static List<BookLanguage> getBookLanguageByNameRegex(String name)
+			throws SQLException, ReflectiveOperationException {
+
+		BookLanguage bookLanguage = new BookLanguage();
+		bookLanguage.setName(name);
+
+		try (Connection connection = ConnectionManager.getConnection()) {
+
+			PreparedStatement statement = connection
+					.prepareStatement(BookLanguageStatements.SELECT_BOOK_LANGUAGE_BY_NAME_REGEX);
+
+			Transformer
+					.valueIntoPreparedStatement(
+							statement,
+							bookLanguage,
+							BookLanguageStatements.SELECT_BOOK_LANGUAGE_BY_NAME_REGEX_ORDER);
+
+			ResultSet rs = statement.executeQuery();
+
+			return Transformer.transformResultSetIntoList(rs,
+					BookLanguage.class);
+
+		}
+	}
+
+	public static List<BookLanguage> getBookLanguageAll() throws SQLException,
+			ReflectiveOperationException {
+		try (Connection connection = ConnectionManager.getConnection()) {
+
+			PreparedStatement statement = connection
+					.prepareStatement(BookLanguageStatements.SELECT_BOOK_LANGUAGE_ALL);
+
+			ResultSet rs = statement.executeQuery();
+
+			return Transformer.transformResultSetIntoList(rs,
+					BookLanguage.class);
+
+		}
+	}
 }

@@ -5,10 +5,9 @@ import java.util.List;
 
 import com.mediateka.dao.BookTypeDAO;
 import com.mediateka.model.BookType;
+import com.mediateka.model.enums.State;
 
 public class BookTypeService {
-
-
 	public void saveBookType(BookType bookType) throws SQLException,
 			ReflectiveOperationException {
 		BookTypeDAO.saveBookType(bookType);
@@ -24,9 +23,18 @@ public class BookTypeService {
 		return BookTypeDAO.getBookTypeById(id);
 	}
 
-	public List<BookType> getBookTypeByName(String name) throws SQLException,
-			ReflectiveOperationException {
-		return BookTypeDAO.getBookTypeByName(name);
+	public List<BookType> getBookTypeByNameRegex(String name)
+			throws SQLException, ReflectiveOperationException {
+		return BookTypeDAO.getBookTypeByNameRegex(name);
 	}
 
+	public List<BookType> getBookTypeByState(State state) throws SQLException,
+			ReflectiveOperationException {
+		return BookTypeDAO.getBookTypeByState(state);
+	}
+
+	public List<BookType> getBookTypeAll() throws SQLException,
+			ReflectiveOperationException {
+		return BookTypeDAO.getBookTypeAll();
+	}
 }

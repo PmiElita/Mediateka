@@ -8,11 +8,11 @@ import java.util.List;
 
 import com.mediateka.dao.statement.BookMeaningStatements;
 import com.mediateka.model.BookMeaning;
+import com.mediateka.model.enums.State;
 import com.mediateka.util.ConnectionManager;
 import com.mediateka.util.Transformer;
 
 public class BookMeaningDAO {
-
 	public static void saveBookMeaning(BookMeaning bookMeaning)
 			throws SQLException, ReflectiveOperationException {
 
@@ -67,7 +67,29 @@ public class BookMeaningDAO {
 		}
 	}
 
-	public static List<BookMeaning> getBookMeaningByName(String name)
+	public static List<BookMeaning> getBookMeaningByState(State state)
+			throws SQLException, ReflectiveOperationException {
+
+		BookMeaning bookMeaning = new BookMeaning();
+		bookMeaning.setState(state);
+
+		try (Connection connection = ConnectionManager.getConnection()) {
+
+			PreparedStatement statement = connection
+					.prepareStatement(BookMeaningStatements.SELECT_BOOK_MEANING_BY_STATE);
+
+			Transformer.valueIntoPreparedStatement(statement, bookMeaning,
+					BookMeaningStatements.SELECT_BOOK_MEANING_BY_STATE_ORDER);
+
+			ResultSet rs = statement.executeQuery();
+
+			return Transformer
+					.transformResultSetIntoList(rs, BookMeaning.class);
+
+		}
+	}
+
+	public static List<BookMeaning> getBookMeaningByNameRegex(String name)
 			throws SQLException, ReflectiveOperationException {
 
 		BookMeaning bookMeaning = new BookMeaning();
@@ -76,17 +98,33 @@ public class BookMeaningDAO {
 		try (Connection connection = ConnectionManager.getConnection()) {
 
 			PreparedStatement statement = connection
-					.prepareStatement(BookMeaningStatements.SELECT_BOOK_MEANING_BY_NAME);
+					.prepareStatement(BookMeaningStatements.SELECT_BOOK_MEANING_BY_NAME_REGEX);
 
-			Transformer.valueIntoPreparedStatement(statement, bookMeaning,
-					BookMeaningStatements.SELECT_BOOK_MEANING_BY_NAME_ORDER);
+			Transformer
+					.valueIntoPreparedStatement(
+							statement,
+							bookMeaning,
+							BookMeaningStatements.SELECT_BOOK_MEANING_BY_NAME_REGEX_ORDER);
 
 			ResultSet rs = statement.executeQuery();
 
-			return Transformer.transformResultSetIntoList(rs,
-					BookMeaning.class);
+			return Transformer
+					.transformResultSetIntoList(rs, BookMeaning.class);
 
 		}
 	}
 
+	public static List<BookMeaning> getBookMeaningAll() throws SQLException,
+			ReflectiveOperationException {
+		try (Connection connection = ConnectionManager.getConnection()) {
+
+			PreparedStatement statement = connection
+					.prepareStatement(BookMeaningStatements.SELECT_BOOK_MEANING_ALL);
+			ResultSet rs = statement.executeQuery();
+
+			return Transformer
+					.transformResultSetIntoList(rs, BookMeaning.class);
+
+		}
+	}
 }

@@ -1,31 +1,28 @@
 package com.mediateka.model;
 
-
-
 import com.mediateka.annotation.Column;
 import com.mediateka.model.enums.MediaType;
 import com.mediateka.model.enums.State;
 
 public class Media {
 
-	@Column(name ="id")
+	@Column(name = "id")
 	private Integer id;
-	
-	@Column(name ="type")
+
+	@Column(name = "type")
 	private MediaType type;
-	
-	@Column(name ="path")
+
+	@Column(name = "path")
 	private String path;
-	
-	@Column(name ="description")
+
+	@Column(name = "description")
 	private String description;
-	
-	@Column(name ="content_group_id")
+
+	@Column(name = "content_group_id")
 	private Integer contentGroupId;
-	
-	@Column(name ="state")
+
+	@Column(name = "state")
 	private State state;
-	
 
 	public Integer getId() {
 		return id;
@@ -51,6 +48,14 @@ public class Media {
 		this.path = path;
 	}
 
+	public State getState() {
+		return state;
+	}
+
+	public void setState(State state) {
+		this.state = state;
+	}
+
 	public String getDescription() {
 		return description;
 	}
@@ -73,9 +78,5 @@ public class Media {
 				+ ", description=" + description + ", contentGroupId="
 				+ contentGroupId + "]";
 	}
-	
-	
-	
-	
-	
+
 }
