@@ -62,6 +62,8 @@ public class User {
 	@Column(name = "is_form_active")
 	private Boolean isFormActive;
 
+	@Column(name= "salt")
+	private String salt;
 	
 	public Integer getId() {
 		return id;
@@ -205,6 +207,14 @@ public class User {
 
 	public void setIsFormActive(Boolean isFormActive) {
 		this.isFormActive = isFormActive;
+	}
+
+	public String getSalt() {
+		return salt;
+	}
+
+	public void setSalt(String salt) {
+		this.salt = salt;
 	}
 
 	@Override
