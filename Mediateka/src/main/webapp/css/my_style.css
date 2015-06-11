@@ -1,0 +1,14 @@
+.nav-wrapper a img {
+	width: 3em;
+	height: 2em;
+}
+
+section {
+	padding: 1em;
+}
+
+.main-info{
+	padding-bottom:2em;
+	width:73%;
+	margin:auto;
+}
