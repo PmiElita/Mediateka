@@ -73,7 +73,7 @@ public class ContentGroupDAO {
 		}
 	}
 
-	public static ContentGroup getContentGroupByEventId(Integer eventId)
+	public static List<ContentGroup> getContentGroupByEventId(Integer eventId)
 			throws ReflectiveOperationException, SQLException {
 		try (Connection connection = ConnectionManager.getConnection()) {
 			PreparedStatement statement = connection
@@ -83,12 +83,12 @@ public class ContentGroupDAO {
 			Transformer.valueIntoPreparedStatement(statement, contentGroup,
 					SELECT_CONTENT_GROUP_BY_EVENT_ID_ORDER);
 			ResultSet resultSet = statement.executeQuery();
-			return Transformer.transformResultSetIntoObject(resultSet,
+			return Transformer.transformResultSetIntoList(resultSet,
 					ContentGroup.class);
 		}
 	}
 
-	public static ContentGroup getContentGroupByClubId(Integer clubId)
+	public static List<ContentGroup> getContentGroupByClubId(Integer clubId)
 			throws ReflectiveOperationException, SQLException {
 		try (Connection connection = ConnectionManager.getConnection()) {
 			PreparedStatement statement = connection
@@ -98,12 +98,12 @@ public class ContentGroupDAO {
 			Transformer.valueIntoPreparedStatement(statement, contentGroup,
 					SELECT_CONTENT_GROUP_BY_CLUB_ID_ORDER);
 			ResultSet resultSet = statement.executeQuery();
-			return Transformer.transformResultSetIntoObject(resultSet,
+			return Transformer.transformResultSetIntoList(resultSet,
 					ContentGroup.class);
 		}
 	}
 
-	public static ContentGroup getContentGroupByParentId(Integer parentId)
+	public static List<ContentGroup> getContentGroupByParentId(Integer parentId)
 			throws ReflectiveOperationException, SQLException {
 		try (Connection connection = ConnectionManager.getConnection()) {
 			PreparedStatement statement = connection
@@ -113,13 +113,14 @@ public class ContentGroupDAO {
 			Transformer.valueIntoPreparedStatement(statement, contentGroup,
 					SELECT_CONTENT_GROUP_BY_PARENT_ID_ORDER);
 			ResultSet resultSet = statement.executeQuery();
-			return Transformer.transformResultSetIntoObject(resultSet,
+			return Transformer.transformResultSetIntoList(resultSet,
 					ContentGroup.class);
 		}
 	}
 
-	public static ContentGroup getContentGroupByCreatorId(Integer creatorId)
-			throws ReflectiveOperationException, SQLException {
+	public static List<ContentGroup> getContentGroupByCreatorId(
+			Integer creatorId) throws ReflectiveOperationException,
+			SQLException {
 		try (Connection connection = ConnectionManager.getConnection()) {
 			PreparedStatement statement = connection
 					.prepareStatement(SELECT_CONTENT_GROUP_BY_CREATOR_ID);
@@ -128,7 +129,7 @@ public class ContentGroupDAO {
 			Transformer.valueIntoPreparedStatement(statement, contentGroup,
 					SELECT_CONTENT_GROUP_BY_CREATOR_ID_ORDER);
 			ResultSet resultSet = statement.executeQuery();
-			return Transformer.transformResultSetIntoObject(resultSet,
+			return Transformer.transformResultSetIntoList(resultSet,
 					ContentGroup.class);
 		}
 	}

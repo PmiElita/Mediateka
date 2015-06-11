@@ -29,23 +29,24 @@ public class ContentGroupService {
 		return ContentGroupDAO.getContentGroupByState(state);
 	}
 
-	public static ContentGroup getContentGroupByEventId(Integer eventId)
+	public static List<ContentGroup> getContentGroupByEventId(Integer eventId)
 			throws ReflectiveOperationException, SQLException {
 		return ContentGroupDAO.getContentGroupByEventId(eventId);
 	}
 
-	public static ContentGroup getContentGroupByClubId(Integer clubId)
+	public static List<ContentGroup> getContentGroupByClubId(Integer clubId)
 			throws ReflectiveOperationException, SQLException {
 		return ContentGroupDAO.getContentGroupByClubId(clubId);
 	}
 
-	public static ContentGroup getContentGroupByParentId(Integer parentId)
+	public static List<ContentGroup> getContentGroupByParentId(Integer parentId)
 			throws ReflectiveOperationException, SQLException {
 		return ContentGroupDAO.getContentGroupByParentId(parentId);
 	}
 
-	public static ContentGroup getContentGroupByCreatorId(Integer creatorId)
-			throws ReflectiveOperationException, SQLException {
+	public static List<ContentGroup> getContentGroupByCreatorId(
+			Integer creatorId) throws ReflectiveOperationException,
+			SQLException {
 		return ContentGroupDAO.getContentGroupByCreatorId(creatorId);
 	}
 
