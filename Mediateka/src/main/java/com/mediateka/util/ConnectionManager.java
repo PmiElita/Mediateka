@@ -20,7 +20,7 @@ public class ConnectionManager {
 			e.printStackTrace();
 		}
 		pool = new ConnectionPool("MediatekaPool", 20, 30, 40, 3600,
-				"jdbc:mysql://localhost:3306/mediateka", "root", "");
+				"jdbc:mysql://localhost:3306/mediateka", "root", "root");
 	}
 
 	public static Connection getConnection() {

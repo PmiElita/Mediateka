@@ -2,10 +2,7 @@ package com.mediateka.filter;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.Set;
-import java.util.regex.Matcher;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -16,11 +13,10 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.reflections.*;
+import org.reflections.Reflections;
 
 import com.mediateka.annotation.Controller;
 import com.mediateka.annotation.Request;
-import com.sun.jndi.toolkit.url.Uri;
 
 /**
  * Servlet Filter implementation class MainFilter
@@ -53,10 +49,8 @@ public class MainFilter implements Filter {
 			chain.doFilter(request, response);
 		}
 		else {
-			System.err.println(findPathUri(uri));
 			String method = httpRequest.getMethod().toLowerCase();
 			try {
-				System.out.println(uri + method);
 				executeAction(httpRequest, httpResponse, findPathUri(uri), method);
 			} catch (Exception e){
 				e.printStackTrace();
@@ -67,14 +61,13 @@ public class MainFilter implements Filter {
 	}
 	
 	private String findPathUri(String uri){
-		System.out.println(uri);
 		
 		String urlString;
 		
 		urlString = uri.substring(uri.indexOf('/',1));
-		System.out.println(urlString);
+
 		urlString = urlString.substring(1);
-		System.out.println(urlString);
+
 		if(urlString.equals("")){
 			return "index";
 		}
