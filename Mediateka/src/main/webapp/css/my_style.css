@@ -56,6 +56,18 @@ section {
 }
 
 .my-admin-card{
-	width:15em;
-	height:15em;
+	width:12em;
+	height:12em;
+}
+
+.section white .container #infoText{
+	height:20em;
+}
+.my-card:hover{
+	background-color:#e8eaf6;
+}
+
+.my-card img{
+	margin-top:-1em;
+	margin-left:1em;
 }

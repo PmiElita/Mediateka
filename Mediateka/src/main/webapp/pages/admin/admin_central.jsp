@@ -16,51 +16,57 @@
 
 			<div class="row" style="margin-left: -4em">
 				<div class="col s4">
-					<div class="col s12 m8 offset-m2 l6 offset-l3">
-						<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
-							<div style="margin-top: -2em">
-								<h3>Users</h3>
-								<div class="row valign-wrapper">
-									<div class="col s12">
-										<img src="images/admin/users.jpg" alt=""
-											class="circle responsive-img">
+					<a href="" data-target="modal7" class="modal-trigger">
+						<div class="col s12 m8 offset-m2 l6 offset-l3 my-card">
+							<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
+								<div style="margin-top: -2em">
+									<h3 style="color: black">Users</h3>
+									<div class="row valign-wrapper">
+										<div class="col s10">
+											<img src="images/admin/users.png" alt=""
+												class="circle responsive-img">
+										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-					</div>
+					</a>
 				</div>
 
 				<div class="col s4">
-					<div class="col s12 m8 offset-m2 l6 offset-l3">
-						<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
-							<div style="margin-top: -2em">
-								<h3>Clubs</h3>
-								<div class="row valign-wrapper">
-									<div class="col s12">
-										<img src="images/admin/clubs.jpg" alt=""
-											class="circle responsive-img">
+					<a href="clubs">
+						<div class="col s12 m8 offset-m2 l6 offset-l3 my-card">
+							<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
+								<div style="margin-top: -2em">
+									<h3 style="color: black">Clubs</h3>
+									<div class="row valign-wrapper">
+										<div class="col s10">
+											<img src="images/admin/clubs.png" alt=""
+												class="circle responsive-img">
+										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-					</div>
+					</a>
 				</div>
 
 				<div class="col s4">
-					<div class="col s12 m8 offset-m2 l6 offset-l3">
-						<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
-							<div style="margin-top: -2em">
-								<h3>Events</h3>
-								<div class="row valign-wrapper">
-									<div class="col s12">
-										<img src="images/admin/events.jpg" alt=""
-											class="circle responsive-img">
+					<a href="events">
+						<div class="col s12 m8 offset-m2 l6 offset-l3 my-card">
+							<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
+								<div style="margin-top: -2em">
+									<h3 style="color: black">Events</h3>
+									<div class="row valign-wrapper">
+										<div class="col s8">
+											<img style="margin-top:0em" src="images/admin/events.png" alt=""
+												class="circle responsive-img">
+										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-					</div>
+					</a>
 				</div>
 			</div>
 
@@ -68,13 +74,31 @@
 
 			<div class="row" style="margin-left: -4em">
 				<div class="col s4">
-					<div class="col s12 m8 offset-m2 l6 offset-l3">
+					<a href="info">
+						<div class="col s12 m8 offset-m2 l6 offset-l3 my-card">
+							<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
+								<div style="margin-top: -2em">
+									<h3 style="color: black">Info</h3>
+									<div class="row valign-wrapper">
+										<div class="col s9">
+											<img src="images/admin/info.png" alt=""
+												class="circle responsive-img">
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</a>
+				</div>
+
+				<div class="col s4">
+					<div class="col s12 m8 offset-m2 l6 offset-l3 my-card">
 						<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
 							<div style="margin-top: -2em">
-								<h3>Users</h3>
+								<h3 style="color: black">Books</h3>
 								<div class="row valign-wrapper">
 									<div class="col s9">
-										<img src="images/admin/info.png" alt=""
+										<img src="images/admin/books.png" alt=""
 											class="circle responsive-img">
 									</div>
 								</div>
@@ -84,29 +108,13 @@
 				</div>
 
 				<div class="col s4">
-					<div class="col s12 m8 offset-m2 l6 offset-l3">
+					<div class="col s12 m8 offset-m2 l6 offset-l3 my-card">
 						<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
 							<div style="margin-top: -2em">
-								<h3>Books</h3>
+								<h3 style="color: black">Reports</h3>
 								<div class="row valign-wrapper">
-									<div class="col s9">
-										<img src="images/admin/books.jpg" alt=""
-											class="circle responsive-img">
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<div class="col s4">
-					<div class="col s12 m8 offset-m2 l6 offset-l3">
-						<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
-							<div style="margin-top: -2em">
-								<h3>Events</h3>
-								<div class="row valign-wrapper">
-									<div class="col s9">
-										<img src="images/admin/reports.png" alt=""
+									<div class="col s8">
+										<img style="margin-top:0em" src="images/admin/reports.png" alt=""
 											class="circle responsive-img">
 									</div>
 								</div>
@@ -115,8 +123,6 @@
 					</div>
 				</div>
 			</div>
-
-
 		</div>
 	</div>
 </div>

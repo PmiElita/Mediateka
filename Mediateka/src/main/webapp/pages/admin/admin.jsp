@@ -18,7 +18,8 @@
 <jsp:include page="../form/register_user_form.jsp" />
 <jsp:include page="../form/new_event_form.jsp" />
 <jsp:include page="../form/message_form.jsp" />
-<jsp:include page="../table/user_table.jsp" />	
+<jsp:include page="../table/user_table.jsp" />
+<jsp:include page="admin_modal_users.jsp" />
 </head>
 
 <body>
