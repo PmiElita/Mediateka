@@ -2,19 +2,16 @@
 <nav>
 	<div class="nav-wrapper">
 	
-		<a href="?command=Main" class="brand-logo"><img alt="Logo"
+		<a href="index" class="brand-logo"><img alt="Logo"
 			src="images/logo.png" /></a>
 			
 		<ul class="right hide-on-med-and-down">
 
-			<li><a title="Cabinet" href="?command=GoToRegisterNewUser" class="modal-trigger waves-effect"> <i
-					class="large mdi-action-assignment-ind"></i></a></li>
-
-			<li><a title="Cabinet" href="?command=Cabinet" class="modal-trigger waves-effect"> <i
+			<li><a title="Cabinet" href="cabinet" class="waves-effect"> <i
 					class="large mdi-maps-local-library"></i></a></li>
 
 			<li><a title="Register" href="" data-target="modal2" class="modal-trigger waves-effect"> <i
-					class="large mdi-image-camera"></i></a></li>
+					class="large mdi-action-assignment-ind"></i></a></li>
 
 			<li><a title="Login" href="" data-target="modal1" class="modal-trigger waves-effect"> <i
 					class="large mdi-action-input"></i></a></li>

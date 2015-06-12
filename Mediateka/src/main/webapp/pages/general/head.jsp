@@ -12,5 +12,3 @@
 <link type="text/css" rel="stylesheet" href="css/side_nav_style.css"
 	media="screen,projection" />
 	
-<link type="text/css" rel="stylesheet" href="css/register_form.css"
-	media="screen,projection" />

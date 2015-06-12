@@ -15,7 +15,8 @@
 <head>
 
 <jsp:include page="../general/head.jsp" />
-
+<jsp:include page="../form/new_event_form.jsp" />
+<jsp:include page="../form/message_form.jsp" />
 </head>
 
 <body>
@@ -27,7 +28,7 @@
 	%>
 
 	<jsp:include page="../general/nav.jsp" />
-	<jsp:include page="side_nav.jsp"/>
+	<jsp:include page="user_side_nav.jsp"/>
 	<jsp:include page="user_central.jsp" />
 	<jsp:include page="../general/footer.jsp" />
 	<jsp:include page="../general/script.jsp" />

@@ -15,20 +15,21 @@ section {
 
 
 
-#register_user_form p{
+.modal .modal-content #creation_form .container p{
 	color: grey;
 	font-family: Cursive;
+	margin-bottom: -0.5em;
 }
 
-#register_user_form{
+.modal .modal-content #creation_form .container{
 	margin-top: 1em;
 }
 
-#register_user_form .container .row{
+.modal .modal-content #creation_form .container .row{
 	margin-top: -2em;
 }
 
-#register_user_form .container{
+.modal .modal-content #creation_form .container{
 	margin-top: 5em;
 }
 
