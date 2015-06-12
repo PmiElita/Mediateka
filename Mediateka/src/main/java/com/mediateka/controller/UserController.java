@@ -28,6 +28,10 @@ public class UserController {
 		request.getRequestDispatcher("pages/admin/admin.jsp").forward(request, response);
 	}
 	
+	@Request(url="info", method="get")
+	public static void infoGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		request.getRequestDispatcher("pages/admin/info.jsp").forward(request, response);
+	}
 	
 	@Request(url="post_register", method="get")
 	public static void postRegisterGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
