@@ -45,6 +45,9 @@ public class MainFilter implements Filter {
 		HttpServletResponse httpResponse = (HttpServletResponse) response;
 		String uri = httpRequest.getRequestURI();
 	
+		httpRequest.setCharacterEncoding("UTF-8");
+		httpResponse.setCharacterEncoding("UTF-8");
+		
 		if (uri.matches(".*\\..*")) {
 			chain.doFilter(request, response);
 		}
