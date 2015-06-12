@@ -1,7 +1,6 @@
 package com.mediateka.controller;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -9,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.regex.Pattern;
 
 import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -35,57 +35,113 @@ public class RegisterUserController {
 
 	private static boolean checkRegistrationForm(UserRegistrationForm form) {
 
-		System.out.println(form);
 		// check user first, last and middle name
+		if (form.getFirstName() == null) {
+			return false;
+		}
+		if (form.getFirstName().length() > 40) {
+			return false;
+		}
 		if (!onlyCharsPattern.matcher(form.getFirstName()).matches()) {
-			System.out.print("1");
+			return false;
+		}
+
+		if (form.getLastName() == null) {
+			return false;
+		}
+		if (form.getLastName().length() > 40) {
 			return false;
 		}
 		if (!onlyCharsPattern.matcher(form.getLastName()).matches()) {
-			System.out.print("2");
+			return false;
+		}
+
+		if (form.getMiddleName() == null) {
+			return false;
+		}
+		if (form.getMiddleName().length() > 40) {
 			return false;
 		}
 		if (!onlyCharsPattern.matcher(form.getMiddleName()).matches()) {
-			System.out.print("3");
 			return false;
 		}
 
+		if (form.getBirthDate() == null) {
+			return false;
+		}
+		if (form.getBirthDate().length() > 40) {
+			return false;
+		}
 		@SuppressWarnings("unused")
 		java.util.Date date;
-		//date = new SimpleDateFormat("dd MM, yyyy").parse(form
-			//	.getBirthDate());
-		date = new java.util.Date(0);
+		try {
+			date = new SimpleDateFormat("dd MM, yyyy").parse(form
+					.getBirthDate());
+		} catch (ParseException e) {
+			return false;
+		}
 
-		// check nationality
+		// check citizenship
+		if (form.getNationality() == null) {
+			return false;
+		}
+		if (form.getNationality().length() > 40) {
+			return false;
+		}
 		if (!onlyCharsPattern.matcher(form.getNationality()).matches()) {
-			System.out.print("1");
 			return false;
 		}
 
 		// check profession
+		if (form.getProfession() == null) {
+			return false;
+		}
+		if (form.getProfession().length() > 40) {
+			return false;
+		}
 		if (!onlyDigitsPattern.matcher(form.getProfession()).matches()) {
-			System.out.print("5");
 			return false;
 		}
 
 		// check email
+		if (form.getEmail() == null) {
+			return false;
+		}
+		if (form.getEmail().length() > 40) {
+			return false;
+		}
 		if (!emailPattern.matcher(form.getEmail()).matches()) {
-			System.out.print("8");
 			return false;
 		}
 
 		// check phone. see http://en.wikipedia.org/wiki/E.123
+		if (form.getPhone() == null) {
+			return false;
+		}
+		if (form.getPhone().length() > 40) {
+			return false;
+		}
 		if (!phoneNumberPattern.matcher(form.getPhone()).matches()) {
-			System.out.print("9");
 			return false;
 		}
 
-		if (!onlyDigitsPattern.matcher(form.getFormId()).matches()){
-			System.out.println("10");
+		if (form.getFormId() == null) {
 			return false;
 		}
-		
+		if (form.getFormId().length() > 40) {
+			return false;
+		}
+		if (!onlyDigitsPattern.matcher(form.getFormId()).matches()) {
+			return false;
+		}
+
 		// check address
+		if (form.getAddress() == null) {
+			return false;
+		}
+		if (form.getAddress().length() > 40) {
+			return false;
+		}
 		return true;
 	}
 
@@ -99,21 +155,16 @@ public class RegisterUserController {
 
 	@Request(url = "registerNewUser", method = "post")
 	public static void registerNewUser(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+			HttpServletResponse response) throws ServletException, IOException,
+			SecurityException, IllegalArgumentException, SQLException,
+			ReflectiveOperationException, AddressException, MessagingException {
 
 		UserRegistrationForm form = new UserRegistrationForm();
-		try {
-			ObjectFiller.fill(form, request);
 
-		} catch (NoSuchMethodException | SecurityException
-				| IllegalAccessException | IllegalArgumentException
-				| InvocationTargetException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		ObjectFiller.fill(form, request);
 
 		if (!checkRegistrationForm(form)) {
-			response.sendRedirect("gofuckyourself.com");
+			response.sendRedirect("index");
 			return;
 		}
 
@@ -123,53 +174,44 @@ public class RegisterUserController {
 		newUser.setLastName(form.getLastName());
 
 		try {
-			newUser.setBirthDate(
-					new Date(
-							new SimpleDateFormat("dd MMMMMMMM, yyyy").parse(form.getBirthDate()).getTime()
-					)
-					
-					);
+			newUser.setBirthDate(new Date(new SimpleDateFormat("dd MMMM, yyyy")
+					.parse(form.getBirthDate()).getTime())
+
+			);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			response.sendRedirect("index");
+			return;
 		}
 		newUser.setBirthDate(new Date(0));
 		newUser.setNationality(form.getNationality());
 		newUser.setProfessionId(Integer.parseInt(form.getProfession()));
 		newUser.setEducation(form.getEducation());
 		newUser.setEduInstitution(form.getInstitution());
-		
+
 		newUser.setEmail(form.getEmail());
 		newUser.setPhone(form.getPhone());
 		newUser.setAdress(form.getAddress());
 		newUser.setRole(Role.USER);
-		newUser.setJoinDate(new Date( new java.util.Date().getTime() ));
-		
+		newUser.setJoinDate(new Date(new java.util.Date().getTime()));
+
 		newUser.setState(State.BLOCKED);
-		
+
 		newUser.setFormId(Integer.parseInt(form.getFormId()));
 		newUser.setIsFormActive(true);
-		//generate salt
-		
-
+		// generate salt
 
 		String salt = SecurityStringGenerator.generateString(128);
 		String token = SecurityStringGenerator.generateString(64);
 		newUser.setSalt(salt);
 		newUser.setPasswordChangingToken(token);
-		System.out.println("salt:"+salt);
-		System.out.println("token:"+token);
-		System.out.println("newUser.token = " + newUser.getPasswordChangingToken());
-		try {
-			UserService.saveUser(newUser);			
-			PasswordChangeEmailSender.sendToken(newUser, token);
-			
-			
-		} catch (SQLException | ReflectiveOperationException | MessagingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+		System.out.println("salt:" + salt);
+		System.out.println("token:" + token);
+		System.out.println("newUser.token = "
+				+ newUser.getPasswordChangingToken());
+
+		UserService.saveUser(newUser);
+		PasswordChangeEmailSender.sendToken(newUser, token);
+
 		response.sendRedirect("index");
 	}
 
