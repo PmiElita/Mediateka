@@ -17,11 +17,20 @@ public class UserController {
 		request.getRequestDispatcher("pages/events/events.jsp").forward(request, response);
 	}
 	
-	
+	@Request(url="clubs", method="get")
+	public static void clubsGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		request.getRequestDispatcher("pages/clubs/clubs.jsp").forward(request, response);
+	}
 	
 	@Request(url="cabinet", method="get")
 	public static void cabinetGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		request.getRequestDispatcher("pages/user/user.jsp").forward(request, response);
-	//	request.getRequestDispatcher("pages/admin/admin.jsp").forward(request, response);
+	//	request.getRequestDispatcher("pages/user/user.jsp").forward(request, response);
+		request.getRequestDispatcher("pages/admin/admin.jsp").forward(request, response);
+	}
+	
+	
+	@Request(url="post_register", method="get")
+	public static void postRegisterGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		request.getRequestDispatcher("pages/additional/post_register.jsp").forward(request, response);
 	}
 }
