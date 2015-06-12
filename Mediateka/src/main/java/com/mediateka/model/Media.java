@@ -24,6 +24,17 @@ public class Media {
 	@Column(name = "state")
 	private State state;
 
+	@Column(name = "name")
+	private String name;
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public Integer getId() {
 		return id;
 	}
@@ -76,7 +87,6 @@ public class Media {
 	public String toString() {
 		return "Media [id=" + id + ", type=" + type + ", path=" + path
 				+ ", description=" + description + ", contentGroupId="
-				+ contentGroupId + "]";
+				+ contentGroupId + ", state=" + state + ", name=" + name + "]";
 	}
-
 }

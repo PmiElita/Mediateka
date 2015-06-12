@@ -40,6 +40,11 @@ public class MediaService {
 		return MediaDAO.getMediaByState(state);
 	}
 
+	public static List<Media> getMediaByNameRegex(String name)
+			throws SQLException, ReflectiveOperationException {
+		return MediaDAO.getMediaByNameRegex(name);
+	}
+
 	public static List<Media> getMediaAll() throws SQLException,
 			ReflectiveOperationException {
 		return MediaDAO.getMediaAll();

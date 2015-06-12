@@ -97,6 +97,21 @@ public class MediaDAO {
 		}
 	}
 
+	public static List<Media> getMediaByNameRegex(String name)
+			throws SQLException, ReflectiveOperationException {
+		try (Connection connection = ConnectionManager.getConnection()) {
+			PreparedStatement statement = connection
+					.prepareStatement(SELECT_MEDIA_BY_NAME_REGEX);
+			Media media = new Media();
+			media.setName(name);
+			Transformer.valueIntoPreparedStatement(statement, media,
+					SELECT_MEDIA_BY_STATE_ORDER);
+			ResultSet resultSet = statement.executeQuery();
+			return Transformer.transformResultSetIntoList(resultSet,
+					Media.class);
+		}
+	}
+
 	public static List<Media> getMediaAll() throws SQLException,
 			ReflectiveOperationException {
 		try (Connection connection = ConnectionManager.getConnection()) {
