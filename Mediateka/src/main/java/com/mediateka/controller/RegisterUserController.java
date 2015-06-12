@@ -8,6 +8,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.regex.Pattern;
 
+import javax.mail.MessagingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,6 +21,7 @@ import com.mediateka.model.enums.Role;
 import com.mediateka.model.enums.State;
 import com.mediateka.service.UserService;
 import com.mediateka.util.ObjectFiller;
+import com.mediateka.util.PasswordChangeEmailSender;
 import com.mediateka.util.SecurityStringGenerator;
 
 @Controller
@@ -131,7 +133,7 @@ public class RegisterUserController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		newUser.setBirthDate(new Date(0));
 		newUser.setNationality(form.getNationality());
 		newUser.setProfessionId(Integer.parseInt(form.getProfession()));
 		newUser.setEducation(form.getEducation());
@@ -152,17 +154,23 @@ public class RegisterUserController {
 
 
 		String salt = SecurityStringGenerator.generateString(128);
+		String token = SecurityStringGenerator.generateString(64);
 		newUser.setSalt(salt);
-		
-		
+		newUser.setPasswordChangingToken(token);
+		System.out.println("salt:"+salt);
+		System.out.println("token:"+token);
+		System.out.println("newUser.token = " + newUser.getPasswordChangingToken());
 		try {
-			UserService.saveUser(newUser);
-		} catch (SQLException | ReflectiveOperationException e) {
+			UserService.saveUser(newUser);			
+			PasswordChangeEmailSender.sendToken(newUser, token);
+			
+			
+		} catch (SQLException | ReflectiveOperationException | MessagingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		response.sendRedirect("home");
+		response.sendRedirect("index");
 	}
 
 }

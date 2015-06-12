@@ -4,22 +4,22 @@ public class UserStatements {
 	public static final String INSERT_USER = "INSERT INTO user "
 			+ "(form_id, first_name, last_name, middle_name, birth_date,"
 			+ " nationality, education, profession_id, edu_institution,"
-			+ " phone, adress, join_date, email, password, role, state, is_form_active, salt)"
-			+ " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ";
+			+ " phone, adress, join_date, email, password, role, state, is_form_active, salt, password_changing_token)"
+			+ " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ";
 	public static final String[] INSERT_USER_ORDER = { "form_id", "first_name",
 			"last_name", "middle_name", "birth_date", "nationality",
 			"education", "profession_id", "edu_institution", "phone", "adress",
 			"join_date", "email", "password", "role", "state",
-			"is_form_active", "salt" };
+			"is_form_active", "salt", "password_changing_token" };
 
 	public static final String UPDATE_USER_BY_ID = "UPDATE user SET form_id=?, first_name=?, last_name=?, middle_name=?, birth_date=?,"
 			+ " nationality=?, education=?, profession_id=?, edu_institution=?,"
-			+ " phone=?, adress=?, join_date=?, email=?, password=?, role=?, state=?, is_form_active=?,salt=? WHERE id =?";
+			+ " phone=?, adress=?, join_date=?, email=?, password=?, role=?, state=?, is_form_active=?,salt=?, password_changing_token=? WHERE id =?";
 	public static final String[] UPDATE_USER_BY_ID_ORDER = { "form_id",
 			"first_name", "last_name", "middle_name", "birth_date",
 			"nationality", "education", "profession_id", "edu_institution",
 			"phone", "adress", "join_date", "email", "password", "role",
-			"state", "is_from_active", "salt", "id" };
+			"state", "is_form_active", "salt", "password_changing_token", "id" };
 
 	public static final String SELECT_USER_BY_ID = "SELECT * FROM user WHERE id =?";
 	public static final String[] SELECT_USER_BY_ID_ORDER = { "id" };
@@ -42,8 +42,12 @@ public class UserStatements {
 	public static final String SELECT_USER_BY_PROFESSION = "SELECT user.* FROM user, profession WHERE user.proffesion_id = proffesion.id AND profession.name=?";
 	public static final String[] SELECT_USER_BY_PROFESSION_ORDER = { "name" };
 
-	public static final String SELECT_USER_BY_NATIONALITY = "SELECT * FROM user nationality=?";
+	public static final String SELECT_USER_BY_NATIONALITY = "SELECT * FROM user WHERE nationality=?";
 	public static final String[] SELECT_USER_BY_NATIONALITY_ORDER = { "nationality" };
+	
+	public static final String SELECT_USER_BY_TOKEN = "SELECT * FROM user WHERE password_changing_token=?";
+	public static final String[] SELECT_USER_BY_TOKEN_ORDER = {"password_changing_token"};
+	
 
 	public static final String SELECT_USER_ALL = "SELECT * FROM user";
 }

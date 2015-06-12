@@ -58,6 +58,11 @@ public class UserService {
 			throws ReflectiveOperationException, SQLException {
 		return UserDAO.getUserByNationality(nationality);
 	}
+	
+	public static User getUserByToken(String token)
+			throws ReflectiveOperationException, SQLException{
+		return UserDAO.getUserByToken(token);
+	}
 
 	public static List<User> getUserAll() throws ReflectiveOperationException,
 			SQLException {

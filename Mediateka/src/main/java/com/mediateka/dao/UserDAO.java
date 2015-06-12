@@ -159,6 +159,25 @@ public class UserDAO {
 		}
 	}
 
+
+	
+	public static User getUserByToken(String token)
+			throws ReflectiveOperationException, SQLException {
+		try (Connection connection = ConnectionManager.getConnection()) {
+			PreparedStatement statement = connection
+					.prepareStatement(SELECT_USER_BY_TOKEN);
+			User user = new User();
+			user.setPasswordChangingToken(token);
+			Transformer.valueIntoPreparedStatement(statement, user,
+					SELECT_USER_BY_TOKEN_ORDER);
+			ResultSet resultSet = statement.executeQuery();
+			return Transformer
+					.transformResultSetIntoObject(resultSet, User.class);
+		}
+	}
+
+
+	
 	public static List<User> getUserAll() throws ReflectiveOperationException,
 			SQLException {
 		try (Connection connection = ConnectionManager.getConnection()) {

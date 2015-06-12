@@ -68,7 +68,7 @@ public class Transformer {
 		
 		for (int i=0; i<queue.length; i++){
 			int index=findFieldByColumnName(annotatedFields, queue[i]);
-			if (index==-1) throw new RuntimeException("wrong value order in statement");
+			if (index==-1) throw new RuntimeException("wrong value order in statement "+queue[i]);
 			if (annotatedFields.get(index).getType().isEnum()){
 				ps.setObject(i+1,getMethods.get(index).invoke(value).toString());			
 			} else {

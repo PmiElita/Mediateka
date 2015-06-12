@@ -7,64 +7,81 @@ import com.mediateka.model.enums.Role;
 import com.mediateka.model.enums.State;
 
 public class User {
-	
+
 	@Column(name = "id")
 	private Integer id;
 
 	@Column(name = "form_id")
 	private Integer formId;
-	
+
 	@Column(name = "first_name")
 	private String firstName;
-	
+
 	@Column(name = "last_name")
 	private String lastName;
-	
+
 	@Column(name = "middle_name")
 	private String middleName;
-	
+
 	@Column(name = "birth_date")
-	private Date birthDate; 
-	
-	@Column(name ="nationality")
+	private Date birthDate;
+
+	@Column(name = "nationality")
 	private String nationality;
-	
+
 	@Column(name = "education")
 	private String education;
-	
+
 	@Column(name = "profession_id")
 	private Integer professionId;
-	
+
 	@Column(name = "edu_institution")
 	private String eduInstitution;
-	
+
 	@Column(name = "phone")
 	private String phone;
-	
+
 	@Column(name = "adress")
 	private String adress;
-	
+
 	@Column(name = "join_date")
 	private Date joinDate;
-	
+
 	@Column(name = "email")
 	private String email;
-	
+
 	@Column(name = "password")
 	private String password;
-	
+
 	@Column(name = "role")
 	private Role role;
-	
+
 	@Column(name = "state")
 	private State state;
-	
+
 	@Column(name = "is_form_active")
 	private Boolean isFormActive;
 
-	@Column(name= "salt")
+	@Column(name = "salt")
 	private String salt;
-	
+
+	@Column(name = "password_changing_token")
+	private String passwordChangingToken;
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", formId=" + formId + ", firstName="
+				+ firstName + ", lastName=" + lastName + ", middleName="
+				+ middleName + ", birthDate=" + birthDate + ", nationality="
+				+ nationality + ", education=" + education + ", professionId="
+				+ professionId + ", eduInstitution=" + eduInstitution
+				+ ", phone=" + phone + ", adress=" + adress + ", joinDate="
+				+ joinDate + ", email=" + email + ", password=" + password
+				+ ", role=" + role + ", state=" + state + ", isFormActive="
+				+ isFormActive + ", salt=" + salt + ", passwordChangingToken="
+				+ passwordChangingToken + "]";
+	}
+
 	public Integer getId() {
 		return id;
 	}
@@ -85,8 +102,8 @@ public class User {
 		return firstName;
 	}
 
-	public void setFirstName(String fistName) {
-		this.firstName = fistName;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
 
 	public String getLastName() {
@@ -217,18 +234,12 @@ public class User {
 		this.salt = salt;
 	}
 
-	@Override
-	public String toString() {
-		return "User [formId=" + formId + ", firstName=" + firstName
-				+ ", lastName=" + lastName + ", middleName=" + middleName
-				+ ", birthDate=" + birthDate + ", nationality=" + nationality
-				+ ", education=" + education + ", professionId=" + professionId
-				+ ", eduInstitution=" + eduInstitution + ", phone=" + phone
-				+ ", adress=" + adress + ", joinDate=" + joinDate + ", email="
-				+ email + ", password=" + password + ", role=" + role
-				+ ", state=" + state + ", id=" + id + "]";
+	public String getPasswordChangingToken() {
+		return passwordChangingToken;
 	}
-	
-	
+
+	public void setPasswordChangingToken(String passwordChangingToken) {
+		this.passwordChangingToken = passwordChangingToken;
+	}
 
 }
