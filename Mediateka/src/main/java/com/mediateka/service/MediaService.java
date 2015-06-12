@@ -10,12 +10,12 @@ import com.mediateka.model.enums.State;
 
 public class MediaService {
 
-	public void saveMedia(Media media) throws SQLException,
+	public static void saveMedia(Media media) throws SQLException,
 			ReflectiveOperationException {
 		MediaDAO.saveMedia(media);
 	}
 
-	public void updateMedia(Media media) throws SQLException,
+	public static void updateMedia(Media media) throws SQLException,
 			ReflectiveOperationException {
 		MediaDAO.updateMedia(media);
 	}
