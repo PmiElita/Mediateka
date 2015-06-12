@@ -10,18 +10,113 @@
 <fmt:setBundle basename="menu" />
 <fmt:requestEncoding value="utf-8" />
 
-<div class="user-info">
+<div class="admin-info">
 	<div class="section white">
 		<div class="container">
-		<h1>User info</h1>
-			<div class="row">
-				<div class="col 8">
-					<h6>First name:</h6>
-					<h6>Second name:</h6>
-					<h6>E-mail:</h6>
-					<h6>Gender:</h6>
+
+			<div class="row" style="margin-left: -4em">
+				<div class="col s4">
+					<div class="col s12 m8 offset-m2 l6 offset-l3">
+						<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
+							<div style="margin-top: -2em">
+								<h3>Users</h3>
+								<div class="row valign-wrapper">
+									<div class="col s12">
+										<img src="images/admin/users.jpg" alt=""
+											class="circle responsive-img">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="col s4">
+					<div class="col s12 m8 offset-m2 l6 offset-l3">
+						<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
+							<div style="margin-top: -2em">
+								<h3>Clubs</h3>
+								<div class="row valign-wrapper">
+									<div class="col s12">
+										<img src="images/admin/clubs.jpg" alt=""
+											class="circle responsive-img">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="col s4">
+					<div class="col s12 m8 offset-m2 l6 offset-l3">
+						<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
+							<div style="margin-top: -2em">
+								<h3>Events</h3>
+								<div class="row valign-wrapper">
+									<div class="col s12">
+										<img src="images/admin/events.jpg" alt=""
+											class="circle responsive-img">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
+
+
+
+			<div class="row" style="margin-left: -4em">
+				<div class="col s4">
+					<div class="col s12 m8 offset-m2 l6 offset-l3">
+						<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
+							<div style="margin-top: -2em">
+								<h3>Users</h3>
+								<div class="row valign-wrapper">
+									<div class="col s9">
+										<img src="images/admin/info.png" alt=""
+											class="circle responsive-img">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="col s4">
+					<div class="col s12 m8 offset-m2 l6 offset-l3">
+						<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
+							<div style="margin-top: -2em">
+								<h3>Books</h3>
+								<div class="row valign-wrapper">
+									<div class="col s9">
+										<img src="images/admin/books.jpg" alt=""
+											class="circle responsive-img">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="col s4">
+					<div class="col s12 m8 offset-m2 l6 offset-l3">
+						<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
+							<div style="margin-top: -2em">
+								<h3>Events</h3>
+								<div class="row valign-wrapper">
+									<div class="col s9">
+										<img src="images/admin/reports.png" alt=""
+											class="circle responsive-img">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
 		</div>
 	</div>
 </div>

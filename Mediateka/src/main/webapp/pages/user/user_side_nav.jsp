@@ -2,10 +2,9 @@
 	<div id="sidebar" class="z-depth-4">
 		<ul>
 			<li><a href="index">Main page</a></li>
-			<li><a href="events">View events</a></li>
-			<li><a href="" data-target="modal3" class="modal-trigger waves-effect">Create event</a></li>
-			<li><a href="#">Read</a></li>
-			<li><a href="#">Edit profile</a></li>
+			<li><a href="clubs">My Clubs</a></li>
+			<li><a href="events">My events</a></li>
+			<li><a href="activity">Activity</a></li>
 			<li><a href="" data-target="modal5" class="modal-trigger waves-effect">Send message</a></li>
 		</ul>
 	</div>

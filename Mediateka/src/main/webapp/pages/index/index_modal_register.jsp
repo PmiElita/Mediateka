@@ -47,7 +47,7 @@
 	</div>
 
 	<div class="modal-footer">
-		<a href="#!"
+		<a href="post_register"
 			class=" modal-action modal-close waves-effect waves-green btn-flat">Confirm</a>
 	</div>
 

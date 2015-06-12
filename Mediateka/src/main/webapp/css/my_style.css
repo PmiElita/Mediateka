@@ -7,33 +7,55 @@ section {
 	padding: 1em;
 }
 
-.main-info{
-	padding-bottom:2em;
-	width:73%;
-	margin:auto;
+.main-info {
+	padding-bottom: 2em;
+	width: 73%;
+	margin: auto;
 }
 
-
-
-.modal .modal-content #creation_form .container p{
+.modal .modal-content #creation_form .container p {
 	color: grey;
 	font-family: Cursive;
 	margin-bottom: -0.5em;
 }
 
-.modal .modal-content #creation_form .container{
+.modal .modal-content #creation_form .container {
 	margin-top: 1em;
 }
 
-.modal .modal-content #creation_form .container .row{
+.modal .modal-content #creation_form .container .row {
 	margin-top: -2em;
 }
 
-.modal .modal-content #creation_form .container{
+.modal .modal-content #creation_form .container {
 	margin-top: 5em;
 }
 
-.titler{
-	display:inline;
-	margin-left:5em;
+.titler {
+	display: inline;
+	margin-left: 5em;
+}
+
+.my-picture-row {
+	margin-top: 2em;
+	margin-bottom: 0em;
+}
+
+.row .my-picture-wrap {
+	height: 10em;
+}
+
+.my-picture-wrap .my-picture {
+	background-size: cover;
+	background-position: center;
+}
+
+.my-parallax {
+	min-height: 35.8em;
+	width: 100%;
+}
+
+.my-admin-card{
+	width:15em;
+	height:15em;
 }

@@ -7682,7 +7682,7 @@ small {
 .tabs {
 	position: relative;
 	height: 48px;
-	background-color: #fff;
+	background-color: #424242;
 	margin: 0 auto;
 	width: 100%;
 	white-space: nowrap;
@@ -7702,7 +7702,7 @@ small {
 }
 
 .tabs .tab a {
-	color: #ee6e73;
+	color: #fff;
 	display: block;
 	width: 100%;
 	height: 100%;
@@ -7714,14 +7714,14 @@ small {
 }
 
 .tabs .tab a:hover {
-	color: #f9c9cb;
+	color: #29b6f6;
 }
 
 .tabs .indicator {
 	position: absolute;
 	bottom: 0;
 	height: 2px;
-	background-color: #f6b2b5;
+	background-color: #fff;
 	will-change: left, right;
 }
 
@@ -8083,8 +8083,8 @@ a.waves-effect .waves-ripple {
 	right: 0;
 	background-color: #fafafa;
 	padding: 0;
-	max-height: 90%;
-	width: 55%;
+	max-height: 85%;
+	width: 75%;
 	margin: auto;
 	overflow-y: auto;
 	z-index: 1000;

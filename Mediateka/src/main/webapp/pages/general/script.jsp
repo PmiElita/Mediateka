@@ -8,9 +8,7 @@
 	$(document).ready(function() {
 		$('.materialboxed').materialbox();
 
-		$(".dropdown-button").dropdown({
-			hover : false
-		});
+		$(".dropdown-button").dropdown();
 
 		$('.modal-trigger').leanModal();
 
@@ -28,6 +26,7 @@
 		
 		$('select').material_select();
 		
+		$('ul.tabs').tabs();
 	});
 </script>
 

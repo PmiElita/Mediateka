@@ -11,7 +11,7 @@
 <fmt:requestEncoding value="utf-8" />
 
 
-<div class="parallax-container">
+<div class="parallax-container my-parallax">
 	<div class="parallax">
 		<img src="images/parallax1.jpg">
 	</div>
@@ -22,7 +22,7 @@
 		<div class="row">
 
 			<div class="col s3 offset-s1_5">
-				<div class="card">
+				<div class="card medium">
 					<div class="card-image waves-effect waves-block waves-light">
 						<img class="activator" src="images/events/event1.jpg">
 					</div>
@@ -43,7 +43,7 @@
 			</div>
 
 			<div class="col s3">
-				<div class="card">
+				<div class="card medium">
 					<div class="card-image waves-effect waves-block waves-light">
 						<img class="activator" src="images/events/event1.jpg">
 					</div>
@@ -64,7 +64,7 @@
 			</div>
 
 			<div class="col s3">
-				<div class="card">
+				<div class="card medium">
 					<div class="card-image waves-effect waves-block waves-light">
 						<img class="activator" src="images/events/event1.jpg">
 					</div>

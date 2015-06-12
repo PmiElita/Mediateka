@@ -13,11 +13,8 @@
 <html>
 
 <head>
-
 <jsp:include page="../general/head.jsp" />
-
 </head>
-
 
 <body>
 	<%
@@ -29,26 +26,19 @@
 
 
 	<jsp:include page="../general/nav.jsp" />
-	
-	<div class="parallax-container my-parallax">
-		<div class="parallax">
-			<img src="images/parallax1.jpg">
-		</div>
 
-		<div class="row" style="margin-top:-1em">
-			<div class="col s12">
-				<ul class="tabs">
-					<li class="tab col s3"><a href="#my_events">My events</a></li>
-					<li class="tab col s3"><a href="#all_events">All events</a></li>
-				</ul>
-			</div>
-			<div id="my_events"><jsp:include page="my_events.jsp" /></div>
-			<div id="all_events"><jsp:include page="all_events.jsp" /></div>
+	<div style="margin-top:10em; margin-right:0em" class="container offset-s4">
+		<div class="row">
+			<h1 class="col8 ">Thanks!</h1>
 		</div>
-
+		<div class="row">
+			<p style="font-size:1.5em" class="col8">Check out your e-mail to confirm your registration.</p>
+		</div>
 	</div>
-
+	<div style="min-height:195px">
+	</div>
 	<jsp:include page="../general/footer.jsp" />
+
 	<jsp:include page="../general/script.jsp" />
 </body>
 </html>

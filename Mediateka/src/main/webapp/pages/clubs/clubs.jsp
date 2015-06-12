@@ -38,12 +38,12 @@
 		<div class="row" style="margin-top:-1em">
 			<div class="col s12">
 				<ul class="tabs">
-					<li class="tab col s3"><a href="#my_events">My events</a></li>
-					<li class="tab col s3"><a href="#all_events">All events</a></li>
+					<li class="tab col s3"><a href="#my_clubs">My clubs</a></li>
+					<li class="tab col s3"><a href="#all_clubs">All clubs</a></li>
 				</ul>
 			</div>
-			<div id="my_events"><jsp:include page="my_events.jsp" /></div>
-			<div id="all_events"><jsp:include page="all_events.jsp" /></div>
+			<div id="my_clubs"><jsp:include page="my_clubs.jsp" /></div>
+			<div id="all_clubs"><jsp:include page="all_clubs.jsp" /></div>
 		</div>
 
 	</div>
