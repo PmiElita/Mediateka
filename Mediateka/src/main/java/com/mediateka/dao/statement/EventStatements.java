@@ -2,7 +2,7 @@ package com.mediateka.dao.statement;
 
 public class EventStatements {
 
-	public static final String INSER_EVENT = "INSERT INTO event "
+	public static final String INSERT_EVENT = "INSERT INTO event "
 			+ "(type, name, date_from, date_till, club_id, state, description)"
 			+ "VALUES (?,?,?,?,?,?,?)";
 	public static final String[] INSERT_EVENT_ORDER = { "type", "name",

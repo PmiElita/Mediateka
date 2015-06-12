@@ -19,7 +19,7 @@ public class EventDAO {
 			ReflectiveOperationException {
 		try (Connection connection = ConnectionManager.getConnection()) {
 			PreparedStatement statement = connection
-					.prepareStatement(INSER_EVENT);
+					.prepareStatement(INSERT_EVENT);
 			Transformer.valueIntoPreparedStatement(statement, event,
 					INSERT_EVENT_ORDER);
 			statement.executeUpdate();
