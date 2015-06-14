@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -8,43 +8,30 @@
 </head>
 <body>
 
-	<form action="createClub" method="post" enctype="multipart/form-data">
+
+	<form id="createClub" action="createClub" method="post"></form>
+	<form id="uploadClubAvaFile" action="uploadClubAvaFile" method="post"
+		enctype="multipart/form-data"></form>
+	<div>
 		<div class="input-field col s5">
-			<i class="mdi-action-account-circle prefix"></i> <input
-				name="club_name" id="club_name" class="validate" type="text">
-			<label class="active" for="club_name">Club name</label>
+			<input name="club_name" id="club_name" type="text" form="createClub" />
+			Club name
 		</div>
 		<div class="input-field col s5">
 			<i class="mdi-action-account-circle prefix"></i>
-			<textarea name="club_description" cols="40" rows="5"></textarea>
+			<textarea name="club_description" id="club_description " cols="40"
+				rows="5" form="createClub"></textarea>
 			<label class="active" for="club_description">Description</label>
 		</div>
 		<div class="input-field col s5">
-			<input type="file" name="dataFile" id="fileChooser" onchange="readURL(this);" />
-			<img id="ava" src="#" alt="aclub avatar" /> Destination: <input
-				type="text" value="/tmp" name="destination" />
+			<input type="file" name="dataFile" id="fileChooser"
+				form="uploadClubAvaFile"/>
 		</div>
-		
 
-		<input type="submit" value="save"
-			onclick="javaScript: performAjaxSubmit ()">
 
-	</form>
+		<input type="submit" value="save" form = "createClub" onchange="document.getElementById('uploadClubAvaFile').submit();">
 
+	</div>
 </body>
-<script>
-	function performAjaxSubmit() {
-		var sampleFile = document.getElementById("file").files[0];
-		var formdata = new FormData();
-		formdata.append("sampleFile", sampleFile);
-		var xhr = new XMLHttpRequest();
-		xhr.open("POST", "http://127.0.0.1:8080/Mediateca/Upload", true);
-		xhr.send(formdata);
-		xhr.onload = function(e) {
-			if (this.status == 200) {
-				alert(this.responseText);
-			}
-		};
-	}
-</script>
+
 </html>

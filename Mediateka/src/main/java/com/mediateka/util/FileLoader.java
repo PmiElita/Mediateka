@@ -39,7 +39,7 @@ public class FileLoader {
 
 	public  boolean loadFile(HttpServletRequest request,
 			String folderName, String fileName) throws ServletException {
-		boolean isUploaded = true;
+		boolean isUploaded = false;
 
 		boolean isMultipart = ServletFileUpload.isMultipartContent(request);
 
@@ -61,7 +61,7 @@ public class FileLoader {
 
 		// constructs the folder where uploaded file will be stored
 		String uploadFolder = request.getServletContext().getRealPath("")
-				+ File.separator + folderName;
+				 + folderName;
 				
 		
 		File fileDir = new File(uploadFolder);
@@ -77,18 +77,19 @@ public class FileLoader {
 
 		try {
 			// Parse the request
-			List items = upload.parseRequest(request);
-			Iterator iter = items.iterator();
+			List<FileItem> items = upload.parseRequest(request);
+			Iterator<FileItem> iter = items.iterator();
 			while (iter.hasNext()) {
 				FileItem item = (FileItem) iter.next();
 
 				if (!item.isFormField()) {					
 					defaultFileName = new File(item.getName()).getName();
 					String extention = defaultFileName.substring(defaultFileName.indexOf('.'));
-					filePath = uploadFolder + File.separator + fileName;
+					filePath = uploadFolder + File.separator + fileName + extention;
 					File uploadedFile = new File(filePath);
 					System.out.println(filePath);					
 					item.write(uploadedFile);
+					isUploaded = true;
 				}
 			}
 			
