@@ -19,7 +19,7 @@
 	</div>
 	
 	<div class="modal-footer">
-		<a href="#!"
+		<a href="home"
 			class=" modal-action modal-close waves-effect waves-green btn-flat">Confirm</a>
 	</div>
 </div>

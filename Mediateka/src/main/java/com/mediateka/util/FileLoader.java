@@ -1,6 +1,7 @@
 package com.mediateka.util;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -16,29 +17,15 @@ public class FileLoader {
 
 	private static final int MAX_MEMORY_SIZE = 1024 * 1024 * 210;
 	private static final int MAX_REQUEST_SIZE = 1024 * 1024 * 210;
-	
-	
+
 	private String defaultFileName;
-	public String getDefaultFileName() {
-		return defaultFileName;
-	}
-
-	public void setDefaultFileName(String defaultFileName) {
-		this.defaultFileName = defaultFileName;
-	}
-
-	public String getFilePath() {
-		return filePath;
-	}
-
-	public void setFilePath(String filePath) {
-		this.filePath = filePath;
-	}
-
 	private String filePath;
+	private String reletivePath;
+	private HashMap<String, String> parameterMap = new HashMap<String, String>();
 
-	public  boolean loadFile(HttpServletRequest request,
-			String folderName, String fileName) throws ServletException {
+
+	public boolean loadFile(HttpServletRequest request, String folderName,
+			String fileName) throws ServletException {
 		boolean isUploaded = false;
 
 		boolean isMultipart = ServletFileUpload.isMultipartContent(request);
@@ -60,10 +47,9 @@ public class FileLoader {
 		factory.setRepository(new File(System.getProperty("java.io.tmpdir")));
 
 		// constructs the folder where uploaded file will be stored
-		String uploadFolder = request.getServletContext().getRealPath("")
-				 + folderName;
-				
-		
+		String uploadFolder = request.getServletContext().getRealPath("") + "media\\"
+				+ folderName;
+
 		File fileDir = new File(uploadFolder);
 		if (!fileDir.exists()) {
 			fileDir.mkdir();
@@ -84,15 +70,20 @@ public class FileLoader {
 
 				if (!item.isFormField()) {					
 					defaultFileName = new File(item.getName()).getName();
-					String extention = defaultFileName.substring(defaultFileName.indexOf('.'));
-					filePath = uploadFolder + File.separator + fileName + extention;
-					File uploadedFile = new File(filePath);
-					System.out.println(filePath);					
+					String extention = defaultFileName
+							.substring(defaultFileName.indexOf('.'));
+					filePath = uploadFolder + File.separator + fileName
+							+ extention;
+					File uploadedFile = new File(filePath);					
 					item.write(uploadedFile);
 					isUploaded = true;
+				} else {
+					
+
+					parameterMap
+							.put(item.getFieldName(), item.getString());
 				}
 			}
-			
 
 		} catch (FileUploadException ex) {
 			throw new ServletException(ex);
@@ -101,6 +92,34 @@ public class FileLoader {
 		}
 		return isUploaded;
 
+	}
+
+	public HashMap<String, String> getParameterMap() {
+		return parameterMap;
+	}
+
+	public void setParameterMap(HashMap<String, String> parameterMap) {
+		this.parameterMap = parameterMap;
+	}
+	
+	public String getDefaultFileName() {
+		return defaultFileName;
+	}
+
+	public void setDefaultFileName(String defaultFileName) {
+		this.defaultFileName = defaultFileName;
+	}
+
+	public String getFilePath() {
+		return filePath;
+	}
+
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
+	}
+	
+	public String getRelativePath(){
+		return filePath.substring(filePath.indexOf("media"));
 	}
 
 }

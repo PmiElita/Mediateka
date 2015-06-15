@@ -9,8 +9,9 @@
 <body>
 
 
-	<form id="createClub" action="createClub" method="post"></form>
 	<form id="uploadClubAvaFile" action="uploadClubAvaFile" method="post"
+		enctype="multipart/form-data"></form>
+	<form id="createClub" action="createClub" method="post"
 		enctype="multipart/form-data"></form>
 	<div>
 		<div class="input-field col s5">
@@ -24,12 +25,11 @@
 			<label class="active" for="club_description">Description</label>
 		</div>
 		<div class="input-field col s5">
-			<input type="file" name="dataFile" id="fileChooser"
-				form="uploadClubAvaFile"/>
+			<input type="file" name="dataFile" id="fileChooser" form="createClub">
 		</div>
 
-
-		<input type="submit" value="save" form = "createClub" onchange="document.getElementById('uploadClubAvaFile').submit();">
+		<input type="submit" id="subbut" name="subbut" value="save"
+			form="createClub">
 
 	</div>
 </body>
