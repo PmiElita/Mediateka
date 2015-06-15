@@ -28,4 +28,7 @@ public class EventStatements {
 			"date_from", "date_till", "club_id", "state", "description", "id" };
 
 	public static final String SELECT_EVENT_ALL = "SELECT * FROM event";
+	
+	public static final String CALL_GET_EVENTS_BY_DATE ="CALL GetEventsByDate(?)";
+	
 }

@@ -1,12 +1,14 @@
 package com.mediateka.dao;
 
+import static com.mediateka.dao.statement.EventStatements.*;
+
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.List;
-
-import static com.mediateka.dao.statement.EventStatements.*;
 
 import com.mediateka.model.Event;
 import com.mediateka.model.enums.EventType;
@@ -102,6 +104,18 @@ public class EventDAO {
 		try (Connection connection = ConnectionManager.getConnection()) {
 			PreparedStatement statement = connection
 					.prepareStatement(SELECT_EVENT_ALL);
+			ResultSet resultSet = statement.executeQuery();
+			return Transformer.transformResultSetIntoList(resultSet,
+					Event.class);
+		}
+	}
+
+	public static List<Event> getEventsByDate(Timestamp date)
+			throws SQLException, ReflectiveOperationException {
+		try (Connection connection = ConnectionManager.getConnection()) {
+			CallableStatement statement = connection
+					.prepareCall(CALL_GET_EVENTS_BY_DATE);
+			statement.setTimestamp(1, date);
 			ResultSet resultSet = statement.executeQuery();
 			return Transformer.transformResultSetIntoList(resultSet,
 					Event.class);

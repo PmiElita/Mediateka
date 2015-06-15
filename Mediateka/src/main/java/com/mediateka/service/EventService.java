@@ -1,6 +1,7 @@
 package com.mediateka.service;
 
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.List;
 
 import com.mediateka.dao.EventDAO;
@@ -42,5 +43,10 @@ public class EventService {
 	public static void getEventAll() throws SQLException,
 			ReflectiveOperationException {
 		EventDAO.getEventAll();
+	}
+
+	public static List<Event> getEventsByDate(Timestamp date)
+			throws SQLException, ReflectiveOperationException {
+		return EventDAO.getEventsByDate(date);
 	}
 }

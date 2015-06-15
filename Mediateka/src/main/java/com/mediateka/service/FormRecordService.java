@@ -1,6 +1,7 @@
 package com.mediateka.service;
 
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.List;
 
 import com.mediateka.dao.FormRecordDAO;
@@ -55,5 +56,11 @@ public class FormRecordService {
 	public static List<FormRecord> getFormRecordAll() throws SQLException,
 			ReflectiveOperationException {
 		return FormRecordDAO.getFormRecordAll();
+	}
+	
+	public static List<FormRecord> getFormRecordsByDateRange(
+			Timestamp dateFrom, Timestamp dateTill) throws SQLException,
+			ReflectiveOperationException {
+		return FormRecordDAO.getFormRecordsByDateRange(dateFrom, dateTill);
 	}
 }

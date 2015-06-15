@@ -1,9 +1,11 @@
 package com.mediateka.dao;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.List;
 
 import static com.mediateka.dao.statement.FormRecordStatements.*;
@@ -138,6 +140,19 @@ public class FormRecordDAO {
 			ResultSet resultSet = statement.executeQuery();
 			return Transformer.transformResultSetIntoList(resultSet,
 					FormRecord.class);
+		}
+	}
+	
+	public static List<FormRecord> getFormRecordsByDateRange(
+			Timestamp dateFrom, Timestamp dateTill) throws SQLException,
+			ReflectiveOperationException {
+		try (Connection connection = ConnectionManager.getConnection()) {
+			CallableStatement statement = connection.prepareCall(CALL_GET_FORM_RECORDS_BY_DATE_RANGE);
+			statement.setTimestamp(1, dateFrom);
+			statement.setTimestamp(2, dateTill);
+			ResultSet resultSet =statement.executeQuery();
+			
+			return Transformer.transformResultSetIntoList(resultSet, FormRecord.class);
 		}
 	}
 }

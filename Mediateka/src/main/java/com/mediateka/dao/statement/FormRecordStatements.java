@@ -35,4 +35,6 @@ public class FormRecordStatements {
 			"user_id", "admin_id", "state", "id" };
 
 	public static final String SELECT_FORM_RECORD_ALL = "SELECT * FROM form_record";
+	
+	public static final String CALL_GET_FORM_RECORDS_BY_DATE_RANGE= "CALL GetFormRecordsByDateRange(?,?)";
 }
