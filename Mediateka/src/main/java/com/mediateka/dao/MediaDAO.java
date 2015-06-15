@@ -2,6 +2,7 @@ package com.mediateka.dao;
 
 import static com.mediateka.dao.statement.MediaStatements.*;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,6 +16,22 @@ import com.mediateka.util.ConnectionManager;
 import com.mediateka.util.Transformer;
 
 public class MediaDAO {
+	
+	public static Media callSaveMedia(Media media) throws SQLException, ReflectiveOperationException {
+		try (Connection connection = ConnectionManager.getConnection()) {
+			CallableStatement statement = connection
+					.prepareCall(CALL_INSERT_MEDIA);
+			
+			Transformer.valueIntoPreparedStatement(statement, media,
+					CALL_INSERT_MEDIA_ORDER);	
+			
+			ResultSet resultSet = statement.executeQuery();
+			
+			return Transformer.transformResultSetIntoObject(resultSet,
+					Media.class);
+		}
+	}
+	
 	public static void saveMedia(Media media) throws SQLException,
 			ReflectiveOperationException {
 		try (Connection connection = ConnectionManager.getConnection()) {

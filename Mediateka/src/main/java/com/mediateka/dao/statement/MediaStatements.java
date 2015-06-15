@@ -11,6 +11,7 @@ public class MediaStatements {
 			+ " WHERE  id =?";
 	public static final String[] UPDATE_MEDIA_BY_ID_ORDER = { "type", "name",
 			"path", "description", "content_group_id", "state", "id" };
+	
 
 	public static final String SELECT_MEDIA_BY_ID = "SELECT * FROM media WHERE id =?";
 	public static final String[] SELECT_MEDIA_BY_ID_ORDER = { "id" };
@@ -28,4 +29,9 @@ public class MediaStatements {
 	public static final String[] SELECT_MEDIA_BY_STATE_ORDER = { "state" };
 
 	public static final String SELECT_MEDIA_ALL = "SELECT * FROM media";
+	
+	public static final String CALL_INSERT_MEDIA = "CALL InsertMedia(?,?,?,?,?,?)";
+	
+	public static final String[] CALL_INSERT_MEDIA_ORDER = { "name", "type", "path",
+		"description", "content_group_id", "state" };
 }

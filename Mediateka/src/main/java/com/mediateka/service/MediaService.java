@@ -9,6 +9,11 @@ import com.mediateka.model.enums.MediaType;
 import com.mediateka.model.enums.State;
 
 public class MediaService {
+	
+	
+	public static Media callSaveMedia(Media media) throws SQLException, ReflectiveOperationException {
+		return MediaDAO.callSaveMedia(media);
+	}
 
 	public static void saveMedia(Media media) throws SQLException,
 			ReflectiveOperationException {
