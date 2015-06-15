@@ -13,6 +13,8 @@ import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
+import com.mediateka.exception.WrongInputException;
+
 public class FileLoader {
 
 	private static final int MAX_MEMORY_SIZE = 1024 * 1024 * 210;
@@ -119,6 +121,9 @@ public class FileLoader {
 	}
 	
 	public String getRelativePath(){
+		if(filePath == null){
+			throw new WrongInputException("wrong file type");
+		}
 		return filePath.substring(filePath.indexOf("media"));
 	}
 
