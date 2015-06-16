@@ -1,13 +1,9 @@
 package com.mediateka.util;
 
-import com.mediateka.model.User;
 
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.*;
 
 import javax.mail.*;
-import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
@@ -20,7 +16,6 @@ public class EmailSender {
     private static final String password="ABab123456";
     private static final Properties properties = new Properties();
     
-    private static final String serverUrl = "http://localhost:8080/Mediateka/changePassword"; 
  
     static {
     	properties.put("mail.smtp.auth", "true");

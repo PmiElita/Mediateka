@@ -5,7 +5,6 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.regex.Pattern;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
@@ -32,16 +31,10 @@ public class RegisterUserController {
 	private static Logger logger = Logger
 			.getLogger(RegisterUserController.class);
 
-	static Pattern onlyCharsPattern = Pattern.compile("^[A-Za-zА-Яа-яіїґ’]+$");
-	static Pattern onlyDigitsPattern = Pattern.compile("[0-9]+");
-	static Pattern phoneNumberPattern = Pattern.compile("^[0-9]{12}$");
-	static Pattern emailPattern = Pattern
-			.compile("^[A-Z,a-z,0-9_.]+@[A-Z,a-z,0-9_.]+$");
-
 	@Deprecated
 	private static boolean checkRegistrationForm(UserRegistrationForm form) {
 
-		//use form validator instead
+		// use form validator instead
 		return true;
 	}
 
@@ -64,7 +57,7 @@ public class RegisterUserController {
 		ObjectFiller.fill(form, request);
 
 		if (!checkRegistrationForm(form)) {
-			logger.info("form validation failed");
+			logger.warn("form validation failed");
 			response.sendRedirect("index");
 			return;
 		}
@@ -80,7 +73,7 @@ public class RegisterUserController {
 
 			);
 		} catch (ParseException e) {
-			logger.error("failed at parsing birth date");
+			logger.warn("failed at parsing birth date");
 			response.sendRedirect("index");
 			return;
 		}
@@ -107,7 +100,6 @@ public class RegisterUserController {
 		newUser.setSalt(salt);
 		newUser.setPasswordChangingToken(token);
 
-
 		UserService.saveUser(newUser);
 
 		// send mail
@@ -115,14 +107,8 @@ public class RegisterUserController {
 		String mailBody = " <a href=\"http://localhost:8080/Mediateka/changePassword?token="
 				+ token + "\">click here</a> ";
 
-		try {
-			EmailSender.sendMail(newUser.getEmail(), "password changing page",
-					mailBody);
-		} catch (MessagingException e) {
-			logger.error("failed to send email", e);
-			response.sendRedirect("index");
-			return;
-		}
+		EmailSender.sendMail(newUser.getEmail(), "password changing page",
+				mailBody);
 
 		response.sendRedirect("index");
 	}
