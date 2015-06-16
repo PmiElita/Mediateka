@@ -1,6 +1,6 @@
 package com.mediateka.exception;
 
-public class WrongInputException extends RuntimeException {
+public class WrongInputException extends Exception {
 
 	private static final long serialVersionUID = 1L;
 
