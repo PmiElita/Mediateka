@@ -4,7 +4,7 @@
 <div id="modal1" class="modal">
 	<div class="modal-content">
 		<form method="post">
-			<h4>Login</h4>
+			<h4 class="titler">Login</h4>
 
 			<button class="btn waves-effect blue titler" type="submit"
 				name="action" >
