@@ -15,6 +15,7 @@
 <head>
 
 <jsp:include page="../general/head.jsp" />
+<jsp:include page="create_club.jsp" />
 
 </head>
 
@@ -40,6 +41,7 @@
 				<ul class="tabs">
 					<li class="tab col s3"><a href="#my_clubs">My clubs</a></li>
 					<li class="tab col s3"><a href="#all_clubs">All clubs</a></li>
+					<li class="tab col s3"><a href="" data-target="modal8" class="modal-trigger waves-effect">Create club</a></li>
 				</ul>
 			</div>
 			<div id="my_clubs"><jsp:include page="my_clubs.jsp" /></div>

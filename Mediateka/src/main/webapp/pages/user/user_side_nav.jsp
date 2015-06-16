@@ -5,8 +5,8 @@
 	<div id="sidebar" class="z-depth-4">
 		<ul>
 			<li><a href="index">Main page</a></li>
-			<li><a href="clubs">My Clubs</a></li>
-			<li><a href="events">My events</a></li>
+			<li><a href="clubs">Clubs</a></li>
+			<li><a href="events">Events</a></li>
 			<li><a href="activity">Activity</a></li>
 			<li><a href="" data-target="modal5" class="modal-trigger waves-effect">Send message</a></li>
 		</ul>

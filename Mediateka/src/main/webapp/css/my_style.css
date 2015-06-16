@@ -7,6 +7,16 @@ section {
 	padding: 1em;
 }
 
+#top-user-name {
+	-webkit-transition: padding 2s;
+	background-color: #fff;
+}
+
+#top-user-name:hover {
+	-webkit-transition: border-radius 2s;
+	background-color: #fff;
+}
+
 .main-info {
 	padding-bottom: 2em;
 	width: 73%;
@@ -42,12 +52,16 @@ section {
 }
 
 .row .my-picture-wrap {
+	margin-left:-6em;
 	height: 10em;
+	width: 50em;
+	background-color: #eeeeee;
 }
 
 .my-picture-wrap .my-picture {
 	background-size: cover;
 	background-position: center;
+	margin-left: 20em;
 }
 
 .my-parallax {
@@ -79,7 +93,7 @@ section {
 	font-size: 2em;
 }
 
-.club-badge{
+.club-badge {
 	color: #03a9f4;
 	margin-top: 1.5em;
 	font-size: 2em;
@@ -98,7 +112,7 @@ section {
 	text-decoration: none;
 	visibility: hidden;
 	width: 400px;
-	min-height:16em;
+	min-height: 16em;
 	z-index: 100;
 }
 
@@ -124,4 +138,14 @@ section {
 .profile-tooltipped span p {
 	margin-left: 6em;
 	margin-bottom: -3em;
+}
+
+.image-cover-text {
+	position: absolute;
+	margin-left: 6em;
+	margin-top: 1em;
+	text-shadow: white 1px 0px, white 1px 1px, white 0px 1px, white -1px 1px, white
+		-1px 0px, white -1px -1px, white 0px -1px, white 1px -1px, white 0 0 3px, white
+		0 0 3px, white 0 0 3px, white 0 0 3px, white 0 0 3px, white 0 0 3px, white 0 0
+		3px, white 0 0 3px;
 }

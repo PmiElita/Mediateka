@@ -4,7 +4,7 @@
 <span> <img src="images/admin/users.png" style="width: 5em" />
 	<div style="margin-top: -1.5em">
 		<strong>
-			<p>Login: __loggin__</p>
+			<p>KoKo__VBDKS__</p>
 			<p>Birthday: __19.12.2002__</p>
 			<p>E-mail: __sdj@dfks.sjd__</p>
 			<p>Number of Events: __128192__</p>

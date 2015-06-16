@@ -14,19 +14,19 @@
 
 <div class="section white">
 	<div class="container">
-		<h3>Club Name</h3>
 		<form>
-			<div class="row my-picture-row">
+			<div class="row my-picture-row" style="margin-left: -3em">
 				<div class="col s8 offset-s2">
 					<div class="waves-effect waves-block waves-light my-picture-wrap">
-						<img class="my-picture" src="#" id="ava">
+						<h3 class="image-cover-text">${club_name}</h3>
+						<img class="my-picture" src="images/club/club_default.png"
+							id="ava">
 					</div>
 				</div>
 			</div>
-			<input class="btn" type="file" onchange="readURL(this);" />
 		</form>
 
-		<div class="row" style="margin-left: -4em">
+		<div class="row" style="margin-left: -7em">
 			<div class="col s3">
 				<a href="" data-target="modal7" class="modal-trigger">
 					<div class="col s12 m8 offset-m2 l6 offset-l3 my-card">
@@ -47,7 +47,7 @@
 			</div>
 
 			<div class="col s3">
-				<a href="clubs">
+				<a href="club_videos">
 					<div class="col s12 m8 offset-m2 l6 offset-l3 my-card">
 						<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
 							<div style="margin-top: -2em">
@@ -102,6 +102,9 @@
 					</div>
 				</a>
 			</div>
+		</div>
+		<div class="container">
+			<p>${club_description}</p>
 		</div>
 	</div>
 </div>
