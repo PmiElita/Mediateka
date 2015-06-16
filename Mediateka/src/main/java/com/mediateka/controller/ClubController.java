@@ -1,6 +1,5 @@
 package com.mediateka.controller;
 
-import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -10,19 +9,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.mediateka.annotation.Controller;
 import com.mediateka.annotation.Request;
-import com.mediateka.exception.WrongInputException;
 import com.mediateka.model.Club;
-import com.mediateka.model.Media;
-import com.mediateka.model.enums.MediaType;
-import com.mediateka.model.enums.State;
 import com.mediateka.service.ClubService;
-import com.mediateka.service.MediaService;
 import com.mediateka.util.FileLoader;
 
 @Controller
 public class ClubController {
 
-	@Request(url = "pages/club/createClub", method = "post")
+	@Request(url = "createClub", method = "post")
 	public static void createClubPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			SQLException, ReflectiveOperationException {
@@ -32,7 +26,7 @@ public class ClubController {
 		club.setName(request.getParameter("club_name"));
 		club.setDescription(request.getParameter("club_description"));	
 		ClubService.saveClub(club);		
-		request.getRequestDispatcher("club_home.jsp")
+		request.getRequestDispatcher("pages/club/club.jsp")
 				.forward(request, response);
 
 	}
@@ -45,5 +39,4 @@ public class ClubController {
 		request.getRequestDispatcher("loadAlbum.jsp")
 				.forward(request, response);
 	}
-
 }

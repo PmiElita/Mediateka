@@ -15,7 +15,7 @@ public class IndexController {
    
 	@Request(url="index", method="get")
 	public static void indexGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		request.getRequestDispatcher("pages/main/main.jsp").forward(request, response);
+		request.getRequestDispatcher("pages/index/index.jsp").forward(request, response);
 	}
 	
 	@Request(url="index", method="post")
