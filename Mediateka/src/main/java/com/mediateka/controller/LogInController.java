@@ -44,9 +44,9 @@ public class LogInController {
 
 		HttpSession mySession = request.getSession();
 
-		mySession.setAttribute("id", user.getId());
-		mySession.setAttribute("firstName", user.getFirstName());
-
+		mySession.setAttribute("userId", user.getId());
+		mySession.setAttribute("userFirstName", user.getFirstName());
+		mySession.setAttribute("userRole", user.getRole());
 		response.sendRedirect("index");
 
 	}
