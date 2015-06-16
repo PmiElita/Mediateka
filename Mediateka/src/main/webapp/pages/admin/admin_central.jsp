@@ -24,8 +24,9 @@
 									<div class="row valign-wrapper">
 										<div class="col s10">
 											<img src="images/admin/users.png" alt=""
-												class="circle responsive-img">
+												class="circle responsive-img" />
 										</div>
+										<div class="my-badge">4</div>
 									</div>
 								</div>
 							</div>
@@ -44,6 +45,7 @@
 											<img src="images/admin/clubs.png" alt=""
 												class="circle responsive-img">
 										</div>
+										<div class="my-badge">3</div>
 									</div>
 								</div>
 							</div>
@@ -59,9 +61,10 @@
 									<h3 style="color: black">Events</h3>
 									<div class="row valign-wrapper">
 										<div class="col s8">
-											<img style="margin-top:0em" src="images/admin/events.png" alt=""
-												class="circle responsive-img">
+											<img style="margin-top: 0em" src="images/admin/events.png"
+												alt="" class="circle responsive-img">
 										</div>
+										<div class="my-badge" style="margin-left:0.75em">2</div>
 									</div>
 								</div>
 							</div>
@@ -84,6 +87,7 @@
 											<img src="images/admin/info.png" alt=""
 												class="circle responsive-img">
 										</div>
+										<div class="my-badge" style="margin-left:0.4em">1</div>
 									</div>
 								</div>
 							</div>
@@ -101,6 +105,7 @@
 										<img src="images/admin/books.png" alt=""
 											class="circle responsive-img">
 									</div>
+									<div class="my-badge" style="margin-left:0.2em">88</div>
 								</div>
 							</div>
 						</div>
@@ -114,9 +119,10 @@
 								<h3 style="color: black">Reports</h3>
 								<div class="row valign-wrapper">
 									<div class="col s8">
-										<img style="margin-top:0em" src="images/admin/reports.png" alt=""
-											class="circle responsive-img">
+										<img style="margin-top: 0em" src="images/admin/reports.png"
+											alt="" class="circle responsive-img">
 									</div>
+									<div class="my-badge" style="margin-left:0.75em">9</div>
 								</div>
 							</div>
 						</div>

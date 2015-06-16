@@ -1,3 +1,6 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+	
 <html>
 <head>
 <link type="text/css" rel="stylesheet" href="css/materialize.css"
@@ -10,7 +13,7 @@
 		<img src="images/error.jpg"/>
 		<h4 style="margin-left:1em">PAGE NOT FOUND</h4>
 	</div>
-	<div style="min-height:1em">
+	<div style="min-height:5em">
 	</div>
 	<jsp:include page="general/footer.jsp" />
 

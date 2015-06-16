@@ -1,20 +1,25 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+	
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<nav>
+
+<nav >
 	<div class="nav-wrapper">
 
 		<a href="index" class="brand-logo"><img alt="Logo"
-			src="images/logo.png" /></a>
+			src="images/logo.png" style="width:inherit"/></a>
 
-		<ul class="right hide-on-med-and-down">
+		<ul  class="right hide-on-med-and-down">
 
 			<li><a style="margin-right: 10em; font-size: 1.5em">User
 					name</a></li>
 
 
-			<li><a title="Profile" href="" class="waves-effect">
-					<i class="large mdi-action-face-unlock"></i>
-			</a></li>
+			<li  class="profile-tooltipped">
+			<a title="Edit profile" href="#" class="waves-effect" >
+			<i	class="large mdi-action-face-unlock"></i>
 			
+			</a><jsp:include page="../general/profile_tooltip.jsp"/></li>
 
 			<li><a title="Cabinet" href="cabinet" class="waves-effect">
 					<i class="large mdi-maps-local-library"></i>
@@ -31,9 +36,9 @@
 			<li><a title="Change language" class="dropdown-button" href="#!"
 				data-activates="dropdown1">Language<i
 					class="mdi-navigation-arrow-drop-down right"></i></a></li>
-
 		</ul>
 	</div>
+
 </nav>
 
 <!-- Dropdown Structure -->

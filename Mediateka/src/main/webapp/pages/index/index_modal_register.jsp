@@ -1,3 +1,6 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+	
 <div id="modal2" class="modal">
 	<div class="modal-content">
 		<h4>Register</h4>

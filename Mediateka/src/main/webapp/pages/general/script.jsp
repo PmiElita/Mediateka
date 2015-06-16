@@ -1,4 +1,6 @@
-
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+	
 <script type="text/javascript"
 	src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 
@@ -23,12 +25,15 @@
 			selectYears : 15
 		// Creates a dropdown of 15 years to control year
 		});
-		
+
 		$('select').material_select();
-		
+
 		$('ul.tabs').tabs();
+
 	});
 </script>
+
+
 
 <!-- Side nav -->
 <script type="text/javascript">

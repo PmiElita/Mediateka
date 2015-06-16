@@ -35,6 +35,7 @@
 	<div class="main-info">
 		<div class="section white">
 			<div class="container">
+				<h3>Main page info edit</h3>
 				<textarea id="infoText" name="infoText" class="materialize-textarea info">		Перша львівська медіатека – це проект громадського центру нового типу, діє при Центральній бібліотеці для дорослих ім. Лесі	Українки. Медіатека – інтерактивний громадський центр, який
 пропонує можливість участі у заходах та використання різноманітних ресурсів, включаючи Інтернет, CD та DVD-носії, електронні книги,
 інтерактивні програми вивчення іноземних мов і комп’ютерних технологій, програми дитячого розвитку, комп’ютерні курси, музичну
@@ -46,7 +47,7 @@
 		</div>
 	</div>
 
-
+	<div style="min-height:14em"></div>
 	<jsp:include page="../general/footer.jsp" />
 	<jsp:include page="../general/script.jsp" />
 </body>
