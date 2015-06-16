@@ -25,13 +25,13 @@
     			<option value="${types.getId()}"><c:out value="${types.getName()}"/></option>
     		</c:forEach>
    		</select></p>
-   		<p><select size="6" name="meaning" required>
+   		<p><select size="4" name="meaning" required>
     		<option disabled>Book meaning...</option>
     		<c:forEach var="meanings" items="${book_meaning}">
     			<option value="${meanings.getId()}"><c:out value="${meanings.getName()}"/></option>
     		</c:forEach>
    		</select></p>
-   		<p><select size="6" name="language" required>
+   		<p><select size="4" name="language" required>
     		<option disabled>Book language...</option>
     		<c:forEach var="languages" items="${book_language}">
     			<option value="${languages.getId()}"><c:out value="${languages.getName()}"/></option>

@@ -3,6 +3,7 @@ package com.mediateka.model;
 import java.sql.Timestamp;
 
 import com.mediateka.annotation.Column;
+import com.mediateka.model.enums.FormRecordGoal;
 import com.mediateka.model.enums.State;
 
 public class FormRecord {
@@ -20,7 +21,7 @@ public class FormRecord {
 	private Integer bookId;
 
 	@Column(name = "goal")
-	private String goal;
+	private FormRecordGoal goal;
 
 	@Column(name = "event_id")
 	private Integer eventId;
@@ -69,11 +70,11 @@ public class FormRecord {
 		this.bookId = bookId;
 	}
 
-	public String getGoal() {
+	public FormRecordGoal getGoal() {
 		return goal;
 	}
 
-	public void setGoal(String goal) {
+	public void setGoal(FormRecordGoal goal) {
 		this.goal = goal;
 	}
 
