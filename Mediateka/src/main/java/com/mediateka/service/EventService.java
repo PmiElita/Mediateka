@@ -49,4 +49,9 @@ public class EventService {
 			throws SQLException, ReflectiveOperationException {
 		return EventDAO.getEventsByDate(date);
 	}
+	
+	public static Event callSaveEvent(Event event) throws SQLException,
+	ReflectiveOperationException {
+		return EventDAO.callSaveEvent(event);
+	}
 }

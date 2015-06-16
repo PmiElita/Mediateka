@@ -31,6 +31,9 @@ public class Event {
 	@Column(name = "description")
 	private String description;
 
+	@Column (name = "ava_id")
+	private Integer avaId;
+	
 	public Integer getId() {
 		return id;
 	}
@@ -93,6 +96,14 @@ public class Event {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public Integer getAvaId() {
+		return avaId;
+	}
+
+	public void setAvaId(Integer avaId) {
+		this.avaId = avaId;
 	}
 
 	@Override

@@ -28,7 +28,7 @@ import static com.mediateka.service.BookService.*;
 @Controller
 public class BookController {
 	private static Logger logger = Logger
-			.getLogger(RegisterUserController.class);
+			.getLogger(BookController.class);
 
 	@Request(url = "CreateBook", method = "get")
 	public static void BookCreateGet(HttpServletRequest request,

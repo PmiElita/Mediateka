@@ -4,9 +4,9 @@ public class EventStatements {
 
 	public static final String INSERT_EVENT = "INSERT INTO event "
 			+ "(type, name, date_from, date_till, club_id, state, description)"
-			+ "VALUES (?,?,?,?,?,?,?)";
+			+ "VALUES (?,?,?,?,?,?,?,?)";
 	public static final String[] INSERT_EVENT_ORDER = { "type", "name",
-			"date_from", "date_till", "club_id", "state", "description" };
+			"date_from", "date_till", "club_id", "state", "description", "ava_id" };
 
 	public static final String SELECT_EVENT_BY_ID = "SELECT  * FROM event WHERE id = ?";
 	public static final String[] SELECT_EVENT_BY_ID_ORDER = { "id" };
@@ -23,12 +23,15 @@ public class EventStatements {
 
 	public static final String UPDATE_EVENT_BY_ID = "UPDATE event SET type=?, name=?,"
 			+ " date_from=?, date_till=?, "
-			+ "club_id=?, state=?, description=? WHERE id = ?";
+			+ "club_id=?, state=?, description=?, ava_id=? WHERE id = ?";
 	public static final String[] UPDATE_EVENT_BY_ID_ORDER = { "type", "name",
-			"date_from", "date_till", "club_id", "state", "description", "id" };
+			"date_from", "date_till", "club_id", "state", "description", "ava_id", "id" };
 
 	public static final String SELECT_EVENT_ALL = "SELECT * FROM event";
 	
 	public static final String CALL_GET_EVENTS_BY_DATE ="CALL GetEventsByDate(?)";
 	
+	public static final String CALL_INSERT_EVENT = "CALL insertEvent (?,?,?,?,?,?,?,?)";
+	public static final String[] CALL_INSERT_EVENT_ORDER = { "type", "name",
+		"date_from", "date_till", "club_id", "state", "description", "ava_id" };
 }

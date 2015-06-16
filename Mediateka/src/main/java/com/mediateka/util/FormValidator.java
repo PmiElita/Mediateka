@@ -24,7 +24,7 @@ public class FormValidator {
 				}
 				String fieldValue = (String) field.get(object);
 
-				if (fieldValue.length() > field.getAnnotation(Validation.class)
+				if (fieldValue.trim().length()==0||fieldValue.length() > field.getAnnotation(Validation.class)
 						.length()
 						|| !fieldValue.matches(field.getAnnotation(
 								Validation.class).regexp())) {

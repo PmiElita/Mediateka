@@ -121,4 +121,17 @@ public class EventDAO {
 					Event.class);
 		}
 	}
+
+	public static Event callSaveEvent(Event event) throws SQLException,
+			ReflectiveOperationException {
+		try (Connection connection = ConnectionManager.getConnection()) {
+			CallableStatement statement = connection
+					.prepareCall(CALL_INSERT_EVENT);
+			Transformer.valueIntoPreparedStatement(statement, event,
+					CALL_INSERT_EVENT_ORDER);
+			ResultSet resultSet = statement.executeQuery();
+			return Transformer.transformResultSetIntoObject(resultSet,
+					Event.class);
+		}
+	}
 }
