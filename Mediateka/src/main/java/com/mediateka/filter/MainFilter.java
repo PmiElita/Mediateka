@@ -1,5 +1,8 @@
 package com.mediateka.filter;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.Set;
@@ -15,9 +18,20 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.reflections.Reflections;
 
+import com.google.common.io.CharStreams;
 import com.mediateka.annotation.Controller;
 import com.mediateka.annotation.Request;
 
+
+
+
+
+
+
+
+
+import org.apache.log4j.*;
+import org.apache.log4j.xml.DOMConfigurator;
 /**
  * Servlet Filter implementation class MainFilter
  */
@@ -106,7 +120,7 @@ public class MainFilter implements Filter {
 		action.invoke( actionClass, httpRequest, httpResponse);  // invoke found method
        }
        else {
-    	  throw new Exception();
+    	  throw new Exception("can't find appropriate controller. url: " + httpRequest.getRequestURI());
        }
 	}
 
@@ -114,7 +128,13 @@ public class MainFilter implements Filter {
 	 * @see Filter#init(FilterConfig)
 	 */
 	public void init(FilterConfig fConfig) throws ServletException {
-		// TODO Auto-generated method stub
+
+		String pathToLog4jConfigurator = fConfig.getServletContext().getRealPath("/log4jConfiguration.xml");
+		System.out.println("path to file: " + pathToLog4jConfigurator );
+		DOMConfigurator.configure(pathToLog4jConfigurator );
+		
+		Logger.getLogger(this.getClass()).debug("initiate main filter");
+		
 	}
 
 }

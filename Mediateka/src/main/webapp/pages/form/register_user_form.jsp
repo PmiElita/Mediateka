@@ -6,7 +6,7 @@
 
 		<div id="creation_form">
 
-			<form>
+			<form action="registerNewUser" method="post">
 				<h3 class="titler">Register new user</h3>
 				<button class="btn waves-effect blue titler" type="submit"
 					name="action">
@@ -95,7 +95,7 @@
 								</div>
 								<div class="input-field col s3">
 									<p>Address</p>
-									<input id="adress" name="adress" type="text" class="validate">
+									<input id="adress" name="address" type="text" class="validate">
 								</div>
 								<div class="input-field col s3">
 									<p>Phone</p>

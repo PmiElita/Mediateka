@@ -11,8 +11,7 @@
 
 		<ul  class="right hide-on-med-and-down">
 
-			<li><a style="margin-right: 10em; font-size: 1.5em">User
-					name</a></li>
+			<li><a style="margin-right: 10em; font-size: 1.5em">MUMU</a></li>
 
 
 			<li  class="profile-tooltipped">

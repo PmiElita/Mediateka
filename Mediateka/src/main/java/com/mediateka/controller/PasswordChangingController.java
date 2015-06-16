@@ -3,7 +3,6 @@ package com.mediateka.controller;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
-import java.util.regex.Pattern;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -14,12 +13,12 @@ import com.mediateka.annotation.Request;
 import com.mediateka.model.User;
 import com.mediateka.model.enums.State;
 import com.mediateka.service.UserService;
+import com.mediateka.util.RegExps;
 import com.mediateka.util.SaltedPasswordGenerator;
 
 @Controller
 public class PasswordChangingController {
 
-	static Pattern passwordPattern = Pattern.compile("(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,}");
 
 	
 	@Request(url = "changePassword", method = "get")
@@ -67,24 +66,28 @@ public class PasswordChangingController {
 		String confirmPassword = request.getParameter("confirmPassword");
 		
 		if (password == null) {
+			System.out.println("err1");
 			response.sendRedirect("index");
 			return;
 		}
 		
 		if (password.length() > 40){
+			System.out.println("err2");
 			response.sendRedirect("index");
 			return;
 		}
 
 		if (!password.equals(confirmPassword)){
+			System.out.println("err3");
 			response.sendRedirect("index");
 			return;			
 		}
 		
-		if (!passwordPattern.matcher(password).matches()) {
-			response.sendRedirect("index");
-			return;						
-		}
+//		if (!RegExps.passwordPattern.matcher(password).matches()) {
+//			System.out.println("err4");
+//			response.sendRedirect("index");
+//			return;						
+//		}
 
 		
 		

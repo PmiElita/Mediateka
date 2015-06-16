@@ -34,6 +34,19 @@
   </div>
 </div>
 
+
+
+<!-- Text input-->
+<div class="control-group">
+  <label class="control-label" for="password">confirm password</label>
+  <div class="controls">
+    <input id="password" name="confirmPassword" type="text" placeholder="password" class="input-xlarge" required="">
+    <p class="help-block">confirmPassword</p>
+  </div>
+</div>
+
+
+
 <!-- Button -->
 <div class="control-group">
   <label class="control-label" for="button"></label>

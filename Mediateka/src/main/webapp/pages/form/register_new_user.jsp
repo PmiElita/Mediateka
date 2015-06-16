@@ -14,16 +14,15 @@
 
 <head>
 
-<jsp:include page="../general/head.jsp" />
+   <jsp:include page="../general/head.jsp" /> 
 
 </head>
 
 <body>
 
-	<jsp:include page="../general/nav.jsp" />
-
+ 	<jsp:include page="../general/nav.jsp" /> 
 	<jsp:include page="register_user_form.jsp" />
-	<jsp:include page="../general/footer.jsp" />
-	<jsp:include page="../general/script.jsp" />
+  	<jsp:include page="../general/footer.jsp" />  
+  	<jsp:include page="../general/script.jsp" />  
 </body>
 </html>
