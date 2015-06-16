@@ -21,12 +21,27 @@ import com.mediateka.util.FormValidator;
 import com.mediateka.util.ObjectFiller;
 import com.mediateka.util.SaltedPasswordGenerator;
 
+/**
+ * 
+ * Used to change user's password
+ */
 @Controller
 public class PasswordChangingController {
 
 	private static Logger logger = Logger
 			.getLogger(PasswordChangingController.class);
 
+	/**
+	 * Show's password changing form
+	 * The form has hidden 'token' field 
+	 * 
+	 * @param request	as in servlet
+	 * @param response	as in servlet
+	 * @throws ServletException
+	 * @throws IOException
+	 * @throws ReflectiveOperationException
+	 * @throws SQLException
+	 */
 	@Request(url = "changePassword", method = "get")
 	public static void showPage(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
@@ -56,6 +71,18 @@ public class PasswordChangingController {
 
 	}
 
+	
+	/**
+	 * Checks user's token. Sets password and deletes token from DB
+	 * 
+	 * @param request	as in servlet
+	 * @param response	as in servlet
+	 * @throws ServletException
+	 * @throws IOException
+	 * @throws ReflectiveOperationException
+	 * @throws SQLException
+	 * @throws NoSuchAlgorithmException
+	 */
 	@Request(url = "changePassword", method = "post")
 	public static void changePassword(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,

@@ -27,6 +27,10 @@ import com.mediateka.util.ObjectFiller;
 import com.mediateka.util.EmailSender;
 import com.mediateka.util.SecurityStringGenerator;
 
+/**
+ * 
+ * Used to register the user
+ */
 @Controller
 public class RegisterUserController {
 
@@ -34,6 +38,13 @@ public class RegisterUserController {
 			.getLogger(RegisterUserController.class);
 
 
+	/**
+	 * Show user registration form
+	 * @param request	as in servlet
+	 * @param response	as in servlet
+	 * @throws ServletException
+	 * @throws IOException
+	 */
 	@Request(url = "registerNewUser", method = "get")
 	public static void showUserRegistrationForm(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
@@ -42,6 +53,22 @@ public class RegisterUserController {
 				.forward(request, response);
 	}
 
+	
+	/**
+	 * Takes user registration form, validates, creates new user
+	 * 
+	 * @param request	as in servlet
+	 * @param response	as in servlet
+	 * @throws ServletException
+	 * @throws IOException
+	 * @throws SecurityException
+	 * @throws IllegalArgumentException
+	 * @throws SQLException
+	 * @throws ReflectiveOperationException
+	 * @throws AddressException
+	 * @throws MessagingException
+	 * @throws ParseException
+	 */
 	@Request(url = "registerNewUser", method = "post")
 	public static void registerNewUser(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,

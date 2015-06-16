@@ -20,11 +20,31 @@ import com.mediateka.util.FormValidator;
 import com.mediateka.util.ObjectFiller;
 import com.mediateka.util.SaltedPasswordGenerator;
 
+
+/**
+ * 
+ * LogIn controller is used to log in and log out
+ * 
+ */
 @Controller
 public class LogInController {
 
 	private static Logger logger = Logger.getLogger(LogInController.class);
 
+	
+	/**
+	 * 
+	 * Takes login form, validates login data and sets session
+	 * 
+	 * @param request	as in servlet
+	 * @param response	as in servlet
+	 * @throws SecurityException
+	 * @throws IllegalArgumentException
+	 * @throws ReflectiveOperationException
+	 * @throws SQLException
+	 * @throws NoSuchAlgorithmException
+	 * @throws IOException
+	 */
 	@Request(url = "login", method = "post")
 	public static void logIn(HttpServletRequest request,
 			HttpServletResponse response) throws SecurityException,
@@ -60,6 +80,12 @@ public class LogInController {
 
 	}
 
+	/**
+	 * Invalidates session
+	 * @param request	as in servlet
+	 * @param response	as in servlet
+	 * @throws IOException
+	 */
 	@Request(url = "logout", method = "get")
 	public static void logOut(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
