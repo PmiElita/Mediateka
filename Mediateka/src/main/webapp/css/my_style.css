@@ -55,19 +55,73 @@ section {
 	width: 100%;
 }
 
-.my-admin-card{
-	width:12em;
-	height:12em;
+.my-admin-card {
+	width: 12em;
+	height: 12em;
 }
 
-.section white .container #infoText{
-	height:20em;
-}
-.my-card:hover{
-	background-color:#e8eaf6;
+.section white .container #infoText {
+	height: 20em;
 }
 
-.my-card img{
-	margin-top:-1em;
-	margin-left:1em;
+.my-card:hover {
+	background-color: #e8eaf6;
+}
+
+.my-card img {
+	margin-top: -1em;
+	margin-left: 1em;
+}
+
+.my-badge {
+	color: #03a9f4;
+	margin-top: 1em;
+	font-size: 2em;
+}
+
+.club-badge{
+	color: #03a9f4;
+	margin-top: 1.5em;
+	font-size: 2em;
+}
+
+.profile-tooltipped span {
+	background-color: rgba(255, 255, 255, 0.9);
+	border-radius: 15px 15px 15px 0px;
+	box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5);
+	color: #000;
+	margin-left: -200px;
+	margin-top: 60px;
+	opacity: 0;
+	padding: 10px 10px 10px 40px;
+	position: absolute;
+	text-decoration: none;
+	visibility: hidden;
+	width: 400px;
+	min-height:16em;
+	z-index: 100;
+}
+
+.profile-tooltipped:hover span {
+	opacity: 1;
+	visibility: visible;
+}
+
+.profile-tooltipped span img {
+	border: 0 none;
+	float: left;
+	opacity: 0;
+	position: absolute;
+	visibility: hidden;
+	z-index: -1;
+}
+
+.profile-tooltipped:hover span img {
+	opacity: 1;
+	visibility: visible;
+}
+
+.profile-tooltipped span p {
+	margin-left: 6em;
+	margin-bottom: -3em;
 }
