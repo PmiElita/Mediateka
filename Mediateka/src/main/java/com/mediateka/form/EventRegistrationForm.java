@@ -1,12 +1,27 @@
 package com.mediateka.form;
 
+import com.mediateka.annotation.DateField;
+import com.mediateka.annotation.EnumField;
+import com.mediateka.annotation.Validation;
+import com.mediateka.model.enums.EventType;
+import com.mediateka.util.RegExps;
+
 public class EventRegistrationForm {
 
-	String type;
-	String name;
-	String date_from;
-	String date_till;
-	String description;
+	@EnumField(enumClass=EventType.class)
+	private String type;
+	
+	@Validation(regexp=RegExps.ONLY_CHARS, length = 250)
+	private String name;
+	
+	@DateField(format = "yyyy-MM-dd")
+	private String dateFrom;
+	
+	@DateField(format= "yyyy-MM-dd")
+	private String dateTill;
+	
+	@Validation(regexp=RegExps.ANY_CHARACTERS, length = 250)
+	private String description;
 
 	public String getType() {
 		return type;
@@ -24,20 +39,20 @@ public class EventRegistrationForm {
 		this.name = name;
 	}
 
-	public String getDate_from() {
-		return date_from;
+	public String getDateFrom() {
+		return dateFrom;
 	}
 
-	public void setDate_from(String date_from) {
-		this.date_from = date_from;
+	public void setDateFrom(String dateFrom) {
+		this.dateFrom = dateFrom;
 	}
 
-	public String getDate_till() {
-		return date_till;
+	public String getDateTill() {
+		return dateTill;
 	}
 
-	public void setDate_till(String date_till) {
-		this.date_till = date_till;
+	public void setDateTill(String dateTill) {
+		this.dateTill = dateTill;
 	}
 
 	public String getDescription() {
@@ -51,7 +66,7 @@ public class EventRegistrationForm {
 	@Override
 	public String toString() {
 		return "ClubRegistrationForm [type=" + type + ", name=" + name
-				+ ", dateFrom=" + date_from + ", dateTill=" + date_till
+				+ ", dateFrom=" + dateFrom + ", dateTill=" + dateTill
 				+ ", description=" + description + "]";
 	}
 
