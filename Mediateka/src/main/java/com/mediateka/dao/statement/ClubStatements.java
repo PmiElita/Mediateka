@@ -8,6 +8,11 @@ public class ClubStatements {
 	public static final String[] INSERT_CLUB_ORDER = { "name", "description",
 			"ava_id", "state" };
 
+	public static final String CALL_INSERT_CLUB = "CALL InsertClub(?,?,?,?)";
+
+	public static final String[] CALL_INSERT_CLUB_ORDER = { "name",
+			"description", "ava_id", "state" };
+
 	public static final String UPDATE_CLUB = "UPDATE club " + "SET "
 			+ "name = ? " + "description = ? " + "ava_id = ? " + "state = ? "
 			+ "WHERE " + "id = ? ";

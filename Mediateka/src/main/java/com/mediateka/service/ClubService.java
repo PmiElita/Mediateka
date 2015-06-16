@@ -9,19 +9,23 @@ import com.mediateka.model.enums.State;
 
 public class ClubService {
 
-	public static void saveClub(Club book) throws SQLException,
+	public static void saveClub(Club club) throws SQLException,
 			ReflectiveOperationException {
-		ClubDAO.saveClub(book);
+		ClubDAO.saveClub(club);
+	}
+	
+	public static Club callSaveClub(Club club) throws SQLException, ReflectiveOperationException{
+		return ClubDAO.callSaveClub(club);
 	}
 
-	public static void updateClub(Club book) throws SQLException,
+	public static void updateClub(Club club) throws SQLException,
 			ReflectiveOperationException {
-		ClubDAO.updateClub(book);
+		ClubDAO.updateClub(club);
 	}
 
-	public static Club getClubById(Integer bookId)
+	public static Club getClubById(Integer clubId)
 			throws ReflectiveOperationException, SQLException {
-		return ClubDAO.getClubById(bookId);
+		return ClubDAO.getClubById(clubId);
 	}
 
 	public static List<Club> getClubByNameRegex(String name)

@@ -1,5 +1,7 @@
 package com.mediateka.dao;
 
+
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,13 +10,14 @@ import java.util.List;
 
 import com.mediateka.dao.statement.ClubStatements;
 import com.mediateka.model.Club;
+import com.mediateka.model.Media;
 import com.mediateka.model.enums.State;
 import com.mediateka.util.ConnectionManager;
 import com.mediateka.util.Transformer;
 
 public class ClubDAO {
 
-	public static void saveClub(Club Club) throws SQLException,
+	public static void saveClub(Club club) throws SQLException,
 			ReflectiveOperationException {
 
 		try (Connection connection = ConnectionManager.getConnection()) {
@@ -22,15 +25,29 @@ public class ClubDAO {
 			PreparedStatement statement = connection
 					.prepareStatement(ClubStatements.INSERT_CLUB);
 
-			Transformer.valueIntoPreparedStatement(statement, Club,
+			Transformer.valueIntoPreparedStatement(statement, club,
 					ClubStatements.INSERT_CLUB_ORDER);
 
 			statement.executeUpdate();
 
 		}
 	}
+	
+	public static Club callSaveClub(Club club)throws SQLException, ReflectiveOperationException {
+		try (Connection connection = ConnectionManager.getConnection()) {
+			CallableStatement statement = connection.prepareCall(ClubStatements.CALL_INSERT_CLUB);
+			
+			Transformer.valueIntoPreparedStatement(statement, club,
+					ClubStatements.CALL_INSERT_CLUB_ORDER);	
+			
+			ResultSet resultSet = statement.executeQuery();
+			
+			return Transformer.transformResultSetIntoObject(resultSet,
+					Club.class);
+		}
+	}
 
-	public static void updateClub(Club Club) throws SQLException,
+	public static void updateClub(Club club) throws SQLException,
 			ReflectiveOperationException {
 
 		try (Connection connection = ConnectionManager.getConnection()) {
@@ -38,7 +55,7 @@ public class ClubDAO {
 			PreparedStatement statement = connection
 					.prepareStatement(ClubStatements.UPDATE_CLUB);
 
-			Transformer.valueIntoPreparedStatement(statement, Club,
+			Transformer.valueIntoPreparedStatement(statement, club,
 					ClubStatements.UPDATE_CLUB_ORDER);
 
 			statement.executeUpdate();
