@@ -4,11 +4,11 @@
 <div id="modal2" class="modal">
 	<div class="modal-content">
 
-		<form>
+		<form action="post_register">
 			<h4 class="titler">Register</h4>
 
 			<button class="btn waves-effect blue titler" type="submit"
-				name="action">
+				name="register">
 				Register <i class="mdi-content-send right"></i>
 			</button>
 

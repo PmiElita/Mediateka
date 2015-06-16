@@ -7,7 +7,7 @@
 			<h4 class="titler">Login</h4>
 
 			<button class="btn waves-effect blue titler" type="submit"
-				name="action" >
+				name="login" >
 				Login <i class="mdi-content-send right"></i>
 			</button>
 			<div class="row">
