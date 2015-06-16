@@ -1,8 +1,4 @@
 package com.mediateka.filter;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.Set;
@@ -18,16 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.reflections.Reflections;
 
-import com.google.common.io.CharStreams;
 import com.mediateka.annotation.Controller;
 import com.mediateka.annotation.Request;
-
-
-
-
-
-
-
 
 
 import org.apache.log4j.*;
