@@ -22,13 +22,13 @@ public class FileLoader {
 
 	private String defaultFileName;
 	private String filePath;
-	private String reletivePath;
 	private HashMap<String, String> parameterMap = new HashMap<String, String>();
 
-
-	public boolean loadFile(HttpServletRequest request, String folderName,
-			String fileName) throws ServletException {
+	public boolean loadFile(HttpServletRequest request, String folderName)
+			throws ServletException {
 		boolean isUploaded = false;
+
+		String fileName = SecurityStringGenerator.generateString(16);
 
 		boolean isMultipart = ServletFileUpload.isMultipartContent(request);
 
@@ -49,8 +49,8 @@ public class FileLoader {
 		factory.setRepository(new File(System.getProperty("java.io.tmpdir")));
 
 		// constructs the folder where uploaded file will be stored
-		String uploadFolder = request.getServletContext().getRealPath("") + "media\\"
-				+ folderName;
+		String uploadFolder = request.getServletContext().getRealPath("")
+				+ "media\\" + folderName;
 
 		File fileDir = new File(uploadFolder);
 		if (!fileDir.exists()) {
@@ -70,20 +70,19 @@ public class FileLoader {
 			while (iter.hasNext()) {
 				FileItem item = (FileItem) iter.next();
 
-				if (!item.isFormField()) {					
+				if (!item.isFormField()) {
 					defaultFileName = new File(item.getName()).getName();
 					String extention = defaultFileName
 							.substring(defaultFileName.indexOf('.'));
 					filePath = uploadFolder + File.separator + fileName
 							+ extention;
-					File uploadedFile = new File(filePath);					
+					File uploadedFile = new File(filePath);
 					item.write(uploadedFile);
 					isUploaded = true;
 				} else {
-					
 
-					parameterMap
-							.put(item.getFieldName(), item.getString());
+					parameterMap.put(item.getFieldName(),
+							item.getString("UTF-8"));
 				}
 			}
 
@@ -97,14 +96,20 @@ public class FileLoader {
 	}
 
 	public HashMap<String, String> getParameterMap() {
+		if (parameterMap == null) {
+			throw new WrongInputException("Wrong paramet map. ");
+		}
 		return parameterMap;
 	}
 
 	public void setParameterMap(HashMap<String, String> parameterMap) {
 		this.parameterMap = parameterMap;
 	}
-	
+
 	public String getDefaultFileName() {
+		if (defaultFileName == null) {
+			throw new WrongInputException("Wrong file name. ");
+		}
 		return defaultFileName;
 	}
 
@@ -113,16 +118,19 @@ public class FileLoader {
 	}
 
 	public String getFilePath() {
+		if (filePath == null) {
+			throw new WrongInputException("Wrong file type. ");
+		}
 		return filePath;
 	}
 
 	public void setFilePath(String filePath) {
 		this.filePath = filePath;
 	}
-	
-	public String getRelativePath(){
-		if(filePath == null){
-			throw new WrongInputException("wrong file type");
+
+	public String getRelativePath() {
+		if (filePath == null) {
+			throw new WrongInputException("Wrong file type. ");
 		}
 		return filePath.substring(filePath.indexOf("media"));
 	}

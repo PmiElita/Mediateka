@@ -25,7 +25,7 @@ import static com.mediateka.service.EventService.saveEvent;
 public class EventController {
 
 	@Request(url = "CreateEvent", method = "get")
-	public static void EventGet(HttpServletRequest request,
+	public static void EventCreateGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 
 		request.getRequestDispatcher("pages/fedunets12.06/create_event.jsp")
@@ -34,7 +34,7 @@ public class EventController {
 	}
 
 	@Request(url = "CreateEvent", method = "post")
-	public static void EventPost(HttpServletRequest request,
+	public static void EventCreatePost(HttpServletRequest request,
 			HttpServletResponse response) throws ParseException, SQLException,
 			ReflectiveOperationException, ServletException, IOException {
 
@@ -46,14 +46,8 @@ public class EventController {
 		EventRegistrationForm form = new EventRegistrationForm();
 		ObjectFiller.fill(form, request);
 
-		if (form.getType().equals("") || form.getDate_from().equals("")
-				|| form.getDate_till().equals("")) {
-			fail = true;
-			message.append("Some fields are missing. ");
-		}
-
 		// event name valid
-		if (form.getName().equals("")) {
+		if (form.getName() == null || form.getName().equals("")) {
 			fail = true;
 			message.append("Event name is empty. ");
 		} else if (form.getName().length() > 45) {
@@ -62,7 +56,7 @@ public class EventController {
 		}
 
 		// event description valid
-		if (form.getDescription().equals("")) {
+		if (form.getDescription() == null || form.getDescription().equals("")) {
 			fail = true;
 			message.append("Event description is empty. ");
 		} else if (form.getDescription().length() > 255) {
@@ -74,30 +68,38 @@ public class EventController {
 		try {
 			if (form.getType() != null)
 				EventType.valueOf(form.getType().toUpperCase());
+			else {
+				fail = true;
+				message.append("Event type is missing. ");
+			}
 		} catch (IllegalArgumentException e) {
 			fail = true;
 			message.append("Wrong event type. ");
 		}
 
 		// event date valid
-		if (form.getDate_from().equals("") || form.getDate_till().equals("")) {
+		if (form.getDate_from() == null || form.getDate_till() == null
+				|| form.getDate_from().equals("")
+				|| form.getDate_till().equals("")) {
 			fail = true;
 			message.append("Wrong date format. ");
-		}
-		try {
-			Timestamp t1 = DateConverter.convertIntoTimestamp(form
-					.getDate_from());
-			Timestamp t2 = DateConverter.convertIntoTimestamp(form
-					.getDate_till());
-			if (t1.getTime() > t2.getTime()) {
-				message.append("Wrong date order. ");
+		} else {
+			try {
+				Timestamp t1 = DateConverter.convertIntoTimestamp(form
+						.getDate_from());
+				Timestamp t2 = DateConverter.convertIntoTimestamp(form
+						.getDate_till());
+				if (t1.getTime() > t2.getTime()) {
+					message.append("Wrong date order. ");
+					fail = true;
+				}
+			} catch (ParseException e) {
 				fail = true;
+				message.append("Wrong date format. ");
 			}
-		} catch (ParseException e) {
-			fail = true;
-			message.append("Wrong date format. ");
 		}
 
+		// logic
 		if (!fail) {
 			Event event = new Event();
 			event.setName(form.getName());
