@@ -1,18 +1,45 @@
 package com.mediateka.form;
 
+import com.mediateka.annotation.DateField;
+import com.mediateka.annotation.Validation;
+import com.mediateka.util.RegExps;
+
 public class UserRegistrationForm {
+	
+	@Validation(regexp=RegExps.ONLY_DIGITS, length=8)
 	private String formId;
+	
+	@Validation(regexp=RegExps.ONLY_CHARS, length=45)
 	private String firstName;
+	
+	@Validation (regexp=RegExps.ONLY_CHARS, length=45)
 	private String lastName;
+	
+	@Validation(regexp=RegExps.ONLY_CHARS, length=45)
 	private String middleName;
+	
+	@DateField(format="dd.MM.yyyy")
 	private String birthDate;
+	
+	@Validation(regexp=RegExps.ONLY_CHARS, length=45)
 	private String nationality;
+	
+	@Validation(regexp=RegExps.ONLY_DIGITS, length=8)
 	private String profession;
+	
+	@Validation(regexp=RegExps.ONLY_CHARS, length=45)
 	private String education;
+	
+	@Validation(regexp=RegExps.ONLY_CHARS, length=200)
 	private String institution;
 
+	@Validation(regexp=RegExps.EMAIL, length=45)
 	private String email;
+	
+	@Validation(regexp=RegExps.ONLY_DIGITS, length=45)
 	private String phone;
+	
+	@Validation(regexp=RegExps.ANY_CHARACTERS, length=200)
 	private String address;
 
 	public String getFormId() {

@@ -12,10 +12,12 @@ import org.apache.log4j.Logger;
 
 import com.mediateka.annotation.Controller;
 import com.mediateka.annotation.Request;
+import com.mediateka.exception.WrongInputException;
 import com.mediateka.form.PasswordChangingForm;
 import com.mediateka.model.User;
 import com.mediateka.model.enums.State;
 import com.mediateka.service.UserService;
+import com.mediateka.util.FormValidator;
 import com.mediateka.util.ObjectFiller;
 import com.mediateka.util.SaltedPasswordGenerator;
 
@@ -66,7 +68,14 @@ public class PasswordChangingController {
 
 		ObjectFiller.fill(form, request);
 
-		// TODO: VALIDATE FORM
+		try {
+			FormValidator.validate(form);
+		} catch (IllegalArgumentException | WrongInputException e) {
+			logger.warn("can't validate password changing form", e);
+			response.sendRedirect("index");
+			return;
+		}
+		
 
 		if (!form.getPassword().equals(form.getConfirmPassword())) {
 			logger.warn("password and confirmPassword fields are not the same");

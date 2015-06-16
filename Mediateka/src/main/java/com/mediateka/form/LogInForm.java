@@ -1,9 +1,17 @@
 package com.mediateka.form;
 
+import com.mediateka.annotation.Validation;
+import com.mediateka.util.RegExps;
+
 public class LogInForm {
 
+	@Validation(regexp=RegExps.EMAIL, length=45)
 	private String email;
+	
+	@Validation(regexp=RegExps.PASSWORD, length=64)
 	private String password;
+	
+	
 	@Override
 	public String toString() {
 		return "LogInForm [email=" + email + ", password=" + password + "]";

@@ -12,9 +12,11 @@ import org.apache.log4j.Logger;
 
 import com.mediateka.annotation.Controller;
 import com.mediateka.annotation.Request;
+import com.mediateka.exception.WrongInputException;
 import com.mediateka.form.LogInForm;
 import com.mediateka.model.User;
 import com.mediateka.service.UserService;
+import com.mediateka.util.FormValidator;
 import com.mediateka.util.ObjectFiller;
 import com.mediateka.util.SaltedPasswordGenerator;
 
@@ -31,6 +33,13 @@ public class LogInController {
 
 		LogInForm form = new LogInForm();
 		ObjectFiller.fill(form, request);
+		try {
+			FormValidator.validate(form);
+		} catch (WrongInputException e) {
+			logger.warn("can't validate login form", e);
+			response.sendRedirect("index");
+			return;
+		}
 
 		User user = UserService.getUserByEmail(form.getEmail());
 
