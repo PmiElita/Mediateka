@@ -129,7 +129,7 @@ public class MainFilter implements Filter {
 	 */
 	public void init(FilterConfig fConfig) throws ServletException {
 
-		String pathToLog4jConfigurator = fConfig.getServletContext().getRealPath("/log4jConfiguration.xml");
+		String pathToLog4jConfigurator = fConfig.getServletContext().getRealPath("/configurations/log4jConfiguration.xml");
 		System.out.println("path to file: " + pathToLog4jConfigurator );
 		DOMConfigurator.configure(pathToLog4jConfigurator );
 		

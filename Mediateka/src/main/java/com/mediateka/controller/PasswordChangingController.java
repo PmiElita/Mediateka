@@ -8,47 +8,46 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
+
 import com.mediateka.annotation.Controller;
 import com.mediateka.annotation.Request;
+import com.mediateka.form.PasswordChangingForm;
 import com.mediateka.model.User;
 import com.mediateka.model.enums.State;
 import com.mediateka.service.UserService;
-import com.mediateka.util.RegExps;
+import com.mediateka.util.ObjectFiller;
 import com.mediateka.util.SaltedPasswordGenerator;
 
 @Controller
 public class PasswordChangingController {
 
+	private static Logger logger = Logger
+			.getLogger(PasswordChangingController.class);
 
-	
 	@Request(url = "changePassword", method = "get")
 	public static void showPage(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			ReflectiveOperationException, SQLException {
 
-		System.out.println("HERE");
-
 		String token = request.getParameter("token");
 		if (token == null) {
+			logger.warn("trying to get password changing form without a token");
 			response.sendRedirect("index");
 			return;
 		}
 		if (token.length() != 64) {
+			logger.warn("wrong token length");
 			response.sendRedirect("index");
 			return;
 		}
 
-		System.out.println("token = " + token);
 		User user = UserService.getUserByToken(token);
 		if (user == null) {
-			response.sendRedirect("index");
+			logger.warn("no user with suck token");
 			return;
 		}
 
-		if (!token.equals(user.getPasswordChangingToken())) {
-			response.sendRedirect("index");
-			return;
-		}
 		request.getRequestDispatcher("pages/form/passwordChangingForm.jsp")
 				.forward(request, response);
 		return;
@@ -62,58 +61,28 @@ public class PasswordChangingController {
 			NoSuchAlgorithmException {
 
 		User user;
-		String password = request.getParameter("password");
-		String confirmPassword = request.getParameter("confirmPassword");
-		
-		if (password == null) {
-			System.out.println("err1");
-			response.sendRedirect("index");
-			return;
-		}
-		
-		if (password.length() > 40){
-			System.out.println("err2");
+
+		PasswordChangingForm form = new PasswordChangingForm();
+
+		ObjectFiller.fill(form, request);
+
+		// TODO: VALIDATE FORM
+
+		if (!form.getPassword().equals(form.getConfirmPassword())) {
+			logger.warn("password and confirmPassword fields are not the same");
 			response.sendRedirect("index");
 			return;
 		}
 
-		if (!password.equals(confirmPassword)){
-			System.out.println("err3");
-			response.sendRedirect("index");
-			return;			
-		}
-		
-//		if (!RegExps.passwordPattern.matcher(password).matches()) {
-//			System.out.println("err4");
-//			response.sendRedirect("index");
-//			return;						
-//		}
-
-		
-		
-		String token = request.getParameter("token");
-		if (token == null) {
-			response.sendRedirect("index");
-			return;
-		}
-
-		if (token.length() != 64){
-			response.sendRedirect("index");
-			return;
-		}
 		user = UserService.getUserByToken(request.getParameter("token"));
 		if (user == null) {
+			logger.warn("no user is attached to given token");
 			response.sendRedirect("index");
 			return;
 		}
 
-		if (!token.equals(user.getPasswordChangingToken())) {
-			response.sendRedirect("index");
-			return;
-		}
-
-		String saltedPass = SaltedPasswordGenerator.generate(password,
-				user.getSalt());
+		String saltedPass = SaltedPasswordGenerator.generate(
+				form.getPassword(), user.getSalt());
 
 		user.setPassword(saltedPass);
 		user.setPasswordChangingToken(null);

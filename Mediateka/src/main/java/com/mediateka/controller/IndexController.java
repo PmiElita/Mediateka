@@ -9,8 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.mediateka.annotation.Controller;
 import com.mediateka.annotation.Request;
-import com.mediateka.model.User;
-import com.mediateka.util.ObjectFiller;
 
 @Controller
 public class IndexController {
