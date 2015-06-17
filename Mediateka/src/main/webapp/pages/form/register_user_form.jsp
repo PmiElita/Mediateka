@@ -7,7 +7,7 @@
 		<div id="creation_form">
 
 			<form action="registerNewUser" method="post">
-				<h3 class="titler">Register new user33333</h3>
+				<h3 class="titler">Register new user</h3>
 				<button class="btn waves-effect blue titler" type="submit"
 					name="action">
 					Register <i class="mdi-content-send right"></i>
