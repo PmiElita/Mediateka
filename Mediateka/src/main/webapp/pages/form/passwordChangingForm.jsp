@@ -17,13 +17,7 @@
 <legend>Form Name</legend>
 
 <!-- Text input-->
-<div class="control-group">
-  <label class="control-label" for="token">token</label>
-  <div class="controls">
-    <input id="token" name="token" type="text" placeholder="token" class="input-xlarge" required="">
-    <p class="help-block">token</p>
-  </div>
-</div>
+<input type="hidden" name="token" id="token" value="${token}"/>
 
 <!-- Text input-->
 <div class="control-group">
