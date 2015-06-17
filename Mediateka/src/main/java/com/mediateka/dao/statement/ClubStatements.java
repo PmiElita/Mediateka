@@ -14,7 +14,7 @@ public class ClubStatements {
 			"description", "ava_id", "state" };
 
 	public static final String UPDATE_CLUB = "UPDATE club " + "SET "
-			+ "name = ? " + "description = ? " + "ava_id = ? " + "state = ? "
+			+ "name = ?, " + "description = ?, " + "ava_id = ?, " + "state = ? "
 			+ "WHERE " + "id = ? ";
 	public static final String[] UPDATE_CLUB_ORDER = { "name", "description",
 			"ava_id", "state", "id" };
