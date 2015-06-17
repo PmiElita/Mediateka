@@ -11,16 +11,21 @@
 
 		<ul class="right hide-on-med-and-down">
 
-			<li><a style="font-size: 1.5em" id="top-user-name">User name</a></li>
+			<li><a style="font-size: 1.5em" id="top-user-name">${userName}</a></li>
 
-			<li class="profile-tooltipped"><a title="Edit profile" href="#"
-				class="waves-effect"> <i class="large mdi-action-face-unlock"></i>
+			<c:if test="${userRole ne null}">
+				<li class="profile-tooltipped"><a title="Edit profile" href="#"
+					class="waves-effect"> <i class="large mdi-action-face-unlock"></i>
 
-			</a><jsp:include page="../general/profile_tooltip.jsp" /></li>
+				</a><jsp:include page="../general/profile_tooltip.jsp" /></li>
 
-			<li><a title="Cabinet" href="cabinet" class="waves-effect">
-					<i class="large mdi-maps-local-library"></i>
-			</a></li>
+				<li><a title="Cabinet" href="cabinet" class="waves-effect">
+						<i class="large mdi-maps-local-library"></i>
+				</a></li>
+
+				<li><a title="Logout" href="logout" class="waves-effect"><i
+						class="large mdi-navigation-cancel"></i></a></li>
+			</c:if>
 
 
 			<c:if test="${userRole eq null}">
@@ -29,12 +34,11 @@
 						class="large mdi-action-assignment-ind"></i></a></li>
 
 				<li><a title="Login" href="" data-target="modal1"
-					class="modal-trigger waves-effect"> <i class="large mdi-action-input"></i></a></li>
+					class="modal-trigger waves-effect"> <i
+						class="large mdi-action-input"></i></a></li>
 			</c:if>
 
-			<c:if test="${userRole ne null}">
-				<li><a title="Logout" href="logout" class="waves-effect"><i class="large mdi-navigation-cancel"></i></a></li>
-			</c:if>
+
 
 			<li><a title="Change language" class="dropdown-button" href="#!"
 				data-activates="dropdown1">Language<i

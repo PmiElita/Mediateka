@@ -4,7 +4,7 @@
 <div id="modal2" class="modal">
 	<div class="modal-content">
 
-		<form action="post_register">
+		<form action="registerNewUser" method="post">
 			<h4 class="titler">Register</h4>
 
 			<div class="row">
