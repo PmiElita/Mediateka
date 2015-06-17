@@ -12,7 +12,7 @@
 					<div class="row">
 						<div class="input-field col s6">
 							<input id="first_name" name="first_name" type="text" class="validate"> <label
-								for="first_name">First Name*</label>
+								for="first_name">First Name</label>
 						</div>
 						<div class="input-field col s6">
 							<input id="last_name" name="last_name" type="text" class="validate"> <label
@@ -27,7 +27,7 @@
 
 						<div class="input-field col s6">
 							<input id="password_reg" name="password_reg" class="validate" type="password">
-							<label for="password_reg">Password*</label>
+							<label for="password_reg">Password</label>
 						</div>
 					</div>
 					<div class="row" style="margin-left:7em">
