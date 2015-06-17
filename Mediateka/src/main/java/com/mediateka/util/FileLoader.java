@@ -25,13 +25,10 @@ public class FileLoader {
 	private List<String> filePath = new ArrayList<String>();
 	private HashMap<String, String> parameterMap = new HashMap<String, String>();
 
-	
-
-	public boolean loadFile(HttpServletRequest request, String folderName
-			) throws ServletException {
+	public boolean loadFile(HttpServletRequest request, String folderName)
+			throws ServletException {
 		boolean isUploaded = false;
-			;
-		
+		;
 
 		boolean isMultipart = ServletFileUpload.isMultipartContent(request);
 
@@ -52,11 +49,12 @@ public class FileLoader {
 		factory.setRepository(new File(System.getProperty("java.io.tmpdir")));
 
 		// constructs the folder where uploaded file will be stored
-		String uploadFolder = request.getServletContext().getRealPath("") + "media\\"
-				+ folderName;
-		
-		File mediaDir = new File(request.getServletContext().getRealPath("") + "media");
-		if(!mediaDir.exists()){
+		String uploadFolder = request.getServletContext().getRealPath("")
+				+ "media\\" + folderName;
+
+		File mediaDir = new File(request.getServletContext().getRealPath("")
+				+ "media");
+		if (!mediaDir.exists()) {
 			mediaDir.mkdir();
 		}
 
@@ -79,22 +77,26 @@ public class FileLoader {
 			while (iter.hasNext()) {
 				FileItem item = (FileItem) iter.next();
 
-				if (!item.isFormField()) {		
-					String fileName = SecurityStringGenerator.generateString(16);
+				if (!item.isFormField()) {
+
+					String fileName = SecurityStringGenerator
+							.generateString(16);
 					defaultFileName.add(new File(item.getName()).getName());
-					String extention = defaultFileName.get(i)
-							.substring(defaultFileName.get(i).indexOf('.'));
+					String extention = "";
+					if (defaultFileName.get(i).indexOf('.') != -1) {
+						extention = defaultFileName.get(i).substring(
+								defaultFileName.get(i).indexOf('.'));
+					}
 					filePath.add(uploadFolder + File.separator + fileName
 							+ extention);
-					File uploadedFile = new File(filePath.get(i));					
+					File uploadedFile = new File(filePath.get(i));
 					item.write(uploadedFile);
-					isUploaded = true;			
-					i ++;
+					isUploaded = true;
+					i++;
 				} else {
-					
 
-					parameterMap
-							.put(item.getFieldName(), item.getString("UTF-8"));
+					parameterMap.put(item.getFieldName(),
+							item.getString("UTF-8"));
 				}
 			}
 
@@ -114,9 +116,9 @@ public class FileLoader {
 	public void setParameterMap(HashMap<String, String> parameterMap) {
 		this.parameterMap = parameterMap;
 	}
-	
+
 	public String getDefaultFileName() throws WrongInputException {
-		if(defaultFileName.size() == 0){
+		if (defaultFileName.size() == 0) {
 			throw new WrongInputException("wrong file type");
 		}
 		return defaultFileName.get(0);
@@ -125,10 +127,9 @@ public class FileLoader {
 	public void setDefaultFileName(String defaultFileName) {
 		this.defaultFileName.add(defaultFileName);
 	}
-	
-	
+
 	public String getFilePath() throws WrongInputException {
-		if(filePath.size() == 0){
+		if (filePath.size() == 0) {
 			throw new WrongInputException("wrong file type");
 		}
 		return filePath.get(0);
@@ -137,16 +138,16 @@ public class FileLoader {
 	public void setFilePath(String filePath) {
 		this.filePath.add(filePath);
 	}
-	
-	public String getRelativePath() throws WrongInputException{
-		if(filePath.size() == 0){
+
+	public String getRelativePath() throws WrongInputException {
+		if (filePath.size() == 0) {
 			throw new WrongInputException("wrong file type");
 		}
 		return filePath.get(0).substring(filePath.get(0).indexOf("media\\"));
 	}
-	
-	public List<String> getAllRelativePathes() throws WrongInputException{
-		if(filePath.size() == 0){
+
+	public List<String> getAllRelativePathes() throws WrongInputException {
+		if (filePath.size() == 0) {
 			throw new WrongInputException("wrong file type");
 		}
 		List<String> relativePathes = new ArrayList<String>();
@@ -155,20 +156,19 @@ public class FileLoader {
 		}
 		return relativePathes;
 	}
-	
+
 	public List<String> getAllFilePathes() throws WrongInputException {
-		if(filePath.size() == 0){
+		if (filePath.size() == 0) {
 			throw new WrongInputException("wrong file type");
 		}
 		return filePath;
 	}
-	
+
 	public List<String> getAllFileDefaultNames() throws WrongInputException {
-		if(defaultFileName.size() == 0){
+		if (defaultFileName.size() == 0) {
 			throw new WrongInputException("wrong file type");
 		}
 		return defaultFileName;
 	}
-
 
 }
