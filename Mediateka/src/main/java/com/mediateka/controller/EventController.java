@@ -1,8 +1,5 @@
 package com.mediateka.controller;
 
-import com.mediateka.service.ClubEventMemberService;
-import com.mediateka.service.EventService;
-
 import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -27,6 +24,9 @@ import com.mediateka.model.enums.State;
 import com.mediateka.util.DateConverter;
 import com.mediateka.util.FormValidator;
 import com.mediateka.util.ObjectFiller;
+
+import static com.mediateka.service.ClubEventMemberService.saveClubEventMember;
+import static com.mediateka.service.EventService.callSaveEvent;
 
 @Controller
 public class EventController {
@@ -61,9 +61,9 @@ public class EventController {
 			Timestamp dateTill = DateConverter.convertIntoTimestamp(
 					form.getDateTill(), "yyyy-MM-dd");
 			if (dateTill.getTime() < dateFrom.getTime()) {
-                   throw new WrongInputException("Date till must be equals or greater than date from");
+				throw new WrongInputException(
+						"Date till must be equals or greater than date from");
 			}
-
 
 			Event event = new Event();
 			event.setName(form.getName());
@@ -77,15 +77,15 @@ public class EventController {
 			if (session.getAttribute("club_id") != null)
 				event.setClubId(Integer.parseInt(session
 						.getAttribute("club_id").toString()));
-			event =EventService.callSaveEvent(event);
-			
+			event.setAvaId(1);
+			event = callSaveEvent(event);
+
 			ClubEventMember clubEventMember = new ClubEventMember();
 			clubEventMember.setEventId(event.getId());
 			clubEventMember.setState(State.ACTIVE);
 			clubEventMember.setType(ClubEventMemberType.CREATOR);
-			clubEventMember.setUserId((Integer)session.getAttribute("userId"));
-			
-			ClubEventMemberService.saveClubEventMember(clubEventMember);
+			clubEventMember.setUserId((Integer) session.getAttribute("userId"));
+			saveClubEventMember(clubEventMember);
 			String message = "Event created. ";
 
 			request.setAttribute("message", message);
@@ -99,6 +99,5 @@ public class EventController {
 					.forward(request, response);
 			request.removeAttribute("message");
 		}
-
 	}
 }

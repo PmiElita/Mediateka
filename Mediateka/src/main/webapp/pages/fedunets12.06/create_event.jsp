@@ -28,6 +28,6 @@
 		Event description:<textarea type="textarea" name="description" placeholder="event description..." pattern=".{1,255}"></textarea><br>
 
 	</form>	
-			<button  onclick="submitPressed()">Create event</button>
+	<button  onclick="submitPressed()">Create event</button>
 </body>
 </html>
