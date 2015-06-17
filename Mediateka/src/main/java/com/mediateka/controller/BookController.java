@@ -27,8 +27,7 @@ import static com.mediateka.service.BookService.*;
 
 @Controller
 public class BookController {
-	private static Logger logger = Logger
-			.getLogger(BookController.class);
+	private static Logger logger = Logger.getLogger(BookController.class);
 
 	@Request(url = "CreateBook", method = "get")
 	public static void BookCreateGet(HttpServletRequest request,
@@ -147,6 +146,11 @@ public class BookController {
 			saveBook(book);
 			String message = "Book added. ";
 
+			request.setAttribute("book_type", getBookTypeByState(State.ACTIVE));
+			request.setAttribute("book_meaning",
+					getBookMeaningByState(State.ACTIVE));
+			request.setAttribute("book_language",
+					getBookLanguageByState(State.ACTIVE));
 			request.setAttribute("message", message);
 			request.getRequestDispatcher("pages/fedunets12.06/create_book.jsp")
 					.forward(request, response);
@@ -155,11 +159,19 @@ public class BookController {
 		} catch (WrongInputException e) {
 			logger.warn(e);
 
+			request.setAttribute("book_type", getBookTypeByState(State.ACTIVE));
+			request.setAttribute("book_meaning",
+					getBookMeaningByState(State.ACTIVE));
+			request.setAttribute("book_language",
+					getBookLanguageByState(State.ACTIVE));
 			request.setAttribute("message", e.getMessage());
 
 			request.getRequestDispatcher("pages/fedunets12.06/create_book.jsp")
 					.forward(request, response);
 			request.removeAttribute("message");
+			request.removeAttribute("book_type");
+			request.removeAttribute("book_meaning");
+			request.removeAttribute("book_language");
 		}
 
 	}
