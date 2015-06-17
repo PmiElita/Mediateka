@@ -80,6 +80,11 @@ section {
 
 .my-card:hover {
 	background-color: #e8eaf6;
+	min-width:78%;
+}
+
+.my-small-card:hover {
+	min-width:100%;
 }
 
 .my-card img {

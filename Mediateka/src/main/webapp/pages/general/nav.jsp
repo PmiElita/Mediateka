@@ -29,13 +29,11 @@
 						class="large mdi-action-assignment-ind"></i></a></li>
 
 				<li><a title="Login" href="" data-target="modal1"
-					class="modal-trigger waves-effect"> <img
-						src="images/login.png" /></a></li>
+					class="modal-trigger waves-effect"> <i class="large mdi-action-input"></i></a></li>
 			</c:if>
 
 			<c:if test="${userRole ne null}">
-				<li><a title="Logout" href="logout" class="waves-effect"> <img
-						src="images/logout.png" /></a></li>
+				<li><a title="Logout" href="logout" class="waves-effect"><i class="large mdi-navigation-cancel"></i></a></li>
 			</c:if>
 
 			<li><a title="Change language" class="dropdown-button" href="#!"

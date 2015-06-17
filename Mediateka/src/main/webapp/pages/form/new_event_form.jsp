@@ -14,11 +14,11 @@
 				<div class="container">
 
 					<div class="row">
-						<div class="input-field col s4">
+						<div class="input-field col s6">
 							<p>Start date</p>
 							<input id="dateFrom" name="dateFrom" type="date" class="datepicker">
 						</div>
-						<div class="input-field col s4 offset-s4">
+						<div class="input-field col s6">
 							<p>End date</p>
 							<input id="dateTill" name="dateTill" type="date" class="datepicker">
 						</div>
@@ -28,22 +28,18 @@
 					<div class="row">
 						<div class="col s12">
 							<div class="row">
-								<div class="input-field col s4">
+								<div class="input-field col s6">
 									<p>Name</p>
 									<input id="name" name="name" type="text" class="validate">
 								</div>
-								<div class="input-field col s4">
+								<div class="input-field col s6">
 									<p>Type</p>
-									<select id="type" name="type">
+									<select id="type" name="type" class="browser-default" style="margin-top:0.75em">
 										<option value="1">Closed</option>
 										<option value="2">18+</option>
 										<option value="3">Artists</option>
 										<option value="4">Technical</option>
 									</select>
-								</div>
-								<div class="input-field col s4">
-									<p>Club ID</p>
-									<input id="clubId" name="clubId" type="text" class="validate">
 								</div>
 							</div>
 

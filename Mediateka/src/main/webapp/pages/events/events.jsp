@@ -15,7 +15,6 @@
 <head>
 
 <jsp:include page="../general/head.jsp" />
-
 </head>
 
 
@@ -27,15 +26,22 @@
 		LOG.warn("There's a new man in Town!");
 	%>
 
-
 	<jsp:include page="../general/nav.jsp" />
-	
+
 	<div class="parallax-container my-parallax">
 		<div class="parallax">
 			<img src="images/parallax1.jpg">
 		</div>
 
-		<div class="row" style="margin-top:-1em">
+
+			<jsp:include page="../admin/admin_side_nav.jsp" />
+		
+
+		<c:if test="${userRole eq 'user'}">
+			<jsp:include page="../user/user_side_nav.jsp" />
+		</c:if>
+
+		<div class="row" style="margin-top: -1em">
 			<div class="col s12">
 				<ul class="tabs">
 					<li class="tab col s3"><a href="#my_events">My events</a></li>
@@ -49,6 +55,5 @@
 	</div>
 
 	<jsp:include page="../general/footer.jsp" />
-	<jsp:include page="../general/script.jsp" />
 </body>
 </html>

@@ -26,8 +26,16 @@
 	%>
 
 	<jsp:include page="../general/nav.jsp" />
+
+	<c:if test="${userRole eq 'admin'}">
+		<jsp:include page="../admin/admin_side_nav.jsp" />
+	</c:if>
+
+	<c:if test="${userRole eq 'user'}">
+		<jsp:include page="../user/user_side_nav.jsp" />
+	</c:if>
+
 	<jsp:include page="club_central.jsp" />
 	<jsp:include page="../general/footer.jsp" />
-	<jsp:include page="../general/script.jsp" />
 </body>
 </html>

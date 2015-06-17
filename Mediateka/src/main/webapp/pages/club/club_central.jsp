@@ -10,7 +10,6 @@
 <fmt:setBundle basename="menu" />
 <fmt:requestEncoding value="utf-8" />
 
-<jsp:include page="../general/script_2.jsp" />
 
 <div class="section white">
 	<div class="container">
@@ -29,7 +28,7 @@
 		<div class="row" style="margin-left: -7em">
 			<div class="col s3">
 				<a href="" data-target="modal7" class="modal-trigger">
-					<div class="col s12 m8 offset-m2 l6 offset-l3 my-card">
+					<div class="col s12 m8 offset-m2 l6 offset-l3 my-card my-small-card">
 						<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
 							<div style="margin-top: -2em">
 								<h3 style="color: black">Music</h3>
@@ -48,7 +47,7 @@
 
 			<div class="col s3">
 				<a href="club_videos">
-					<div class="col s12 m8 offset-m2 l6 offset-l3 my-card">
+					<div class="col s12 m8 offset-m2 l6 offset-l3 my-card my-small-card">
 						<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
 							<div style="margin-top: -2em">
 								<h3 style="color: black">Video</h3>
@@ -67,7 +66,7 @@
 
 			<div class="col s3">
 				<a href="info">
-					<div class="col s12 m8 offset-m2 l6 offset-l3 my-card">
+					<div class="col s12 m8 offset-m2 l6 offset-l3 my-card my-small-card">
 						<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
 							<div style="margin-top: -2em">
 								<h3 style="color: black">Photo</h3>
@@ -86,7 +85,7 @@
 
 			<div class="col s3">
 				<a href="events">
-					<div class="col s12 m8 offset-m2 l6 offset-l3 my-card">
+					<div class="col s12 m8 offset-m2 l6 offset-l3 my-card my-small-card">
 						<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
 							<div style="margin-top: -2em">
 								<h3 style="color: black">Events</h3>

@@ -15,11 +15,6 @@
 <head>
 
 <jsp:include page="../general/head.jsp" />
-<jsp:include page="../form/register_user_form.jsp" />
-<jsp:include page="../form/new_event_form.jsp" />
-<jsp:include page="../form/message_form.jsp" />
-<jsp:include page="../table/user_table.jsp" />
-<jsp:include page="admin_modal_users.jsp" />
 </head>
 
 <body>
@@ -31,9 +26,8 @@
 	%>
 
 	<jsp:include page="../general/nav.jsp" />
-	<jsp:include page="admin_side_nav.jsp"/>
+	<jsp:include page="admin_side_nav.jsp" />
 	<jsp:include page="admin_central.jsp" />
 	<jsp:include page="../general/footer.jsp" />
-	<jsp:include page="../general/script.jsp" />
 </body>
 </html>

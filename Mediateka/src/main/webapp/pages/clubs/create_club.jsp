@@ -4,9 +4,7 @@
 
 <div id="modal8" class="modal">
 	<div class="modal-content">
-		<form id="createClub" action="createClub" method="post"
-			enctype="multipart/form-data"></form>
-		<div>
+		<form id="createClub" action="createClub" method="post">
 			<div class="input-field col s5">
 				<input name="club_name" id="club_name" type="text" form="createClub" />
 				Club name
@@ -17,13 +15,8 @@
 					rows="5" form="createClub"></textarea>
 				<label class="active" for="club_description">Description</label>
 			</div>
-			<div class="input-field col s5">
-				<input type="file" name="dataFile" id="fileChooser"
-					form="createClub">
-			</div>
-			<input type="submit" id="subbut" name="subbut" value="save"
-				form="createClub">
 
-		</div>
+			<button type="submit" id="subbut" name="subbut" form="createClub">Create</button>
+		</form>
 	</div>
 </div>
