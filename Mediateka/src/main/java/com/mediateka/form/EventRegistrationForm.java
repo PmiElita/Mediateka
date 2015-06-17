@@ -11,7 +11,7 @@ public class EventRegistrationForm {
 	@EnumField(enumClass=EventType.class)
 	private String type;
 	
-	@Validation(regexp=RegExps.ONLY_CHARS, length = 250)
+	@Validation(regexp=RegExps.ANY_CHARACTERS, length = 250)
 	private String name;
 	
 	@DateField(format = "yyyy-MM-dd")

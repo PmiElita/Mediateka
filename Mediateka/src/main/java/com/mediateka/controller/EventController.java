@@ -63,62 +63,7 @@ public class EventController {
 			if (dateTill.getTime() < dateFrom.getTime()) {
                    throw new WrongInputException("Date till must be equals or greater than date from");
 			}
-			//
-			// // event name valid
-			// if (form.getName() == null || form.getName().equals("")) {
-			// fail = true;
-			// message.append("Event name is empty. ");
-			// } else if (form.getName().length() > 45) {
-			// fail = true;
-			// message.append("Event name to long. ");
-			// }
-			//
-			// // event description valid
-			// if (form.getDescription() == null ||
-			// form.getDescription().equals("")) {
-			// fail = true;
-			// message.append("Event description is empty. ");
-			// } else if (form.getDescription().length() > 255) {
-			// fail = true;
-			// message.append("Event description to long. ");
-			// }
-			//
-			// // event type valid
-			// try {
-			// if (form.getType() != null)
-			// EventType.valueOf(form.getType().toUpperCase());
-			// else {
-			// fail = true;
-			// message.append("Event type is missing. ");
-			// }
-			// } catch (IllegalArgumentException e) {
-			// fail = true;
-			// message.append("Wrong event type. ");
-			// }
-			//
-			// // event date valid
-			// if (form.getDateFrom() == null || form.getDateTill() == null
-			// || form.getDateFrom().equals("")
-			// || form.getDateTill().equals("")) {
-			// fail = true;
-			// message.append("Wrong date format. ");
-			// } else {
-			// try {
-			// Timestamp t1 = DateConverter.convertIntoTimestamp(form
-			// .getDateFrom());
-			// Timestamp t2 = DateConverter.convertIntoTimestamp(form
-			// .getDateTill());
-			// if (t1.getTime() > t2.getTime()) {
-			// message.append("Wrong date order. ");
-			// fail = true;
-			// }
-			// } catch (ParseException e) {
-			// fail = true;
-			// message.append("Wrong date format. ");
-			// }
-			// }
 
-			// logic
 
 			Event event = new Event();
 			event.setName(form.getName());
