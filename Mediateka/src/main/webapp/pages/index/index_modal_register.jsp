@@ -18,25 +18,29 @@
 					<div class="row">
 						<div class="col s12">
 							<div class="row">
-								<div class="input-field col s4">
+								<div class="input-field col s3">
 									<p>First name</p>
 									<input id="firstName" name="firstName" type="text"
 										class="validate">
 								</div>
-								<div class="input-field col s4">
+								<div class="input-field col s3">
 									<p>Last name</p>
 									<input id="lastName" name="lastName" type="text"
 										class="validate">
 								</div>
-								<div class="input-field col s4">
+								<div class="input-field col s3">
 									<p>Middle name</p>
 									<input id="middleName" name="middleName" type="text"
 										class="validate">
 								</div>
+								<div class="input-field col s3">
+									<p>Password</p>
+									<input id="password" name="password" type="text" class="validate">
+								</div>
 							</div>
 
 							<div class="row">
-								<div class="input-field col s3" style="margin-top:0.5em">
+								<div class="input-field col s3" style="margin-top: 0.5em">
 									<p>Nationality</p>
 									<input id="nationality" name="nationality" type="text"
 										class="validate">
@@ -44,7 +48,7 @@
 								<div class="input-field col s3">
 									<p>Profession</p>
 									<select id="profession" name="profession"
-										class="browser-default" style="margin-top:0.75em">
+										class="browser-default" style="margin-top: 0.75em">
 										<option value="1">Chemist</option>
 										<option value="2">Linguist</option>
 										<option value="3">Programmer</option>
@@ -55,20 +59,21 @@
 								</div>
 								<div class="input-field col s3">
 									<p>Education</p>
-									<select id="education" name="education" class="browser-default" style="margin-top:0.75em">
+									<select id="education" name="education" class="browser-default"
+										style="margin-top: 0.75em">
 										<option value="1">Primary</option>
 										<option value="2">Lower secondary</option>
 										<option value="3">Upper secondary</option>
 										<option value="4">Bachelor</option>
 										<option value="5">Master</option>
 										<option value="6">Doctoral</option>
-										
+
 									</select>
 								</div>
 								<div class="input-field col s3">
 									<p>Institution</p>
 									<select id="eduInstitution" name="institution"
-										class="browser-default" style="margin-top:0.75em">
+										class="browser-default" style="margin-top: 0.75em">
 										<option value="NULP">NU "LP"</option>
 										<option value="LNU">LNU</option>
 										<option value="AoA">Academy of arts</option>
