@@ -7,7 +7,7 @@
 		<div id="creation_form">
 
 			<form action="registerNewUser" method="post">
-				<h3 class="titler">Register new user</h3>
+				<h3 class="titler">Register new user33333</h3>
 				<button class="btn waves-effect blue titler" type="submit"
 					name="action">
 					Register <i class="mdi-content-send right"></i>
@@ -71,13 +71,13 @@
 								</div>
 								<div class="input-field col s3">
 									<p>Institution</p>
-									<select id="eduInstitution" name="eduInstitution"
+									<select id="eduInstitution" name="institution"
 										class="browser-default" style="margin-top:0.75em">
-										<option value="1">NU "LP"</option>
-										<option value="2">LNU</option>
-										<option value="3">Academy of arts</option>
-										<option value="4">LIET</option>
-										<option value="5">InPhys</option>
+										<option value="NULP">NU "LP"</option>
+										<option value="LNU">LNU</option>
+										<option value="AoA">Academy of arts</option>
+										<option value="LIET">LIET</option>
+										<option value="InPhys">InPhys</option>
 									</select>
 								</div>
 							</div>
@@ -95,7 +95,7 @@
 								</div>
 								<div class="input-field col s3">
 									<p>Address</p>
-									<input id="adress" name="adress" type="text" class="validate">
+									<input id="adress" name="address" type="text" class="validate">
 								</div>
 								<div class="input-field col s3">
 									<p>Phone</p>

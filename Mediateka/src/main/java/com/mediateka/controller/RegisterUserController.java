@@ -38,22 +38,7 @@ public class RegisterUserController {
 			.getLogger(RegisterUserController.class);
 
 
-	/**
-	 * Show user registration form
-	 * @param request	as in servlet
-	 * @param response	as in servlet
-	 * @throws ServletException
-	 * @throws IOException
-	 */
-	@Request(url = "registerNewUser", method = "get")
-	public static void showUserRegistrationForm(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
 
-		request.getRequestDispatcher("pages/form/register_new_user.jsp")
-				.forward(request, response);
-	}
-
-	
 	/**
 	 * Takes user registration form, validates, creates new user
 	 * 
@@ -75,6 +60,7 @@ public class RegisterUserController {
 			SecurityException, IllegalArgumentException, SQLException,
 			ReflectiveOperationException, AddressException, MessagingException, ParseException {
 
+		System.out.println("START");
 		UserRegistrationForm form = new UserRegistrationForm();
 
 		ObjectFiller.fill(form, request);
@@ -82,10 +68,12 @@ public class RegisterUserController {
 			FormValidator.validate(form);
 		} catch (WrongInputException e) {
 			logger.warn("failed to validate registration form", e);
+			logger.warn(form);
 			response.sendRedirect("index");
 			return;
 		}
 
+		System.out.println("HERE");
 
 		User newUser = new User();
 		newUser.setFirstName(form.getFirstName());
@@ -107,6 +95,7 @@ public class RegisterUserController {
 		newUser.setRole(Role.USER);
 		newUser.setJoinDate(new Date(new java.util.Date().getTime()));
 
+		System.out.println("AND HERE");
 		newUser.setState(State.BLOCKED);
 
 		newUser.setFormId(Integer.parseInt(form.getFormId()));
@@ -120,6 +109,7 @@ public class RegisterUserController {
 
 		UserService.saveUser(newUser);
 
+		System.out.println("DDDDD");
 		// send mail
 		String mailBody = " <a href=\"http://localhost:8080/Mediateka/changePassword?token="
 				+ token + "\">click here</a> ";
@@ -127,7 +117,7 @@ public class RegisterUserController {
 		EmailSender.sendMail(newUser.getEmail(), "password changing page",
 				mailBody);
 
-		response.sendRedirect("index");
+		request.getRequestDispatcher("pages/additional/post_register.jsp").forward(request, response);
 	}
 
 }

@@ -1,13 +1,27 @@
 package com.mediateka.form;
 
+import com.mediateka.annotation.Validation;
+import com.mediateka.util.RegExps;
+
 public class BookRegistrationForm {
 
-	String name;
-	String author;
-	String type;
-	String meaning;
-	String language;
-	String media;
+	@Validation(regexp=RegExps.ONLY_CHARS, length=45)
+	private String name;
+	
+	@Validation(regexp=RegExps.ANY_CHARACTERS, length=45)
+	private String author;
+	
+	@Validation(regexp=RegExps.ONLY_DIGITS, length=8)
+	private String type;
+	
+	@Validation(regexp=RegExps.ONLY_DIGITS, length=8)
+	private String meaning;
+
+	@Validation(regexp=RegExps.ONLY_DIGITS, length=8)
+	private String language;
+	
+	@Validation(regexp=RegExps.ONLY_DIGITS, length=8)
+	private String media;
 
 	public String getName() {
 		return name;

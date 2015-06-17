@@ -38,6 +38,9 @@ public class BookController {
 				getBookMeaningByState(State.ACTIVE));
 		request.setAttribute("book_language",
 				getBookLanguageByState(State.ACTIVE));
+		
+		
+		logger.debug((getBookTypeByState(State.ACTIVE) == null));
 		request.getRequestDispatcher("pages/fedunets12.06/create_book.jsp")
 				.forward(request, response);
 		request.removeAttribute("book_type");

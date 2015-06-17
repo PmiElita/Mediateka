@@ -5,44 +5,42 @@ import com.mediateka.util.RegExps;
 
 public class PasswordChangingForm {
 
-	@Validation(regexp=RegExps.ANY_CHARACTERS, length=64)
-	private String token;
-	
-	@Validation(regexp=RegExps.PASSWORD, length=64)
-	private String password;
-	
-	@Validation(regexp=RegExps.PASSWORD, length=64)
-	private String confirmPassword;
+	@Validation(regexp = RegExps.PASSWORD, length = 64)
+	private String oldPassword;
+	@Validation(regexp = RegExps.PASSWORD, length = 64)
+	private String newPassword;
+	@Validation(regexp = RegExps.PASSWORD, length = 64)
+	private String confirmNewPassword;
 
-	
+	public String getOldPassword() {
+		return oldPassword;
+	}
+
+	public void setOldPassword(String oldPassword) {
+		this.oldPassword = oldPassword;
+	}
+
+	public String getNewPassword() {
+		return newPassword;
+	}
+
+	public void setNewPassword(String newPassword) {
+		this.newPassword = newPassword;
+	}
+
+	public String getConfirmNewPassword() {
+		return confirmNewPassword;
+	}
+
+	public void setConfirmNewPassword(String confirmNewPassword) {
+		this.confirmNewPassword = confirmNewPassword;
+	}
+
 	@Override
 	public String toString() {
-		return "PasswordChangingForm [token=" + token + ", password="
-				+ password + ", confirmPassword=" + confirmPassword + "]";
-	}
-
-	public String getToken() {
-		return token;
-	}
-
-	public void setToken(String token) {
-		this.token = token;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public String getConfirmPassword() {
-		return confirmPassword;
-	}
-
-	public void setConfirmPassword(String confirmPassword) {
-		this.confirmPassword = confirmPassword;
+		return "PasswordChangingForm [oldPassword=" + oldPassword
+				+ ", newPassword=" + newPassword + ", confirmNewPassword="
+				+ confirmNewPassword + "]";
 	}
 
 }

@@ -51,17 +51,25 @@ public class LogInController {
 			IllegalArgumentException, ReflectiveOperationException,
 			SQLException, NoSuchAlgorithmException, IOException {
 
+		System.out.println("STARTING LOGIN");
 		LogInForm form = new LogInForm();
 		ObjectFiller.fill(form, request);
 		try {
 			FormValidator.validate(form);
 		} catch (WrongInputException e) {
+			System.out.println("can't validate form");
+			System.out.println(e.toString());
 			logger.warn("can't validate login form", e);
 			response.sendRedirect("index");
 			return;
 		}
 
 		User user = UserService.getUserByEmail(form.getEmail());
+		if (user==null){
+			logger.warn("no user with such email");
+			response.sendRedirect("index");
+			return;
+		}
 
 		String saltedPassword = SaltedPasswordGenerator.generate(
 				form.getPassword(), user.getSalt());
@@ -76,6 +84,7 @@ public class LogInController {
 		mySession.setAttribute("userId", user.getId());
 		mySession.setAttribute("userFirstName", user.getFirstName());
 		mySession.setAttribute("userRole", user.getRole());
+		System.out.println("DONE LOGIN");
 		response.sendRedirect("index");
 
 	}

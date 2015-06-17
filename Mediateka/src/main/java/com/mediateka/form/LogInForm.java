@@ -8,7 +8,7 @@ public class LogInForm {
 	@Validation(regexp=RegExps.EMAIL, length=45)
 	private String email;
 	
-	@Validation(regexp=RegExps.PASSWORD, length=64)
+	@Validation(regexp=RegExps.ANY_CHARACTERS, length=64)
 	private String password;
 	
 	

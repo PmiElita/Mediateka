@@ -27,7 +27,7 @@ public class UserRegistrationForm {
 	@Validation(regexp=RegExps.ONLY_DIGITS, length=8)
 	private String profession;
 	
-	@Validation(regexp=RegExps.ONLY_CHARS, length=45)
+	@Validation(regexp=RegExps.ONLY_DIGITS, length=8)
 	private String education;
 	
 	@Validation(regexp=RegExps.ONLY_CHARS, length=200)

@@ -13,7 +13,7 @@ import org.apache.log4j.Logger;
 import com.mediateka.annotation.Controller;
 import com.mediateka.annotation.Request;
 import com.mediateka.exception.WrongInputException;
-import com.mediateka.form.PasswordChangingForm;
+import com.mediateka.form.PasswordResettingForm;
 import com.mediateka.model.User;
 import com.mediateka.model.enums.State;
 import com.mediateka.service.UserService;
@@ -91,7 +91,7 @@ public class PasswordChangingController {
 
 		User user;
 
-		PasswordChangingForm form = new PasswordChangingForm();
+		PasswordResettingForm form = new PasswordResettingForm();
 
 		ObjectFiller.fill(form, request);
 
