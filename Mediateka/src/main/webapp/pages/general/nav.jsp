@@ -41,7 +41,7 @@
 
 
 			<li><a title="Change language" class="dropdown-button" href="#!"
-				data-activates="dropdown1">Language<i
+				data-activates="dropdown1">Language<i>
 					class="mdi-navigation-arrow-drop-down right"></i></a></li>
 		</ul>
 	</div>

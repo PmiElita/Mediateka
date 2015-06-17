@@ -1,6 +1,7 @@
 package com.mediateka.controller;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -26,6 +27,7 @@ import com.mediateka.service.UserService;
 import com.mediateka.util.FormValidator;
 import com.mediateka.util.ObjectFiller;
 import com.mediateka.util.EmailSender;
+import com.mediateka.util.SaltedPasswordGenerator;
 import com.mediateka.util.SecurityStringGenerator;
 
 /**
@@ -54,12 +56,13 @@ public class RegisterUserController {
 	 * @throws AddressException
 	 * @throws MessagingException
 	 * @throws ParseException
+	 * @throws NoSuchAlgorithmException 
 	 */
 	@Request(url = "anonymousRegisterNewUser", method = "post")
 	public static void registerNewUser(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			SecurityException, IllegalArgumentException, SQLException,
-			ReflectiveOperationException, AddressException, MessagingException, ParseException {
+			ReflectiveOperationException, AddressException, MessagingException, ParseException, NoSuchAlgorithmException {
 
 		AnonymousUserRegistrationForm form = new AnonymousUserRegistrationForm();
 
@@ -77,8 +80,10 @@ public class RegisterUserController {
 			logger.warn("failed to validate registration form");
 			logger.warn(form);
 			response.sendRedirect("index");
-			return;			
+			return;
 		}
+		
+		
 		
 		User userWithSuchEmail = UserService.getUserByEmail(form.getEmail());
 		if (userWithSuchEmail != null){
@@ -108,27 +113,18 @@ public class RegisterUserController {
 		newUser.setRole(Role.USER);
 		newUser.setJoinDate(new Date(new java.util.Date().getTime()));
 
-		newUser.setState(State.BLOCKED);
+		newUser.setState(State.ACTIVE);
 
 		newUser.setFormId(null);
 		newUser.setIsFormActive(true);
 		
 		// generate salt
 		String salt = SecurityStringGenerator.generateString(128);
-		String token = SecurityStringGenerator.generateString(64);
 		newUser.setSalt(salt);
-		newUser.setPasswordChangingToken(token);
-
+		newUser.setPassword(SaltedPasswordGenerator.generate(form.getPassword(), salt));
 		UserService.saveUser(newUser);
 
-		// send mail
-		String mailBody = " <a href=\"http://localhost:8080/Mediateka/changePassword?token="
-				+ token + "\">click here</a> ";
-
-		EmailSender.sendMail(newUser.getEmail(), "password changing page",
-				mailBody);
-
-		request.getRequestDispatcher("pages/additional/post_register.jsp").forward(request, response);
+		response.sendRedirect("index");
 	}
 
 	

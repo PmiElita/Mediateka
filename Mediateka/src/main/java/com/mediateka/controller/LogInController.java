@@ -15,6 +15,8 @@ import com.mediateka.annotation.Request;
 import com.mediateka.exception.WrongInputException;
 import com.mediateka.form.LogInForm;
 import com.mediateka.model.User;
+import com.mediateka.model.UserCard;
+import com.mediateka.service.UserCardService;
 import com.mediateka.service.UserService;
 import com.mediateka.util.FormValidator;
 import com.mediateka.util.ObjectFiller;
@@ -51,7 +53,6 @@ public class LogInController {
 			IllegalArgumentException, ReflectiveOperationException,
 			SQLException, NoSuchAlgorithmException, IOException {
 
-		System.out.println("STARTING LOGIN");
 		LogInForm form = new LogInForm();
 		ObjectFiller.fill(form, request);
 		try {
@@ -84,7 +85,12 @@ public class LogInController {
 		mySession.setAttribute("userId", user.getId());
 		mySession.setAttribute("userFirstName", user.getFirstName());
 		mySession.setAttribute("userRole", user.getRole());
-		System.out.println("DONE LOGIN");
+		
+		UserCard userCard = UserCardService.getUserCardByUserId(user.getId());
+		
+		mySession.setAttribute("userCard", userCard);
+		
+		
 		response.sendRedirect("index");
 
 	}
