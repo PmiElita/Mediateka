@@ -29,8 +29,10 @@ import static com.mediateka.service.BookService.*;
 public class BookController {
 	private static Logger logger = Logger.getLogger(BookController.class);
 
+	// create book
+
 	@Request(url = "CreateBook", method = "get")
-	public static void BookCreateGet(HttpServletRequest request,
+	public static void bookCreateGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			SQLException, ReflectiveOperationException {
 		request.setAttribute("book_type", getBookTypeByState(State.ACTIVE));
@@ -49,7 +51,7 @@ public class BookController {
 	}
 
 	@Request(url = "CreateBook", method = "post")
-	public static void BookCreatePost(HttpServletRequest request,
+	public static void bookCreatePost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			SecurityException, IllegalArgumentException, SQLException,
 			ReflectiveOperationException {
@@ -177,5 +179,38 @@ public class BookController {
 			request.removeAttribute("book_language");
 		}
 
+	}
+
+	// update book
+
+	@Request(url = "UpdateBook", method = "get")
+	public static void bookUpdateGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException,
+			SQLException, ReflectiveOperationException {
+
+		request.getSession().setAttribute("bookId", 2);
+		int bookId = Integer.parseInt(request.getSession()
+				.getAttribute("bookId").toString());
+		Book book = getBookById(bookId);
+
+		Media media = getMediaById(book.getMediaId());
+		String imagePath = media.getPath().replace("\\", "/");
+		request.setAttribute("imagePath", imagePath);
+
+		request.setAttribute("book_type", getBookTypeByState(State.ACTIVE));
+		request.setAttribute("book_meaning",
+				getBookMeaningByState(State.ACTIVE));
+		request.setAttribute("book_language",
+				getBookLanguageByState(State.ACTIVE));
+		request.setAttribute("book", book);
+		request.getRequestDispatcher("pages/fedunets12.06/update_book.jsp")
+				.forward(request, response);
+		;
+
+		request.removeAttribute("book");
+		request.removeAttribute("book_type");
+		request.removeAttribute("book_meaning");
+		request.removeAttribute("book_language");
+		request.removeAttribute("imagePath");
 	}
 }
