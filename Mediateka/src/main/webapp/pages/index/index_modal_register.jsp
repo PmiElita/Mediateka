@@ -18,28 +18,33 @@
 					<div class="row">
 						<div class="col s12">
 							<div class="row">
-								<div class="input-field col s3">
+								<div class="input-field col s4">
 									<p>First name</p>
 									<input id="firstName" name="firstName" type="text"
 										class="validate">
 								</div>
-								<div class="input-field col s3">
+								<div class="input-field col s4">
 									<p>Last name</p>
 									<input id="lastName" name="lastName" type="text"
 										class="validate">
 								</div>
-								<div class="input-field col s3">
+								<div class="input-field col s4">
 									<p>Middle name</p>
 									<input id="middleName" name="middleName" type="text"
 										class="validate">
 								</div>
-								<div class="input-field col s3">
+							</div>
+
+							<div class="row">
+								<div class="input-field col s6">
 									<p>Password</p>
-									<input id="password" name="password" type="text" class="validate">
+									<input id="password" name="password" type="text"
+										class="validate">
 								</div>
-								<div class="input-field col s3">
+								<div class="input-field col s6">
 									<p>Confirm password</p>
-									<input id="password" name="confirmPassword" type="text" class="validate">
+									<input id="password" name="confirmPassword" type="text"
+										class="validate">
 								</div>
 							</div>
 
