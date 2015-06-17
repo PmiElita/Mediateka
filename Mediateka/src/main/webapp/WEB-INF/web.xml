@@ -9,17 +9,6 @@
 		<location>/error404.jsp</location>
 	</error-page>
   
-  <servlet>
-  	<description>
-  	</description>
-  	<display-name>asdasd</display-name>
-  	<servlet-name>asdasd</servlet-name>
-  	<servlet-class>com.mediateka.controller.asdasd</servlet-class>
-  </servlet>
-  <servlet-mapping>
-  	<servlet-name>asdasd</servlet-name>
-  	<url-pattern>/asdasd</url-pattern>
-  </servlet-mapping>
   <welcome-file-list>
     <welcome-file>index</welcome-file>
   </welcome-file-list>
