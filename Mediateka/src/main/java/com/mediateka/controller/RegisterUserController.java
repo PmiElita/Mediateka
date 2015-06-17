@@ -61,7 +61,6 @@ public class RegisterUserController {
 			SecurityException, IllegalArgumentException, SQLException,
 			ReflectiveOperationException, AddressException, MessagingException, ParseException {
 
-		System.out.println("GERE");
 		AnonymousUserRegistrationForm form = new AnonymousUserRegistrationForm();
 
 		ObjectFiller.fill(form, request);

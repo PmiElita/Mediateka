@@ -64,6 +64,8 @@ public class PasswordChangingController {
 			logger.warn("no user with suck token");
 			return;
 		}
+		
+		request.setAttribute("token", request.getParameter("token"));
 
 		request.getRequestDispatcher("pages/form/passwordChangingForm.jsp")
 				.forward(request, response);
