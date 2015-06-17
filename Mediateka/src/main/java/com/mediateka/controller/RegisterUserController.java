@@ -17,6 +17,7 @@ import org.apache.log4j.Logger;
 import com.mediateka.annotation.Controller;
 import com.mediateka.annotation.Request;
 import com.mediateka.exception.WrongInputException;
+import com.mediateka.form.AnonymousUserRegistrationForm;
 import com.mediateka.form.UserRegistrationForm;
 import com.mediateka.model.User;
 import com.mediateka.model.enums.Role;
@@ -54,14 +55,14 @@ public class RegisterUserController {
 	 * @throws MessagingException
 	 * @throws ParseException
 	 */
-	@Request(url = "registerNewUser", method = "post")
+	@Request(url = "anonymousRegisterNewUser", method = "post")
 	public static void registerNewUser(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			SecurityException, IllegalArgumentException, SQLException,
 			ReflectiveOperationException, AddressException, MessagingException, ParseException {
 
-		System.out.println("START");
-		UserRegistrationForm form = new UserRegistrationForm();
+		System.out.println("GERE");
+		AnonymousUserRegistrationForm form = new AnonymousUserRegistrationForm();
 
 		ObjectFiller.fill(form, request);
 		try {
@@ -72,9 +73,22 @@ public class RegisterUserController {
 			response.sendRedirect("index");
 			return;
 		}
+		
+		if (!form.getPassword().equals(form.getConfirmPassword())){
+			logger.warn("failed to validate registration form");
+			logger.warn(form);
+			response.sendRedirect("index");
+			return;			
+		}
+		
+		User userWithSuchEmail = UserService.getUserByEmail(form.getEmail());
+		if (userWithSuchEmail != null){
+			//such email is already in use
+			response.sendRedirect("index");
+			return;
+		}
 
-		System.out.println("HERE");
-
+		
 		User newUser = new User();
 		newUser.setFirstName(form.getFirstName());
 		newUser.setMiddleName(form.getMiddleName());
@@ -95,10 +109,9 @@ public class RegisterUserController {
 		newUser.setRole(Role.USER);
 		newUser.setJoinDate(new Date(new java.util.Date().getTime()));
 
-		System.out.println("AND HERE");
 		newUser.setState(State.BLOCKED);
 
-		newUser.setFormId(Integer.parseInt(form.getFormId()));
+		newUser.setFormId(null);
 		newUser.setIsFormActive(true);
 		
 		// generate salt
@@ -109,7 +122,6 @@ public class RegisterUserController {
 
 		UserService.saveUser(newUser);
 
-		System.out.println("DDDDD");
 		// send mail
 		String mailBody = " <a href=\"http://localhost:8080/Mediateka/changePassword?token="
 				+ token + "\">click here</a> ";
@@ -120,4 +132,12 @@ public class RegisterUserController {
 		request.getRequestDispatcher("pages/additional/post_register.jsp").forward(request, response);
 	}
 
+	
+	
+	@Request(url = "anonymousRegisterNewUser", method = "post")
+	public static void anonymousRegisterNewUser(HttpServletRequest request,
+			HttpServletResponse response){
+
+		
+	}
 }
