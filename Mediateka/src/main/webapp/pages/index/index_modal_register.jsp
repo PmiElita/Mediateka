@@ -54,7 +54,7 @@
 									<input id="nationality" name="nationality" type="text"
 										class="validate">
 								</div>
-								<div class="input-field col s3">
+								<div class="input-field col s3" style="margin-top: 0em">
 									<p>Profession</p>
 									<select id="profession" name="profession"
 										class="browser-default" style="margin-top: 0.75em">
@@ -66,7 +66,7 @@
 										<option value="6">Artist</option>
 									</select>
 								</div>
-								<div class="input-field col s3">
+								<div class="input-field col s3" style="margin-top: 0em">
 									<p>Education</p>
 									<select id="education" name="education" class="browser-default"
 										style="margin-top: 0.75em">
@@ -79,16 +79,11 @@
 
 									</select>
 								</div>
-								<div class="input-field col s3">
+
+								<div class="input-field col s3" style="margin-top: 0em">
 									<p>Institution</p>
-									<select id="eduInstitution" name="institution"
-										class="browser-default" style="margin-top: 0.75em">
-										<option value="NULP">NU "LP"</option>
-										<option value="LNU">LNU</option>
-										<option value="AoA">Academy of arts</option>
-										<option value="LIET">LIET</option>
-										<option value="InPhys">InPhys</option>
-									</select>
+									<input id="eduInstitution" name="institution" type="text"
+										class="validate" style="margin-top: 0.75em">
 								</div>
 							</div>
 

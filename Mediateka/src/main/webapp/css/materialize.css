@@ -11178,6 +11178,7 @@ to {
 	color: #fff;
 	padding-bottom: 15px;
 	font-weight: 300;
+	display:none;
 }
 
 .picker__nav--prev:hover, .picker__nav--next:hover {

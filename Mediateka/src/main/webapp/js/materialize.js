@@ -5733,7 +5733,7 @@ DatePicker.prototype.nodes = function( isOpen ) {
             // If years selector is set to a literal "true", set it to 5.
 			// Otherwise
             // divide in half to get half before and half after focused year.
-            numberYears = settings.selectYears === true ? 5 : ~~( settings.selectYears / 2 )
+            numberYears = settings.selectYears === true ? 5 : ~~( settings.selectYears )
 
             // If there are years to select, add a dropdown menu.
             if ( numberYears ) {
@@ -5742,7 +5742,7 @@ DatePicker.prototype.nodes = function( isOpen ) {
                     minYear = minLimitObject.year,
                     maxYear = maxLimitObject.year,
                     lowestYear = focusedYear - numberYears,
-                    highestYear = focusedYear + numberYears
+                    highestYear = focusedYear + 1
 
                 // If the min year is greater than the lowest year, increase the
 				// highest year
@@ -6006,9 +6006,7 @@ DatePicker.defaults = (function( prefix ) {
         weekdaysLetter: [ 'S', 'M', 'T', 'W', 'T', 'F', 'S' ],
 
         // Today and clear
-        today: 'Today',
-        clear: 'Clear',
-        close: 'Close',
+        close: 'OK',
 
         // The format to show on the `input` element
         format: 'd.mmmm.yyyy',
