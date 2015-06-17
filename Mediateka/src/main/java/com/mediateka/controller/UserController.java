@@ -41,7 +41,7 @@ public class UserController {
 		Integer userId = (Integer) request.getSession().getAttribute("userId");
 
 		if (userId == null) {
-			response.sendRedirect("index");
+			request.getRequestDispatcher("pages/error404.jsp").forward(request, response);
 			return;
 		}
 
