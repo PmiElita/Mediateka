@@ -5,13 +5,13 @@ import com.mediateka.util.RegExps;
 
 public class PasswordResettingForm {
 
-	@Validation(regexp=RegExps.ANY_CHARACTERS, length=64)
+	@Validation(regexp=RegExps.ANY_CHARACTERS, maxLength=64, minLength=1)
 	private String token;
 	
-	@Validation(regexp=RegExps.PASSWORD, length=64)
+	@Validation(regexp=RegExps.PASSWORD, maxLength=64, minLength=1)
 	private String password;
 	
-	@Validation(regexp=RegExps.PASSWORD, length=64)
+	@Validation(regexp=RegExps.PASSWORD, maxLength=64, minLength=1)
 	private String confirmPassword;
 
 	

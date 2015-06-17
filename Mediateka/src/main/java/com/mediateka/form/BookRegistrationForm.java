@@ -5,22 +5,22 @@ import com.mediateka.util.RegExps;
 
 public class BookRegistrationForm {
 
-	@Validation(regexp=RegExps.ONLY_CHARS, length=45)
+	@Validation(regexp=RegExps.ONLY_CHARS, maxLength=45, minLength=1)
 	private String name;
 	
-	@Validation(regexp=RegExps.ANY_CHARACTERS, length=45)
+	@Validation(regexp=RegExps.ANY_CHARACTERS, maxLength=45, minLength=1)
 	private String author;
 	
-	@Validation(regexp=RegExps.ONLY_DIGITS, length=8)
+	@Validation(regexp=RegExps.ONLY_DIGITS, maxLength=8, minLength=1)
 	private String type;
 	
-	@Validation(regexp=RegExps.ONLY_DIGITS, length=8)
+	@Validation(regexp=RegExps.ONLY_DIGITS, maxLength=8, minLength=1)
 	private String meaning;
 
-	@Validation(regexp=RegExps.ONLY_DIGITS, length=8)
+	@Validation(regexp=RegExps.ONLY_DIGITS, maxLength=8, minLength=1)
 	private String language;
 	
-	@Validation(regexp=RegExps.ONLY_DIGITS, length=8)
+	@Validation(regexp=RegExps.ONLY_DIGITS, maxLength=8, minLength=1)
 	private String media;
 
 	public String getName() {

@@ -6,40 +6,40 @@ import com.mediateka.util.RegExps;
 
 public class UserRegistrationForm {
 	
-	@Validation(regexp=RegExps.ONLY_DIGITS, length=8)
+	@Validation(regexp=RegExps.ONLY_DIGITS, maxLength=8, minLength=1)
 	private String formId;
 	
-	@Validation(regexp=RegExps.ONLY_CHARS, length=45)
+	@Validation(regexp=RegExps.ONLY_CHARS, maxLength=45, minLength=1)
 	private String firstName;
 	
-	@Validation (regexp=RegExps.ONLY_CHARS, length=45)
+	@Validation (regexp=RegExps.ONLY_CHARS, maxLength=45, minLength=1)
 	private String lastName;
 	
-	@Validation(regexp=RegExps.ONLY_CHARS, length=45)
+	@Validation(regexp=RegExps.ONLY_CHARS, maxLength=45, minLength=1)
 	private String middleName;
 	
 	@DateField(format="dd.MM.yyyy")
 	private String birthDate;
 	
-	@Validation(regexp=RegExps.ONLY_CHARS, length=45)
+	@Validation(regexp=RegExps.ONLY_CHARS, maxLength=45, minLength=1)
 	private String nationality;
 	
-	@Validation(regexp=RegExps.ONLY_DIGITS, length=8)
+	@Validation(regexp=RegExps.ONLY_DIGITS, maxLength=8, minLength=1)
 	private String profession;
 	
-	@Validation(regexp=RegExps.ONLY_DIGITS, length=8)
+	@Validation(regexp=RegExps.ONLY_DIGITS, maxLength=8, minLength=1)
 	private String education;
 	
-	@Validation(regexp=RegExps.ONLY_CHARS, length=200)
+	@Validation(regexp=RegExps.ONLY_CHARS, maxLength=200, minLength=0)
 	private String institution;
 
-	@Validation(regexp=RegExps.EMAIL, length=45)
+	@Validation(regexp=RegExps.EMAIL, maxLength=45, minLength=0)
 	private String email;
 	
-	@Validation(regexp=RegExps.ONLY_DIGITS, length=45)
+	@Validation(regexp=RegExps.ONLY_DIGITS, maxLength=45, minLength=0)
 	private String phone;
 	
-	@Validation(regexp=RegExps.ANY_CHARACTERS, length=200)
+	@Validation(regexp=RegExps.ANY_CHARACTERS, maxLength=200, minLength=0)
 	private String address;
 
 	public String getFormId() {

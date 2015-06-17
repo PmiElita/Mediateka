@@ -5,11 +5,11 @@ import com.mediateka.util.RegExps;
 
 public class PasswordChangingForm {
 
-	@Validation(regexp = RegExps.PASSWORD, length = 64)
+	@Validation(regexp = RegExps.PASSWORD, maxLength = 64, minLength=1)
 	private String oldPassword;
-	@Validation(regexp = RegExps.PASSWORD, length = 64)
+	@Validation(regexp = RegExps.PASSWORD, maxLength = 64, minLength=1)
 	private String newPassword;
-	@Validation(regexp = RegExps.PASSWORD, length = 64)
+	@Validation(regexp = RegExps.PASSWORD, maxLength = 64, minLength=1)
 	private String confirmNewPassword;
 
 	public String getOldPassword() {

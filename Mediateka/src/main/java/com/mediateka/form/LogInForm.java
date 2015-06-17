@@ -5,10 +5,10 @@ import com.mediateka.util.RegExps;
 
 public class LogInForm {
 
-	@Validation(regexp=RegExps.EMAIL, length=45)
+	@Validation(regexp=RegExps.EMAIL, maxLength=45, minLength=1)
 	private String email;
 	
-	@Validation(regexp=RegExps.ANY_CHARACTERS, length=64)
+	@Validation(regexp=RegExps.ANY_CHARACTERS, maxLength=64, minLength=1)
 	private String password;
 	
 	

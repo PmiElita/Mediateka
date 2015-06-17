@@ -9,5 +9,6 @@ import java.lang.annotation.Target;
 @Target(value = { ElementType.FIELD })
 public @interface Validation {
       String regexp();
-      int length();
+      int maxLength();
+      int minLength();
 }

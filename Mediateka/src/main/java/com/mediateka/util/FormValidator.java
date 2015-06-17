@@ -24,8 +24,9 @@ public class FormValidator {
 				}
 				String fieldValue = (String) field.get(object);
 
-				if (fieldValue.trim().length()==0||fieldValue.length() > field.getAnnotation(Validation.class)
-						.length()
+				if (fieldValue.trim().length()<field.getAnnotation(Validation.class)
+						.minLength()||fieldValue.length() > field.getAnnotation(Validation.class)
+						.maxLength()
 						|| !fieldValue.matches(field.getAnnotation(
 								Validation.class).regexp())) {
 					throw new WrongInputException("Wrong value of "

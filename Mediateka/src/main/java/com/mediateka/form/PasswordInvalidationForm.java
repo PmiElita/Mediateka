@@ -5,7 +5,7 @@ import com.mediateka.util.RegExps;
 
 public class PasswordInvalidationForm {
 
-	@Validation(regexp=RegExps.EMAIL, length=45)
+	@Validation(regexp=RegExps.EMAIL, maxLength=45, minLength=1)
 	String email;
 
 	public String getEmail() {
