@@ -35,10 +35,10 @@
 								<div class="input-field col s6">
 									<p>Type</p>
 									<select id="type" name="type" class="browser-default" style="margin-top:0.75em">
-										<option value="1">Closed</option>
-										<option value="2">18+</option>
-										<option value="3">Artists</option>
-										<option value="4">Technical</option>
+										<option value="Closed">Closed</option>
+										<option value="18+">18+</option>
+										<option value="Artists">Artists</option>
+										<option value="Technical">Technical</option>
 									</select>
 								</div>
 							</div>
