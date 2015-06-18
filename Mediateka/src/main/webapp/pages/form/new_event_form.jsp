@@ -4,7 +4,7 @@
 <div id="modal3" class="modal">
 	<div class="modal-content">
 		<div id="creation_form">
-			<form>
+			<form >
 				<h3 class="titler">Create new event</h3>
 				<button class="btn waves-effect blue titler" type="submit"
 					name="action">
