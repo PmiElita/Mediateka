@@ -112,12 +112,12 @@ section {
 	margin-left: -200px;
 	margin-top: 60px;
 	opacity: 0;
-	padding: 10px 10px 10px 40px;
+	padding: 10px 10px 10px 20px;
 	position: absolute;
 	text-decoration: none;
 	visibility: hidden;
-	width: 400px;
-	min-height: 16em;
+	width: 325px;
+	min-height: 10em;
 	z-index: 100;
 }
 

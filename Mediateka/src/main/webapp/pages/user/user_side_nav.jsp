@@ -6,12 +6,13 @@
 <div class="container-side">
 	<div id="sidebar" class="z-depth-4">
 		<ul>
-			<li><a href="index">Main page</a></li>
 			<li><a href="clubs">Clubs</a></li>
 			<li><a href="events">Events</a></li>
 			<li><a href="" data-target="modal3"
 				class="modal-trigger waves-effect">Create event</a></li>
 			<li><a href="activity">Activity</a></li>
+			<li><a href="cabinet">Cabinet</a></li>
+			<li><a href="index">Main page</a></li>
 		</ul>
 	</div>
 	<div class="main-content">
