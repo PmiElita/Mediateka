@@ -15,7 +15,7 @@
 		<img src="images/parallax1.jpg">
 	</div>
 
-
+	<jsp:include page="user_side_nav.jsp" />
 	<div class="main_poster">
 
 		<div class="row">
@@ -30,8 +30,8 @@
 							1 <i class="mdi-navigation-more-vert right"></i>
 						</span>
 						<p>
-							<a style="display:inline" href="#!">LINK</a>
-							<a style="display:inline; margin-left:11em" href="#!">EDIT</a>
+							<a style="display: inline" href="#!">LINK</a> <a
+								style="display: inline; margin-left: 11em" href="#!">EDIT</a>
 						</p>
 					</div>
 					<div class="card-reveal">
@@ -52,8 +52,8 @@
 							2 <i class="mdi-navigation-more-vert right"></i>
 						</span>
 						<p>
-							<a style="display:inline" href="#!">LINK</a>
-							<a style="display:inline; margin-left:11em" href="#!">EDIT</a>
+							<a style="display: inline" href="#!">LINK</a> <a
+								style="display: inline; margin-left: 11em" href="#!">EDIT</a>
 						</p>
 					</div>
 					<div class="card-reveal">
@@ -74,8 +74,8 @@
 							3 <i class="mdi-navigation-more-vert right"></i>
 						</span>
 						<p>
-							<a style="display:inline" href="#!">LINK</a>
-							<a style="display:inline; margin-left:11em" href="#!">EDIT</a>
+							<a style="display: inline" href="#!">LINK</a> <a
+								style="display: inline; margin-left: 11em" href="#!">EDIT</a>
 						</p>
 					</div>
 					<div class="card-reveal">

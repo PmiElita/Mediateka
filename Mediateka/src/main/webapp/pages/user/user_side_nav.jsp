@@ -12,8 +12,6 @@
 			<li><a href="" data-target="modal3"
 				class="modal-trigger waves-effect">Create event</a></li>
 			<li><a href="activity">Activity</a></li>
-			<li><a href="" data-target="modal5"
-				class="modal-trigger waves-effect">Send message</a></li>
 		</ul>
 	</div>
 	<div class="main-content">

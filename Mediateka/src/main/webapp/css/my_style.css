@@ -41,14 +41,9 @@ section {
 	margin-top: 5em;
 }
 
-.titler {
-	display: inline;
-	margin-left: 2em;
-}
 
 .titler button{
-	margin-left: -2em;
-	margin-bottom: 1em;
+	display: inline;
 }
 
 .my-picture-row {
