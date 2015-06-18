@@ -1,7 +1,6 @@
 package com.mediateka.controller;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Date;
 import java.sql.SQLException;
@@ -14,6 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.log4j.Logger;
 
 import com.mediateka.annotation.Controller;
@@ -119,8 +119,10 @@ public class RegisterUserController {
 
 		UserService.saveUser(newUser);
 
-		String emailBody = "<a href=\"http://localhost:8080/Mediateka/changePassword?token="
-				+ token + "\"> click here to set new password </a>";
+		String emailBody = 
+				"<a href=\"http://localhost:8080/Mediateka/changePassword?token="
+				+ StringEscapeUtils.escapeHtml4(token)
+				+ "\"> click here to set new password </a>";
 
 		EmailSender.sendMail(form.getAddress(), "password setting link",
 				emailBody);
@@ -212,8 +214,10 @@ public class RegisterUserController {
 		String token = SecurityStringGenerator.generateString(64);
 		newUser.setPasswordChangingToken(token);
 
-		String emailBody = "<a href=\"http://localhost:8080/Mediateka/confirmRegistration?token="
-				+ token + "\"> click here to confirm your registration </a>";
+		String emailBody = 
+				"<a href=\"http://localhost:8080/Mediateka/confirmRegistration?token="
+				+ StringEscapeUtils.escapeHtml4(token)
+				+ "\"> click here to confirm your registration </a>";
 
 		EmailSender.sendMail(form.getAddress(),
 				"registration confirmation link", emailBody);
