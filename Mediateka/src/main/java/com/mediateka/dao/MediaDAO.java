@@ -30,7 +30,7 @@ public class MediaDAO {
 			return Transformer.transformResultSetIntoObject(resultSet,
 					Media.class);
 		}
-	}
+	}	
 	
 	public static void saveMedia(Media media) throws SQLException,
 			ReflectiveOperationException {
@@ -40,6 +40,20 @@ public class MediaDAO {
 			Transformer.valueIntoPreparedStatement(statement, media,
 					INSERT_MEDIA_ORDER);
 			statement.executeUpdate();
+		}
+	}
+	
+	public static Media getMediaByPath(String path) throws SQLException, ReflectiveOperationException{
+		try (Connection connection = ConnectionManager.getConnection()) {
+			PreparedStatement statement = connection
+					.prepareStatement(SELECT_MEDIA_BY_PATH);
+			Media media = new Media();
+			media.setPath(path);
+			Transformer.valueIntoPreparedStatement(statement, media,
+					SELECT_MEDIA_BY_PATH_ORDER);
+			ResultSet resultSet = statement.executeQuery();
+			return Transformer.transformResultSetIntoObject(resultSet,
+					Media.class);
 		}
 	}
 

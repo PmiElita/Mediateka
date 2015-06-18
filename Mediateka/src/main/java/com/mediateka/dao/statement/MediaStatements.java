@@ -18,6 +18,11 @@ public class MediaStatements {
 
 	public static final String SELECT_MEDIA_BY_NAME_REGEX = "SELECT * FROM media WHERE name REGEXP ?";
 	public static final String[] SELECT_MEDIA_BY_NAME_REGEX_ORDER = { "name" };
+	
+
+	public static final String SELECT_MEDIA_BY_PATH = "SELECT * FROM media WHERE path = ?";
+	public static final String[] SELECT_MEDIA_BY_PATH_ORDER = {"path"};
+	
 
 	public static final String SELECT_MEDIA_BY_CONTENT_GROUP_ID = "SELECT * FROM media WHERE content_group_id =?";
 	public static final String[] SELECT_MEDIA_BY_CONTENT_GROUP_ID_ORDER = { "content_group_id" };
