@@ -49,6 +49,7 @@ public class EventController {
 			HttpServletResponse response) throws ParseException, SQLException,
 			ReflectiveOperationException, ServletException, IOException {
 
+		System.out.println("HERE");
 		try {
 
 			HttpSession session = request.getSession();
@@ -59,9 +60,9 @@ public class EventController {
 
 			FormValidator.validate(form);
 			Timestamp dateFrom = DateConverter.convertIntoTimestamp(
-					form.getDateFrom(), "yyyy-MM-dd");
+					form.getDateFrom(), "dd.MM.yyyy");
 			Timestamp dateTill = DateConverter.convertIntoTimestamp(
-					form.getDateTill(), "yyyy-MM-dd");
+					form.getDateTill(), "dd.MM.yyyy");
 			if (dateTill.getTime() < dateFrom.getTime()) {
                    throw new WrongInputException("Date till must be equals or greater than date from");
 			}
@@ -73,9 +74,9 @@ public class EventController {
 			event.setDescription(form.getDescription());
 			event.setState(State.BLOCKED);
 			event.setDateFrom(DateConverter.convertIntoTimestamp(
-					form.getDateFrom(), "yyyy-MM-dd"));
+					form.getDateFrom(), "dd.MM.yyyy"));
 			event.setDateTill(DateConverter.convertIntoTimestamp(
-					form.getDateTill(), "yyyy-MM-dd"));
+					form.getDateTill(), "dd.MM.yyyy"));
 			if (session.getAttribute("club_id") != null)
 				event.setClubId(Integer.parseInt(session
 						.getAttribute("club_id").toString()));
@@ -95,7 +96,7 @@ public class EventController {
 					.forward(request, response);
 			request.removeAttribute("message");
 		} catch (WrongInputException e) {
-			logger.warn(e);
+			logger.warn("error at eventController", e);
 			request.setAttribute("message", e.getMessage());
 			request.getRequestDispatcher("pages/fedunets12.06/create_event.jsp")
 					.forward(request, response);

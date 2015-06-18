@@ -14,10 +14,10 @@ public class EventRegistrationForm {
 	@Validation(regexp=RegExps.ANY_CHARACTERS, maxLength = 250, minLength=1)
 	private String name;
 	
-	@DateField(format = "yyyy-MM-dd")
+	@DateField(format = "dd.MM.yyyy")
 	private String dateFrom;
 	
-	@DateField(format= "yyyy-MM-dd")
+	@DateField(format= "dd.MM.yyyy")
 	private String dateTill;
 	
 	@Validation(regexp=RegExps.ANY_CHARACTERS, maxLength = 250, minLength=0)

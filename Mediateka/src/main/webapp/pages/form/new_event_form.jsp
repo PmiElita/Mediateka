@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	
+
 <div id="modal3" class="modal">
 	<div class="modal-content">
 		<div id="creation_form">
-			<form >
+			<form action="CreateEvent" method="post">
 				<h3 class="titler">Create new event</h3>
 				<button class="btn waves-effect blue titler" type="submit"
 					name="action">
@@ -16,11 +16,13 @@
 					<div class="row">
 						<div class="input-field col s6">
 							<p>Start date</p>
-							<input id="dateFrom" name="dateFrom" type="date" class="datepicker">
+							<input id="dateFrom" name="dateFrom" required="required"
+								type="date" class="datepicker">
 						</div>
 						<div class="input-field col s6">
 							<p>End date</p>
-							<input id="dateTill" name="dateTill" type="date" class="datepicker">
+							<input id="dateTill" name="dateTill" required type="date"
+								class="datepicker">
 						</div>
 
 					</div>
@@ -30,15 +32,15 @@
 							<div class="row">
 								<div class="input-field col s6">
 									<p>Name</p>
-									<input id="name" name="name" type="text" class="validate">
+									<input id="name" name="name" required type="text"
+										class="validate">
 								</div>
 								<div class="input-field col s6">
 									<p>Type</p>
-									<select id="type" name="type" class="browser-default" style="margin-top:0.75em">
-										<option value="Closed">Closed</option>
-										<option value="18+">18+</option>
-										<option value="Artists">Artists</option>
-										<option value="Technical">Technical</option>
+									<select id="type" name="type" class="browser-default"
+										style="margin-top: 0.75em">
+										<option value="MEETING">Meeting</option>
+										<option value="EXHIBITION">Exhibition</option>
 									</select>
 								</div>
 							</div>
@@ -46,8 +48,8 @@
 							<div class="row">
 								<div class="input-field col s12">
 									<p>Description</p>
-									<textarea id="description" name="description" class="materialize-textarea"
-										length="100"></textarea>
+									<textarea id="description" name="description"
+										class="materialize-textarea" length="100"></textarea>
 								</div>
 							</div>
 						</div>

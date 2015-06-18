@@ -98,7 +98,7 @@ public class LogInController {
 		mySession.setAttribute("userCard", userCard);
 		System.out.println("new sessionAttibute: " + mySession.getAttribute("userCard").toString());
 		
-		response.sendRedirect("index");
+		response.sendRedirect("cabinet");
 
 	}
 
