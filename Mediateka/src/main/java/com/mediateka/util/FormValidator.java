@@ -10,7 +10,7 @@ import com.mediateka.exception.WrongInputException;
 
 public class FormValidator {
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static <T> void validate(T object) throws IllegalArgumentException,
 			IllegalAccessException, WrongInputException {
 		Class<?> classT = object.getClass();

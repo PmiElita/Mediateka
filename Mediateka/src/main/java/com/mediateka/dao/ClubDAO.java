@@ -10,7 +10,6 @@ import java.util.List;
 
 import com.mediateka.dao.statement.ClubStatements;
 import com.mediateka.model.Club;
-import com.mediateka.model.Media;
 import com.mediateka.model.enums.State;
 import com.mediateka.util.ConnectionManager;
 import com.mediateka.util.Transformer;

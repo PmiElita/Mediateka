@@ -19,14 +19,12 @@ import com.mediateka.annotation.Controller;
 import com.mediateka.annotation.Request;
 import com.mediateka.exception.WrongInputException;
 import com.mediateka.form.AnonymousUserRegistrationForm;
-import com.mediateka.form.UserRegistrationForm;
 import com.mediateka.model.User;
 import com.mediateka.model.enums.Role;
 import com.mediateka.model.enums.State;
 import com.mediateka.service.UserService;
 import com.mediateka.util.FormValidator;
 import com.mediateka.util.ObjectFiller;
-import com.mediateka.util.EmailSender;
 import com.mediateka.util.SaltedPasswordGenerator;
 import com.mediateka.util.SecurityStringGenerator;
 
