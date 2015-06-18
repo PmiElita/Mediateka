@@ -10,11 +10,11 @@
 <fmt:setBundle basename="menu" />
 <fmt:requestEncoding value="utf-8" />
 
-<div class="admin-info">
+<div class="admin-info" style="margin-top:2em; margin-bottom:2.3em">
 	<div class="section white">
 		<div class="container">
 
-			<div class="row" style="margin-left: -4em">
+			<div class="row">
 				<div class="col s4">
 					<a href="" data-target="modal7" class="modal-trigger">
 						<div class="col s12 m8 offset-m2 l6 offset-l3 my-card">
@@ -71,11 +71,9 @@
 						</div>
 					</a>
 				</div>
-			</div>
+		
 
 
-
-			<div class="row" style="margin-left: -4em">
 				<div class="col s4">
 					<a href="info">
 						<div class="col s12 m8 offset-m2 l6 offset-l3 my-card">

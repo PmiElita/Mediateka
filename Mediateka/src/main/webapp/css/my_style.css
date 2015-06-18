@@ -116,7 +116,7 @@ section {
 	position: absolute;
 	text-decoration: none;
 	visibility: hidden;
-	width: 325px;
+	width: 300px;
 	min-height: 10em;
 	z-index: 100;
 }

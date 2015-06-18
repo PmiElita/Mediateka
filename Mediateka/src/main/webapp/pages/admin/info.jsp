@@ -43,23 +43,26 @@
 </textarea>
 			</div>
 
-			<div class="container" >
-				<h3>Edit slider images</h3>
-				<div style="margin-left:5em">
-					<h6>1</h6>
-					<img src="images/slide_1.jpg" style="width: 20em;" />
-					<h6>2</h6>
-					<img src="images/slide_2.jpg" style="width: 20em;" />
-					<h6>3</h6>
-					<img src="images/slide_3.jpg" style="width: 20em;" />
+			<div class="container">
+				<div class="row">
+					<h3>Edit slider images</h3>
+					<div class="col s6">
+						<h6>1</h6>
+						<img src="images/slide_1.jpg" style="width: 20em;" />
+					</div>
+					<div class="col s6">
+						<h6>2</h6>
+						<img src="images/slide_2.jpg" style="width: 20em;" />
+					</div>
+					<div class="col s6">
+						<h6>3</h6>
+						<img src="images/slide_3.jpg" style="width: 20em;" />
+					</div>
 				</div>
 			</div>
-		</div>
-	</div>
 
-	<div style="min-height: 14em"></div>
-	
-	<jsp:include page="../general/footer.jsp" />
+			<div style="min-height: 14em"></div>
 
+			<jsp:include page="../general/footer.jsp" />
 </body>
 </html>
