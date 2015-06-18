@@ -1,15 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	
+	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+	
 
 <span> <img src="images/admin/users.png" style="width: 5em" />
 	<div style="margin-top: -1.5em">
 		<strong>
-			<p>KoKo__VBDKS__</p>
-			<p>Birthday: __19.12.2002__</p>
-			<p>E-mail: __sdj@dfks.sjd__</p>
-			<p>Number of Events: __128192__</p>
-			<p>Number of clubs: __128192__</p>
-			<p>Last visit: __10.06.2015__</p>
+			<p> <c:out value="${sessionScope.userCard.getFirstName()}"/>
+			    <c:out value="${sessionScope.userCard.getLastName()}"/> </p>
+
+			<p> <c:out value="${sessionScope.userCard.getEmail()}"/> </p>
+
 		</strong>
 	</div>
 </span>

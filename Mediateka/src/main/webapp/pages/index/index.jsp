@@ -28,6 +28,14 @@
 
 
 	<jsp:include page="../general/nav.jsp" />
+	
+	
+	<c:if test="${notification ne null }">
+		<c:out value="${notification}"/>
+	</c:if>
+	
+	
+	
 	<jsp:include page="index_slider.jsp" />
 	<jsp:include page="index_central.jsp" />
 	<jsp:include page="../general/footer.jsp" />

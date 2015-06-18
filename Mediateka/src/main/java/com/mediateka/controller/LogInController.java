@@ -16,6 +16,7 @@ import com.mediateka.exception.WrongInputException;
 import com.mediateka.form.LogInForm;
 import com.mediateka.model.User;
 import com.mediateka.model.UserCard;
+import com.mediateka.model.enums.State;
 import com.mediateka.service.UserCardService;
 import com.mediateka.service.UserService;
 import com.mediateka.util.FormValidator;
@@ -71,6 +72,12 @@ public class LogInController {
 			response.sendRedirect("index");
 			return;
 		}
+		
+		if (user.getState() != State.ACTIVE){
+			logger.warn("trying to log in as non-active user");
+			response.sendRedirect("index");
+			return;
+		}
 
 		String saltedPassword = SaltedPasswordGenerator.generate(
 				form.getPassword(), user.getSalt());
@@ -89,7 +96,7 @@ public class LogInController {
 		UserCard userCard = UserCardService.getUserCardByUserId(user.getId());
 		
 		mySession.setAttribute("userCard", userCard);
-		
+		System.out.println("new sessionAttibute: " + mySession.getAttribute("userCard").toString());
 		
 		response.sendRedirect("index");
 
