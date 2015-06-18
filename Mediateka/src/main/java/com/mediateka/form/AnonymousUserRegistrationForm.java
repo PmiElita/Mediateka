@@ -34,7 +34,7 @@ public class AnonymousUserRegistrationForm {
 	@Validation(regexp=RegExps.ONLY_DIGITS, maxLength=8, minLength=1)
 	private String education;
 	
-	@Validation(regexp=RegExps.ONLY_CHARS, maxLength=200, minLength=0)
+	@Validation(regexp=RegExps.ANY_CHARACTERS, maxLength=200, minLength=0)
 	private String institution;
 
 	@Validation(regexp=RegExps.EMAIL, maxLength=45, minLength=1)
