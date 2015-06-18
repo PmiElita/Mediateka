@@ -4,8 +4,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<%@page import="org.apache.log4j.Logger"%>
-
 <fmt:setLocale value="${locale}" />
 <fmt:setBundle basename="menu" />
 <fmt:requestEncoding value="utf-8" />
@@ -17,14 +15,6 @@
 </head>
 
 <body>
-	<%
-		Logger LOG = Logger.getLogger(this.getClass().getName());
-	%>
-	<%
-		LOG.warn("There's a new man in Town!");
-	%>
-
-
 	<jsp:include page="../general/nav.jsp" />
 
 	<div style="margin-top: 10em; margin-right: 0em"
@@ -38,7 +28,7 @@
 		</div>
 	</div>
 	<div style="min-height: 195px"></div>
-	
+
 	<jsp:include page="../general/footer.jsp" />
 
 </body>

@@ -4,8 +4,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<%@page import="org.apache.log4j.Logger"%>
-
 <%@page import="com.mediateka.model.enums.Role"%>
 
 
@@ -23,14 +21,6 @@
 
 
 <body>
-	<%
-		Logger LOG = Logger.getLogger(this.getClass().getName());
-	%>
-	<%
-		LOG.warn("There's a new man in Town!");
-	%>
-
-
 	<jsp:include page="../general/nav.jsp" />
 
 	<div class="parallax-container my-parallax">
@@ -41,10 +31,12 @@
 		<div class="row" style="margin-top: -1em">
 			<div class="col s12">
 				<ul class="tabs">
-					<li class="tab col s3" style="margin-left:5em"><a href="#my_clubs">My clubs</a></li>
+					<li class="tab col s3" style="margin-left: 5em"><a
+						href="#my_clubs">My clubs</a></li>
 					<li class="tab col s3"><a href="#all_clubs">All clubs</a></li>
-					<li class="tab col s3" style="margin-left:-5em"><a href="" data-target="modal8"
-						class="modal-trigger waves-effect">Create club</a></li>
+					<li class="tab col s3" style="margin-left: -5em"><a href=""
+						data-target="modal8" class="modal-trigger waves-effect">Create
+							club</a></li>
 				</ul>
 			</div>
 
@@ -55,7 +47,7 @@
 			<c:if test="${userRole eq Role.USER}">
 				<jsp:include page="../user/user_side_nav.jsp" />
 			</c:if>
-			
+
 			<div id="my_clubs"><jsp:include page="my_clubs.jsp" /></div>
 			<div id="all_clubs"><jsp:include page="all_clubs.jsp" /></div>
 		</div>

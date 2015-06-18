@@ -4,12 +4,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<%@page import="org.apache.log4j.Logger"%>
-
 <fmt:setLocale value="${locale}" />
 <fmt:setBundle basename="menu" />
 <fmt:requestEncoding value="utf-8" />
-
 
 <div class="section white">
 	<div class="container">

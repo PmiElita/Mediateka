@@ -6,8 +6,6 @@
 
 <%@page import="com.mediateka.model.enums.Role"%>
 
-<%@page import="org.apache.log4j.Logger"%>
-
 <fmt:setLocale value="${locale}" />
 <fmt:setBundle basename="menu" />
 <fmt:requestEncoding value="utf-8" />
@@ -21,12 +19,6 @@
 
 
 <body>
-	<%
-		Logger LOG = Logger.getLogger(this.getClass().getName());
-	%>
-	<%
-		LOG.warn("There's a new man in Town!");
-	%>
 
 	<jsp:include page="../general/nav.jsp" />
 

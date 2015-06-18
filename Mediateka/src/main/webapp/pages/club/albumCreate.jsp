@@ -12,6 +12,5 @@
 		<input type = "submit" value = "create">
 	</form>
 
-
 </body>
 </html>
