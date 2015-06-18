@@ -29,6 +29,7 @@
 	<jsp:include page="../general/nav.jsp" />
 
 	<div class="parallax-container my-parallax">
+
 		<div class="parallax">
 			<img src="images/parallax1.jpg">
 		</div>
