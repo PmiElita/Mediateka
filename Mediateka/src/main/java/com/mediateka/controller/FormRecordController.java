@@ -33,7 +33,7 @@ import static com.mediateka.service.UserService.*;
 public class FormRecordController {
 
 	@Request(url = "CreateFormRecord", method = "get")
-	public static void FormRecordCreateGet(HttpServletRequest request,
+	public static void formRecordCreateGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			SQLException, ReflectiveOperationException {
 		Timestamp date = new Timestamp(new java.util.Date().getTime());
@@ -58,7 +58,7 @@ public class FormRecordController {
 
 	@SuppressWarnings("deprecation")
 	@Request(url = "CreateFormRecord", method = "post")
-	public static void FormRecordCreatePost(HttpServletRequest request,
+	public static void formRecordCreatePost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			SQLException, ReflectiveOperationException {
 		StringBuilder message = new StringBuilder();

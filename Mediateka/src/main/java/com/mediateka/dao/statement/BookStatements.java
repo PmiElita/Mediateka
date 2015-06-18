@@ -8,9 +8,9 @@ public class BookStatements {
 	public static final String[] INSERT_BOOK_ORDER = { "name", "author",
 			"state", "type_id", "meaning_id", "language_id", "media_id" };
 
-	public static final String UPDATE_BOOK = "UPDATE book " + "SET"
-			+ "name = ? " + "author = ? " + "state = ? " + "type_id = ? "
-			+ "meaning_id = ? " + "language_id = ? " + "media_id = ? "
+	public static final String UPDATE_BOOK = "UPDATE book " + "SET "
+			+ "name = ?, " + "author = ?, " + "state = ?, " + "type_id = ?, "
+			+ "meaning_id = ?, " + "language_id = ?, " + "media_id = ? "
 			+ "WHERE " + "id = ?";
 	public static final String[] UPDATE_BOOK_ORDER = { "name", "author",
 			"state", "type_id", "meaning_id", "language_id", "media_id", "id" };

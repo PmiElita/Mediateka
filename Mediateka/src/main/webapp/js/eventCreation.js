@@ -13,18 +13,22 @@ function dateChange() {
 		} else {
 			if (dateFrom > dateTill) {
 				document.getElementById("wrongDate").innerHTML = "Date till must be equals or greater than date from";
+				document.getElementById("submit").disabled = true;
 				return false;
 			} else {
 				document.getElementById("wrongDate").innerHTML = "";
+				document.getElementById("submit").disabled = false;
 				return true;
 			}
 		}
 	}
 }
 
-function submitPressed() {
-
-	if (dateChange()) {
-		document.createEvent.submit();
-	}
+function handleClick(myRadio) {
+	var exhibition = String("EXHIBITION");
+	var meeting = String("MEETING");
+	if (String(myRadio.value) == exhibition)
+		alert("+exhib");
+	else if (String(myRadio.value) == meeting)
+		alert("+meet");
 }

@@ -12,9 +12,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link class="jsbin" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
+<link class="jsbin" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
 <script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 <script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.0/jquery-ui.min.js"></script>
+<script src="js/eventCreation.js"></script>
+<script src="js/imageView.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>update_book</title>
 </head>
@@ -38,7 +40,7 @@
     		</c:forEach>
    		</select></p>
    		<!-- book meaning selection -->
-   		<p><select size="4" name="meaning" required>
+   		<p><select size="6" name="meaning" required>
     		<option disabled>Book meaning...</option>
     		<c:forEach var="meanings" items="${book_meaning}">
     		<c:choose>
@@ -52,7 +54,7 @@
     		</c:forEach>
    		</select></p>
    		<!-- book language selection -->
-   		<p><select size="4" name="language" required>
+   		<p><select size="6" name="language" required>
     		<option disabled>Book language...</option>
     		<c:forEach var="languages" items="${book_language}">
     		<c:choose>
@@ -65,7 +67,7 @@
     		</c:choose>
     		</c:forEach>
    		</select></p>
-   		Book title:<input type="file" name="media" placeholder="book cover screenshot..." value="${book.getMediaId()}" onchange="readURL(this);"><img id="photo" src="${imagePath}"><br>
+   		Book title:<input type="file" name="image" placeholder="book cover screenshot..." value="${book.getMediaId()}" onchange="readURL(this);"><img id="photo" src="${imagePath}"><br>
    		Book state:<c:choose>
    				   <c:when test="${book.getState()==State.ACTIVE}">
    				   <input type="radio" name="state" value="ACTIVE" checked>active
@@ -93,18 +95,4 @@
    		<input type="submit" value="Update book">
 	</form>
 </body>
-<script>
-function readURL(input) {	
-	  if (input.files && input.files[0]) {		  
-	    var reader = new FileReader();
-	    reader.onload = function (e) {
-	      $('#photo')
-	        .attr('src', e.target.result)
-	        .width(150)
-	        .height(200);
-	    };
-	    reader.readAsDataURL(input.files[0]);
-	  }
-	}
- </script>
 </html>
