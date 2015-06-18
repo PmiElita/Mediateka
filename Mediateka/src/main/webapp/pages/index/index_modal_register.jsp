@@ -7,15 +7,16 @@
 		<div id="creation_form">
 
 			<form action="anonymousRegisterNewUser" method="post">
-				<h3 class="titler">Register</h3>
-				<button class="btn waves-effect blue titler" type="submit"
-					name="action">
-					Register <i class="mdi-content-send right"></i>
-				</button>
 
 				<div class="container">
 
-					<div class="row">
+					<h3 class="titler">Register</h3>
+					<button class="btn waves-effect blue titler" type="submit"
+						name="action">
+						Register <i class="mdi-content-send right"></i>
+					</button>
+
+					<div class="row" style="margin-top:3em">
 						<div class="col s12">
 							<div class="row">
 								<div class="input-field col s4">
@@ -38,12 +39,12 @@
 							<div class="row">
 								<div class="input-field col s6">
 									<p>Password</p>
-									<input id="password" name="password" type="text"
+									<input id="password" name="password" type="password"
 										class="validate">
 								</div>
 								<div class="input-field col s6">
 									<p>Confirm password</p>
-									<input id="password" name="confirmPassword" type="text"
+									<input id="password" name="confirmPassword" type="password"
 										class="validate">
 								</div>
 							</div>

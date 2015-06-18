@@ -33,11 +33,11 @@
 			<img src="images/parallax1.jpg">
 		</div>
 
-
+		<c:if test="${userRole eq Role.ADMIN}">
 			<jsp:include page="../admin/admin_side_nav.jsp" />
-		
+		</c:if>
 
-		<c:if test="${userRole eq 'user'}">
+		<c:if test="${userRole eq Role.USER}">
 			<jsp:include page="../user/user_side_nav.jsp" />
 		</c:if>
 

@@ -6,6 +6,9 @@
 
 <%@page import="org.apache.log4j.Logger"%>
 
+<%@page import="com.mediateka.model.enums.Role"%>
+
+
 <fmt:setLocale value="${locale}" />
 <fmt:setBundle basename="menu" />
 <fmt:requestEncoding value="utf-8" />
@@ -35,11 +38,11 @@
 			<img src="images/parallax1.jpg">
 		</div>
 
-		<c:if test="${userRole eq 'admin'}">
+		<c:if test="${userRole eq Role.ADMIN}">
 			<jsp:include page="../admin/admin_side_nav.jsp" />
 		</c:if>
 
-		<c:if test="${userRole eq 'user'}">
+		<c:if test="${userRole eq Role.USER}">
 			<jsp:include page="../user/user_side_nav.jsp" />
 		</c:if>
 

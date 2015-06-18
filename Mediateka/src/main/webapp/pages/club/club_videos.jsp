@@ -4,6 +4,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+<%@page import="com.mediateka.model.enums.Role"%>
+
 <%@page import="org.apache.log4j.Logger"%>
 
 <fmt:setLocale value="${locale}" />
@@ -18,11 +20,11 @@
 <body>
 	<jsp:include page="../general/nav.jsp" />
 
-	<c:if test="${userRole eq 'admin'}">
+	<c:if test="${userRole eq Role.ADMIN}">
 		<jsp:include page="../admin/admin_side_nav.jsp" />
 	</c:if>
 
-	<c:if test="${userRole eq 'user'}">
+	<c:if test="${userRole eq Role.USER}">
 		<jsp:include page="../user/user_side_nav.jsp" />
 	</c:if>
 

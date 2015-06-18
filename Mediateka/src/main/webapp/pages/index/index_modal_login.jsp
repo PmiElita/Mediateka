@@ -24,8 +24,6 @@
 							id="password_log" class="validate" type="password" name="password"> <label
 							for="password_log">Password</label>
 					</div>
-
-
 				</div>
 			</div>
 		</form>
