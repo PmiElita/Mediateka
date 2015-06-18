@@ -22,7 +22,7 @@
 
 		$('.datepicker').pickadate({
 			selectMonths : true,
-			selectYears : 80
+			selectYears : 100
 		});
 
 		$('select').material_select();
