@@ -33,6 +33,13 @@ public class UserController {
 				response);
 	}
 
+	@Request(url = "books", method = "get")
+	public static void booksGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		request.getRequestDispatcher("pages/books/books.jsp").forward(request,
+				response);
+	}
+	
 	@Request(url = "cabinet", method = "get")
 	public static void cabinetGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,

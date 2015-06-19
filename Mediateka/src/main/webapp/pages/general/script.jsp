@@ -6,6 +6,10 @@
 
 <script type="text/javascript" src="js/materialize.js"></script>
 
+<script src="js/imageView.js"></script>
+
+<script src="js/eventCreation.js"></script>
+
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('.materialboxed').materialbox();

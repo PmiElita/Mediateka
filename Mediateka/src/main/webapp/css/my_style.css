@@ -83,10 +83,6 @@ section {
 	min-width:13.5em;
 }
 
-.my-small-card:hover {
-	min-width:11.5;
-}
-
 .my-card img {
 	margin-top: -1em;
 	margin-left: 1em;

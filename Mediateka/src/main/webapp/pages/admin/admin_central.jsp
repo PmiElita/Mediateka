@@ -8,7 +8,7 @@
 <fmt:setBundle basename="menu" />
 <fmt:requestEncoding value="utf-8" />
 
-<div class="admin-info" style="margin-top:2em; margin-bottom:2.3em">
+<div class="admin-info" style="margin-top: 2em; margin-bottom: 2.3em">
 	<div class="section white">
 		<div class="container">
 
@@ -62,14 +62,14 @@
 											<img style="margin-top: 0em" src="images/admin/events.png"
 												alt="" class="circle responsive-img">
 										</div>
-										<div class="my-badge" style="margin-left:0.75em">2</div>
+										<div class="my-badge" style="margin-left: 0.75em">2</div>
 									</div>
 								</div>
 							</div>
 						</div>
 					</a>
 				</div>
-		
+
 
 
 				<div class="col s4">
@@ -83,7 +83,7 @@
 											<img src="images/admin/info.png" alt=""
 												class="circle responsive-img">
 										</div>
-										<div class="my-badge" style="margin-left:0.4em">1</div>
+										<div class="my-badge" style="margin-left: 0.4em">1</div>
 									</div>
 								</div>
 							</div>
@@ -92,20 +92,22 @@
 				</div>
 
 				<div class="col s4">
-					<div class="col s12 m8 offset-m2 l6 offset-l3 my-card">
-						<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
-							<div style="margin-top: -2em">
-								<h3 style="color: black">Books</h3>
-								<div class="row valign-wrapper">
-									<div class="col s9">
-										<img src="images/admin/books.png" alt=""
-											class="circle responsive-img">
+					<a href="books">
+						<div class="col s12 m8 offset-m2 l6 offset-l3 my-card">
+							<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
+								<div style="margin-top: -2em">
+									<h3 style="color: black">Books</h3>
+									<div class="row valign-wrapper">
+										<div class="col s9">
+											<img src="images/admin/books.png" alt=""
+												class="circle responsive-img">
+										</div>
+										<div class="my-badge" style="margin-left: 0.2em">88</div>
 									</div>
-									<div class="my-badge" style="margin-left:0.2em">88</div>
 								</div>
 							</div>
 						</div>
-					</div>
+					</a>
 				</div>
 
 				<div class="col s4">
@@ -118,7 +120,7 @@
 										<img style="margin-top: 0em" src="images/admin/reports.png"
 											alt="" class="circle responsive-img">
 									</div>
-									<div class="my-badge" style="margin-left:0.75em">9</div>
+									<div class="my-badge" style="margin-left: 0.75em">9</div>
 								</div>
 							</div>
 						</div>
