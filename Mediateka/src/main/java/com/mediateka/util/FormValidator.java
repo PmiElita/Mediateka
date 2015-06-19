@@ -44,7 +44,7 @@ public class FormValidator {
 			 try{
 				Enum.valueOf((Class<Enum>) field.getAnnotation(EnumField.class).enumClass(), fieldValue);
 			 } catch (IllegalArgumentException e){
-				 throw new WrongInputException("Wrong type of event");
+				 throw new WrongInputException("Wrong type of enum");
 			 }
 			}
 			

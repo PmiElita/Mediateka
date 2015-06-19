@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <div id="modal2" class="modal">
 	<div class="modal-content">
@@ -9,7 +11,7 @@
 			<form action="anonymousRegisterNewUser" method="post">
 
 				<div class="container">
-					<div style="margin-top:-3.5em">
+					<div style="margin-top: -3.5em">
 						<button class="btn waves-effect blue titler" type="submit"
 							name="action">
 							Register <i class="mdi-content-send right"></i>
@@ -58,18 +60,20 @@
 										<p>Profession</p>
 										<select id="profession" name="profession"
 											class="browser-default" style="margin-top: 0.75em">
-											<option value="1">Chemist</option>
-											<option value="2">Linguist</option>
-											<option value="3">Programmer</option>
-											<option value="4">Manager</option>
-											<option value="5">Scientist</option>
-											<option value="6">Artist</option>
+											
+											<c:forEach items="${professions}" var="profession">
+										  	 <option value="${profession.getId()}"> 
+										  	 	${profession.getName()} 
+										  	 </option> 
+											</c:forEach>
+											
 										</select>
 									</div>
 									<div class="input-field col s3" style="margin-top: 0em">
 										<p>Education</p>
 										<select id="education" name="education"
 											class="browser-default" style="margin-top: 0.75em">
+
 											<option value="PRIMARY">Primary</option>
 											<option value="LOWER_SECONDARY">Lower secondary</option>
 											<option value="UPPER_SECONDARY">Upper secondary</option>
