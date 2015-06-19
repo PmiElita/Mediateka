@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
 <div id="modal4" class="modal">
 	<div class="modal-content">
 
@@ -49,24 +53,26 @@
 										<p>Profession</p>
 										<select id="profession" name="profession"
 											class="browser-default" style="margin-top: 0.75em">
-											<option value="1">Chemist</option>
-											<option value="2">Linguist</option>
-											<option value="3">Programmer</option>
-											<option value="4">Manager</option>
-											<option value="5">Scientist</option>
-											<option value="6">Artist</option>
+
+											<c:forEach items="${professions}" var="profession">
+										  	 <option value="${profession.getId()}"> 
+										  	 	${profession.getName()} 
+										  	 </option> 
+											</c:forEach>
+
 										</select>
 									</div>
 									<div class="input-field col s3">
 										<p>Education</p>
 										<select id="education" name="education"
 											class="browser-default" style="margin-top: 0.75em">
-											<option value="Primary">Primary</option>
-											<option value="Lower secondary">Lower secondary</option>
-											<option value="Upper secondary">Upper secondary</option>
-											<option value="Bachelor">Bachelor</option>
-											<option value="Master">Master</option>
-											<option value="Doctoral">Doctoral</option>
+
+											<option value="PRIMARY">Primary</option>
+											<option value="LOWER_SECONDARY">Lower secondary</option>
+											<option value="UPPER_SECONDARY">Upper secondary</option>
+											<option value="BACHELOR">Bachelor</option>
+											<option value="MASTER">Master</option>
+											<option value="DOCTORAL">Doctoral</option>
 
 										</select>
 									</div>

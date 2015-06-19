@@ -28,6 +28,7 @@ import com.mediateka.service.UserService;
 import com.mediateka.util.EmailSender;
 import com.mediateka.util.FormValidator;
 import com.mediateka.util.ObjectFiller;
+import com.mediateka.util.RegExps;
 import com.mediateka.util.SaltedPasswordGenerator;
 import com.mediateka.util.SecurityStringGenerator;
 
@@ -119,15 +120,14 @@ public class RegisterUserController {
 
 		UserService.saveUser(newUser);
 
-		String emailBody = 
-				"<a href=\"http://localhost:8080/Mediateka/changePassword?token="
+		String emailBody = "<a href=\"http://localhost:8080/Mediateka/changePassword?token="
 				+ StringEscapeUtils.escapeHtml4(token)
 				+ "\"> click here to set new password </a>";
 
 		EmailSender.sendMail(form.getAddress(), "password setting link",
 				emailBody);
 
-		response.sendRedirect("index");
+		response.sendRedirect("cabinet");
 		return;
 	}
 
@@ -145,7 +145,7 @@ public class RegisterUserController {
 	 * @throws SQLException
 	 * @throws NoSuchAlgorithmException
 	 * @throws MessagingException
-	 * @throws ServletException 
+	 * @throws ServletException
 	 */
 	@Request(url = "anonymousRegisterNewUser", method = "post")
 	public static void anonymousRegisterNewUser(HttpServletRequest request,
@@ -218,18 +218,29 @@ public class RegisterUserController {
 
 		UserService.saveUser(newUser);
 
-		String emailBody = 
-				"<a href=\"http://localhost:8080/Mediateka/confirmRegistration?token="
+		String emailBody = "<a href=\"http://localhost:8080/Mediateka/confirmRegistration?token="
 				+ StringEscapeUtils.escapeHtml4(token)
 				+ "\"> click here to confirm your registration </a>";
 
-		EmailSender.sendMail(form.getEmail(),
-				"registration confirmation link", emailBody);
+		EmailSender.sendMail(form.getEmail(), "registration confirmation link",
+				emailBody);
 
-		request.getRequestDispatcher("pages/additional/post_register.jsp").forward(request, response);
+		request.getRequestDispatcher("pages/additional/post_register.jsp")
+				.forward(request, response);
 
 	}
 
+	/**
+	 * this method is called when user confirms his registration using token,
+	 * which is given in his email
+	 * 
+	 * @param request
+	 * @param response
+	 * @throws IOException
+	 * @throws ReflectiveOperationException
+	 * @throws SQLException
+	 * @throws ServletException
+	 */
 	@Request(url = "confirmRegistration", method = "get")
 	public static void confirmRegistration(HttpServletRequest request,
 			HttpServletResponse response) throws IOException,
@@ -253,14 +264,52 @@ public class RegisterUserController {
 
 		UserService.updateUser(user);
 
-		
-		
-		
 		request.setAttribute("notification",
 				"congratulations, your account is activated");
 		request.getRequestDispatcher("pages/index/index.jsp").forward(request,
 				response);
 
+		return;
+	}
+
+	/**
+	 * checks email if it's already in use
+	 * 
+	 * this code is used by javascript code to validate registration form on
+	 * frontend
+	 * 
+	 * @param request
+	 * @param response
+	 * @return true if you can use given email in registration form, false
+	 *         elsewise
+	 * @throws IOException
+	 * @throws SQLException
+	 * @throws ReflectiveOperationException
+	 */
+	@Request(url = "checkemail", method = "get")
+	public static void chechEmailForUse(HttpServletRequest request,
+			HttpServletResponse response) throws IOException,
+			ReflectiveOperationException, SQLException {
+
+		String email = request.getParameter("email");
+
+		if (email == null) {
+			response.getWriter().write("false");
+			return;
+		}
+
+		if (!email.matches(RegExps.EMAIL)) {
+			response.getWriter().write("false");
+			return;
+		}
+
+		User userWithSuchEmail = UserService.getUserByEmail(email);
+		if (userWithSuchEmail != null) {
+			response.getWriter().write("false");
+			return;
+		}
+
+		response.getWriter().write("true");
 		return;
 	}
 

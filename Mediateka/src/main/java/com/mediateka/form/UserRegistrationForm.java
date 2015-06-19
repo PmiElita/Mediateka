@@ -1,7 +1,9 @@
 package com.mediateka.form;
 
 import com.mediateka.annotation.DateField;
+import com.mediateka.annotation.EnumField;
 import com.mediateka.annotation.Validation;
+import com.mediateka.model.enums.EducationType;
 import com.mediateka.util.RegExps;
 
 public class UserRegistrationForm {
@@ -27,10 +29,10 @@ public class UserRegistrationForm {
 	@Validation(regexp=RegExps.ONLY_DIGITS, maxLength=8, minLength=1)
 	private String profession;
 	
-	@Validation(regexp=RegExps.ONLY_DIGITS, maxLength=8, minLength=1)
+	@EnumField(enumClass = EducationType.class)
 	private String education;
 	
-	@Validation(regexp=RegExps.ONLY_CHARS, maxLength=200, minLength=0)
+	@Validation(regexp=RegExps.ANY_CHARACTERS, maxLength=200, minLength=0)
 	private String institution;
 
 	@Validation(regexp=RegExps.EMAIL, maxLength=45, minLength=0)

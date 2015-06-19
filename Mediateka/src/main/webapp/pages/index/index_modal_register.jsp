@@ -60,7 +60,7 @@
 										<p>Profession</p>
 										<select id="profession" name="profession"
 											class="browser-default" style="margin-top: 0.75em">
-											
+
 											<c:forEach items="${professions}" var="profession">
 										  	 <option value="${profession.getId()}"> 
 										  	 	${profession.getName()} 
