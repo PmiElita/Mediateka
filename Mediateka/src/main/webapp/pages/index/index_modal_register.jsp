@@ -58,24 +58,24 @@
 										<p>Profession</p>
 										<select id="profession" name="profession"
 											class="browser-default" style="margin-top: 0.75em">
-											<option value="Chemist">Chemist</option>
-											<option value="Linguist">Linguist</option>
-											<option value="Programmer">Programmer</option>
-											<option value="Manager">Manager</option>
-											<option value="Scientist">Scientist</option>
-											<option value="Artist">Artist</option>
+											<option value="1">Chemist</option>
+											<option value="2">Linguist</option>
+											<option value="3">Programmer</option>
+											<option value="4">Manager</option>
+											<option value="5">Scientist</option>
+											<option value="6">Artist</option>
 										</select>
 									</div>
 									<div class="input-field col s3" style="margin-top: 0em">
 										<p>Education</p>
 										<select id="education" name="education"
 											class="browser-default" style="margin-top: 0.75em">
-											<option value="Primary">Primary</option>
-											<option value="Lower secondary">Lower secondary</option>
-											<option value="Upper secondary">Upper secondary</option>
-											<option value="Bachelor">Bachelor</option>
-											<option value="Master">Master</option>
-											<option value="Doctoral">Doctoral</option>
+											<option value="PRIMARY">Primary</option>
+											<option value="LOWER_SECONDARY">Lower secondary</option>
+											<option value="UPPER_SECONDARY">Upper secondary</option>
+											<option value="BACHELOR">Bachelor</option>
+											<option value="MASTER">Master</option>
+											<option value="DOCTORAL">Doctoral</option>
 
 										</select>
 									</div>

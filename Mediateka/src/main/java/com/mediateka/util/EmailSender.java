@@ -7,6 +7,8 @@ import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import org.apache.log4j.Logger;
+
 
 public class EmailSender {
 
@@ -16,6 +18,7 @@ public class EmailSender {
     private static final String password="ABab123456";
     private static final Properties properties = new Properties();
     
+    private static Logger logger = Logger.getLogger(EmailSender.class);
  
     static {
     	properties.put("mail.smtp.auth", "true");
@@ -49,6 +52,8 @@ public class EmailSender {
 		
 
 		message.setContent(body, "text/html; charset=utf-8");
+
+		logger.debug("send email to " + recipient);
 		
 		Transport.send(message);
 		

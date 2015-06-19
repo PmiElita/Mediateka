@@ -145,14 +145,16 @@ public class RegisterUserController {
 	 * @throws SQLException
 	 * @throws NoSuchAlgorithmException
 	 * @throws MessagingException
+	 * @throws ServletException 
 	 */
 	@Request(url = "anonymousRegisterNewUser", method = "post")
 	public static void anonymousRegisterNewUser(HttpServletRequest request,
 			HttpServletResponse response) throws ParseException,
 			SecurityException, IllegalArgumentException, IOException,
 			ReflectiveOperationException, SQLException,
-			NoSuchAlgorithmException, MessagingException {
+			NoSuchAlgorithmException, MessagingException, ServletException {
 
+		logger.debug("registering new user anonymously");
 		AnonymousUserRegistrationForm form = new AnonymousUserRegistrationForm();
 
 		ObjectFiller.fill(form, request);
@@ -175,6 +177,7 @@ public class RegisterUserController {
 		User userWithSuchEmail = UserService.getUserByEmail(form.getEmail());
 		if (userWithSuchEmail != null) {
 			// such email is already in use
+			logger.debug("given email is already in use");
 			response.sendRedirect("index");
 			return;
 		}
@@ -209,20 +212,21 @@ public class RegisterUserController {
 		newUser.setSalt(salt);
 		newUser.setPassword(SaltedPasswordGenerator.generate(
 				form.getPassword(), salt));
-		UserService.saveUser(newUser);
 
 		String token = SecurityStringGenerator.generateString(64);
 		newUser.setPasswordChangingToken(token);
+
+		UserService.saveUser(newUser);
 
 		String emailBody = 
 				"<a href=\"http://localhost:8080/Mediateka/confirmRegistration?token="
 				+ StringEscapeUtils.escapeHtml4(token)
 				+ "\"> click here to confirm your registration </a>";
 
-		EmailSender.sendMail(form.getAddress(),
+		EmailSender.sendMail(form.getEmail(),
 				"registration confirmation link", emailBody);
 
-		response.sendRedirect("index");
+		request.getRequestDispatcher("pages/additional/post_register.jsp").forward(request, response);
 
 	}
 
@@ -249,9 +253,12 @@ public class RegisterUserController {
 
 		UserService.updateUser(user);
 
+		
+		
+		
 		request.setAttribute("notification",
 				"congratulations, your account is activated");
-		request.getRequestDispatcher("pages/index.jsp").forward(request,
+		request.getRequestDispatcher("pages/index/index.jsp").forward(request,
 				response);
 
 		return;
