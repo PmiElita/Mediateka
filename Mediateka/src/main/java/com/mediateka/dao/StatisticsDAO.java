@@ -1,0 +1,55 @@
+package com.mediateka.dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+import com.mediateka.util.ConnectionManager;
+
+public class StatisticsDAO {
+
+	public static Map<String, Map<String, Integer>> getBookStatistics(
+			Date startTime, Date endTime) throws SQLException {
+
+		try (Connection connection = ConnectionManager.getConnection()) {
+
+			System.out.println("startTime: " + startTime);
+			System.out.println("endTime: " + endTime);
+			PreparedStatement statement = connection
+					.prepareStatement("CALL getBooksStatistics(?, ? );");
+
+			
+			
+			
+			statement.setTimestamp(1, new java.sql.Timestamp(startTime.getTime()));
+			statement.setTimestamp(2, new java.sql.Timestamp(endTime.getTime()));
+
+			statement.execute();
+			ResultSet rs = statement.getResultSet();
+			if (rs == null)
+				System.out.println("RS IS NULL");
+			Map<String, Map<String, Integer>> returnValue = new HashMap<String, Map<String, Integer>>();
+
+			while (rs.next()) {
+
+				String groupName = rs.getString("group");
+				String name = rs.getString("name");
+
+				Map<String, Integer> group = returnValue.get(groupName);
+				if (group == null) {
+					returnValue.put(groupName, new HashMap<String, Integer>());
+					group = returnValue.get(groupName);
+
+				}
+				group.put(name, rs.getInt("count"));
+			}
+
+			return returnValue;
+		}
+
+	}
+}
