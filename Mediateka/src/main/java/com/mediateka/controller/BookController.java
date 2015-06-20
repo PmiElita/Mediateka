@@ -43,7 +43,7 @@ public class BookController {
 		
 		
 		logger.debug((getBookTypeByState(State.ACTIVE) == null));
-		request.getRequestDispatcher("pages/fedunets12.06/create_book.jsp")
+		request.getRequestDispatcher("pages/books/create_book.jsp")
 				.forward(request, response);
 		request.removeAttribute("book_type");
 		request.removeAttribute("book_meaning");
@@ -157,7 +157,7 @@ public class BookController {
 			request.setAttribute("book_language",
 					getBookLanguageByState(State.ACTIVE));
 			request.setAttribute("message", message);
-			request.getRequestDispatcher("pages/fedunets12.06/create_book.jsp")
+			request.getRequestDispatcher("pages/books/create_book.jsp")
 					.forward(request, response);
 			request.removeAttribute("message");
 
@@ -171,7 +171,7 @@ public class BookController {
 					getBookLanguageByState(State.ACTIVE));
 			request.setAttribute("message", e.getMessage());
 
-			request.getRequestDispatcher("pages/fedunets12.06/create_book.jsp")
+			request.getRequestDispatcher("pages/books/create_book.jsp")
 					.forward(request, response);
 			request.removeAttribute("message");
 			request.removeAttribute("book_type");
@@ -203,7 +203,7 @@ public class BookController {
 		request.setAttribute("book_language",
 				getBookLanguageByState(State.ACTIVE));
 		request.setAttribute("book", book);
-		request.getRequestDispatcher("pages/fedunets12.06/update_book.jsp")
+		request.getRequestDispatcher("pages/books/update_book.jsp")
 				.forward(request, response);
 		;
 
