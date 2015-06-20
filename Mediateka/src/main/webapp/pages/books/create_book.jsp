@@ -35,7 +35,7 @@
 						<div class="input-field col s6">
 							<p>Book name</p>
 							<input id="name" name="name" type="text" class="validate"
-								pattern=".{1,45}">
+								pattern=".{1,45}" required>
 						</div>
 
 						<div class="input-field col s6">

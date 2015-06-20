@@ -31,7 +31,8 @@
 		<div class="row" style="margin-top: -1em">
 			<div class="col s12">
 				<ul class="tabs">
-					<li class="tab col s3"><a href="#my_events">My events</a></li>
+					<li class="tab col s3"><a href="#my_events"
+						style="margin-left: 5em">My events</a></li>
 					<li class="tab col s3"><a href="#all_events">All events</a></li>
 				</ul>
 			</div>

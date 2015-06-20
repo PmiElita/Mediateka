@@ -29,7 +29,7 @@
 
 			<div class="row" style="margin-left: -7em; margin-top: 4em">
 
-				<div class="col s4">
+				<div class="col s3">
 					<a title="Find book" href="" data-target="modal14"
 						class="modal-trigger">
 						<div class="col s12 m8 offset-m2 l6 offset-l3 my-card">
@@ -47,7 +47,7 @@
 					</a>
 				</div>
 
-				<div class="col s4">
+				<div class="col s3">
 					<a title="Create book" href="CreateBook">
 						<div class="col s12 m8 offset-m2 l6 offset-l3 my-card">
 							<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
@@ -63,14 +63,30 @@
 						</div>
 					</a>
 				</div>
-				<div class="col s4">
-					<a title="Update book" href="UpdateBook" >
+				<div class="col s3">
+					<a title="Update book" href="UpdateBook">
 						<div class="col s12 m8 offset-m2 l6 offset-l3 my-card">
 							<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
 								<div style="margin-top: 2em">
 									<div class="row valign-wrapper">
 										<div class="col s9">
 											<img src="images/admin/book_update.png" alt=""
+												class="responsive-img" />
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</a>
+				</div>
+				<div class="col s3">
+					<a title="Book statistics" href="bookStatistics">
+						<div class="col s12 m8 offset-m2 l6 offset-l3 my-card">
+							<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
+								<div style="margin-top: 2em">
+									<div class="row valign-wrapper">
+										<div class="col s9">
+											<img src="images/admin/book_statistics.png" alt=""
 												class="responsive-img" />
 										</div>
 									</div>

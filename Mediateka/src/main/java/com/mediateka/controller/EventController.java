@@ -39,7 +39,7 @@ public class EventController {
 	public static void EventCreateGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 
-		request.getRequestDispatcher("pages/fedunets12.06/create_event.jsp")
+		request.getRequestDispatcher("pages/events/create_event.jsp")
 				.forward(request, response);
 
 	}
@@ -49,7 +49,6 @@ public class EventController {
 			HttpServletResponse response) throws ParseException, SQLException,
 			ReflectiveOperationException, ServletException, IOException {
 
-		System.out.println("HERE");
 		try {
 
 			HttpSession session = request.getSession();
@@ -92,13 +91,13 @@ public class EventController {
 			String message = "Event created. ";
 
 			request.setAttribute("message", message);
-			request.getRequestDispatcher("pages/fedunets12.06/create_event.jsp")
+			request.getRequestDispatcher("pages/events/create_event.jsp")
 					.forward(request, response);
 			request.removeAttribute("message");
 		} catch (WrongInputException e) {
 			logger.warn("error at eventController", e);
 			request.setAttribute("message", e.getMessage());
-			request.getRequestDispatcher("pages/fedunets12.06/create_event.jsp")
+			request.getRequestDispatcher("pages/events/create_event.jsp")
 					.forward(request, response);
 			request.removeAttribute("message");
 		}
