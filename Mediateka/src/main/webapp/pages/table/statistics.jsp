@@ -15,14 +15,14 @@
 
 	<table border="1">
 		<tr>
-			<c:forEach var="group" items="${bookStatistics}">
+			<c:forEach var="group" items="${statistics}">
 				<td colspan="${group.value.size()}">${group.key}</td>
 			</c:forEach>
 		</tr>
 
 
 		<tr>
-			<c:forEach var="group" items="${bookStatistics}">
+			<c:forEach var="group" items="${statistics}">
 				<c:forEach var="name" items="${group.value}">
 					<td> ${name.key} </td>
 				</c:forEach>
@@ -31,7 +31,7 @@
 
 
 		<tr>
-			<c:forEach var="group" items="${bookStatistics}">
+			<c:forEach var="group" items="${statistics}">
 				<c:forEach var="name" items="${group.value}">
 					<td> ${name.value} </td>
 				</c:forEach>

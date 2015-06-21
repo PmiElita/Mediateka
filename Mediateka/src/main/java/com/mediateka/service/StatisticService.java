@@ -14,4 +14,13 @@ public class StatisticService {
 		return StatisticsDAO.getBookStatistics(startTime, endTime);
 	}
 
+	
+	public static Map<String, Map<String, Integer>> getUserStatistics(
+			Date startTime, Date endTime) throws SQLException {
+		
+		return StatisticsDAO.getUserStatistics(startTime, endTime);
+	}
+
+	
+
 }

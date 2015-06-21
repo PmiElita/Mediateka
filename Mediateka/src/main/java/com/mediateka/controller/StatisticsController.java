@@ -32,10 +32,29 @@ public class StatisticsController {
 		Map< String, Map<String, Integer> > bookStatistics = StatisticService.getBookStatistics(start, end);
 		
 		
-		request.setAttribute("bookStatistics", bookStatistics);
+		request.setAttribute("statistics", bookStatistics);
 		
 		
-		request.getRequestDispatcher("pages/books/book_statistics.jsp").forward(
+		request.getRequestDispatcher("pages/table/statistics.jsp").forward(
+				request, response);
+	}
+
+
+	@Request(url = "userStatistics", method = "get")
+	public static void getUserStatistics(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException, SQLException {
+
+		Date start = new Date(1000);
+		Date end = new Date(2000000000000L);
+		
+		
+		Map< String, Map<String, Integer> > userStatistics = StatisticService.getUserStatistics(start, end);
+		
+		
+		request.setAttribute("statistics", userStatistics);
+		
+		
+		request.getRequestDispatcher("pages/table/statistics.jsp").forward(
 				request, response);
 	}
 

@@ -52,4 +52,54 @@ public class StatisticsDAO {
 		}
 
 	}
+
+
+
+
+	public static Map<String, Map<String, Integer>> getUserStatistics(
+			Date startTime, Date endTime) throws SQLException {
+
+		try (Connection connection = ConnectionManager.getConnection()) {
+
+			System.out.println("startTime: " + startTime);
+			System.out.println("endTime: " + endTime);
+			PreparedStatement statement = connection
+					.prepareStatement("CALL getUserStatistics(?, ? );");
+
+			
+			
+			
+			statement.setDate(1, new java.sql.Date(startTime.getTime()));
+			statement.setDate(2, new java.sql.Date(endTime.getTime()));
+
+			statement.execute();
+			ResultSet rs = statement.getResultSet();
+			if (rs == null)
+				System.out.println("RS IS NULL");
+			Map<String, Map<String, Integer>> returnValue = new HashMap<String, Map<String, Integer>>();
+
+			while (rs.next()) {
+
+				String groupName = rs.getString("group");
+				String name = rs.getString("column_name");
+
+				Map<String, Integer> group = returnValue.get(groupName);
+				if (group == null) {
+					returnValue.put(groupName, new HashMap<String, Integer>());
+					group = returnValue.get(groupName);
+
+				}
+				group.put(name, rs.getInt("counter"));
+			}
+
+			return returnValue;
+		}
+
+	}
+
+
+
+
+
+
 }
