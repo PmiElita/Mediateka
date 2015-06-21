@@ -41,7 +41,7 @@ public class ContentGroup {
 	@Column(name = "dislike")
 	private Integer dislike;
 
-	@Column(name = "parentId")
+	@Column(name = "parent_id")
 	private Integer parentId;
 
 	public Integer getId() {

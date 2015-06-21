@@ -22,13 +22,13 @@
 	<form id="myForm" action="loadAlbum" method="post"
 		enctype="multipart/form-data">
 
-		<input type="text" placeholder="album name">
-		Files: <input type="file" id="images" name="images" multiple
-			onchange="readURL(this)"><br /> 
+		<input type="text" id = "name" name="name" placeholder="album name">
+		Files: <input type="file" id="image" name="image" multiple
+			onchange="readURL(this)" accept="image/*"><br /> 
 			<label id="number"
 			hidden="true">1</label>
 
-		<div id="selectedFiles"></div>
+		<div id="selectedFiles"></div>		
 
 		<input type="submit" value="upload">
 	</form>

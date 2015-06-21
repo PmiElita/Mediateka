@@ -3,14 +3,20 @@ package com.mediateka.dao.statement;
 public class ContentGroupStatements {
 	// insert
 	public static final String INSERT_CONTENT_GROUP = "INSERT INTO content_group "
-			+ "(type, name, creator_id, creator_date, text,"
-			+ " event_id, club_id, state, like,"
-			+ " dislike, parent_id)"
-			+ " VALUES (?,?,?,?,?,?,?,?,?,?,?) ";
+			+ "(type, name, creator_id, creation_date, text, "
+			+ "event_id, club_id, state, content_group.like, dislike, "
+			+ "parent_id) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 	public static final String[] INSERT_CONTENT_GROUP_ORDER = { "type", "name",
-			"creator_id", "creator_date", "text", "event_id", "club_id",
-			"state", "like", "dislike", "parent_id" };
+			"creator_id", "creation_date", "text", "event_id", "club_id",
+			"state", "like", "dislike",  "parent_id" };
 
+	
+	public static final String CALL_INSERT_CONTENT_GROUP = "CALL insertContentGroup (?,?,?,?,?,?,?,?,?,?,?)";
+	
+	public static final String[] CALL_INSERT_CONTENT_GROUP_ORDER = { "type", "name",
+		"creator_id", "creation_date", "text", "event_id", "club_id",
+		"state", "like", "dislike", "parent_id" };
+	
 	// select
 	public static final String SELECT_CONTENT_GROUP_BY_ID = "SELECT * FROM content_group WHERE id=?";
 	public static final String[] SELECT_CONTENT_GROUP_BY_ID_ORDER = { "id" };

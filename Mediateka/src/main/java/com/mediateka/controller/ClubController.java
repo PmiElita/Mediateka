@@ -13,12 +13,14 @@ import org.apache.log4j.Logger;
 
 import com.mediateka.annotation.Controller;
 import com.mediateka.annotation.Request;
+import com.mediateka.content.CreateContent;
 import com.mediateka.exception.WrongInputException;
 import com.mediateka.form.ClubRegistrationForm;
 import com.mediateka.model.Club;
 import com.mediateka.model.ClubEventMember;
 import com.mediateka.model.Media;
 import com.mediateka.model.enums.ClubEventMemberType;
+import com.mediateka.model.enums.ContentGroupType;
 import com.mediateka.model.enums.MediaType;
 import com.mediateka.model.enums.State;
 import com.mediateka.service.ClubEventMemberService;
@@ -66,7 +68,7 @@ public class ClubController {
 		club.setName(form.getName());
 		club.setDescription(form.getDescription());
 		club.setState(State.BLOCKED);
-		club.setAvaId(1);
+		club.setAvaId(2);
 		club = ClubService.callSaveClub(club);
 		clubEventMember.setClubId(club.getId());
 		clubEventMember.setUserId(Integer.parseInt(session.getAttribute(
@@ -75,7 +77,7 @@ public class ClubController {
 		clubEventMember.setType(ClubEventMemberType.CREATOR);
 		ClubEventMemberService.saveClubEventMember(clubEventMember);
 		File clubDir = new File(request.getServletContext().getRealPath("")
-				+ "media\\club\\club#" + club.getId());
+				+ "media\\club\\club" + club.getId());
 		clubDir.mkdirs();
 		new File(clubDir.getAbsolutePath() + "\\images").mkdir();
 		new File(clubDir.getAbsolutePath() + "\\video").mkdir();
@@ -88,12 +90,18 @@ public class ClubController {
 
 	@Request(url = "editClub", method = "get")
 	public static void editClubGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException, ReflectiveOperationException, SQLException {
+			HttpServletResponse response) throws ServletException, IOException,
+			ReflectiveOperationException, SQLException {
 		HttpSession session = request.getSession();
-		//change set atribute to atribute from sesion
-		Club club = ClubService.getClubById(5);
-		session.setAttribute("club", club);
-		request.setAttribute("clubAva", MediaService.getMediaById(club.getAvaId()).getPath().replace("\\", "/"));
+		// change set atribute to atribute from sesion
+		Club club = ClubService.getClubById(1);
+		session.setAttribute("clubId", club.getId());
+		request.setAttribute("club", ClubService.getClubById((Integer) request
+				.getSession().getAttribute("clubId")));
+		request.setAttribute(
+				"clubAva",
+				MediaService.getMediaById(club.getAvaId()).getPath()
+						.replace("\\", "/"));
 		request.getRequestDispatcher("pages/club/editClub.jsp").forward(
 				request, response);
 
@@ -103,55 +111,96 @@ public class ClubController {
 	public static void editClubPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			SQLException, ReflectiveOperationException {
-		String message = "wrong input data";
+
+		Club club = ClubService.getClubById((Integer) request.getSession()
+				.getAttribute("clubId"));
+		FileLoader fileLoader = new FileLoader();
+		fileLoader.loadFile(request, "club\\club" + club.getId());
+
+		Media media = new Media();
+
 		try {
-		
-			FileLoader fileLoader = new FileLoader();
-			fileLoader.loadFile(request, "club_ava");
-
-			Media media = new Media();
-			
-			Club club = (Club) request.getSession().getAttribute("club");
-
+			fileLoader.getAllFilePathes();
 			media.setType(MediaType.IMAGE);
-			media.setPath(fileLoader.getRelativePath());
-
-			media.setName(fileLoader.getDefaultFileName());
 			media.setState(State.ACTIVE);
+			media.setPath(fileLoader.getRelativePath());
+			media.setName(fileLoader.getDefaultFileName());
 			media = MediaService.callSaveMedia(media);
-			club.setName(fileLoader.getParameterMap().get(("club_name")));
-			club.setDescription(fileLoader.getParameterMap().get(
-					("club_description")));
-			club.setAvaId(media.getId());
-			ClubService.updateClub(club);
-			//ClubService.saveClub(club);
-			System.out.println(club);
-			System.out.println(media.getPath());
-			request.setAttribute("source", media.getPath().replace("\\", "/"));
-			request.getRequestDispatcher("club_home.jsp").forward(request,
-					response);
-
 		} catch (WrongInputException e) {
-			request.setAttribute("message", message);
-			request.getRequestDispatcher("pages/club/club.jsp").forward(request, response);
+			media = MediaService.getMediaById(club.getAvaId());
 		}
 
+		club.setName(fileLoader.getParameterMap().get(("club_name")));
+		club.setDescription(fileLoader.getParameterMap().get(
+				("club_description")));
+
+		club.setAvaId(media.getId());
+		ClubService.updateClub(club);
+		request.setAttribute("source", media.getPath().replace("\\", "/"));
+		request.getRequestDispatcher("pages/club/club.jsp").forward(request,
+				response);
+
 	}
 
-	@Request(url = "pages/club/loadAlbum", method = "post")
-	public static void createAlbum(HttpServletRequest request,
+	@Request(url = "loadAlbum", method = "get")
+	public static void createAlbumGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		session.setAttribute("clubId", 1);
+		session.setAttribute("userId", 2);
+		request.getRequestDispatcher("pages/club/loadAlbum.jsp").forward(
+				request, response);
 
+	}
+
+	@Request(url = "loadAlbum", method = "post")
+	public static void createAlbumPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException,
+			ReflectiveOperationException, SQLException {
+
+		HttpSession session = request.getSession();
+		Club club = ClubService.getClubById((Integer) session
+				.getAttribute("clubId"));
+		String type = "club" + session.getAttribute("clubId");
+		request.getAttribute("clubId");
+		CreateContent.createContent(request, ContentGroupType.IMAGE, type);
+		request.getRequestDispatcher("pages/club/club.jsp").forward(request,
+				response);
+
+	}
+
+	@Request(url = "record", method = "get")
+	public static void createRecordGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		session.setAttribute("clubId", 1);
+		session.setAttribute("userId", 2);
+		request.getRequestDispatcher("pages/club/record.jsp").forward(request,
+				response);
+		
 	}
 	
+	@Request(url = "record", method = "post")
+	public static void createRecordPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException, SQLException, ReflectiveOperationException {
+		HttpSession session = request.getSession();
+		String type = "club" + session.getAttribute("clubId");
+		CreateContent.createContent(request, ContentGroupType.COMMENT, type);
+		request.getRequestDispatcher("pages/club/club.jsp").forward(request,
+				response);
+	}
+
 	@Request(url = "club", method = "get")
-	public static void clubGet(HttpServletRequest request, HttpServletResponse response) throws ServletException,
-			IOException {
-		request.getRequestDispatcher("pages/club/club.jsp").forward(request, response);
+	public static void clubGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		request.getRequestDispatcher("pages/club/club.jsp").forward(request,
+				response);
 	}
 
 	@Request(url = "club_videos", method = "get")
-	public static void videosGet(HttpServletRequest request, HttpServletResponse response) throws ServletException,
-			IOException {
-		request.getRequestDispatcher("pages/club/club_videos.jsp").forward(request, response);
-	}}
+	public static void videosGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		request.getRequestDispatcher("pages/club/club_videos.jsp").forward(
+				request, response);
+	}
+}

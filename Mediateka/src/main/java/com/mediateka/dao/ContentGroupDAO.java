@@ -2,12 +2,16 @@ package com.mediateka.dao;
 
 import static com.mediateka.dao.statement.ContentGroupStatements.*;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import com.mediateka.dao.statement.ClubStatements;
+import com.mediateka.dao.statement.ContentGroupStatements;
+import com.mediateka.model.Club;
 import com.mediateka.model.ContentGroup;
 import com.mediateka.model.enums.ContentGroupType;
 import com.mediateka.model.enums.State;
@@ -24,6 +28,20 @@ public class ContentGroupDAO {
 			Transformer.valueIntoPreparedStatement(statement, contentGroup,
 					INSERT_CONTENT_GROUP_ORDER);
 			statement.executeUpdate();
+		}
+	}
+	
+	public static ContentGroup callSaveContentGroup(ContentGroup contentGroup) throws SQLException, ReflectiveOperationException{
+		try (Connection connection = ConnectionManager.getConnection()) {
+			CallableStatement statement = connection.prepareCall(ContentGroupStatements.CALL_INSERT_CONTENT_GROUP);
+			
+			Transformer.valueIntoPreparedStatement(statement, contentGroup,
+					ContentGroupStatements.CALL_INSERT_CONTENT_GROUP_ORDER);	
+			
+			ResultSet resultSet = statement.executeQuery();
+			
+			return Transformer.transformResultSetIntoObject(resultSet,
+					ContentGroup.class);
 		}
 	}
 

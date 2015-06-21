@@ -13,6 +13,10 @@ public class ContentGroupService {
 			throws SQLException, ReflectiveOperationException {
 		ContentGroupDAO.saveContentGroup(contentGroup);
 	}
+	
+	public static ContentGroup callSaveContentGroup(ContentGroup contentGroup) throws SQLException, ReflectiveOperationException{
+		return ContentGroupDAO.callSaveContentGroup(contentGroup);
+	}
 
 	public static ContentGroup getContentGroupById(Integer contentGroupId)
 			throws ReflectiveOperationException, SQLException {

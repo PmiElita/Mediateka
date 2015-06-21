@@ -17,10 +17,9 @@ public class Club {
 	@Column(name = "ava_id")
 	private Integer avaId;
 
-	@Column(name ="state")
+	@Column(name = "state")
 	private State state;
-	
-	
+
 	public State getState() {
 		return state;
 	}
@@ -61,10 +60,12 @@ public class Club {
 		this.avaId = avaId;
 	}
 
+
+
 	@Override
 	public String toString() {
 		return "Club [id=" + id + ", name=" + name + ", description="
-				+ description + ", creatorId="  + ", avaId=" + avaId
+				+ description + ", avaId=" + avaId + ", state=" + state
 				+ "]";
 	}
 

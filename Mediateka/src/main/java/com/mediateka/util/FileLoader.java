@@ -1,6 +1,8 @@
 package com.mediateka.util;
 
 import java.io.File;
+import java.io.FileInputStream;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -13,17 +15,23 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.tika.metadata.Metadata;
+import org.apache.tika.parser.AutoDetectParser;
+import org.apache.tika.sax.BodyContentHandler;
+import org.xml.sax.ContentHandler;
 
 import com.mediateka.exception.WrongInputException;
+import com.mediateka.model.enums.MediaType;
 
 public class FileLoader {
 
 	private static final int MAX_MEMORY_SIZE = 1024 * 1024 * 210;
 	private static final int MAX_REQUEST_SIZE = 1024 * 1024 * 210;
 
-	private List<String> defaultFileName = new ArrayList<String>();
-	private List<String> filePath = new ArrayList<String>();
+	private List<String> defaultFileNames = new ArrayList<String>();
+	private List<String> filePaths = new ArrayList<String>();
 	private HashMap<String, String> parameterMap = new HashMap<String, String>();
+	private List<MediaType> mediaTypes = new ArrayList<MediaType>();
 
 	public boolean loadFile(HttpServletRequest request, String folderName)
 			throws ServletException {
@@ -77,22 +85,38 @@ public class FileLoader {
 			while (iter.hasNext()) {
 				FileItem item = (FileItem) iter.next();
 
-				if (!item.isFormField()) {
-
+				if (item.getSize() > 0 && !item.isFormField()) {
+					mediaTypes.add(MediaType.valueOf(item.getFieldName()
+							.toUpperCase()));
 					String fileName = SecurityStringGenerator
 							.generateString(16);
-					defaultFileName.add(new File(item.getName()).getName());
+					defaultFileNames.add(new File(item.getName()).getName());
 					String extention = "";
-					if (defaultFileName.get(i).indexOf('.') != -1) {
-						extention = defaultFileName.get(i).substring(
-								defaultFileName.get(i).indexOf('.'));
-					}
-					filePath.add(uploadFolder + File.separator + fileName
-							+ extention);
-					File uploadedFile = new File(filePath.get(i));
+					if (defaultFileNames.get(i).indexOf('.') != -1) {
+						extention = defaultFileNames.get(i).substring(
+								defaultFileNames.get(i).indexOf('.'));
+					}					
+					String filePath = uploadFolder + "\\"
+							+ item.getFieldName().toLowerCase() + "s"
+							+ File.separator + fileName + extention;
+					filePaths.add(filePath);
+					File uploadedFile = new File(filePath);
 					item.write(uploadedFile);
 					isUploaded = true;
 					i++;
+					//open file					
+					Metadata metadata = new Metadata();
+					FileInputStream fileInputStream = new FileInputStream(uploadedFile);
+					AutoDetectParser parser = new AutoDetectParser();
+					ContentHandler contenthandler = new BodyContentHandler();
+					metadata.set(Metadata.RESOURCE_NAME_KEY, uploadedFile.getName());
+					parser.parse(fileInputStream, contenthandler, metadata);
+					if (item.getContentType().equals(
+							metadata.get(Metadata.CONTENT_TYPE)) == false) {
+						System.out.println(item.getContentType() + " "
+								+ metadata.get(Metadata.CONTENT_TYPE));
+						throw new WrongInputException("wrong file type");
+					}
 				} else {
 
 					parameterMap.put(item.getFieldName(),
@@ -118,57 +142,65 @@ public class FileLoader {
 	}
 
 	public String getDefaultFileName() throws WrongInputException {
-		if (defaultFileName.size() == 0) {
+		if (defaultFileNames.size() == 0) {
 			throw new WrongInputException("wrong file type");
 		}
-		return defaultFileName.get(0);
+		return defaultFileNames.get(0);
 	}
 
 	public void setDefaultFileName(String defaultFileName) {
-		this.defaultFileName.add(defaultFileName);
+		this.defaultFileNames.add(defaultFileName);
 	}
 
 	public String getFilePath() throws WrongInputException {
-		if (filePath.size() == 0) {
+		if (filePaths.size() == 0) {
 			throw new WrongInputException("wrong file type");
 		}
-		return filePath.get(0);
+		return filePaths.get(0);
 	}
 
 	public void setFilePath(String filePath) {
-		this.filePath.add(filePath);
+		this.filePaths.add(filePath);
 	}
 
 	public String getRelativePath() throws WrongInputException {
-		if (filePath.size() == 0) {
+		if (filePaths.size() == 0) {
 			throw new WrongInputException("wrong file type");
 		}
-		return filePath.get(0).substring(filePath.get(0).indexOf("media\\"));
+		return filePaths.get(0).substring(filePaths.get(0).indexOf("media\\"));
 	}
 
 	public List<String> getAllRelativePathes() throws WrongInputException {
-		if (filePath.size() == 0) {
+		if (filePaths.size() == 0) {
 			throw new WrongInputException("wrong file type");
 		}
 		List<String> relativePathes = new ArrayList<String>();
-		for (String path : filePath) {
+		for (String path : filePaths) {
 			relativePathes.add(path.substring(path.indexOf("media\\")));
 		}
 		return relativePathes;
 	}
 
 	public List<String> getAllFilePathes() throws WrongInputException {
-		if (filePath.size() == 0) {
+		if (filePaths.size() == 0) {
 			throw new WrongInputException("wrong file type");
 		}
-		return filePath;
+		return filePaths;
 	}
 
 	public List<String> getAllFileDefaultNames() throws WrongInputException {
-		if (defaultFileName.size() == 0) {
+		if (defaultFileNames.size() == 0) {
 			throw new WrongInputException("wrong file type");
 		}
-		return defaultFileName;
+		return defaultFileNames;
+	}
+
+	public List<MediaType> getMediaTypes() {
+		return mediaTypes;
+	}
+
+	public MediaType getMediaType() {
+		return mediaTypes.get(0);
 	}
 
 }
