@@ -91,6 +91,7 @@
 
 		for (var i = 0, len = storedFiles.length; i < len; i++) {
 			data.append('image', storedFiles[i]);
+			data.append('text', $('textarea#text').val());
 		}
 
 		var xhr = new XMLHttpRequest();
