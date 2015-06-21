@@ -15,7 +15,6 @@ function viewFile() {
 	if (document.getElementById('photo') != null) {
 		return "";
 	}
-
 	var numb = document.getElementById('number').innerText;
 	document.getElementById('number').innerText++;
 	alert(document.getElementById('number').innerText)

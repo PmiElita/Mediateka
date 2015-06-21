@@ -83,9 +83,20 @@ public class FileLoader {
 			Iterator<FileItem> iter = items.iterator();
 			int i = 0;
 			while (iter.hasNext()) {
+
 				FileItem item = (FileItem) iter.next();
 
 				if (item.getSize() > 0 && !item.isFormField()) {
+
+					if (item.getContentType()
+							.substring(0, item.getContentType().indexOf('/'))
+							.equals(item.getFieldName().toLowerCase()) == false) {
+						System.out.println(item.getContentType().substring(0,
+								item.getContentType().indexOf('/'))
+								+ " " + item.getFieldName().toLowerCase());
+						throw new WrongInputException("wrong input file type");
+					}
+
 					mediaTypes.add(MediaType.valueOf(item.getFieldName()
 							.toUpperCase()));
 					String fileName = SecurityStringGenerator
@@ -95,7 +106,7 @@ public class FileLoader {
 					if (defaultFileNames.get(i).indexOf('.') != -1) {
 						extention = defaultFileNames.get(i).substring(
 								defaultFileNames.get(i).indexOf('.'));
-					}					
+					}
 					String filePath = uploadFolder + "\\"
 							+ item.getFieldName().toLowerCase() + "s"
 							+ File.separator + fileName + extention;
@@ -104,17 +115,21 @@ public class FileLoader {
 					item.write(uploadedFile);
 					isUploaded = true;
 					i++;
-					//open file					
+					// open file
 					Metadata metadata = new Metadata();
-					FileInputStream fileInputStream = new FileInputStream(uploadedFile);
-					AutoDetectParser parser = new AutoDetectParser();
-					ContentHandler contenthandler = new BodyContentHandler();
-					metadata.set(Metadata.RESOURCE_NAME_KEY, uploadedFile.getName());
-					parser.parse(fileInputStream, contenthandler, metadata);
-					if (item.getContentType().equals(
+					try (FileInputStream fileInputStream = new FileInputStream(
+							uploadedFile)) {
+						AutoDetectParser parser = new AutoDetectParser();
+						ContentHandler contenthandler = new BodyContentHandler();
+						metadata.set(Metadata.RESOURCE_NAME_KEY,
+								uploadedFile.getName());
+						parser.parse(fileInputStream, contenthandler, metadata);
+					}
+					if (item.getContentType().equals(							
 							metadata.get(Metadata.CONTENT_TYPE)) == false) {
 						System.out.println(item.getContentType() + " "
 								+ metadata.get(Metadata.CONTENT_TYPE));
+						uploadedFile.delete();
 						throw new WrongInputException("wrong file type");
 					}
 				} else {

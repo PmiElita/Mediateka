@@ -163,7 +163,7 @@ public class ClubController {
 				.getAttribute("clubId"));
 		String type = "club" + session.getAttribute("clubId");
 		request.getAttribute("clubId");
-		CreateContent.createContent(request, ContentGroupType.IMAGE, type);
+		CreateContent.createContent(request, ContentGroupType.IMAGE);
 		request.getRequestDispatcher("pages/club/club.jsp").forward(request,
 				response);
 
@@ -185,7 +185,6 @@ public class ClubController {
 			HttpServletResponse response) throws ServletException, IOException, SQLException, ReflectiveOperationException {
 		HttpSession session = request.getSession();
 		String type = "club" + session.getAttribute("clubId");
-		CreateContent.createContent(request, ContentGroupType.COMMENT, type);
 		request.getRequestDispatcher("pages/club/club.jsp").forward(request,
 				response);
 	}

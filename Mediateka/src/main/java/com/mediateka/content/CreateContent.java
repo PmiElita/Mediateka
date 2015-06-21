@@ -28,11 +28,17 @@ import com.mediateka.util.FileLoader;
 public class CreateContent {
 	
 	
-	public static void createContent(HttpServletRequest request, ContentGroupType contentGroupType, String type) throws ServletException, SQLException, ReflectiveOperationException{		
+	public static void createContent(HttpServletRequest request, ContentGroupType contentGroupType) throws ServletException, SQLException, ReflectiveOperationException{		
 		
 		HttpSession session = request.getSession();
 		
 		FileLoader fileLoader = new FileLoader();
+		String type = null;
+		if(session.getAttribute("clubId") != null){
+			type = "club" + session.getAttribute("clubId");
+		} else if(session.getAttribute("eventId") != null){
+			type = "club" + session.getAttribute("clubId");
+		}
 		System.out.println(type.replaceAll("[0-9]", "") + "\\" + type);
 		fileLoader.loadFile(request, type.replaceAll("[0-9]", "") + "\\" + type);
 		ContentGroup contentGroup = new ContentGroup();
@@ -49,7 +55,7 @@ public class CreateContent {
 		contentGroup = ContentGroupService.callSaveContentGroup(contentGroup);
 		try {
 			for(int i = 0; i < fileLoader.getAllFilePathes().size(); i++){
-				Media media = new Media();
+				Media media = new Media();			
 				System.out.println(fileLoader.getFilePath());
 				media.setType(fileLoader.getMediaTypes().get(i));
 				media.setState(State.ACTIVE);
@@ -57,7 +63,7 @@ public class CreateContent {
 				media.setName(fileLoader.getAllFileDefaultNames().get(i));
 				media.setContentGroupId(contentGroup.getId());
 				Path source = Paths.get(fileLoader.getFilePath());
-				try {
+				try {					
 					System.out.println(Files.probeContentType(source));
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
