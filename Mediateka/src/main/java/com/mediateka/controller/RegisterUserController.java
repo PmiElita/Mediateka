@@ -124,7 +124,7 @@ public class RegisterUserController {
 				+ StringEscapeUtils.escapeHtml4(token)
 				+ "\"> click here to set new password </a>";
 
-		EmailSender.sendMail(form.getAddress(), "password setting link",
+		EmailSender.sendMail(form.getEmail(), "password setting link",
 				emailBody);
 
 		response.sendRedirect("cabinet");
