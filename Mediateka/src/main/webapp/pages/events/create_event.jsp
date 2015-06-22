@@ -50,16 +50,24 @@
 
 					<div class="row" style="margin-bottom: 0em">
 						<p id="wrongDate"></p>
-						<div class="input-field col s6">
+						<div class="input-field col s3">
 							<p>Event date from:</p>
 							<input name="dateFrom" id="dateFrom" type="date" class="validate"
 								required onchange="dateChange()">
 						</div>
 
-						<div class="input-field col s6">
+						<div class="input-field col s3">
 							<p>Event date till:</p>
 							<input name="dateTill" id="dateTill" type="date" class="validate"
 								required onchange="dateChange()">
+						</div>
+
+						<div class="input-field col s3">
+							<jsp:include page="../additional/time_picker_from.jsp"/>
+						</div>
+
+						<div class="input-field col s3">
+							<jsp:include page="../additional/time_picker_till.jsp"/>
 						</div>
 
 					</div>
