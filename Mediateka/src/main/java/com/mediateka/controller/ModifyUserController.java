@@ -53,6 +53,8 @@ public class ModifyUserController {
 		request.setAttribute("address", me.getAdress());
 		request.setAttribute("phone", me.getPhone());
 		
+		request.setAttribute("professions", ProfessionService.getProfessionAll());
+		
 		request.getRequestDispatcher("pages/form/modify_user_form.jsp")
 				.forward(request, response);
 	}

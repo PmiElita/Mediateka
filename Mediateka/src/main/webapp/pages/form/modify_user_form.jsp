@@ -1,5 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
+<fmt:setLocale value="${cookie.lang.value}" />
+<fmt:setBundle basename="translations/user_modification_form" var="msg"/>
+
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -14,72 +23,111 @@
 	<form action="modifyUser" method="post">
 
 		<div class="input-field col s3">
-			<p>First name</p>
-			<input id="firstName" name="firstName" type="text" class="validate" value="${firstName }" >
+			<p>
+				<fmt:message bundle="${msg}" key="first_name" />
+			</p>
+			<input id="firstName" name="firstName" type="text" class="validate"
+				value="${firstName }">
 		</div>
 		<div class="input-field col s3">
-			<p>Last name</p>
-			<input id="lastName" name="lastName" type="text" class="validate" value="${lastName }" >
+			<p>
+				<fmt:message bundle="${msg}" key="last_name" />
+			</p>
+			<input id="lastName" name="lastName" type="text" class="validate"
+				value="${lastName }">
 		</div>
 		<div class="input-field col s3">
-			<p>Middle name</p>
-			<input id="middleName" name="middleName" type="text" class="validate" value="${middleName }">
+			<p>
+				<fmt:message bundle="${msg}" key="middle_name" />
+			</p>
+			<input id="middleName" name="middleName" type="text" class="validate"
+				value="${middleName }">
 		</div>
 
 		<div class="input-field col s3" style="margin-top: 0.5em">
-			<p>Nationality</p>
+			<p>
+				<fmt:message bundle="${msg}" key="nationality" />
+			</p>
 			<input id="nationality" name="nationality" type="text"
-				class="validate" value="${nationality }" >
+				class="validate" value="${nationality }">
 		</div>
 		<div class="input-field col s3">
-			<p>Profession</p>
+			<p>
+				<fmt:message bundle="${msg}" key="profession" />
+			</p>
 			<select id="profession" name="profession" class="browser-default"
 				style="margin-top: 0.75em">
-				<option value="1">Chemist</option>
-				<option value="2">Linguist</option>
-				<option value="3">Programmer</option>
-				<option value="4">Manager</option>
-				<option value="5">Scientist</option>
-				<option value="6">Artist</option>
+				<c:forEach items="${professions}" var="profession">
+					<option value="${profession.getId()}">
+						<fmt:message bundle="${msg}"
+							key="profession.${profession.getName()}" />
+					</option>
+				</c:forEach>
 			</select>
 		</div>
 		<div class="input-field col s3">
-			<p>Education</p>
+			<p>
+				<fmt:message bundle="${msg}" key="education" />
+			</p>
 			<select id="education" name="education" class="browser-default"
 				style="margin-top: 0.75em">
-				<option value="Primary">Primary</option>
-				<option value="Lower secondary">Lower secondary</option>
-				<option value="Upper secondary">Upper secondary</option>
-				<option value="Bachelor">Bachelor</option>
-				<option value="Master">Master</option>
-				<option value="Doctoral">Doctoral</option>
+				<option value="PRIMARY">
+					<fmt:message bundle="${msg}" key="education.primary" />
+				</option>
+				<option value="LOWER_SECONDARY">
+					<fmt:message bundle="${msg}" key="education.lower_secondary" />
+				</option>
+				<option value="UPPER_SECONDARY">
+					<fmt:message bundle="${msg}" key="education.upper_secondary" />
+				</option>
+				<option value="BACHELOR">
+					<fmt:message bundle="${msg}" key="education.bachelor" />
+				</option>
+				<option value="MASTER">
+					<fmt:message bundle="${msg}" key="education.master" />
+				</option>
+				<option value="DOCTORAL">
+					<fmt:message bundle="${msg}" key="education.doctoral" />
+				</option>
 
 			</select>
 		</div>
 		<div class="input-field col s3" style="margin-top: 0em">
-			<p>Institution</p>
+			<p>
+				<fmt:message bundle="${msg}" key="institution" />
+			</p>
 			<input id="eduInstitution" name="institution" type="text"
-				class="validate" style="margin-top: 0.75em" value="${eduInstitution }">
+				class="validate" style="margin-top: 0.75em"
+				value="${eduInstitution }">
 		</div>
 
 		<div class="input-field col s3">
-			<p>Birth date</p>
-			<input id="birthDate" name="birthDate" type="date" class="datepicker" value="${birthDate }">
+			<p>
+				<fmt:message bundle="${msg}" key="birth_date" />
+			</p>
+			<input id="birthDate" name="birthDate" type="date" class="datepicker"
+				value="${birthDate }">
 		</div>
 
 		<div class="input-field col s3">
-			<p>Address</p>
-			<input id="adress" name="address" type="text" class="validate" value="${address }">
+			<p>
+				<fmt:message bundle="${msg}" key="address" />
+			</p>
+			<input id="adress" name="address" type="text" class="validate"
+				value="${address }">
 		</div>
 		<div class="input-field col s3">
-			<p>Phone</p>
-			<input id="phone" name="phone" type="text" class="validate" value="${phone }">
+			<p>
+				<fmt:message bundle="${msg}" key="phone" />
+			</p>
+			<input id="phone" name="phone" type="text" class="validate"
+				value="${phone }">
 		</div>
 
 
 		<button class="btn waves-effect blue titler" type="submit"
 			name="action" style="margin-bottom: 3.5em">
-			change data<i class="mdi-content-send right"></i>
+			<fmt:message bundle="${msg}" key="button" /><i class="mdi-content-send right"></i>
 		</button>
 
 	</form>
