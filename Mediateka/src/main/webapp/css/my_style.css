@@ -1,25 +1,25 @@
 .nav-wrapper a img {
-	width: 3em;
-	height: 2em;
+	width: 3.0em;
+	height: 2.0em;
 }
 
 section {
-	padding: 1em;
+	padding: 1.0em;
 }
 
 #top-user-name {
-	-webkit-transition: padding 2s;
+	-webkit-transition: padding 2.0s;
 	background-color: #fff;
 }
 
 #top-user-name:hover {
-	-webkit-transition: border-radius 2s;
+	-webkit-transition: border-radius 2.0s;
 	background-color: #fff;
 }
 
 .main-info {
-	padding-bottom: 2em;
-	width: 73%;
+	padding-bottom: 2.0em;
+	width: 73.0%;
 	margin: auto;
 }
 
@@ -30,15 +30,15 @@ section {
 }
 
 .modal .modal-content #creation_form .container {
-	margin-top: 1em;
+	margin-top: 1.0em;
 }
 
 .modal .modal-content #creation_form .container .row {
-	margin-top: -2em;
+	margin-top: -2.0em;
 }
 
 .modal .modal-content #creation_form .container {
-	margin-top: 5em;
+	margin-top: 5.0em;
 }
 
 
@@ -47,35 +47,35 @@ section {
 }
 
 .my-picture-row {
-	margin-top: 2em;
-	margin-bottom: 0em;
+	margin-top: 2.0em;
+	margin-bottom: 0.0em;
 }
 
 .row .my-picture-wrap {
-	margin-left:-6em;
-	height: 10em;
-	width: 50em;
+	margin-left:-6.0em;
+	height: 10.0em;
+	width: 50.0em;
 	background-color: #eeeeee;
 }
 
 .my-picture-wrap .my-picture {
 	background-size: cover;
 	background-position: center;
-	margin-left: 20em;
+	margin-left: 20.0em;
 }
 
 .my-parallax {
 	min-height: 35.8em;
-	width: 100%;
+	width: 100.0%;
 }
 
 .my-admin-card {
-	width: 12em;
-	height: 12em;
+	width: 12.0em;
+	height: 12.0em;
 }
 
 .section white .container #infoText {
-	height: 20em;
+	height: 20.0em;
 }
 
 .my-card:hover {
@@ -84,69 +84,59 @@ section {
 }
 
 .my-card img {
-	margin-top: -1em;
-	margin-left: 1em;
+	margin-top: -1.0em;
+	margin-left: 1.0em;
 }
 
 .my-badge {
 	color: #03a9f4;
-	margin-top: 1em;
-	font-size: 2em;
+	margin-top: 1.0em;
+	font-size: 2.0em;
 }
 
 .club-badge {
 	color: #03a9f4;
 	margin-top: 1.5em;
-	font-size: 2em;
+	font-size: 2.0em;
 }
 
 .profile-tooltipped span {
-	background-color: rgba(255, 255, 255, 0.9);
-	border-radius: 15px 15px 15px 0px;
-	box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5);
+	background-color: rgba(255.0, 255.0, 255.0, 0.9);
+	border-radius: 15.0px 15.0px 15.0px 0.0px;
+	box-shadow: 1.0px 1.0px 10.0px rgba(0.0, 0.0, 0.0, 0.5);
 	color: #000;
-	margin-left: -200px;
-	margin-top: 60px;
-	opacity: 0;
-	padding: 10px 10px 10px 20px;
+	margin-left: -200.0px;
+	margin-top: 60.0px;
+	opacity: 0.0;
+	padding: 10.0px 10.0px 10.0px 20.0px;
 	position: absolute;
 	text-decoration: none;
 	visibility: hidden;
-	width: 300px;
-	min-height: 10em;
-	z-index: 100;
+	width: 300.0px;
+	min-height: 10.0em;
+	z-index: 100.0;
 }
 
 .profile-tooltipped:hover span {
-	opacity: 1;
+	opacity: 1.0;
 	visibility: visible;
 }
 
 .profile-tooltipped span img {
-	border: 0 none;
+	border: 0.0 none;
 	float: left;
-	opacity: 0;
+	opacity: 0.0;
 	position: absolute;
 	visibility: hidden;
-	z-index: -1;
+	z-index: -1.0;
 }
 
 .profile-tooltipped:hover span img {
-	opacity: 1;
+	opacity: 1.0;
 	visibility: visible;
 }
 
 .profile-tooltipped span p {
-	margin-left: 6em;
-	margin-bottom: -3em;
-}
-
-.image-cover-text {
-	position: absolute;
-	margin-left: 6em;
-	margin-top: 1em;
-	text-shadow: white 1px 0px, white 1px 1px, white 0px 1px, white -1px 1px, white
-		-1px 0px, white -1px -1px, white 0px -1px, white 1px -1px, white 0 0 3px, white
-		0 0 3px, white 0 0 3px, white 0 0 3px, white 0 0 3px, white 0 0 3px, white 0 0
-		3px, white 0 0 3px;
+	margin-left: 6.0em;
+	margin-bottom: -3.0em;
 }
