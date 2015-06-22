@@ -11,6 +11,10 @@
 <fmt:requestEncoding value="utf-8" />
 
 <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script src= "js/eventCreation.js"></script>
+<script src="js/jquery-2.1.4.min.js"></script>
+<script src="js/date.js"></script>
 <jsp:include page="../general/head.jsp" />
 </head>
 
@@ -42,34 +46,42 @@
 
 						<div class="input-field col s6" style="margin-top:6em">
 							Event type:<input type="radio" name="type" value="MEETING"
-								onclick="handleClick(this);" checked>meeting <input
+								onclick="handleClick(this);">meeting <input
 								type="radio" name="type" value="EXHIBITION"
-								onclick="handleClick(this);">exhibition<br>
+								onclick="handleClick(this);" checked>exhibition<br>
 						</div>
 					</div>
 
 					<div class="row" style="margin-bottom: 0em">
+						<div class="row">
 						<p id="wrongDate"></p>
-						<div class="input-field col s3">
-							<p>Event date from:</p>
-							<input name="dateFrom" id="dateFrom" type="date" class="validate"
-								required onchange="dateChange()">
 						</div>
-
-						<div class="input-field col s3">
-							<p>Event date till:</p>
-							<input name="dateTill" id="dateTill" type="date" class="validate"
-								required onchange="dateChange()">
+						<div class="row">
+						<div class="input-field col s6">
+							<p id="labelDateFrom">Date from:</p>
+							<p></p>
+							<input class="datepicker" name="dateFrom" id="dateFrom" required onchange="dateChange()">
 						</div>
-
-						<div class="input-field col s3">
-							<jsp:include page="../additional/time_picker_from.jsp"/>
+						
+						<div class="input-field col s6">
+							<p id="labelTimeFrom" style="visibility:hidden;">Time from:</p>
+							<input class="timepicker" name="timeFrom" id="timeFrom" required onchange="dateChange()" style="visibility:hidden;">
 						</div>
-
-						<div class="input-field col s3">
-							<jsp:include page="../additional/time_picker_till.jsp"/>
 						</div>
-
+						
+						<div class="row">
+						<div class="delete-add" id="delete-add">
+						<div class="input-field col s6">
+							<p id="labelDateTill" style="visibility:visible;">Date till:</p>
+							<input class="datepicker" name="dateTill" id="dateTill" onchange="dateChange()" style="visibility:visible;">
+						</div>
+						</div>
+						
+						<div class="input-field col s6">
+							<p id="labelTimeTill" style="visibility:hidden;">Time till:</p>
+							<input class="timepicker" name="timeTill" id="timeTill" required onchange="dateChange()" style="visibility:hidden;">
+						</div>
+						</div>
 					</div>
 
 					<div class="row">

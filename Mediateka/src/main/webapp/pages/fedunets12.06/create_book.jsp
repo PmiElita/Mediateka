@@ -41,7 +41,7 @@
     			<option value="${languages.getId()}"><c:out value="${languages.getName()}"/></option>
     		</c:forEach>
    		</select></p>
-   		Book title:<input type="file" name="image" placeholder="book cover screenshot..." onchange="readURL(this);"><img id="photo" src=""><br>
+   		Book title:<input type="file" name="image" id="image" placeholder="book cover screenshot..." onchange="readURL(this);"><img id="photo" src=""><br>
    		<input type="submit" value="Create book">
 	</form>
 </body>

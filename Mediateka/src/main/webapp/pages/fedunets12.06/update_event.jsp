@@ -28,20 +28,21 @@
 <body>
 	${message}
 	<form name="updateEvent" id="update_event" action="UpdateEvent" method="post" enctype="multipart/form-data">
-		Event name:<input type="text" name="name" placeholder="event name..." pattern=".{1,45}" value="${event.getName()}"><br>
+		Event name:<input type="text" name="name" placeholder="event name..." required pattern=".{1,45}" value="${event.getName()}"><br>
 		<c:choose>
 		<c:when test="${event.type eq EventType.MEETING}">
-		Event type:<input type="radio" name="type" value="meeting" checked>meeting<input type="radio" name="type" value="exhibition">exhibition<br>
+		Event type:<input type="radio" name="type" value="meeting" onclick="handleClick(this);" checked>meeting<input type="radio" name="type" value="exhibition" onclick="handleClick(this);">exhibition<br>
 		</c:when>
 		<c:otherwise>
-		Event type:<input type="radio" name="type" value="meeting">meeting<input type="radio" name="type" value="exhibition" checked>exhibition<br>
+		Event type:<input type="radio" name="type" value="meeting" onclick="handleClick(this);">meeting<input type="radio" name="type" value="exhibition" onclick="handleClick(this);" checked>exhibition<br>
 		</c:otherwise>
 		</c:choose>
 		<p id="wrongDate"></p>
-		Event date from:<input type="date" name="dateFrom" id="dateFrom" required onchange="dateChange()" value="${dateFrom}"><br>
-		Event date till:<input type="date" name="dateTill" id="dateTill" required onchange="dateChange()" value="${dateTill}"><br>
-		Event description:<textarea type="textarea" name="description" placeholder="event description..." pattern=".{1,255}"><c:out value="${event.getDescription()}"/></textarea><br>
-		Event avatar:<input type="file" name="image" placeholder="event avatar..." value="#" onchange="readURL(this);"><img id="photo" src="${imagePath}"><br>
+		<label for="dateFrom" id="labelDateFrom">Event date:</label><input type="date" name="dateFrom" id="dateFrom" required onchange="dateChange()" value="${dateFrom}"><br>
+		<label for="timeFrom" id="labelTimeFrom">Event time from:</label><input type="time" name="timeFrom" id="timeFrom" required onchange="dateChange()"><br>
+		<label for="dateTimeTill" id="labelDateTimeTill">Event time till:</label><input type="date" name="dateTill" id="dateTill" required onchange="dateChange()" value="${dateTill}"><br>
+		Event description:<textarea type="textarea" name="description" placeholder="event description..." required pattern=".{1,255}"><c:out value="${event.getDescription()}"/></textarea><br>
+		Event avatar:<input type="file" name="image" id="image" placeholder="event avatar..." value="#" onchange="readURL(this);"><img id="photo" src="${imagePath}"><br>
 		<c:choose>
 		<c:when test="${event.state eq State.ACTIVE}">
 		Event state:<input type="radio" name="state" value="active" checked>active <input type="radio" name="state" value="blocked">blocked<br>

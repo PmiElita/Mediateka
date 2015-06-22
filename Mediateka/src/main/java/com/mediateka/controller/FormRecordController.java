@@ -240,7 +240,7 @@ public class FormRecordController {
 			int minute = Integer.parseInt(array[1]);
 			if (hour > 23 || hour < 0 || minute > 59 || minute < 0)
 				throw new NumberFormatException();
-		} catch (NumberFormatException e) {
+		} catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
 			result = false;
 		}
 		return result;

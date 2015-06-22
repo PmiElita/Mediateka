@@ -67,7 +67,7 @@
     		</c:choose>
     		</c:forEach>
    		</select></p>
-   		Book title:<input type="file" name="image" placeholder="book cover screenshot..." value="${book.getMediaId()}" onchange="readURL(this);"><img id="photo" src="${imagePath}"><br>
+   		Book title:<input type="file" name="image" id="image" placeholder="book cover screenshot..." value="${book.getMediaId()}" onchange="readURL(this);"><img id="photo" src="${imagePath}"><br>
    		Book state:<c:choose>
    				   <c:when test="${book.getState()==State.ACTIVE}">
    				   <input type="radio" name="state" value="ACTIVE" checked>active

@@ -150,7 +150,7 @@
 										<p>
 											<fmt:message bundle="${msg}" key="registration.email" />
 										</p>
-										<input id="email" name="email" type="text" class="validate">
+										<input id="email" name="email" type="email" class="validate">
 									</div>
 									<div class="input-field col s3">
 										<p>

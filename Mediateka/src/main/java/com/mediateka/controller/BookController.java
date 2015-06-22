@@ -1,5 +1,6 @@
 package com.mediateka.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -40,10 +41,9 @@ public class BookController {
 				getBookMeaningByState(State.ACTIVE));
 		request.setAttribute("book_language",
 				getBookLanguageByState(State.ACTIVE));
-		
-		
+
 		logger.debug((getBookTypeByState(State.ACTIVE) == null));
-		request.getRequestDispatcher("pages/books/create_book.jsp")
+		request.getRequestDispatcher("pages/fedunets12.06/create_book.jsp")
 				.forward(request, response);
 		request.removeAttribute("book_type");
 		request.removeAttribute("book_meaning");
@@ -56,6 +56,8 @@ public class BookController {
 			SecurityException, IllegalArgumentException, SQLException,
 			ReflectiveOperationException {
 		try {
+			new File(request.getServletContext().getRealPath("")
+					+ "media\\book ava\\images").mkdir();
 			FileLoader fileLoader = new FileLoader();
 			fileLoader.loadFile(request, "book ava");
 			HashMap<String, String> parameterMap = fileLoader.getParameterMap();
@@ -84,7 +86,7 @@ public class BookController {
 			} else {
 				try {
 					meaningId = Integer.parseInt(parameterMap.get("meaning"));
-					if (getBookMeaningById(meaningId).getName() == null) {
+					if (getBookMeaningById(meaningId) == null) {
 
 						throw new WrongInputException("No such book meaning. ");
 					}
@@ -102,7 +104,7 @@ public class BookController {
 			} else {
 				try {
 					typeId = Integer.parseInt(parameterMap.get("type"));
-					if (getBookTypeById(typeId).getName() == null) {
+					if (getBookTypeById(typeId) == null) {
 
 						throw new WrongInputException("No such book type. ");
 					}
@@ -120,7 +122,7 @@ public class BookController {
 			} else {
 				try {
 					languageId = Integer.parseInt(parameterMap.get("language"));
-					if (getBookLanguageById(languageId).getName() == null) {
+					if (getBookLanguageById(languageId) == null) {
 
 						throw new WrongInputException("No such book language. ");
 					}
@@ -132,11 +134,17 @@ public class BookController {
 
 			// book media valid
 			Media media = new Media();
-			media.setName(fileLoader.getDefaultFileName());
-			media.setPath(fileLoader.getRelativePath());
-			media.setType(MediaType.IMAGE);
-			media.setState(State.ACTIVE);
-			media = callSaveMedia(media);
+			try {
+				fileLoader.getAllFilePathes();
+				media = new Media();
+				media.setName(fileLoader.getDefaultFileName());
+				media.setPath(fileLoader.getRelativePath());
+				media.setType(MediaType.IMAGE);
+				media.setState(State.ACTIVE);
+				media = callSaveMedia(media);
+			} catch (WrongInputException e) {
+				media = getMediaById(2);
+			}
 
 			// logic
 
@@ -157,10 +165,10 @@ public class BookController {
 			request.setAttribute("book_language",
 					getBookLanguageByState(State.ACTIVE));
 			request.setAttribute("message", message);
-			request.getRequestDispatcher("pages/books/create_book.jsp")
+
+			request.getRequestDispatcher("pages/fedunets12.06/create_book.jsp")
 					.forward(request, response);
 			request.removeAttribute("message");
-
 		} catch (WrongInputException e) {
 			logger.warn(e);
 
@@ -171,7 +179,7 @@ public class BookController {
 					getBookLanguageByState(State.ACTIVE));
 			request.setAttribute("message", e.getMessage());
 
-			request.getRequestDispatcher("pages/books/create_book.jsp")
+			request.getRequestDispatcher("pages/fedunets12.06/create_book.jsp")
 					.forward(request, response);
 			request.removeAttribute("message");
 			request.removeAttribute("book_type");
@@ -203,14 +211,175 @@ public class BookController {
 		request.setAttribute("book_language",
 				getBookLanguageByState(State.ACTIVE));
 		request.setAttribute("book", book);
-		request.getRequestDispatcher("pages/books/update_book.jsp")
+		request.getRequestDispatcher("pages/fedunets12.06/update_book.jsp")
 				.forward(request, response);
-		;
 
 		request.removeAttribute("book");
 		request.removeAttribute("book_type");
 		request.removeAttribute("book_meaning");
 		request.removeAttribute("book_language");
 		request.removeAttribute("imagePath");
+	}
+
+	@Request(url = "UpdateBook", method = "post")
+	public static void bookUpdatePost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException,
+			SQLException, ReflectiveOperationException {
+		try {
+			FileLoader fileLoader = new FileLoader();
+			fileLoader.loadFile(request, "book ava");
+			HashMap<String, String> parameterMap = fileLoader.getParameterMap();
+
+			// book name valid
+			if (parameterMap.get("name") == null
+					|| parameterMap.get("name").equals("")) {
+				throw new WrongInputException("Book name is empty. ");
+			} else if (parameterMap.get("name").length() > 45) {
+				throw new WrongInputException("Book name to long. ");
+			}
+
+			// book author valid
+			if (parameterMap.get("author") == null
+					|| parameterMap.get("author").equals("")) {
+				throw new WrongInputException("Book author is empty. ");
+			} else if (parameterMap.get("author").length() > 45) {
+				throw new WrongInputException("Book author to long. ");
+			}
+
+			// book meaning valid
+			int meaningId = -1;
+			if (parameterMap.get("meaning") == null
+					|| parameterMap.get("meaning").equals("")) {
+				throw new WrongInputException("Book meaning is empty. ");
+			} else {
+				try {
+					meaningId = Integer.parseInt(parameterMap.get("meaning"));
+					if (getBookMeaningById(meaningId) == null) {
+
+						throw new WrongInputException("No such book meaning. ");
+					}
+				} catch (NumberFormatException e) {
+					throw new WrongInputException("No such book meaning. ");
+				}
+			}
+
+			// book type valid
+			int typeId = -1;
+			if (parameterMap.get("type") == null
+					|| parameterMap.get("type").equals("")) {
+
+				throw new WrongInputException("Book type is empty. ");
+			} else {
+				try {
+					typeId = Integer.parseInt(parameterMap.get("type"));
+					if (getBookTypeById(typeId) == null) {
+
+						throw new WrongInputException("No such book type. ");
+					}
+				} catch (NumberFormatException e) {
+					throw new WrongInputException("No such book type. ");
+				}
+			}
+
+			// book language valid
+			int languageId = -1;
+			if (parameterMap.get("language") == null
+					|| parameterMap.get("language").equals("")) {
+
+				throw new WrongInputException("Book language is empty. ");
+			} else {
+				try {
+					languageId = Integer.parseInt(parameterMap.get("language"));
+					if (getBookLanguageById(languageId) == null) {
+
+						throw new WrongInputException("No such book language. ");
+					}
+				} catch (NumberFormatException e) {
+					throw new WrongInputException("No such book language. ");
+
+				}
+			}
+
+			// book media valid
+			Media media = new Media();
+			try {
+				fileLoader.getAllFilePathes();
+				media = new Media();
+				media.setName(fileLoader.getDefaultFileName());
+				media.setPath(fileLoader.getRelativePath());
+				media.setType(MediaType.IMAGE);
+				media.setState(State.ACTIVE);
+				media = callSaveMedia(media);
+			} catch (WrongInputException e) {
+				int bookId = Integer.parseInt(request.getSession()
+						.getAttribute("bookId").toString());
+				Book book = getBookById(bookId);
+				media = getMediaById(book.getMediaId());
+			}
+
+			// logic
+			Book book = new Book();
+			book.setName(parameterMap.get("name"));
+			book.setAuthor(parameterMap.get("author"));
+			book.setState(State.valueOf(parameterMap.get("state")));
+			book.setMeaningId(meaningId);
+			book.setTypeId(typeId);
+			book.setLanguageId(languageId);
+
+			book.setMediaId(media.getId());
+			book.setId(Integer.parseInt(request.getSession()
+					.getAttribute("bookId").toString()));
+			updateBook(book);
+			String message = "Book updated. ";
+
+			String imagePath = media.getPath().replace("\\", "/");
+			request.setAttribute("imagePath", imagePath);
+			int bookId = Integer.parseInt(request.getSession()
+					.getAttribute("bookId").toString());
+			Book bookNew = getBookById(bookId);
+
+			request.setAttribute("book_type", getBookTypeByState(State.ACTIVE));
+			request.setAttribute("book_meaning",
+					getBookMeaningByState(State.ACTIVE));
+			request.setAttribute("book_language",
+					getBookLanguageByState(State.ACTIVE));
+			request.setAttribute("book", bookNew);
+			request.setAttribute("message", message);
+			request.getRequestDispatcher("pages/fedunets12.06/create_book.jsp")
+					.forward(request, response);
+			request.removeAttribute("message");
+			request.removeAttribute("book");
+			request.removeAttribute("book_type");
+			request.removeAttribute("book_meaning");
+			request.removeAttribute("book_language");
+			request.removeAttribute("imagePath");
+
+		} catch (WrongInputException e) {
+			logger.warn(e);
+			int bookId = Integer.parseInt(request.getSession()
+					.getAttribute("bookId").toString());
+			Book book = getBookById(bookId);
+
+			Media media = getMediaById(book.getMediaId());
+			String imagePath = media.getPath().replace("\\", "/");
+			request.setAttribute("imagePath", imagePath);
+
+			request.setAttribute("book_type", getBookTypeByState(State.ACTIVE));
+			request.setAttribute("book_meaning",
+					getBookMeaningByState(State.ACTIVE));
+			request.setAttribute("book_language",
+					getBookLanguageByState(State.ACTIVE));
+			request.setAttribute("book", book);
+			request.setAttribute("message", e.getMessage());
+
+			request.getRequestDispatcher("pages/fedunets12.06/create_book.jsp")
+					.forward(request, response);
+			request.removeAttribute("message");
+			request.removeAttribute("book_type");
+			request.removeAttribute("book_meaning");
+			request.removeAttribute("book_language");
+			request.removeAttribute("book");
+			request.removeAttribute("imagePath");
+		}
 	}
 }
