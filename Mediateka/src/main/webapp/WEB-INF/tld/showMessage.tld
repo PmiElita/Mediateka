@@ -1,0 +1,20 @@
+<taglib>
+  <tlib-version>1.0</tlib-version>
+  <jsp-version>2.0</jsp-version>
+  <short-name>Example TLD with Body</short-name>
+  <tag>
+    <name>message</name>
+    <tag-class>com.mediateka.tag.ShowMessage</tag-class>
+    <body-content>empty</body-content>
+    <attribute>
+       <name>locale</name>
+         <required>true</required>
+  <rtexprvalue>true</rtexprvalue>
+    </attribute>
+        <attribute>
+       <name>key</name>
+         <required>true</required>
+  <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+</taglib>
