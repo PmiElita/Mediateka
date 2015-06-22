@@ -12,7 +12,6 @@
 		<ul class="right hide-on-med-and-down">
 
 			<li><a style="font-size: 1.5em" id="top-user-name">${userName}</a></li>
-
 			<c:if test="${userRole ne null}">
 				<li class="profile-tooltipped"><a title="Edit profile" href="#"
 					class="waves-effect"> <i class="large mdi-action-face-unlock"></i>
@@ -50,7 +49,7 @@
 
 <!-- Dropdown Structure -->
 <ul id="dropdown1" class="dropdown-content">
-	<li><a href="#!"><img src="images/UAFlag.png" alt="Ukraine" />UKR</a></li>
+	<li><a href="chooseLanguage?lang=uk"><img src="images/UAFlag.png" alt="Ukraine" />UKR</a></li>
 	<li class="divider"></li>
-	<li><a href="#!"><img src="images/USFlag.png" alt="USA" />USA</a></li>
+	<li><a href="chooseLanguage?lang=en"><img src="images/USFlag.png" alt="USA" />USA</a></li>
 </ul>
