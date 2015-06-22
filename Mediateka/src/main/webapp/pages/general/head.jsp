@@ -15,4 +15,6 @@
 <link type="text/css" rel="stylesheet" href="css/side_nav_style.css"
 	media="screen,projection" />
 
+<link type="text/css" rel="stylesheet" href="css/autocomplete.css"
+	media="screen,projection" />
 <jsp:include page="../general/script.jsp" />
