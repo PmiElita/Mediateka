@@ -109,6 +109,10 @@ public class MainFilter implements Filter {
 					throw new Exception(
 							"user don't have permission to invoke method "
 									+ classMethodPair.getMethod().getName());
+				} else {
+					throw new Exception(
+							"user don't have permission to invoke method "
+									+ classMethodPair.getMethod().getName());
 				}
 			} else {
 				classMethodPair.getMethod().invoke(classMethodPair.getClazz(),

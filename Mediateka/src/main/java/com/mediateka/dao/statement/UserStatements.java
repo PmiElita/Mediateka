@@ -50,4 +50,11 @@ public class UserStatements {
 	
 
 	public static final String SELECT_USER_ALL = "SELECT * FROM user";
+	
+	public static final String CALL_GET_USERS_BY_ONE_REGEXP = "CALL getUsersByOneRegexp(?)";
+	
+	public static final String CALL_GET_USERS_BY_TWO_REGEXP = "CALL getUsersByTwoRegexp(?,?)";
+	
+	public static final String CALL_GET_USERS_BY_THREE_REGEXP = "CALL getUsersByThreeRegexp(?,?,?)";
+
 }

@@ -1,5 +1,6 @@
 package com.mediateka.dao;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -159,8 +160,6 @@ public class UserDAO {
 		}
 	}
 
-
-	
 	public static User getUserByToken(String token)
 			throws ReflectiveOperationException, SQLException {
 		try (Connection connection = ConnectionManager.getConnection()) {
@@ -171,18 +170,57 @@ public class UserDAO {
 			Transformer.valueIntoPreparedStatement(statement, user,
 					SELECT_USER_BY_TOKEN_ORDER);
 			ResultSet resultSet = statement.executeQuery();
-			return Transformer
-					.transformResultSetIntoObject(resultSet, User.class);
+			return Transformer.transformResultSetIntoObject(resultSet,
+					User.class);
 		}
 	}
 
-
-	
 	public static List<User> getUserAll() throws ReflectiveOperationException,
 			SQLException {
 		try (Connection connection = ConnectionManager.getConnection()) {
 			PreparedStatement statement = connection
 					.prepareStatement(SELECT_USER_ALL);
+			ResultSet resultSet = statement.executeQuery();
+			return Transformer
+					.transformResultSetIntoList(resultSet, User.class);
+		}
+	}
+
+	public static List<User> getUsersByOneRegexp(String regexp)
+			throws SQLException, ReflectiveOperationException {
+		try (Connection connection = ConnectionManager.getConnection()) {
+			CallableStatement statement = connection
+					.prepareCall(CALL_GET_USERS_BY_ONE_REGEXP);
+			statement.setString(1, regexp);
+			ResultSet resultSet = statement.executeQuery();
+			return Transformer
+					.transformResultSetIntoList(resultSet, User.class);
+		}
+	}
+
+	public static List<User> getUsersByTwoRegexp(String firstRegexp,
+			String secondRegexp) throws SQLException,
+			ReflectiveOperationException {
+		try (Connection connection = ConnectionManager.getConnection()) {
+			CallableStatement statement = connection
+					.prepareCall(CALL_GET_USERS_BY_TWO_REGEXP);
+			statement.setString(1, firstRegexp);
+			statement.setString(2, secondRegexp);
+			ResultSet resultSet = statement.executeQuery();
+			return Transformer
+					.transformResultSetIntoList(resultSet, User.class);
+		}
+	}
+
+	public static List<User> getUsersByThreeRegexp(String firstRegexp,
+			String secondRegexp, String thirdRegexp) throws SQLException,
+			ReflectiveOperationException {
+		try (Connection connection = ConnectionManager.getConnection()) {
+			CallableStatement statement = connection
+					.prepareCall(CALL_GET_USERS_BY_THREE_REGEXP);
+			statement.setString(1, firstRegexp);
+			statement.setString(2, secondRegexp);
+			statement.setString(3, thirdRegexp);
 			ResultSet resultSet = statement.executeQuery();
 			return Transformer
 					.transformResultSetIntoList(resultSet, User.class);

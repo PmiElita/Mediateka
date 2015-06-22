@@ -68,4 +68,21 @@ public class UserService {
 			SQLException {
 		return UserDAO.getUserAll();
 	}
+	
+	public static List<User> getUsersByOneRegexp(String regexp)
+			throws SQLException, ReflectiveOperationException {
+		return UserDAO.getUsersByOneRegexp(regexp);
+	}
+	
+	public static List<User> getUsersByTwoRegexp(String firstRegexp,
+			String secondRegexp) throws SQLException,
+			ReflectiveOperationException {
+		return UserDAO.getUsersByTwoRegexp(firstRegexp, secondRegexp);
+	}
+	
+	public static List<User> getUsersByThreeRegexp(String firstRegexp,
+			String secondRegexp, String thirdRegexp) throws SQLException,
+			ReflectiveOperationException {
+		return UserDAO.getUsersByThreeRegexp(firstRegexp, secondRegexp, thirdRegexp);
+	}
 }
