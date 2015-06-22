@@ -18,7 +18,7 @@
 
 			<li><a style="font-size: 1.5em" id="top-user-name">${userName}</a></li>
 			<c:if test="${userRole ne null}">
-				<li class="profile-tooltipped"><a title="<fmt:message bundle="${msg}" key="edit_profile" />" href="#"
+				<li class="profile-tooltipped"><a title="<fmt:message bundle="${msg}" key="edit_profile" />" href="modifyUser"
 					class="waves-effect"> <i class="large mdi-action-face-unlock"></i>
 
 				</a><jsp:include page="../general/profile_tooltip.jsp" /></li>

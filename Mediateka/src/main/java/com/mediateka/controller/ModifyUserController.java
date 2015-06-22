@@ -41,6 +41,17 @@ public class ModifyUserController {
 		List<Profession> professions = ProfessionService.getProfessionByState(State.ACTIVE);
 		request.setAttribute("professions", professions);
 		
+		User me = UserService.getUserById((Integer) request.getSession().getAttribute("userId"));
+		System.out.println("me == " + me);
+		request.setAttribute("firstName", me.getFirstName());
+		request.setAttribute("lastName", me.getLastName());
+		request.setAttribute("middleName", me.getMiddleName());
+		request.setAttribute("nationality", me.getNationality());
+		request.setAttribute("eduInstitution", me.getEduInstitution());
+		String birthDate = new SimpleDateFormat("dd.MM.yyyy").format(me.getBirthDate());
+		request.setAttribute("birthDate", birthDate);
+		request.setAttribute("address", me.getAdress());
+		request.setAttribute("phone", me.getPhone());
 		
 		request.getRequestDispatcher("pages/form/modify_user_form.jsp")
 				.forward(request, response);

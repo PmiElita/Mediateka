@@ -15,21 +15,21 @@
 
 		<div class="input-field col s3">
 			<p>First name</p>
-			<input id="firstName" name="firstName" type="text" class="validate">
+			<input id="firstName" name="firstName" type="text" class="validate" value="${firstName }" >
 		</div>
 		<div class="input-field col s3">
 			<p>Last name</p>
-			<input id="lastName" name="lastName" type="text" class="validate">
+			<input id="lastName" name="lastName" type="text" class="validate" value="${lastName }" >
 		</div>
 		<div class="input-field col s3">
 			<p>Middle name</p>
-			<input id="middleName" name="middleName" type="text" class="validate">
+			<input id="middleName" name="middleName" type="text" class="validate" value="${middleName }">
 		</div>
 
 		<div class="input-field col s3" style="margin-top: 0.5em">
 			<p>Nationality</p>
 			<input id="nationality" name="nationality" type="text"
-				class="validate">
+				class="validate" value="${nationality }" >
 		</div>
 		<div class="input-field col s3">
 			<p>Profession</p>
@@ -59,21 +59,21 @@
 		<div class="input-field col s3" style="margin-top: 0em">
 			<p>Institution</p>
 			<input id="eduInstitution" name="institution" type="text"
-				class="validate" style="margin-top: 0.75em">
+				class="validate" style="margin-top: 0.75em" value="${eduInstitution }">
 		</div>
 
 		<div class="input-field col s3">
 			<p>Birth date</p>
-			<input id="birthDate" name="birthDate" type="date" class="datepicker">
+			<input id="birthDate" name="birthDate" type="date" class="datepicker" value="${birthDate }">
 		</div>
 
 		<div class="input-field col s3">
 			<p>Address</p>
-			<input id="adress" name="address" type="text" class="validate">
+			<input id="adress" name="address" type="text" class="validate" value="${address }">
 		</div>
 		<div class="input-field col s3">
 			<p>Phone</p>
-			<input id="phone" name="phone" type="text" class="validate">
+			<input id="phone" name="phone" type="text" class="validate" value="${phone }">
 		</div>
 
 
