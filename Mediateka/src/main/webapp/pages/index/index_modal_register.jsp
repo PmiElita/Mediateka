@@ -61,7 +61,7 @@
 											<fmt:message bundle="${msg}" key="registration.password" />
 										</p>
 										<input id="password" name="password" type="password"
-											pattern="${consts.getPassword() }" class="validate" required
+											 class="validate" required
 											onchange=" this.setCustomValidity(this.validity.patternMismatch ? this.title : ''); if(this.checkValidity()) form.confirmPassword.pattern = this.value;">
 									</div>
 									<div class="input-field col s6">
