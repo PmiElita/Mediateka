@@ -158,8 +158,7 @@
 											<fmt:message bundle="${msg}" key="registration.email" />
 										</p>
 										<input id="email" name="email" type="email" required
-											pattern="${consts.getEmail() }" class="validate"
-											
+											pattern="${consts.getEmail() }" 
 											onchange="
 											$.ajax(
 												{
@@ -169,16 +168,15 @@
 														function(data){
 															if (data == 'true'){
 																form.email.setCustomValidity('');
+																form.email.setAttribute('class', 'validate valid');
 															} else {
 																form.email.setCustomValidity('this email is already in use');
+																form.email.setAttribute('class', 'validate invalid');
 															}
-															
 														}
 												} 
 											);"
-											
-											
-											>
+											class="validate">
 									</div>
 									<div class="input-field col s3">
 										<p>
