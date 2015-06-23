@@ -132,8 +132,8 @@ public class MainFilter implements Filter {
 
 		String pathToLog4jConfigurator = fConfig.getServletContext()
 				.getRealPath("/configurations/log4jConfiguration.xml");
-		DOMConfigurator.configure(pathToLog4jConfigurator);
 
+		DOMConfigurator.configure(pathToLog4jConfigurator);
 		Logger.getLogger(this.getClass()).debug("initiate main filter");
 
 	}

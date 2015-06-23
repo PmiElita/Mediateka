@@ -158,7 +158,27 @@
 											<fmt:message bundle="${msg}" key="registration.email" />
 										</p>
 										<input id="email" name="email" type="email" required
-											pattern="${consts.getEmail() }" class="validate">
+											pattern="${consts.getEmail() }" class="validate"
+											
+											onchange="
+											$.ajax(
+												{
+													url:'checkemail', 
+													data : { email : this.value}, 
+													success : 
+														function(data){
+															if (data == 'true'){
+																form.email.setCustomValidity('');
+															} else {
+																form.email.setCustomValidity('this email is already in use');
+															}
+															
+														}
+												} 
+											);"
+											
+											
+											>
 									</div>
 									<div class="input-field col s3">
 										<p>
