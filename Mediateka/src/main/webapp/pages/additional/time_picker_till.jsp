@@ -10,11 +10,11 @@
 <p>Time till:</p>
 <input type="text" data-field="time" name="timeTill" readonly>
 
-<div id="dtBox1"></div>
+<div id="tmBox2"></div>
 
 <script type="text/javascript">
 	$(document).ready(function() {
-		$("#dtBox2").DateTimePicker();
+		$("#tmBox2").DateTimePicker();
 	});
 </script>
 

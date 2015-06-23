@@ -8,24 +8,46 @@
 <fmt:setBundle basename="menu" />
 <fmt:requestEncoding value="utf-8" />
 
+<head>
+<jsp:include page="crop/crop.jsp" />
+
+<style>
+.image-cover-t {
+	color: white;
+	position: absolute;
+	margin-left: 3em;
+	margin-top: 1em;
+	z-index: 1000;
+	text-shadow: black 1.0px 0.0px, black 1.0px 1.0px, black 0.0px 1.0px,
+		black -1.0px 1.0px, black -1.0px 0.0px, black -1.0px -1.0px, black
+		0.0px -1.0px, black 1.0px -1.0px, black 0.0 0.0 3.0px, black 0.0 0.0
+		3.0px, black 0.0 0.0 3.0px, black 0.0 0.0 3.0px, black 0.0 0.0 3.0px,
+		black 0.0 0.0 3.0px, black 0.0 0.0 3.0px, black 0.0 0.0 3.0px;
+}
+</style>
+</head>
+
 <div class="section white">
 	<div class="container">
 		<form>
 			<div class="row my-picture-row" style="margin-left: -3em">
 				<div class="col s8 offset-s2">
 					<div class="waves-effect waves-block waves-light my-picture-wrap">
-						<h3 class="image-cover-text">${club_name}</h3>
-						<img class="my-picture" src="images/club/club_default.png"
-							id="ava">
+						<h3 class="image-cover-t">${club_name}HiHi</h3>
+						<a title="Change picture" href="" data-target="modal15"
+							class="modal-trigger waves-effect"><img class="my-picture"
+							src="images/club/club_default.png" id="ava"></a>
 					</div>
 				</div>
 			</div>
 		</form>
 
+
 		<div class="row" style="margin-left: -7em">
 			<div class="col s3">
 				<a href="" data-target="modal7" class="modal-trigger">
-					<div class="col s12 m8 offset-m2 l6 offset-l3 my-card my-small-card">
+					<div
+						class="col s12 m8 offset-m2 l6 offset-l3 my-card my-small-card">
 						<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
 							<div style="margin-top: -2em">
 								<h3 style="color: black">Music</h3>
@@ -44,7 +66,8 @@
 
 			<div class="col s3">
 				<a href="club_videos">
-					<div class="col s12 m8 offset-m2 l6 offset-l3 my-card my-small-card">
+					<div
+						class="col s12 m8 offset-m2 l6 offset-l3 my-card my-small-card">
 						<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
 							<div style="margin-top: -2em">
 								<h3 style="color: black">Video</h3>
@@ -63,7 +86,8 @@
 
 			<div class="col s3">
 				<a href="info">
-					<div class="col s12 m8 offset-m2 l6 offset-l3 my-card my-small-card">
+					<div
+						class="col s12 m8 offset-m2 l6 offset-l3 my-card my-small-card">
 						<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
 							<div style="margin-top: -2em">
 								<h3 style="color: black">Photo</h3>
@@ -82,7 +106,8 @@
 
 			<div class="col s3">
 				<a href="events">
-					<div class="col s12 m8 offset-m2 l6 offset-l3 my-card my-small-card">
+					<div
+						class="col s12 m8 offset-m2 l6 offset-l3 my-card my-small-card">
 						<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
 							<div style="margin-top: -2em">
 								<h3 style="color: black">Events</h3>

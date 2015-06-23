@@ -36,7 +36,7 @@ public class UserController {
 		request.getRequestDispatcher("pages/events/events.jsp").forward(
 				request, response);
 	}
-
+	
 	@Request(url = "clubs", method = "get")
 	public static void clubsGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {

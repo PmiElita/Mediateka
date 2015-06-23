@@ -17,4 +17,7 @@
 
 <link type="text/css" rel="stylesheet" href="css/autocomplete.css"
 	media="screen,projection" />
+	
+<link rel="stylesheet" type="text/css" href="css/DateTimePicker.css" />
+	
 <jsp:include page="../general/script.jsp" />

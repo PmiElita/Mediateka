@@ -12,7 +12,13 @@
 
 <script src="js/date.js"></script>
 
+<script src="js/crop.js"></script>
+
+<script src="http://yui.yahooapis.com/3.17.2/build/yui/yui-min.js"></script>
+
 <script src= "js/eventCreation.js"></script>
+
+<script type="text/javascript" src="js/DateTimePicker.js"></script>
 
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -28,10 +34,7 @@
 			full_width : true
 		});
 
-		$('.datepicker').pickadate({
-			selectMonths : true,
-			selectYears : 100
-		});
+		$("#dtBox").DateTimePicker();
 
 		$('select').material_select();
 

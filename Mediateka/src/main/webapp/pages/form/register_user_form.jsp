@@ -55,9 +55,8 @@
 											class="browser-default" style="margin-top: 0.75em">
 
 											<c:forEach items="${professions}" var="profession">
-										  	 <option value="${profession.getId()}"> 
-										  	 	${profession.getName()} 
-										  	 </option> 
+												<option value="${profession.getId()}">
+													${profession.getName()}</option>
 											</c:forEach>
 
 										</select>
@@ -87,8 +86,9 @@
 								<div class="row">
 									<div class="input-field col s3">
 										<p>Birth date</p>
-										<input id="birthDate" name="birthDate" type="date"
-											class="datepicker">
+										<input name="birthDate" id="birthDate" type="date"
+											class="validate" required onchange="dateChange()">
+										<jsp:include page="../additional/date_picker.jsp" />
 									</div>
 									<div class="input-field col s3">
 										<p>E-mail</p>

@@ -30,6 +30,7 @@
 	</c:if>
 
 	<jsp:include page="club_central.jsp" />
+	<div style="margin-bottom:5.75em"></div>
 	<jsp:include page="../general/footer.jsp" />
 </body>
 </html>

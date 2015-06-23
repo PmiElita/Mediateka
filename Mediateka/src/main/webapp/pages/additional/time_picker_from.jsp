@@ -7,11 +7,11 @@
 <p>Time from:</p>
 <input type="text" data-field="time" name="timeFrom" readonly>
 
-<div id="dtBox"></div>
+<div id="tmBox1"></div>
 
 <script type="text/javascript">
 	$(document).ready(function() {
-		$("#dtBox").DateTimePicker();
+		$("#tmBox1").DateTimePicker();
 	});
 </script>
 

@@ -36,13 +36,13 @@
 		mode: "date",
 		defaultDate: new Date(),
 	
-		dateSeparator: "-",
+		dateSeparator: ".",
 		timeSeparator: ":",
 		timeMeridiemSeparator: " ",
 		dateTimeSeparator: " ",
 	
-		dateTimeFormat: "dd-MM-yyyy HH:mm:ss",
-		dateFormat: "dd-MM-yyyy",
+		dateTimeFormat: "dd.MM.yyyy HH:mm:ss",
+		dateFormat: "dd.MM.yyyy",
 		timeFormat: "HH:mm",
 	
 		maxDate: null,
@@ -56,8 +56,8 @@
 	
 		shortDayNames: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
 		fullDayNames: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-		shortMonthNames: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-		fullMonthNames: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+		shortMonthNames: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+		fullMonthNames: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
 		formatHumanDate: function(sDate) 
 		{
 			return sDate.dayShort + ", " + sDate.month + " " + sDate.dd + ", " + sDate.yyyy;

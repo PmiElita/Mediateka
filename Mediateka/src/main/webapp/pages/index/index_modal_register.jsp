@@ -150,8 +150,8 @@
 										<p>
 											<fmt:message bundle="${msg}" key="registration.birth_date" />
 										</p>
-										<input id="birthDate" name="birthDate" type="date"
-											class="datepicker">
+										<input id="birthDate" name="birthDate" type="text" data-field="date">
+										<div id="dtBox"></div>
 									</div>
 									<div class="input-field col s3">
 										<p>
