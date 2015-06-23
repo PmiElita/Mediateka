@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -47,20 +48,19 @@ public class LogInController {
 	 * @throws SQLException
 	 * @throws NoSuchAlgorithmException
 	 * @throws IOException
+	 * @throws ServletException 
 	 */
 	@Request(url = "login", method = "post")
 	public static void logIn(HttpServletRequest request,
 			HttpServletResponse response) throws SecurityException,
 			IllegalArgumentException, ReflectiveOperationException,
-			SQLException, NoSuchAlgorithmException, IOException {
+			SQLException, NoSuchAlgorithmException, IOException, ServletException {
 
 		LogInForm form = new LogInForm();
 		ObjectFiller.fill(form, request);
 		try {
 			FormValidator.validate(form);
 		} catch (WrongInputException e) {
-			System.out.println("can't validate form");
-			System.out.println(e.toString());
 			logger.warn("can't validate login form", e);
 			response.sendRedirect("index");
 			return;
@@ -69,21 +69,31 @@ public class LogInController {
 		User user = UserService.getUserByEmail(form.getEmail());
 		if (user==null){
 			logger.warn("no user with such email");
-			response.sendRedirect("index");
+			request.setAttribute("notification",
+					"invalid email or password");
+			request.getRequestDispatcher("pages/index/index.jsp").forward(request,
+					response);
+
 			return;
 		}
 		
-		if (user.getState() != State.ACTIVE){
-			logger.warn("trying to log in as non-active user");
-			response.sendRedirect("index");
-			return;
-		}
-
 		String saltedPassword = SaltedPasswordGenerator.generate(
 				form.getPassword(), user.getSalt());
 		if (!user.getPassword().equals(saltedPassword)) {
 			logger.warn("failed to log in");
-			response.sendRedirect("index");
+			request.setAttribute("notification",
+					"invalid email or password");
+			request.getRequestDispatcher("pages/index/index.jsp").forward(request,
+					response);
+			return;
+		}
+
+		if (user.getState() != State.ACTIVE){
+			logger.warn("trying to log in as non-active user");
+			request.setAttribute("notification",
+					"your account is inactive");
+			request.getRequestDispatcher("pages/index/index.jsp").forward(request,
+					response);
 			return;
 		}
 

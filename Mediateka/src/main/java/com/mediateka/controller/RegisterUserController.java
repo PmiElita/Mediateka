@@ -76,14 +76,22 @@ public class RegisterUserController {
 		} catch (WrongInputException e) {
 			logger.warn("failed to validate registration form", e);
 			logger.warn(form);
-			response.sendRedirect("index");
+			request.setAttribute("notification",
+					"registration form validation failed");
+			request.getRequestDispatcher("pages/index/index.jsp").forward(request,
+					response);
+
 			return;
 		}
 
 		User userWithSuchEmail = UserService.getUserByEmail(form.getEmail());
 		if (userWithSuchEmail != null) {
 			// such email is already in use
-			response.sendRedirect("index");
+			request.setAttribute("notification",
+					"email is already taken");
+			request.getRequestDispatcher("pages/index/index.jsp").forward(request,
+					response);
+
 			return;
 		}
 

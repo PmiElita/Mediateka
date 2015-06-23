@@ -4,7 +4,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<fmt:setLocale value="${locale}" />
+<fmt:setLocale value="${cookie.lang.value}" />
+<fmt:setBundle basename="translations/index_page_notifications" var="msg" />
+
 <fmt:setBundle basename="menu" />
 <fmt:requestEncoding value="utf-8" />
 
@@ -21,7 +23,7 @@
 	
 	
 	<c:if test="${notification ne null }">
-		<c:out value="${notification}"/>
+		<fmt:message bundle="${msg}" key="${notification}" />
 	</c:if>
 	
 	
