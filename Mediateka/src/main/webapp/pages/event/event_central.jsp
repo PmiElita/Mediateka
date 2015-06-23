@@ -46,8 +46,7 @@
 		<div class="row" style="margin-left: -8.5em">
 			<div class="col s4">
 				<a href="" data-target="modal17" class="modal-trigger">
-					<div
-						class="col s12 m8 offset-m2 l6 offset-l3 my-card my-small-card">
+					<div class="col s12 m8 offset-m2 l6 offset-l3 my-card my-small-card">
 						<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
 							<div style="margin-top: -2em">
 								<h3 style="color: black">Music</h3>
