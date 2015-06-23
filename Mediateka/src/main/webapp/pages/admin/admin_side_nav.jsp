@@ -14,7 +14,7 @@
 </head>
 
 <div class="container-side">
-	<div id="sidebar" class="z-depth-4">
+	<div id="sidebar" >
 		<ul>
 			<li><a href="" data-target="modal4"
 				class="modal-trigger waves-effect"><fmt:message bundle="${msg}"

@@ -3,7 +3,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
+<%@page import="com.mediateka.model.enums.State"%>
 <%@page import="com.mediateka.model.enums.Role"%>
 
 <fmt:setLocale value="${locale}" />
@@ -49,7 +49,7 @@
 					<div class="row">
 
 						<div class="input-field col s4">
-							<select size="6" name="type" id="type" class="browser-default"
+							<select name="type" id="type" class="browser-default"
 								style="margin-top: 0.75em">
 								<option disabled>Book type..</option>
 								<c:forEach var="types" items="${book_type}">
@@ -68,7 +68,7 @@
 						</div>
 
 						<div class="input-field col s4">
-							<select size="6" name="meaning" id="meaning"
+							<select name="meaning" id="meaning"
 								class="browser-default" style="margin-top: 0.75em">
 								<option disabled>Book meaning...</option>
 								<c:forEach var="meanings" items="${book_meaning}">
@@ -88,7 +88,7 @@
 
 
 						<div class="input-field col s4">
-							<select size="6" name="language" id="language"
+							<select name="language" id="language"
 								class="browser-default" style="margin-top: 0.75em">
 								<option disabled>Book language...</option>
 								<c:forEach var="languages" items="${book_language}">
@@ -115,7 +115,7 @@
 					<div title="Book state" style="margin-top: 1em">
 						<div style="display: inline-block; margin-right: 10em">
 							<c:choose>
-								<c:when test="${book.getState()==State.ACTIVE}">
+								<c:when test="${book.state eq State.ACTIVE}">
 									<input type="radio" name="state" value="ACTIVE" checked>active
    				   </c:when>
 								<c:otherwise>
@@ -126,7 +126,7 @@
 						</div>
 						<div style="display: inline-block; margin-right: 10em">
 							<c:choose>
-								<c:when test="${book.getState()==State.BLOCKED}">
+								<c:when test="${book.state eq State.BLOCKED}">
 									<input type="radio" name="state" value="BLOCKED" checked>blocked
    				   </c:when>
 								<c:otherwise>
@@ -136,7 +136,7 @@
 						</div>
 						<div style="display: inline-block">
 							<c:choose>
-								<c:when test="${book.getState()==State.DELETED}">
+								<c:when test="${book.state eq State.DELETED}">
 									<input type="radio" name="state" value="DELETED" checked>deleted
    				   </c:when>
 								<c:otherwise>

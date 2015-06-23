@@ -36,10 +36,10 @@ public class BookController {
 	public static void goToBooksPageGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			SQLException, ReflectiveOperationException {
-		request.getRequestDispatcher("pages/books/books.jsp").forward(request, response);
+		request.getRequestDispatcher("pages/books/books.jsp").forward(request,
+				response);
 	}
-	
-	
+
 	@Request(url = "CreateBook", method = "get")
 	public static void bookCreateGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
@@ -51,8 +51,8 @@ public class BookController {
 				getBookLanguageByState(State.ACTIVE));
 
 		logger.debug((getBookTypeByState(State.ACTIVE) == null));
-		request.getRequestDispatcher("pages/books/create_book.jsp")
-				.forward(request, response);
+		request.getRequestDispatcher("pages/books/create_book.jsp").forward(
+				request, response);
 		request.removeAttribute("book_type");
 		request.removeAttribute("book_meaning");
 		request.removeAttribute("book_language");
@@ -204,7 +204,7 @@ public class BookController {
 			HttpServletResponse response) throws ServletException, IOException,
 			SQLException, ReflectiveOperationException {
 
-		request.getSession().setAttribute("bookId", 2);
+		request.getSession().setAttribute("bookId", 3);
 		int bookId = Integer.parseInt(request.getSession()
 				.getAttribute("bookId").toString());
 		Book book = getBookById(bookId);
@@ -219,8 +219,8 @@ public class BookController {
 		request.setAttribute("book_language",
 				getBookLanguageByState(State.ACTIVE));
 		request.setAttribute("book", book);
-		request.getRequestDispatcher("pages/books/update_book.jsp")
-				.forward(request, response);
+		request.getRequestDispatcher("pages/books/update_book.jsp").forward(
+				request, response);
 
 		request.removeAttribute("book");
 		request.removeAttribute("book_type");

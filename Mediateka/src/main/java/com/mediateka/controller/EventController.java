@@ -6,7 +6,6 @@ import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -18,15 +17,14 @@ import com.mediateka.annotation.Controller;
 import com.mediateka.annotation.Request;
 import com.mediateka.exception.WrongInputException;
 import com.mediateka.form.ExhibitionRegistrationForm;
+import com.mediateka.form.MeetingRegistrationForm;
 import com.mediateka.model.ClubEventMember;
 import com.mediateka.model.Event;
 import com.mediateka.model.Media;
-import com.mediateka.model.Profession;
 import com.mediateka.model.enums.ClubEventMemberType;
 import com.mediateka.model.enums.EventType;
 import com.mediateka.model.enums.MediaType;
 import com.mediateka.model.enums.State;
-import com.mediateka.service.ProfessionService;
 import com.mediateka.util.DateConverter;
 import com.mediateka.util.FileLoader;
 import com.mediateka.util.FormValidator;
@@ -36,20 +34,22 @@ import static com.mediateka.service.ClubEventMemberService.saveClubEventMember;
 import static com.mediateka.service.EventService.*;
 import static com.mediateka.service.MediaService.callSaveMedia;
 import static com.mediateka.service.MediaService.getMediaById;
+import static com.mediateka.util.DateConverter.*;
 
 @Controller
 public class EventController {
 
 	private static Logger logger = Logger.getLogger(EventController.class);
 
-	@Request(url="event", method="get")
+	@Request(url = "event", method = "get")
 	public static void goToEventGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
-			SQLException, ReflectiveOperationException{
-		
-		request.getRequestDispatcher("pages/event/event.jsp").forward(request, response);
+			SQLException, ReflectiveOperationException {
+
+		request.getRequestDispatcher("pages/event/event.jsp").forward(request,
+				response);
 	}
-	
+
 	// create event
 
 	@Request(url = "CreateExhibition", method = "get")
@@ -72,108 +72,40 @@ public class EventController {
 
 	}
 
+	@SuppressWarnings("deprecation")
 	@Request(url = "CreateExhibition", method = "post")
 	public static void exhibitionCreatePost(HttpServletRequest request,
 			HttpServletResponse response) throws ParseException, SQLException,
 			ReflectiveOperationException, ServletException, IOException {
-		
+
 		ExhibitionRegistrationForm form = new ExhibitionRegistrationForm();
 		ObjectFiller.fill(form, request);
-		
+
 		try {
 			FormValidator.validate(form);
 
-			// e name valid
-			if (request.getParameter("name") == null
-					|| request.getParameter("name").equals(""))
-				throw new WrongInputException("Event name is empty. ");
-			else if (request.getParameter("name").length() > 250) {
-				throw new WrongInputException("Event name to long. ");
-			}
+			Timestamp currentTime = new Timestamp(
+					new java.util.Date().getTime());
+			currentTime.setHours(0);
+			currentTime.setMinutes(0);
+			currentTime.setSeconds(0);
 
-			// event type valid + event date valid
-			Timestamp dateFrom = null;
-			Timestamp dateTill = null;
-			if (request.getParameter("type") == null
-					|| request.getParameter("type").equals(""))
-				throw new WrongInputException("Event type is empty. ");
-			else if (!request.getParameter("type").toUpperCase()
-					.equals("MEETING")
-					&& !request.getParameter("type").toUpperCase()
-							.equals("EXHIBITION"))
-				throw new WrongInputException("Event type is incorrect. ");
-			else if (request.getParameter("type").toUpperCase()
-					.equals("MEETING")) {
-				if (request.getParameter("dateFrom") == null
-						|| request.getParameter("dateFrom").equals(""))
-					throw new WrongInputException("Event date from is empty. ");
-				if (request.getParameter("dateTill") == null
-						|| request.getParameter("dateTill").equals(""))
-					throw new WrongInputException("Event dateTill is empty. ");
-				if (request.getParameter("timeFrom") == null
-						|| request.getParameter("timeFrom").equals(""))
-					try {
-						dateFrom = DateConverter.convertIntoTimestamp(
-								request.getParameter("dateFrom"), "yyyy-MM-dd");
-						dateTill = dateFrom;
-						if (!timeValid(request.getParameter("timeFrom"))
-								|| !timeValid(request.getParameter("dateTill"))) {
-							throw new WrongInputException(
-									"Illegal time format. ");
-						} else {
-							String[] time = request.getParameter("timeFrom")
-									.split(":");
-							int hour = Integer.parseInt(time[0]);
-							int minute = Integer.parseInt(time[1]);
-							dateFrom.setHours(hour);
-							dateFrom.setMinutes(minute);
-							time = request.getParameter("dateTill").split(":");
-							hour = Integer.parseInt(time[0]);
-							minute = Integer.parseInt(time[1]);
-							dateTill.setHours(hour);
-							dateTill.setMinutes(minute);
-						}
-						if (dateTill.getTime() < dateFrom.getTime())
-							throw new WrongInputException(
-									"Time till must be equals or greater than time from");
-					} catch (ParseException e) {
-						logger.warn(e);
-						throw new WrongInputException("Illigal date format. ");
-					}
-			} else if (request.getParameter("type").toUpperCase()
-					.equals("EXHIBITION")) {
-				if (request.getParameter("dateFrom") == null
-						|| request.getParameter("dateFrom").equals(""))
-					throw new WrongInputException("Event date from is empty. ");
-				if (request.getParameter("dateTill") == null
-						|| request.getParameter("dateTill").equals(""))
-					throw new WrongInputException("Event dateTill is empty. ");
-				try {
-					dateFrom = DateConverter.convertIntoTimestamp(
-							request.getParameter("dateFrom"), "yyyy-MM-dd");
-					dateTill = DateConverter.convertIntoTimestamp(
-							request.getParameter("dateTill"), "yyyy-MM-dd");
-					if (dateTill.getTime() < dateFrom.getTime())
-						throw new WrongInputException(
-								"Date till must be equals or greater than time from");
-				} catch (ParseException e) {
-					logger.warn(e);
-					throw new WrongInputException("Illigal date format. ");
-				}
-			}
-
-			// event description valid
-			if (request.getParameter("description") == null
-					|| request.getParameter("description").equals(""))
-				throw new WrongInputException("Event description is empty. ");
-			else if (request.getParameter("description").length() > 255)
-				throw new WrongInputException("Event description is too long. ");
+			Timestamp dateFrom = convertIntoTimestamp(form.getDateFrom(),
+					"yyyy-MM-dd");
+			Timestamp dateTill = convertIntoTimestamp(form.getDateFrom(),
+					"yyyy-MM-dd");
+			if (dateFrom.getTime() <= 0 || dateTill.getTime() <= 0)
+				throw new WrongInputException("Date is too big or too small. ");
+			if (currentTime.getTime() > dateFrom.getTime())
+				throw new WrongInputException("Date from has gone. ");
+			if (dateFrom.getTime() > dateTill.getTime())
+				throw new WrongInputException(
+						"Date from cant be bigger than date till. ");
 
 			Event event = new Event();
-			event.setName(request.getParameter("name"));
-			event.setType(EventType.valueOf(request.getParameter("type")
-					.toUpperCase()));
-			event.setDescription(request.getParameter("description"));
+			event.setName(form.getName());
+			event.setType(EventType.EXHIBITION);
+			event.setDescription(form.getDescription());
 			event.setState(State.BLOCKED);
 			event.setDateFrom(dateFrom);
 			event.setDateTill(dateTill);
@@ -190,29 +122,101 @@ public class EventController {
 			clubEventMember.setUserId((Integer) request.getSession()
 					.getAttribute("userId"));
 			saveClubEventMember(clubEventMember);
-			String message = "Event created. ";
+			String message = "Exhibition created. ";
 
 			request.setAttribute("message", message);
-			request.getRequestDispatcher("pages/events/create_event.jsp")
+			request.getRequestDispatcher("pages/events/createExhibition.jsp")
 					.forward(request, response);
 			request.removeAttribute("message");
 		} catch (WrongInputException e) {
 			logger.warn(e);
 			request.setAttribute("message", e.getMessage());
-			request.getRequestDispatcher("pages/events/create_event.jsp")
+			request.getRequestDispatcher("pages/events/createExhibition.jsp")
 					.forward(request, response);
 			request.removeAttribute("message");
 		}
 	}
 
-	// update book
+	@SuppressWarnings("deprecation")
+	@Request(url = "CreateMeeting", method = "post")
+	public static void meetingCreatePost(HttpServletRequest request,
+			HttpServletResponse response) throws ParseException, SQLException,
+			ReflectiveOperationException, ServletException, IOException {
+
+		MeetingRegistrationForm form = new MeetingRegistrationForm();
+		ObjectFiller.fill(form, request);
+
+		try {
+			FormValidator.validate(form);
+
+			Timestamp currentTime = new Timestamp(
+					new java.util.Date().getTime());
+			currentTime.setHours(0);
+			currentTime.setMinutes(0);
+			currentTime.setSeconds(0);
+
+			Timestamp dateFrom = convertIntoTimestamp(form.getDate(),
+					"yyyy-MM-dd");
+			Timestamp dateTill = convertIntoTimestamp(form.getDate(),
+					"yyyy-MM-dd");
+
+			int[] timeFrom = timeValid(form.getTimeFrom());
+			int[] timeTill = timeValid(form.getTimeTill());
+			dateFrom.setHours(timeFrom[0]);
+			dateFrom.setMinutes(timeFrom[1]);
+			dateTill.setHours(timeTill[0]);
+			dateTill.setMinutes(timeTill[1]);
+
+			if (dateFrom.getTime() <= 0)
+				throw new WrongInputException("Date is too big or too small. ");
+			if (currentTime.getTime() > dateFrom.getTime())
+				throw new WrongInputException("Date has gone. ");
+
+			Event event = new Event();
+			event.setName(form.getName());
+			event.setType(EventType.MEETING);
+			event.setDescription(form.getDescription());
+			event.setState(State.BLOCKED);
+			event.setDateFrom(dateFrom);
+			event.setDateTill(dateTill);
+			if (request.getSession().getAttribute("club_id") != null)
+				event.setClubId(Integer.parseInt(request.getSession()
+						.getAttribute("club_id").toString()));
+			event.setAvaId(2);
+			event = callSaveEvent(event);
+
+			ClubEventMember clubEventMember = new ClubEventMember();
+			clubEventMember.setEventId(event.getId());
+			clubEventMember.setState(State.ACTIVE);
+			clubEventMember.setType(ClubEventMemberType.CREATOR);
+			clubEventMember.setUserId((Integer) request.getSession()
+					.getAttribute("userId"));
+			saveClubEventMember(clubEventMember);
+			String message = "Meeting created. ";
+
+			request.setAttribute("message", message);
+			request.getRequestDispatcher("pages/events/createMeeting.jsp")
+					.forward(request, response);
+			request.removeAttribute("message");
+		} catch (WrongInputException e) {
+			logger.warn(e);
+			request.setAttribute("message", e.getMessage());
+			request.getRequestDispatcher("pages/events/createMeeting.jsp")
+					.forward(request, response);
+			request.removeAttribute("message");
+		}
+	}
+
+	// update event
 
 	@Request(url = "UpdateEvent", method = "get")
 	public static void eventUpdateGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			SQLException, ReflectiveOperationException {
 
-		request.getSession().setAttribute("eventId", 1);
+		request.getSession().setAttribute("eventId", 31);
+		request.getSession().setAttribute("userId", 2);
+
 		Event event = getEventById(Integer.parseInt(request.getSession()
 				.getAttribute("eventId").toString()));
 		if (event.getAvaId() != null) {
@@ -224,21 +228,39 @@ public class EventController {
 
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		String dateFrom = format.format(event.getDateFrom());
-		String dateTill = format.format(event.getDateTill());
-		request.setAttribute("dateFrom", dateFrom);
-		request.setAttribute("dateTill", dateTill);
-
-		request.getRequestDispatcher("pages/fedunets12.06/update_event.jsp")
-				.forward(request, response);
+		if (event.getType() == EventType.EXHIBITION) {
+			String dateTill = format.format(event.getDateTill());
+			request.setAttribute("dateFrom", dateFrom);
+			request.setAttribute("dateTill", dateTill);
+			request.getRequestDispatcher("pages/events/updateExhibition.jsp")
+					.forward(request, response);
+		} else if (event.getType() == EventType.MEETING) {
+			@SuppressWarnings("deprecation")
+			String timeFrom = event.getDateFrom().getHours() + ":"
+					+ event.getDateFrom().getMinutes();
+			@SuppressWarnings("deprecation")
+			String timeTill = event.getDateTill().getHours() + ":"
+					+ event.getDateTill().getMinutes();
+			request.setAttribute("dateFrom", dateFrom);
+			request.setAttribute("timeFrom", timeFrom);
+			request.setAttribute("timeTill", timeTill);
+			request.getRequestDispatcher("pages/events/updateMeeting.jsp")
+					.forward(request, response);
+		} else {
+			logger.warn("No such event type, event id=" + event.getId());
+		}
 
 		request.removeAttribute("event");
 		request.removeAttribute("imagePath");
 		request.removeAttribute("dateFrom");
 		request.removeAttribute("dateTill");
+		request.removeAttribute("timeFrom");
+		request.removeAttribute("timeTill");
 	}
 
-	@Request(url = "UpdateEvent", method = "post")
-	public static void eventUpdatePost(HttpServletRequest request,
+	// ?????
+	@Request(url = "UpdateExhibition", method = "post")
+	public static void exhibitionUpdatePost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			SQLException, ReflectiveOperationException {
 		int eventId = Integer.parseInt(request.getSession()
@@ -332,19 +354,5 @@ public class EventController {
 					.forward(request, response);
 			request.removeAttribute("message");
 		}
-	}
-
-	private static boolean timeValid(String time) {
-		boolean result = true;
-		String[] array = time.split(":");
-		try {
-			int hour = Integer.parseInt(array[0]);
-			int minute = Integer.parseInt(array[1]);
-			if (hour > 23 || hour < 0 || minute > 59 || minute < 0)
-				throw new NumberFormatException();
-		} catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
-			result = false;
-		}
-		return result;
 	}
 }

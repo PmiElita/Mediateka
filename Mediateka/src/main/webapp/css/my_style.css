@@ -142,3 +142,8 @@ section {
 	margin-left: 6.0em;
 	margin-bottom: -3.0em;
 }
+
+div.container-side{
+	position: fixed;
+	padding-top: 5.0em;
+}

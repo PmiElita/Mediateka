@@ -12,6 +12,7 @@
 
 <head>
 <jsp:include page="../general/head.jsp" />
+<script src="js/bookCreation.js"></script>
 </head>
 
 <jsp:include page="../general/nav.jsp" />
@@ -24,8 +25,8 @@
 		<form id="create_book" action="CreateBook" method="post"
 			enctype="multipart/form-data">
 
-			<button type="submit" class="btn waves-effect blue titler"
-				style="margin-top: 2.5em">Create book</button>
+			<button type="submit" class="btn waves-effect blue titler" id="submit"
+				style="margin-top: 2.5em" disabled>Create book</button>
 
 			<h6 style="color: blue">${message}</h6>
 
@@ -35,22 +36,22 @@
 						<div class="input-field col s6">
 							<p>Book name</p>
 							<input id="name" name="name" type="text" class="validate"
-								pattern=".{1,45}" required>
+								pattern=".{1,45}" required onchange="valid()">
 						</div>
 
 						<div class="input-field col s6">
 							<p>Book author</p>
 							<input id="author" name="author" type="text" class="validate"
-								pattern=".{1,45}">
+								pattern=".{1,45}" required onchange="valid()">
 						</div>
 					</div>
 
 					<div class="row">
 
 						<div class="input-field col s4">
-							<select size="6" name="type" id="type" class="browser-default"
-								style="margin-top: 0.75em">
-								<option disabled>Book type..</option>
+							<select name="type" id="type" class="browser-default"
+								style="margin-top: 0.75em" required onchange="valid()">
+								<option selected disabled value="0">Book type..</option>
 								<c:forEach var="types" items="${book_type}">
 									<option value="${types.getId()}"><c:out
 											value="${types.getName()}" /></option>
@@ -59,9 +60,9 @@
 						</div>
 
 						<div class="input-field col s4">
-							<select size="6" name="meaning" id="meaning"
-								class="browser-default" style="margin-top: 0.75em">
-								<option disabled>Book meaning...</option>
+							<select name="meaning" id="meaning"
+								class="browser-default" style="margin-top: 0.75em" required onchange="valid()">
+								<option selected disabled value="0">Book meaning...</option>
 								<c:forEach var="meanings" items="${book_meaning}">
 									<option value="${meanings.getId()}"><c:out
 											value="${meanings.getName()}" /></option>
@@ -71,9 +72,9 @@
 
 
 						<div class="input-field col s4">
-							<select size="6" name="language" id="language"
-								class="browser-default" style="margin-top: 0.75em">
-								<option disabled>Book language...</option>
+							<select name="language" id="language"
+								class="browser-default" style="margin-top: 0.75em" required onchange="valid()">
+								<option selected disabled value="0">Book language...</option>
 								<c:forEach var="languages" items="${book_language}">
 									<option value="${languages.getId()}"><c:out
 											value="${languages.getName()}" /></option>
