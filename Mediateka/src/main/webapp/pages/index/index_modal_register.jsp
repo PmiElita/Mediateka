@@ -4,6 +4,10 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 
+<jsp:useBean id="consts" class="com.mediateka.util.RegExps"
+	scope="session" />
+
+
 <fmt:setLocale value="${cookie.lang.value}" />
 <fmt:setBundle basename="translations/index" var="msg" scope="session" />
 
@@ -32,21 +36,22 @@
 											<fmt:message bundle="${msg}" key="registration.first_name" />
 										</p>
 										<input id="firstName" name="firstName" type="text"
-											class="validate">
+											pattern="${consts.getOnlyChars() }" class="validate" required>
+
 									</div>
 									<div class="input-field col s4">
 										<p>
 											<fmt:message bundle="${msg}" key="registration.last_name" />
 										</p>
 										<input id="lastName" name="lastName" type="text"
-											class="validate">
+											pattern="${consts.getOnlyChars() }" class="validate" required>
 									</div>
 									<div class="input-field col s4">
 										<p>
 											<fmt:message bundle="${msg}" key="registration.middle_name" />
 										</p>
 										<input id="middleName" name="middleName" type="text"
-											class="validate">
+											pattern="${consts.getOnlyChars() }" class="validate" required>
 									</div>
 								</div>
 
@@ -56,7 +61,8 @@
 											<fmt:message bundle="${msg}" key="registration.password" />
 										</p>
 										<input id="password" name="password" type="password"
-											class="validate">
+											pattern="${consts.getPassword() }" class="validate" required
+											onchange=" this.setCustomValidity(this.validity.patternMismatch ? this.title : ''); if(this.checkValidity()) form.confirmPassword.pattern = this.value;">
 									</div>
 									<div class="input-field col s6">
 										<p>
@@ -64,7 +70,7 @@
 												key="registration.confirm_password" />
 										</p>
 										<input id="password" name="confirmPassword" type="password"
-											class="validate">
+											pattern="${consts.getPassword() }" class="validate" required>
 									</div>
 								</div>
 
@@ -74,14 +80,14 @@
 											<fmt:message bundle="${msg}" key="registration.nationality" />
 										</p>
 										<input id="nationality" name="nationality" type="text"
-											class="validate">
+											pattern="${consts.getOnlyChars() }" class="validate" required>
 									</div>
 									<div class="input-field col s3" style="margin-top: 0em">
 										<p>
 											<fmt:message bundle="${msg}" key="registration.profession" />
 										</p>
 										<select id="profession" name="profession"
-											class="browser-default" style="margin-top: 0.75em">
+											class="browser-default" style="margin-top: 0.75em" required>
 
 											<c:forEach items="${professions}" var="profession">
 												<option value="${profession.getId()}">
@@ -98,7 +104,7 @@
 											<fmt:message bundle="${msg}" key="registration.education" />
 										</p>
 										<select id="education" name="education"
-											class="browser-default" style="margin-top: 0.75em">
+											class="browser-default" style="margin-top: 0.75em" required>
 
 											<option value="PRIMARY">
 												<fmt:message bundle="${msg}"
@@ -133,6 +139,7 @@
 											<fmt:message bundle="${msg}" key="registration.institution" />
 										</p>
 										<input id="eduInstitution" name="institution" type="text"
+											required pattern="${consts.getAnyCharacters() }"
 											class="validate" style="margin-top: 0.75em">
 									</div>
 								</div>
@@ -150,19 +157,22 @@
 										<p>
 											<fmt:message bundle="${msg}" key="registration.email" />
 										</p>
-										<input id="email" name="email" type="email" class="validate">
+										<input id="email" name="email" type="email" required
+											pattern="${consts.getEmail() }" class="validate">
 									</div>
 									<div class="input-field col s3">
 										<p>
 											<fmt:message bundle="${msg}" key="registration.address" />
 										</p>
-										<input id="adress" name="address" type="text" class="validate">
+										<input id="adress" name="address" type="text" required
+											pattern="${consts.getAnyCharacters() }" class="validate">
 									</div>
 									<div class="input-field col s3">
 										<p>
 											<fmt:message bundle="${msg}" key="registration.phone" />
 										</p>
-										<input id="phone" name="phone" type="text" class="validate">
+										<input id="phone" name="phone" type="text" required
+											pattern="${consts.getPhoneNumber() }" class="validate">
 									</div>
 
 								</div>

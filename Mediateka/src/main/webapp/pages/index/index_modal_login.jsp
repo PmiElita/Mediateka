@@ -4,8 +4,10 @@
 
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<fmt:setLocale value="${cookie.lang.value}"/>
+<fmt:setLocale value="${cookie.lang.value}" />
 <fmt:setBundle basename="translations/index" var="msg" scope="session" />
+<jsp:useBean id="consts" class="com.mediateka.util.RegExps"
+	scope="session" />
 
 
 <div id="modal1" class="modal">
@@ -22,16 +24,17 @@
 
 						<div class="input-field col s6">
 							<i class="mdi-action-account-circle prefix"></i> <input
-								id="login_log" class="validate" type="text" name="email">
-							<label class="active" for="login_log"> <fmt:message
-									bundle="${msg}" key="email_field" />
+								id="login_log" class="validate" type="text" name="email"
+								pattern="${consts.getEmail() }" required /> <label class="active"
+								for="login_log"> <fmt:message bundle="${msg}"
+									key="email_field" />
 							</label>
 						</div>
 
 						<div class="input-field col s6">
 							<i class="small mdi-communication-vpn-key prefix"></i><input
 								id="password_log" class="validate" type="password"
-								name="password"> <label for="password_log"> <fmt:message
+								name="password" /> <label for="password_log"> <fmt:message
 									bundle="${msg}" key="password_field" />
 							</label>
 						</div>
