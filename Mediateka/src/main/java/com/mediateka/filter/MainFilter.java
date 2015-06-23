@@ -9,6 +9,7 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -52,6 +53,10 @@ public class MainFilter implements Filter {
 
 		httpRequest.setCharacterEncoding("UTF-8");
 		httpResponse.setCharacterEncoding("UTF-8");
+
+		if (request.getParameter("lang") == null) {
+			httpResponse.addCookie(new Cookie("lang", "uk-UA"));
+		}
 
 		if (uri.matches(".*\\..*")) {
 			chain.doFilter(request, response);

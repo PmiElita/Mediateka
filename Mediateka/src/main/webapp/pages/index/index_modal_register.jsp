@@ -61,7 +61,8 @@
 											<fmt:message bundle="${msg}" key="registration.password" />
 										</p>
 										<input id="password" name="password" type="password"
-											 class="validate" required
+											title = "<fmt:message bundle="${msg}" key="registration.password_requirements" />"
+											pattern="${consts.getPassword() }" class="validate" required
 											onchange=" this.setCustomValidity(this.validity.patternMismatch ? this.title : ''); if(this.checkValidity()) form.confirmPassword.pattern = this.value;">
 									</div>
 									<div class="input-field col s6">
@@ -70,6 +71,7 @@
 												key="registration.confirm_password" />
 										</p>
 										<input id="password" name="confirmPassword" type="password"
+											title = "<fmt:message bundle="${msg}" key="registration.password_requirements" />"
 											pattern="${consts.getPassword() }" class="validate" required>
 									</div>
 								</div>
@@ -158,7 +160,7 @@
 											<fmt:message bundle="${msg}" key="registration.email" />
 										</p>
 										<input id="email" name="email" type="email" required
-											pattern="${consts.getEmail() }" 
+											pattern="${consts.getEmail() }"
 											onchange="
 											$.ajax(
 												{
@@ -170,7 +172,7 @@
 																form.email.setCustomValidity('');
 																form.email.setAttribute('class', 'validate valid');
 															} else {
-																form.email.setCustomValidity('this email is already in use');
+																form.email.setCustomValidity('<fmt:message bundle="${msg}" key="registration.email_is_in_use" />');
 																form.email.setAttribute('class', 'validate invalid');
 															}
 														}

@@ -20,6 +20,7 @@ import com.mediateka.annotation.Controller;
 import com.mediateka.annotation.Request;
 import com.mediateka.exception.WrongInputException;
 import com.mediateka.form.AnonymousUserRegistrationForm;
+import com.mediateka.form.PasswordChangingForm;
 import com.mediateka.form.UserRegistrationForm;
 import com.mediateka.model.User;
 import com.mediateka.model.enums.Role;
@@ -78,8 +79,8 @@ public class RegisterUserController {
 			logger.warn(form);
 			request.setAttribute("notification",
 					"registration form validation failed");
-			request.getRequestDispatcher("pages/index/index.jsp").forward(request,
-					response);
+			request.getRequestDispatcher("pages/index/index.jsp").forward(
+					request, response);
 
 			return;
 		}
@@ -87,10 +88,9 @@ public class RegisterUserController {
 		User userWithSuchEmail = UserService.getUserByEmail(form.getEmail());
 		if (userWithSuchEmail != null) {
 			// such email is already in use
-			request.setAttribute("notification",
-					"email is already taken");
-			request.getRequestDispatcher("pages/index/index.jsp").forward(request,
-					response);
+			request.setAttribute("notification", "email is already taken");
+			request.getRequestDispatcher("pages/index/index.jsp").forward(
+					request, response);
 
 			return;
 		}
@@ -171,14 +171,10 @@ public class RegisterUserController {
 		} catch (WrongInputException e) {
 			logger.warn("failed to validate registration form", e);
 			logger.warn(form);
-			response.sendRedirect("index");
-			return;
-		}
-
-		if (!form.getPassword().equals(form.getConfirmPassword())) {
-			logger.warn("failed to validate registration form");
-			logger.warn(form);
-			response.sendRedirect("index");
+			request.setAttribute("notification",
+					"registration form validation failed");
+			request.getRequestDispatcher("pages/index/index.jsp").forward(
+					request, response);
 			return;
 		}
 
@@ -186,7 +182,19 @@ public class RegisterUserController {
 		if (userWithSuchEmail != null) {
 			// such email is already in use
 			logger.debug("given email is already in use");
-			response.sendRedirect("index");
+			request.setAttribute("notification", "email is already taken");
+			request.getRequestDispatcher("pages/index/index.jsp").forward(
+					request, response);
+
+			return;
+		}
+
+		if (!form.getPassword().equals(form.getConfirmPassword())) {
+			logger.warn("failed to validate registration form");
+			logger.warn(form);
+			request.setAttribute("notification", "email is already taken");
+			request.getRequestDispatcher("pages/index/index.jsp").forward(
+					request, response);
 			return;
 		}
 
@@ -318,6 +326,69 @@ public class RegisterUserController {
 		}
 
 		response.getWriter().write("true");
+		return;
+	}
+
+	@Request(url = "resetPassword", method = "get")
+	public static void changePasswordPage(HttpServletRequest request,
+			HttpServletResponse response) throws IOException,
+			ReflectiveOperationException, SQLException, ServletException {
+
+		request.getRequestDispatcher("pages/form/reset_password_form.jsp")
+				.forward(request, response);
+		return;
+	}
+
+	@Request(url = "resetPassword", method = "post")
+	public static void changePassword(HttpServletRequest request,
+			HttpServletResponse response) throws IOException,
+			ReflectiveOperationException, SQLException, ServletException,
+			IllegalArgumentException, WrongInputException,
+			NoSuchAlgorithmException {
+
+		PasswordChangingForm form = new PasswordChangingForm();
+		ObjectFiller.fill(form, request);
+		FormValidator.validate(form);
+
+		
+		Integer myId = (Integer) request.getSession().getAttribute("userId");
+
+		if (myId == null){
+			request.getSession().invalidate();
+			response.sendRedirect("index");
+			System.out.println("ID = "
+					+ request.getSession().getAttribute("userId"));
+			return;			
+		}
+		
+		User me = UserService.getUserById(myId);
+		
+		if (me == null) {
+			request.getSession().invalidate();
+			response.sendRedirect("index");
+			System.out.println("ID = "
+					+ request.getSession().getAttribute("userId"));
+			return;
+		}
+
+		// generate salt
+		String salt = me.getSalt();
+		String password = SaltedPasswordGenerator.generate(
+				form.getNewPassword(), salt);
+
+		if (!me.getPassword().equals(password)) {
+			request.setAttribute("notification", "wrong old password");
+			request.getRequestDispatcher("pages/form/reset_password_form.jsp")
+					.forward(request, response);
+		}
+
+		me.setPassword(password);
+		UserService.updateUser(me);
+
+		request.setAttribute("notification", "password changed");
+		request.getRequestDispatcher("pages/index/index.jsp").forward(request,
+				response);
+
 		return;
 	}
 

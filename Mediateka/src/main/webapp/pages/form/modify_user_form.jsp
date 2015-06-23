@@ -127,7 +127,8 @@
 
 		<button class="btn waves-effect blue titler" type="submit"
 			name="action" style="margin-bottom: 3.5em">
-			<fmt:message bundle="${msg}" key="button" /><i class="mdi-content-send right"></i>
+			<fmt:message bundle="${msg}" key="button" />
+			<i class="mdi-content-send right"></i>
 		</button>
 
 	</form>
