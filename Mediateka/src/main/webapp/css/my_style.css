@@ -51,18 +51,20 @@ section {
 	margin-bottom: 0.0em;
 }
 
-.row .my-picture-wrap {
+.my-picture-wrap {
 	margin-left:-6.0em;
 	height: 10.0em;
-	width: 50.0em;
+	width: 64.0em;
 	background-color: #eeeeee;
 }
+
 
 .my-picture-wrap .my-picture {
 	background-size: cover;
 	background-position: center;
 	margin-left: 20.0em;
 }
+
 
 .my-parallax {
 	min-height: 35.8em;

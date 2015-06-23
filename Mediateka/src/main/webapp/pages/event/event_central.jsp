@@ -33,8 +33,8 @@
 			<div class="row my-picture-row" style="margin-left: -3em">
 				<div class="col s11 offset-s1">
 					<div class="waves-effect waves-block waves-light my-picture-wrap">
-						<h3 class="image-cover-t">${club_name}HiHi</h3>
-						<a title="Change picture" href="" data-target="modal15"
+						<h3 class="image-cover-t">${event_name}HiHi</h3>
+						<a title="Change picture" href="" data-target="modal16"
 							class="modal-trigger waves-effect"><img class="my-picture"
 							src="images/club/club_default.png" id="ava"></a>
 					</div>
@@ -44,8 +44,8 @@
 
 
 		<div class="row" style="margin-left: -8.5em">
-			<div class="col s3">
-				<a href="" data-target="modal7" class="modal-trigger">
+			<div class="col s4">
+				<a href="" data-target="modal17" class="modal-trigger">
 					<div
 						class="col s12 m8 offset-m2 l6 offset-l3 my-card my-small-card">
 						<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
@@ -64,8 +64,8 @@
 				</a>
 			</div>
 
-			<div class="col s3">
-				<a href="club_videos">
+			<div class="col s4">
+				<a href="event_videos">
 					<div
 						class="col s12 m8 offset-m2 l6 offset-l3 my-card my-small-card">
 						<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
@@ -84,8 +84,8 @@
 				</a>
 			</div>
 
-			<div class="col s3">
-				<a href="club_photo">
+			<div class="col s4">
+				<a href="event_photo">
 					<div
 						class="col s12 m8 offset-m2 l6 offset-l3 my-card my-small-card">
 						<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
@@ -104,28 +104,9 @@
 				</a>
 			</div>
 
-			<div class="col s3">
-				<a href="events">
-					<div
-						class="col s12 m8 offset-m2 l6 offset-l3 my-card my-small-card">
-						<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
-							<div style="margin-top: -2em">
-								<h3 style="color: black">Events</h3>
-								<div class="row valign-wrapper">
-									<div class="col s8">
-										<img style="margin-top: 0em" src="images/club/events.png"
-											alt="" class="circle responsive-img">
-									</div>
-									<div class="my-badge" style="margin-left: 0.75em">2</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</a>
-			</div>
 		</div>
 		<div class="container">
-			<p>${club_description}</p>
+			<p>${event_description}</p>
 		</div>
 	</div>
 </div>

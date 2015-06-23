@@ -6,6 +6,7 @@ import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -20,10 +21,12 @@ import com.mediateka.form.ExhibitionRegistrationForm;
 import com.mediateka.model.ClubEventMember;
 import com.mediateka.model.Event;
 import com.mediateka.model.Media;
+import com.mediateka.model.Profession;
 import com.mediateka.model.enums.ClubEventMemberType;
 import com.mediateka.model.enums.EventType;
 import com.mediateka.model.enums.MediaType;
 import com.mediateka.model.enums.State;
+import com.mediateka.service.ProfessionService;
 import com.mediateka.util.DateConverter;
 import com.mediateka.util.FileLoader;
 import com.mediateka.util.FormValidator;
@@ -39,6 +42,14 @@ public class EventController {
 
 	private static Logger logger = Logger.getLogger(EventController.class);
 
+	@Request(url="event", method="get")
+	public static void goToEventGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException,
+			SQLException, ReflectiveOperationException{
+		
+		request.getRequestDispatcher("pages/event/event.jsp").forward(request, response);
+	}
+	
 	// create event
 
 	@Request(url = "CreateExhibition", method = "get")
