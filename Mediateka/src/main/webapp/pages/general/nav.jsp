@@ -18,47 +18,46 @@
 
 			<li><a style="font-size: 1.5em" id="top-user-name">${userName}</a></li>
 			<c:if test="${userRole ne null}">
-				<li class="profile-tooltipped"><a title="<fmt:message bundle="${msg}" key="edit_profile" />" href="modifyUser"
-					class="waves-effect"> <i class="large mdi-action-face-unlock"></i>
+				<li class="profile-tooltipped"><a
+					title="<fmt:message bundle="${msg}" key="edit_profile" />"
+					href="modifyUser" class="waves-effect"> <i
+						class="large mdi-action-face-unlock"></i>
 
 				</a><jsp:include page="../general/profile_tooltip.jsp" /></li>
 
-				<li><a title="<fmt:message bundle="${msg}" key="cabinet" />" href="cabinet" class="waves-effect">
-						<i class="large mdi-maps-local-library"></i>
+				<li><a title="<fmt:message bundle="${msg}" key="cabinet" />"
+					href="cabinet" class="waves-effect"> <i
+						class="large mdi-maps-local-library"></i>
 				</a></li>
 
-				<li><a title="<fmt:message bundle="${msg}" key="logout" />" href="logout" class="waves-effect"><i
+				<li><a title="<fmt:message bundle="${msg}" key="logout" />"
+					href="logout" class="waves-effect"><i
 						class="large mdi-navigation-cancel"></i></a></li>
 			</c:if>
 
 
 			<c:if test="${userRole eq null}">
-				<li><a title="<fmt:message bundle="${msg}" key="register" />" href="" data-target="modal2"
-					class="modal-trigger waves-effect"> <i
-						class="large mdi-action-assignment-ind"></i></a></li>
+				<li><a title="<fmt:message bundle="${msg}" key="register" />"
+					href="" data-target="modal2" class="modal-trigger waves-effect">
+						<i class="large mdi-action-assignment-ind"></i>
+				</a></li>
 
-				<li><a title="<fmt:message bundle="${msg}" key="login" />" href="" data-target="modal1"
-					class="modal-trigger waves-effect"> <i
-						class="large mdi-action-input"></i></a></li>
+				<li><a title="<fmt:message bundle="${msg}" key="login" />"
+					href="" data-target="modal1" class="modal-trigger waves-effect">
+						<i class="large mdi-action-input"></i>
+				</a></li>
 			</c:if>
 
-
-
-			<li><a
-				title="<fmt:message bundle="${msg}" key="change_language" />"
-				class="dropdown-button" href="#!" data-activates="dropdown1"><fmt:message
-						bundle="${msg}" key="language" /><i
-					class="mdi-navigation-arrow-drop-down right"></i></a></li>
+			<li><c:if test="${cookie.lang.value eq 'en-US'}">
+					<a href="chooseLanguage?lang=uk"><div style="margin-top:0.7em"></div><img
+						title="<fmt:message bundle="${msg}" key="change_language" />"
+						src="images/UAFlag.png" alt="Ukrainian" title="" /></a>
+				</c:if> <c:if test="${cookie.lang.value eq 'uk-UA'}">
+					<a href="chooseLanguage?lang=en"><div style="margin-top:0.7em"></div><img
+						title="<fmt:message bundle="${msg}" key="change_language" />"
+						src="images/GBFlag.png" alt="English" /></a>
+				</c:if></li>
 		</ul>
 	</div>
 
 </nav>
-
-<!-- Dropdown Structure -->
-<ul id="dropdown1" class="dropdown-content">
-	<li><a href="chooseLanguage?lang=uk"><img
-			src="images/UAFlag.png" alt="Ukraine" />UKR</a></li>
-	<li class="divider"></li>
-	<li><a href="chooseLanguage?lang=en"><img
-			src="images/USFlag.png" alt="USA" />USA</a></li>
-</ul>
