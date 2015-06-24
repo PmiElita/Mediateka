@@ -15,10 +15,16 @@ import com.mediateka.annotation.Controller;
 import com.mediateka.annotation.Request;
 import com.mediateka.exception.WrongInputException;
 import com.mediateka.model.Book;
+import com.mediateka.model.BookMeaning;
 import com.mediateka.model.Media;
+import com.mediateka.model.User;
 import com.mediateka.model.enums.MediaType;
+import com.mediateka.model.enums.Role;
 import com.mediateka.model.enums.State;
+import com.mediateka.service.BookMeaningService;
+import com.mediateka.service.UserService;
 import com.mediateka.util.FileLoader;
+import com.mediateka.util.RegExps;
 
 import static com.mediateka.service.MediaService.*;
 import static com.mediateka.service.BookMeaningService.*;
@@ -390,4 +396,57 @@ public class BookController {
 			request.removeAttribute("imagePath");
 		}
 	}
+
+	@Request(url = "sergij_test_add_meaning", method = "get")
+	public static void addNewBookMeaningPage(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException,
+			SQLException, ReflectiveOperationException {
+
+		request.getRequestDispatcher(
+				"pages/form/tmp_form_for_adding_book_related_stuff.jsp")
+				.forward(request, response);
+		return;
+	}
+
+	@Request(url = "sergij_test_add_meaning", method = "post")
+	public static void addNewBookMeaning(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException,
+			SQLException, ReflectiveOperationException {
+
+		String meaningName = request.getParameter("meaning");
+		if (!meaningName.matches(RegExps.ONLY_CHARS)) {
+			response.sendRedirect("index");
+			return;
+		}
+
+		Integer myId = (Integer) request.getSession().getAttribute("userId");
+
+		if (myId == null) {
+			response.sendRedirect("index");
+			return;
+		}
+
+		User me = UserService.getUserById(myId);
+		if (me == null) {
+			response.sendRedirect("index");
+			request.getSession().invalidate();
+			return;
+		}
+
+		if (me.getRole() != Role.ADMIN) {
+			response.sendRedirect("index");
+			return;
+		}
+
+		BookMeaning newMeaning = new BookMeaning();
+		newMeaning.setName(meaningName);
+		newMeaning.setState(State.ACTIVE);
+
+		BookMeaningService.saveBookMeaning(newMeaning);
+		
+		
+		response.sendRedirect(request.getRequestURL().toString());
+
+	}
+
 }
