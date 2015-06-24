@@ -33,7 +33,7 @@ public class ShowUsers extends SimpleTagSupport {
 		if (this.locale.equals("uk-UA")) {
 			messages = ResourceBundle.getBundle("translations/users_uk_UA");
 		} else {
-			messages = ResourceBundle.getBundle("translations/users",
+			messages = ResourceBundle.getBundle("translations/users_en",
 					new Locale(this.locale));
 		}
 		

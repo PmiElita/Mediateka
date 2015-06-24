@@ -35,7 +35,7 @@ public class ShowActivity extends SimpleTagSupport {
 		if (this.locale.equals("uk-UA")) {
 			messages = ResourceBundle.getBundle("translations/activity_uk_UA");
 		} else {
-			messages = ResourceBundle.getBundle("translations/activity",
+			messages = ResourceBundle.getBundle("translations/activity_en",
 					new Locale(this.locale));
 		}
 
