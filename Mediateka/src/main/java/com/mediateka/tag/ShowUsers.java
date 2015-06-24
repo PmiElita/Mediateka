@@ -37,6 +37,10 @@ public class ShowUsers extends SimpleTagSupport {
 					new Locale(this.locale));
 		}
 		
+		
+		
+		
+		
 		if (users != null) {
 
 			JspWriter out = getJspContext().getOut();

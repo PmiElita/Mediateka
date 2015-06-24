@@ -23,6 +23,7 @@ import com.mediateka.form.SearchUserForm;
 import com.mediateka.model.User;
 import com.mediateka.model.enums.State;
 import com.mediateka.search.UserSearch;
+import com.mediateka.service.ProfessionService;
 import com.mediateka.service.UserService;
 import com.mediateka.util.FormValidator;
 import com.mediateka.util.ObjectFiller;
@@ -69,6 +70,8 @@ public class UserController {
 		switch (user.getRole()) {
 		case ADMIN:
 		case MODERATOR:
+			request.setAttribute("professions", ProfessionService.getProfessionAll());
+
 			request.getRequestDispatcher("pages/admin/admin.jsp").forward(
 					request, response);
 			break;

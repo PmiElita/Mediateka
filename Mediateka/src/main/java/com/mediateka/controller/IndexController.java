@@ -25,8 +25,7 @@ public class IndexController {
 		
 		//get list of profession's ids for registration form
 		
-		List<Profession> professions = ProfessionService.getProfessionAll();
-		request.setAttribute("professions", professions);
+		request.setAttribute("professions", ProfessionService.getProfessionAll());
 		
 		request.getRequestDispatcher("pages/index/index.jsp").forward(request, response);
 	}
