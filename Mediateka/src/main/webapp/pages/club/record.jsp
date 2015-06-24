@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<form id="myForm" class="col s12" enctype="multipart/form-data">
+<form id="recordForm" enctype="multipart/form-data" onsubmit="handleForm(e);">
 
 	<input type="hidden" name="clubId" id="clubId" value="1">
 	<div class="main-info container z-depth-1">
@@ -25,10 +25,11 @@
 
 		</div>
 		<div class="row">
-			<div class="col offset-s10" >
+			<div class="col offset-s10">
 				<button class="btn waves-effect" type="submit" name="action">
 					<i class="small mdi-content-send"></i>
 				</button>
+
 			</div>
 		</div>
 		<div id="progress"></div>
@@ -43,15 +44,15 @@
 			<div class="file-field input-field col s1">
 				<div class="btn">
 					<span><i class="small mdi-av-video-collection"></i></span> <input
-						type="file" id="video" name="video" multiple accept="video/*">
+						type="file" id="video" name="video" multiple accept="video/*"
+						onload="loading();">
 				</div>
 
 			</div>
 			<div class="file-field input-field col s1">
 				<div class="btn">
 					<span><i class="small mdi-av-queue-music"></i></span> <input
-						type="file" id="audio" name="audio" multiple accept="audio/*"
-						onload="loading();">
+						type="file" id="audio" name="audio" multiple accept="audio/*">
 				</div>
 			</div>
 			<div id="selectedImages"></div>
@@ -109,12 +110,6 @@
 	</c:forEach>
 </div>
 <script>
-	function loading() {
-		var html = "<div class='progress'><div class='determinate' style='width: 70%''></div></div>";
-		$("#progress").append(html);
-
-	}
-
 	var selDiv = "";
 	var storedImages = [];
 	var storedVideos = [];
@@ -125,10 +120,7 @@
 		$("#image").on("change", handleFileSelect);
 		$("#video").on("change", handleFileSelect);
 		$("#audio").on("change", handleFileSelect);
-
-		$("img").on("mouseover", bigImg);
-
-		$("#myForm").on("submit", handleForm);
+			
 
 		$("body").on("click", ".selFile", removeFile);
 	});
@@ -203,6 +195,7 @@
 	}
 
 	function handleForm(e) {
+		alert(1);
 		e.preventDefault();
 		var data = new FormData();
 
@@ -251,17 +244,5 @@
 			}
 		}
 		$(this).parent().remove();
-	}
-
-	function bigImg(e) {
-
-		var x = $(this);
-		x.style.height = "300px";
-		x.style.width = "450px";
-	}
-
-	function normalImg(x) {
-		x.style.height = "100px";
-		x.style.width = "150px";
 	}
 </script>
