@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 
 public class Translator {
 
-	public static String translate(String propFile,
+	public static String getMessage(String propFile,
 			HttpServletRequest httpRequest, String key) {
 		
 		Cookie[] cookies = httpRequest.getCookies();
@@ -27,8 +27,16 @@ public class Translator {
 			lang = "uk-UA";
 		}
 
+		switch (lang){
+		case "uk-UA":
+			propFile = propFile + "_uk_UA";
+			break;
+		case "en-US":
+			propFile = propFile + "_en";
+			break;
+		}
 		
 		
-		return ResourceBundle.getBundle(propFile, new Locale(lang)).getString(key);
+		return ResourceBundle.getBundle(propFile).getString(key);
 	}
 }
