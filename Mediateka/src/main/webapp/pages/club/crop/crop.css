@@ -1,8 +1,9 @@
 .imageBox
 {
+	margin-left:-5em;
     position: relative;
     height: 25em;
-    width: 56em;
+    width: 65em;
     border:1px solid #aaa;
     background: #fff;
     overflow: hidden;
@@ -14,8 +15,8 @@
 {
     position: absolute;
     top: 60%;
-    left: 17%;
-    width: 50em;
+    left: 14%;
+    width: 60em;
     height: 10em;
     margin-top: -100px;
     margin-left: -100px;

@@ -28,26 +28,29 @@
 </head>
 
 <div class="section white">
-	<div class="container">
-		<form>
-			<div class="row my-picture-row" style="margin-left: -3em">
-				<div class="col s11 offset-s1">
-					<div class="waves-effect waves-block waves-light my-picture-wrap">
-						<h3 class="image-cover-t">${club_name}HiHi</h3>
-						<a title="Change picture" href="" data-target="modal15"
-							class="modal-trigger waves-effect"><img class="my-picture"
-							src="images/club/club_default.png" id="ava"></a>
-					</div>
+
+
+	<form>
+		<div class="row my-picture-row">
+			<div class="col s12" style="background-color: #212121;">
+				<div
+					class="waves-effect waves-block waves-light my-picture-wrap col s8 offset-s2">
+					<h3 class="image-cover-t">${club_name}HiHi</h3>
+					<a title="Change picture" href="" data-target="modal15"
+						class="modal-trigger waves-effect" style="min-width: 100%"><img
+						class="my-picture-club" src="images/club/club_default.png"
+						id="ava"></a>
 				</div>
 			</div>
-		</form>
+		</div>
+	</form>
 
+	<div class="container">
 
-		<div class="row" style="margin-left: -8.5em">
+		<div class="row" style="margin-left: -7em">
 			<div class="col s3">
 				<a href="" data-target="modal7" class="modal-trigger">
-					<div
-						class="col s12 m8 offset-m2 l6 offset-l3 my-card my-small-card">
+					<div class="col s12 m8 offset-m2 l6 offset-l3 my-cardmy-small-card">
 						<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
 							<div style="margin-top: -2em">
 								<h3 style="color: black">Music</h3>
@@ -60,72 +63,68 @@
 								</div>
 							</div>
 						</div>
-					</div>
-				</a>
-			</div>
-
-			<div class="col s3">
-				<a href="club_videos">
-					<div
-						class="col s12 m8 offset-m2 l6 offset-l3 my-card my-small-card">
-						<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
-							<div style="margin-top: -2em">
-								<h3 style="color: black">Video</h3>
-								<div class="row valign-wrapper">
-									<div class="col s9">
-										<img src="images/club/video.jpg" alt=""
-											class="circle responsive-img">
-									</div>
-									<div class="club-badge" style="margin-left: 0.4em">3</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</a>
-			</div>
-
-			<div class="col s3">
-				<a href="club_photo">
-					<div
-						class="col s12 m8 offset-m2 l6 offset-l3 my-card my-small-card">
-						<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
-							<div style="margin-top: -2em">
-								<h3 style="color: black">Photo</h3>
-								<div class="row valign-wrapper">
-									<div class="col s9">
-										<img src="images/club/photo.png" alt=""
-											class="circle responsive-img">
-									</div>
-									<div class="club-badge" style="margin-left: 0.4em">1</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</a>
-			</div>
-
-			<div class="col s3">
-				<a href="events">
-					<div
-						class="col s12 m8 offset-m2 l6 offset-l3 my-card my-small-card">
-						<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
-							<div style="margin-top: -2em">
-								<h3 style="color: black">Events</h3>
-								<div class="row valign-wrapper">
-									<div class="col s8">
-										<img style="margin-top: 0em" src="images/club/events.png"
-											alt="" class="circle responsive-img">
-									</div>
-									<div class="my-badge" style="margin-left: 0.75em">2</div>
-								</div>
-							</div>
-						</div>
-					</div>
 				</a>
 			</div>
 		</div>
-		<div class="container">
-			<p>${club_description}</p>
+
+		<div class="col s3">
+			<a href="club_videos">
+				<div class="col s12 m8 offset-m2 l6 offset-l3 my-card my-small-card">
+					<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
+						<div style="margin-top: -2em">
+							<h3 style="color: black">Video</h3>
+							<div class="row valign-wrapper">
+								<div class="col s9">
+									<img src="images/club/video.jpg" alt=""
+										class="circle responsive-img">
+								</div>
+								<div class="club-badge" style="margin-left: 0.4em">3</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</a>
 		</div>
+
+		<div class="col s3">
+			<a href="club_photo">
+				<div class="col s12 m8 offset-m2 l6 offset-l3 my-card my-small-card">
+					<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
+						<div style="margin-top: -2em">
+							<h3 style="color: black">Photo</h3>
+							<div class="row valign-wrapper">
+								<div class="col s9">
+									<img src="images/club/photo.png" alt=""
+										class="circle responsive-img">
+								</div>
+								<div class="club-badge" style="margin-left: 0.4em">1</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</a>
+		</div>
+
+		<div class="col s3">
+			<a href="events">
+				<div class="col s12 m8 offset-m2 l6 offset-l3 my-card my-small-card">
+					<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
+						<div style="margin-top: -2em">
+							<h3 style="color: black">Events</h3>
+							<div class="row valign-wrapper">
+								<div class="col s8">
+									<img style="margin-top: 0em" src="images/club/events.png"
+										alt="" class="circle responsive-img">
+								</div>
+								<div class="my-badge" style="margin-left: 0.75em">2</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</a>
+		</div>
+	</div>
+	<div class="container">
+		<p>${club_description}</p>
 	</div>
 </div>

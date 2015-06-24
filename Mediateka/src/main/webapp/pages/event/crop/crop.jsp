@@ -72,7 +72,7 @@
 				document.getElementById("ava").setAttribute('style', 'margin-left: 0em;');
 				var img = cropper.getDataURL()
 				document.getElementById("ava").src = img;
-				$('#modal15').closeModal();
+				$('#modal16').closeModal();
 			})
 			$('#btnZoomIn').on('click', function() {
 				cropper.zoomIn();

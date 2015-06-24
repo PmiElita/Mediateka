@@ -28,22 +28,23 @@
 </head>
 
 <div class="section white">
-	<div class="container">
+
 		<form>
-			<div class="row my-picture-row" style="margin-left: -3em">
-				<div class="col s11 offset-s1">
-					<div class="waves-effect waves-block waves-light my-picture-wrap">
+			<div class="row my-picture-row">
+				<div class="col s12" style="background-color: #212121;">
+					<div class="waves-effect waves-block waves-light my-picture-wrap col s8 offset-s2">
 						<h3 class="image-cover-t">${event_name}HiHi</h3>
 						<a title="Change picture" href="" data-target="modal16"
-							class="modal-trigger waves-effect"><img class="my-picture"
+							class="modal-trigger waves-effect" style="min-width: 100%"><img class="my-picture-club"
 							src="images/club/club_default.png" id="ava"></a>
 					</div>
 				</div>
 			</div>
 		</form>
 
+	<div class="container">
 
-		<div class="row" style="margin-left: -8.5em">
+		<div class="row" style="margin-left: -7em">
 			<div class="col s4">
 				<a href="" data-target="modal17" class="modal-trigger">
 					<div class="col s12 m8 offset-m2 l6 offset-l3 my-card my-small-card">
