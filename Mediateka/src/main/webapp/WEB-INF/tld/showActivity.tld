@@ -1,16 +1,21 @@
 <taglib>
-  <tlib-version>1.0</tlib-version>
-  <jsp-version>2.0</jsp-version>
-  <short-name>Show activity TLD</short-name>
-  <tag>
-    <name>showUsers</name>
-    <tag-class>com.mediateka.tag.ShowActivity</tag-class>
-    <body-content>empty</body-content>
-    <attribute>
-       <name>formRecords</name>
-         <required>true</required>
-  <rtexprvalue>true</rtexprvalue>
-    </attribute>
-      
-  </tag>
+	<tlib-version>1.0</tlib-version>
+	<jsp-version>2.0</jsp-version>
+	<short-name>Show activity TLD</short-name>
+	<tag>
+		<name>showUsers</name>
+		<tag-class>com.mediateka.tag.ShowActivity</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<name>formRecords</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>locale</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+	</tag>
 </taglib>

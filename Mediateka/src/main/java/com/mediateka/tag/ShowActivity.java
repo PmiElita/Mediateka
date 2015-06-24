@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
@@ -17,37 +19,66 @@ import com.mediateka.service.EventService;
 
 public class ShowActivity extends SimpleTagSupport {
 	private List<FormRecord> formRecords;
+	private String locale;
 
 	public void setFormRecords(List<FormRecord> formRecords) {
 		this.formRecords = formRecords;
 	}
 
+	public void setLocale(String locale) {
+		this.locale = locale;
+	}
+
 	public void doTag() throws JspException, IOException {
 
+		ResourceBundle messages;
+		if (this.locale.equals("uk-UA")) {
+			messages = ResourceBundle.getBundle("translations/activity_uk_UA");
+		} else {
+			messages = ResourceBundle.getBundle("translations/activity",
+					new Locale(this.locale));
+		}
+
 		if (formRecords != null) {
-		
+
 			JspWriter out = getJspContext().getOut();
 			try {
 				out.write("<table class=\"bordered\">");
 				out.write("<tr>");
-				out.write("<th>Date</th>");
-				out.write("<th>Goal</th>");
-				out.write("<th>Comment</th>");
+				out.write("<th>" + messages.getString("date") + "</th>");
+
+				out.write("<th>" + messages.getString("goal") + "</th>");
+
+				out.write("<th>" + messages.getString("comment") + "</th>");
+
 				out.write("</tr>");
 				for (FormRecord formRecord : formRecords) {
 					out.write("<tr>");
-					out.write("<td>"+new SimpleDateFormat("dd.MM.yyyy").format(new Date(formRecord.getDateFrom().getTime()))+"</td>");
-					if (formRecord.getGoal()!=null){
-					out.write("<td>"+formRecord.getGoal()+"</td>");
-					} else if (formRecord.getBookId()!=null){
-						Book book= BookService.getBookById(formRecord.getBookId());
-						out.write("<td><a style=\"color:#000;\" href=\"book?id="+book.getId()+"\">\""+book.getName()+"\" "+book.getAuthor()+"</a></td>");
-					} else if (formRecord.getEventId()!=null){
-						Event event= EventService.getEventById(formRecord.getEventId());					
-						out.write("<td><a style=\"color:#000;\" href=\"event?id="+event.getId()+"\">"+event.getName()+"</a></td>");
+					out.write("<td>"
+							+ new SimpleDateFormat("dd.MM.yyyy")
+									.format(new Date(formRecord.getDateFrom()
+											.getTime())) + "</td>");
+					if (formRecord.getGoal() != null) {
+						out.write("<td>" + formRecord.getGoal() + "</td>");
+					} else if (formRecord.getBookId() != null) {
+						Book book = BookService.getBookById(formRecord
+								.getBookId());
+						out.write("<td><a style=\"color:#000;\" href=\"book?id="
+								+ book.getId()
+								+ "\">\""
+								+ book.getName()
+								+ "\" " + book.getAuthor() + "</a></td>");
+					} else if (formRecord.getEventId() != null) {
+						Event event = EventService.getEventById(formRecord
+								.getEventId());
+						out.write("<td><a style=\"color:#000;\" href=\"event?id="
+								+ event.getId()
+								+ "\">"
+								+ event.getName()
+								+ "</a></td>");
 					}
-					if (formRecord.getComment()!=null){
-					out.write("<td>"+formRecord.getComment()+"</td>");
+					if (formRecord.getComment() != null) {
+						out.write("<td>" + formRecord.getComment() + "</td>");
 					} else {
 						out.write("<td></td>");
 					}
@@ -60,7 +91,7 @@ public class ShowActivity extends SimpleTagSupport {
 
 		} else {
 			JspWriter out = getJspContext().getOut();
-			out.println("no users");
+			out.println(messages.getString("no_records"));
 		}
 
 	}

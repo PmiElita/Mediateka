@@ -1,6 +1,5 @@
 package com.mediateka.util;
 
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javax.servlet.http.Cookie;
@@ -8,9 +7,10 @@ import javax.servlet.http.HttpServletRequest;
 
 public class Translator {
 
-	public static String getMessage(String propFile,
-			HttpServletRequest httpRequest, String key) {
-		
+	private ResourceBundle bundle;
+	
+	public Translator(String propFile,
+			HttpServletRequest httpRequest) {
 		Cookie[] cookies = httpRequest.getCookies();
 		String lang = null;
 		
@@ -37,6 +37,10 @@ public class Translator {
 		}
 		
 		
-		return ResourceBundle.getBundle(propFile).getString(key);
+		this.bundle = ResourceBundle.getBundle(propFile);
+	}
+	
+	public String getMessage( String key) {
+		return this.bundle.getString(key);
 	}
 }
