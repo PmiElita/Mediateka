@@ -137,6 +137,9 @@ public class UserController {
 		try {
 			SearchUserForm searchUserForm = new SearchUserForm();
 			ObjectFiller.fill(searchUserForm, request);
+			if (searchUserForm.getQuery()==null||searchUserForm.equals("")){
+				throw new WrongInputException("");
+			}
 			FormValidator.validate(searchUserForm);
 			String[] query = searchUserForm.getQuery().split(" ");
 			List<User> users = UserSearch.getUserByRegexps(query);
@@ -155,7 +158,7 @@ public class UserController {
 		} catch (WrongInputException e) {
 			logger.warn("search user wrong input", e);
 			request.setAttribute("message", e.getMessage());
-			request.getRequestDispatcher("pages/fedunets12.06/users.jsp")
+			request.getRequestDispatcher("pages/users/users.jsp")
 					.forward(request, response);
 
 		}
@@ -169,6 +172,7 @@ public class UserController {
 		try {
 			SearchUserForm searchUserForm = new SearchUserForm();
 			ObjectFiller.fill(searchUserForm, request);
+			
 			FormValidator.validate(searchUserForm);
 			String[] query = searchUserForm.getQuery().split(" ");
 			List<User> users = UserSearch.getUserByRegexps(query);
@@ -253,7 +257,6 @@ public class UserController {
 			}
 
 			if (buttonText != null) {
-				System.out.println(1);
 				Map<String, String> map = new HashMap<String, String>();
 				map.put("message", "success");
 				map.put("button", buttonText);
