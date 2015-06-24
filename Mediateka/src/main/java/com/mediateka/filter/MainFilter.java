@@ -54,10 +54,25 @@ public class MainFilter implements Filter {
 		httpRequest.setCharacterEncoding("UTF-8");
 		httpResponse.setCharacterEncoding("UTF-8");
 
-		if (request.getParameter("lang") == null) {
-			httpResponse.addCookie(new Cookie("lang", "uk-UA"));
+		Cookie[] cookies = httpRequest.getCookies();
+		String lang = null;
+		if (cookies != null) {
+			for (Cookie cookie : cookies) {
+				if (cookie.getName().equals("lang")) {
+					lang = cookie.getValue();
+					break;
+				}
+			}
 		}
 
+		if (lang == null) {
+			httpResponse.addCookie(new Cookie("lang", "uk-UA"));
+			httpResponse.sendRedirect(httpRequest.getRequestURL().toString());
+			return;
+		}
+
+
+		
 		if (uri.matches(".*\\..*")) {
 			chain.doFilter(request, response);
 		} else {
