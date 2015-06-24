@@ -14,7 +14,7 @@
 <jsp:include page="../events/create_event.jsp" />
 
 <div class="container-side">
-	<div id="sidebar" class="z-depth-4">
+	<div id="sidebar" >
 		<ul>
 					<li><a href="tmp">TMP</a></li>
 			<li><a href="clubs"><fmt:message bundle="${msg}"
