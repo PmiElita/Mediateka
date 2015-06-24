@@ -33,9 +33,12 @@ public class ActivityController {
 
 		List<FormRecord> formRecords = FormRecordService
 				.getFormRecordsByUserIdAndDateRange(userId, weekAgo,
-						currentDate);
+						currentDate); 
+		if (formRecords!=null){
+			
         Collections.sort(formRecords, new FormRecordsByDateFrom());
-		request.setAttribute("formRecords", formRecords);
+		}
+        request.setAttribute("formRecords", formRecords);
 		request.getRequestDispatcher("pages/activity/activity.jsp")
 				.forward(request, response);
 	}
