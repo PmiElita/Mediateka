@@ -10,7 +10,7 @@ body {
 }
 
 .main {
-	min-height: 96%;
+	min-height: 90%;
 }
 
 .nav-wrapper a img {
@@ -137,6 +137,7 @@ section {
 .profile-tooltipped:hover span {
 	opacity: 1.0;
 	visibility: visible;
+	z-index:1001;
 }
 
 .profile-tooltipped span img {

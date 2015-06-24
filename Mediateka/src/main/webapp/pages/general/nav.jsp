@@ -48,7 +48,7 @@
 				</a></li>
 			</c:if>
 
-			<li><c:if test="${cookie.lang.value eq 'en-US'}">
+			<li style="height:4.5em"><c:if test="${cookie.lang.value eq 'en-US'}">
 					<a href="chooseLanguage?lang=uk"><div style="margin-top:0.7em"></div><img
 						title="<fmt:message bundle="${msg}" key="change_language" />"
 						src="images/UAFlag.png" alt="Ukrainian" title="" /></a>

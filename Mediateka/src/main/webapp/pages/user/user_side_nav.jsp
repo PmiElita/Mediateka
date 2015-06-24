@@ -16,6 +16,7 @@
 <div class="container-side">
 	<div id="sidebar" class="z-depth-4">
 		<ul>
+					<li><a href="tmp">TMP</a></li>
 			<li><a href="clubs"><fmt:message bundle="${msg}"
 						key="user.clubs" /></a></li>
 			<li><a href="events"><fmt:message bundle="${msg}"

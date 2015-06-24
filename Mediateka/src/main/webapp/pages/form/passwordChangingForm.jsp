@@ -10,53 +10,53 @@
 <jsp:include page="../general/head.jsp" />
 </head>
 <body>
-	<jsp:include page="../general/nav.jsp" />
+	<div class="main">
+		<jsp:include page="../general/nav.jsp" />
 
-	<div class="container">
-		<form class="form-horizontal" action="changePassword" method="post">
-			<fieldset>
+		<div class="container" style="margin-top:5em">
+			<form class="form-horizontal" action="changePassword" method="post">
+				<fieldset>
 
-				<!-- Form Name -->
-				<legend>Form Name</legend>
+					<!-- Form Name -->
+					<legend>Form Name</legend>
 
-				<!-- Text input-->
-				<input type="hidden" name="token" id="token" value="${token}" />
+					<!-- Text input-->
+					<input type="hidden" name="token" id="token" value="${token}" />
 
-				<!-- Text input-->
-				<div class="control-group">
-					<label class="control-label" for="password">new password</label>
-					<div class="controls">
-						<input id="password" name="password" type="text"
-							placeholder="password" class="input-xlarge" required="">
-						<p class="help-block">passworrd</p>
+					<!-- Text input-->
+					<div class="control-group">
+						<label class="control-label" for="password">new password</label>
+						<div class="controls">
+							<input id="password" name="password" type="text"
+								placeholder="password" class="input-xlarge" required="">
+							<p class="help-block">passworrd</p>
+						</div>
 					</div>
-				</div>
 
-
-
-				<!-- Text input-->
-				<div class="control-group">
-					<label class="control-label" for="password">confirm
-						password</label>
-					<div class="controls">
-						<input id="password" name="confirmPassword" type="text"
-							placeholder="password" class="input-xlarge" required="">
-						<p class="help-block">confirmPassword</p>
+					<!-- Text input-->
+					<div class="control-group">
+						<label class="control-label" for="password">confirm
+							password</label>
+						<div class="controls">
+							<input id="password" name="confirmPassword" type="text"
+								placeholder="password" class="input-xlarge" required="">
+							<p class="help-block">confirmPassword</p>
+						</div>
 					</div>
-				</div>
 
 
 
-				<!-- Button -->
-				<div class="control-group">
-					<label class="control-label" for="button"></label>
-					<div class="controls">
-						<button id="button" name="button" class="btn btn-primary">Send</button>
+					<!-- Button -->
+					<div class="control-group">
+						<label class="control-label" for="button"></label>
+						<div class="controls">
+							<button id="button" name="button" class="btn btn-primary">Send</button>
+						</div>
 					</div>
-				</div>
 
-			</fieldset>
-		</form>
+				</fieldset>
+			</form>
+		</div>
 	</div>
 	<jsp:include page="../general/footer.jsp" />
 </body>

@@ -30,6 +30,8 @@
 		</c:if>
 
 		<jsp:include page="club_central.jsp" />
+		
+		<jsp:include page="record.jsp"/>
 	</div>
 	<jsp:include page="../general/footer.jsp" />
 </body>
