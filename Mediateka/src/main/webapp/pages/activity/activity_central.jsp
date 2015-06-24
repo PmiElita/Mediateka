@@ -17,6 +17,7 @@
 <link type="text/css" rel="stylesheet" href="css/oleh_style.css"
 	media="screen,projection" />
 
+<jsp:include page="../user/user_side_nav.jsp" />
 <div class="container">
 	<div class="main-activity">
 
