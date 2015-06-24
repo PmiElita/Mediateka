@@ -2,7 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<form id="recordForm" enctype="multipart/form-data" onsubmit="handleForm(e);">
+<form id="recordForm" enctype="multipart/form-data"
+	onsubmit="handleForm(e);">
 
 	<input type="hidden" name="clubId" id="clubId" value="1">
 	<div class="main-info container z-depth-1">
@@ -120,7 +121,8 @@
 		$("#image").on("change", handleFileSelect);
 		$("#video").on("change", handleFileSelect);
 		$("#audio").on("change", handleFileSelect);
-			
+
+		$("#recordForm").on("submit", handleForm);
 
 		$("body").on("click", ".selFile", removeFile);
 	});
@@ -197,9 +199,8 @@
 	function handleForm(e) {
 		alert(1);
 		e.preventDefault();
-		var data = new FormData();
-
-		data.append('text', $('textarea#text').val());
+		var data = new FormData();		
+		data.append('text', $('textarea').val());
 		for (var i = 0, len = storedImages.length; i < len; i++) {
 			data.append('image', storedImages[i]);
 		}
@@ -208,6 +209,10 @@
 		}
 		for (var i = 0, len = storedAudios.length; i < len; i++) {
 			data.append('audio', storedAudios[i]);
+		}
+		if(($('textarea').val() == "") && (storedImages.length == 0) && 
+				(storedAudios.length == 0) && (storedVideos.length == 0)){
+			return;
 		}
 
 		var xhr = new XMLHttpRequest();
