@@ -22,7 +22,7 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
-		$('.materialboxed').materialbox();
+//		$('.materialboxed').materialbox();
 
 		$(".dropdown-button").dropdown();
 

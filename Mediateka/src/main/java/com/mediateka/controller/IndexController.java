@@ -1,7 +1,6 @@
 package com.mediateka.controller;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -16,21 +15,23 @@ import com.mediateka.service.ProfessionService;
 
 @Controller
 public class IndexController {
-   
-	@Request(url="index", method="get")
-	public static void indexGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException,
-			SQLException, ReflectiveOperationException{
-		
-		
-		//get list of profession's ids for registration form
-		
+
+	@Request(url = "index", method = "get")
+	public static void indexGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException, SQLException, ReflectiveOperationException {
+
+		// get list of profession's ids for registration form
+
 		request.setAttribute("professions", ProfessionService.getProfessionAll());
-		
+
 		request.getRequestDispatcher("pages/index/index.jsp").forward(request, response);
 	}
-	
 
+	@Request(url = "tmp", method = "get")
+	public static void tmpGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException, SQLException, ReflectiveOperationException {
 
+		request.getRequestDispatcher("pages/activity/activity.jsp").forward(request, response);
+	}
 
 }

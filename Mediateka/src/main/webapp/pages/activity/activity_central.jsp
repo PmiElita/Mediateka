@@ -16,26 +16,30 @@
 <script type="text/javascript" src="js/activity.js"></script>
 <link type="text/css" rel="stylesheet" href="css/oleh_style.css"
 	media="screen,projection" />
-<div class="main-activity">
 
-	<div class="row select-activity">
+<div class="container">
+	<div class="main-activity">
 
-		<select class="browser-default col s3 " id="period"
-			onchange="reloadActivity(this)">
-			<option value="week" selected>
-				<fmt:message bundle="${msg}" key="week" />
-			</option>
-			<option value="month">
-				<fmt:message bundle="${msg}" key="month" />
-			</option>
-			<option value="allTime">
-				<fmt:message bundle="${msg}" key="allTime" />
-			</option>
-		</select>
-	</div>
-	<div class="row" id="formRecordsRow">
-		<div class="col s12 " id="formRecords">
-			<u:showUsers formRecords="${formRecords }" locale="${cookie.lang.value}"/>
+		<div class="row select-activity">
+
+			<select class="browser-default col s3 " id="period"
+				onchange="reloadActivity(this)">
+				<option value="week" selected>
+					<fmt:message bundle="${msg}" key="week" />
+				</option>
+				<option value="month">
+					<fmt:message bundle="${msg}" key="month" />
+				</option>
+				<option value="allTime">
+					<fmt:message bundle="${msg}" key="allTime" />
+				</option>
+			</select>
+		</div>
+		<div class="row" id="formRecordsRow">
+			<div class="col s12 " id="formRecords">
+				<u:showUsers formRecords="${formRecords }"
+					locale="${cookie.lang.value}" />
+			</div>
 		</div>
 	</div>
 </div>

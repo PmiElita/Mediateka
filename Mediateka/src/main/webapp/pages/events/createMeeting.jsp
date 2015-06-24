@@ -22,7 +22,7 @@
 		<div id="creation_form">
 			<div class="container">
 
-				<h3 style="margin-top: 2em">Create meeting</h3>
+				<h3>Create meeting</h3>
 				${message}
 				<form name="createMeeting" id="create_meeting"
 					action="CreateMeeting" method="post">

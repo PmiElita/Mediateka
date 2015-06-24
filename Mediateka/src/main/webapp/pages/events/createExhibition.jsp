@@ -22,7 +22,7 @@
 		<div id="creation_form">
 			<div class="container">
 
-				<h3 style="margin-top: 2em">Create exhibition</h3>
+				<h3>Create exhibition</h3>
 
 				${message}
 				<form name="createExhibition" id="create_exhibition"

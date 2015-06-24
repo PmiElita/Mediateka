@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,8 +8,10 @@
 <title>My activity</title>
 </head>
 <body>
-	<jsp:include page="../general/nav.jsp" />
-	<jsp:include page="activity_central.jsp"/>
+	<div class="main">
+		<jsp:include page="../general/nav.jsp" />
+		<jsp:include page="activity_central.jsp" />
+	</div>
 	<jsp:include page="../general/footer.jsp" />
 </body>
 </html>

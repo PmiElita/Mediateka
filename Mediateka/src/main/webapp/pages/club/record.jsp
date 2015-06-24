@@ -199,7 +199,7 @@
 	function handleForm(e) {
 		alert(1);
 		e.preventDefault();
-		var data = new FormData();		
+		var data = new FormData();
 		data.append('text', $('textarea').val());
 		for (var i = 0, len = storedImages.length; i < len; i++) {
 			data.append('image', storedImages[i]);
@@ -210,10 +210,10 @@
 		for (var i = 0, len = storedAudios.length; i < len; i++) {
 			data.append('audio', storedAudios[i]);
 		}
-		if(($('textarea').val() == "") && (storedImages.length == 0) && 
-				(storedAudios.length == 0) && (storedVideos.length == 0)){
-			return;
-		}
+		// 		if(($('textarea').val() == "") && (storedImages.length == 0) && 
+		// 				(storedAudios.length == 0) && (storedVideos.length == 0)){
+		// 			return;
+		// 		}
 
 		var xhr = new XMLHttpRequest();
 		xhr.open('POST', 'loadRecord', true);

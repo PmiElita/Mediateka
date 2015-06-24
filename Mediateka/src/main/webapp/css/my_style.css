@@ -10,7 +10,7 @@ body {
 }
 
 .main {
-	min-height: 90%;
+	min-height: 92%;
 }
 
 .nav-wrapper a img {
@@ -118,7 +118,7 @@ section {
 }
 
 .profile-tooltipped span {
-	background-color: rgba(255.0, 255.0, 255.0, 0.9);
+	background-color: rgba(255.0, 255.0, 255.0, 0.5);
 	border-radius: 15.0px 15.0px 15.0px 0.0px;
 	box-shadow: 1.0px 1.0px 10.0px rgba(0.0, 0.0, 0.0, 0.5);
 	color: #000;

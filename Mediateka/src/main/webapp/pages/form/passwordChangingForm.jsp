@@ -13,7 +13,7 @@
 	<div class="main">
 		<jsp:include page="../general/nav.jsp" />
 
-		<div class="container" style="margin-top:5em">
+		<div class="container" style="margin-top: 5em">
 			<form class="form-horizontal" action="changePassword" method="post">
 				<fieldset>
 
@@ -25,22 +25,20 @@
 
 					<!-- Text input-->
 					<div class="control-group">
-						<label class="control-label" for="password">new password</label>
+						<p>New password</p>
 						<div class="controls">
 							<input id="password" name="password" type="text"
-								placeholder="password" class="input-xlarge" required="">
-							<p class="help-block">passworrd</p>
+								class="input-xlarge" required="">
+
 						</div>
 					</div>
 
 					<!-- Text input-->
 					<div class="control-group">
-						<label class="control-label" for="password">confirm
-							password</label>
+						<p>Confirm password</p>
 						<div class="controls">
 							<input id="password" name="confirmPassword" type="text"
-								placeholder="password" class="input-xlarge" required="">
-							<p class="help-block">confirmPassword</p>
+								class="input-xlarge" required="">
 						</div>
 					</div>
 
