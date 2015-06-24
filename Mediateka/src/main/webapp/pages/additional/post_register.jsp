@@ -15,20 +15,21 @@
 </head>
 
 <body>
-	<jsp:include page="../general/nav.jsp" />
+	<div class="main">
+		<jsp:include page="../general/nav.jsp" />
 
-	<div style="margin-top: 10em; margin-right: 0em"
-		class="container offset-s4">
-		<div class="row">
-			<h1 class="col8 ">Thanks!</h1>
+		<div style="margin-top: 10em; margin-right: 0em"
+			class="container offset-s4">
+			<div class="row">
+				<h1 class="col8 ">Thanks!</h1>
+			</div>
+			<div class="row">
+				<p style="font-size: 1.5em" class="col8">Check out your e-mail
+					to confirm your registration.</p>
+			</div>
 		</div>
-		<div class="row">
-			<p style="font-size: 1.5em" class="col8">Check out your e-mail to
-				confirm your registration.</p>
-		</div>
+		<div style="min-height: 195px"></div>
 	</div>
-	<div style="min-height: 195px"></div>
-
 	<jsp:include page="../general/footer.jsp" />
 
 </body>

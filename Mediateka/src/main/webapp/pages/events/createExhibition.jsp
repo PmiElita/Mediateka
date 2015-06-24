@@ -17,44 +17,46 @@
 
 
 <body>
-	<jsp:include page="../general/nav.jsp" />
-	<div id="creation_form">
-		<div class="container">
-			
-			<h3 style="margin-top:2em">Create exhibition</h3>
-			
-			${message}
-			<form name="createExhibition" id="create_exhibition"
-				action="CreateExhibition" method="post">
+	<div class="main">
+		<jsp:include page="../general/nav.jsp" />
+		<div id="creation_form">
+			<div class="container">
 
-				<div class="row">
-					Name:<input type="text" id="name" name="name"
-						required pattern=".{1,45}"><br>
-				</div>
+				<h3 style="margin-top: 2em">Create exhibition</h3>
 
-				<div class="row">
-					<p id="wrongDate"></p>
+				${message}
+				<form name="createExhibition" id="create_exhibition"
+					action="CreateExhibition" method="post">
 
-					<div class="col s6">
-						<label for="dateFrom" id="labelDateFrom">Date from:</label> <input
-							id="dateFrom" name="dateFrom" type="text" data-field="date">
-						<div id="dtBox"></div>
+					<div class="row">
+						Name:<input type="text" id="name" name="name" required
+							pattern=".{1,45}"><br>
 					</div>
 
-					<div class="col s6">
-						<label for="dateTill" id="labelDateTill">Date till:</label> <input
-							id="dateFrom" name="dateFrom" type="text" data-field="date">
-					</div>
-				</div>
+					<div class="row">
+						<p id="wrongDate"></p>
 
-				<div class="row">
-					Description:
-					<textarea name="description"
-					 pattern=".{0,255}" class="materialize-textarea"></textarea>
-					<input type="submit" id="submit"
-						value="Create exhibition" class="btn">
-				</div>
-			</form>
+						<div class="col s6">
+							<label for="dateFrom" id="labelDateFrom">Date from:</label> <input
+								id="dateFrom" name="dateFrom" type="text" data-field="date">
+							<div id="dtBox"></div>
+						</div>
+
+						<div class="col s6">
+							<label for="dateTill" id="labelDateTill">Date till:</label> <input
+								id="dateFrom" name="dateFrom" type="text" data-field="date">
+						</div>
+					</div>
+
+					<div class="row">
+						Description:
+						<textarea name="description" pattern=".{0,255}"
+							class="materialize-textarea"></textarea>
+						<input type="submit" id="submit" value="Create exhibition"
+							class="btn">
+					</div>
+				</form>
+			</div>
 		</div>
 	</div>
 	<jsp:include page="../general/footer.jsp" />

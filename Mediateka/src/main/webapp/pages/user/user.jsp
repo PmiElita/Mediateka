@@ -19,15 +19,11 @@
 </head>
 
 <body>
-	<%
-		Logger LOG = Logger.getLogger(this.getClass().getName());
-	%>
-	<%
-		LOG.warn("There's a new man in Town!");
-	%>
 
-	<jsp:include page="../general/nav.jsp" />
-	<jsp:include page="user_central.jsp" />
+	<div class="main">
+		<jsp:include page="../general/nav.jsp" />
+		<jsp:include page="user_central.jsp" />
+	</div>
 	<jsp:include page="../general/footer.jsp" />
 
 </body>

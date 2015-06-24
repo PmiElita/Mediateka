@@ -21,40 +21,40 @@
 
 
 <body>
-	<jsp:include page="../general/nav.jsp" />
+	<div class="main">
+		<jsp:include page="../general/nav.jsp" />
 
-	<div class="parallax-container my-parallax">
-		<div class="parallax">
-			<img src="images/parallax1.jpg">
-		</div>
-
-		<div class="row" style="margin-top: -1em">
-			<div class="col s12">
-				<ul class="tabs">
-					<li class="tab col s3" style="margin-left: 5em"><a
-						href="#my_clubs">My clubs</a></li>
-					<li class="tab col s3"><a href="#all_clubs">All clubs</a></li>
-					<li class="tab col s3" style="margin-left: -5em"><a href=""
-						data-target="modal8" class="modal-trigger waves-effect">Create
-							club</a></li>
-				</ul>
+		<div class="parallax-container my-parallax">
+			<div class="parallax">
+				<img src="images/parallax1.jpg">
 			</div>
 
-			<c:if test="${userRole eq Role.ADMIN}">
-				<jsp:include page="../admin/admin_side_nav.jsp" />
-			</c:if>
+			<div class="row" style="margin-top: -1em">
+				<div class="col s12">
+					<ul class="tabs">
+						<li class="tab col s3" style="margin-left: 5em"><a
+							href="#my_clubs">My clubs</a></li>
+						<li class="tab col s3"><a href="#all_clubs">All clubs</a></li>
+						<li class="tab col s3" style="margin-left: -5em"><a href=""
+							data-target="modal8" class="modal-trigger waves-effect">Create
+								club</a></li>
+					</ul>
+				</div>
 
-			<c:if test="${userRole eq Role.USER}">
-				<jsp:include page="../user/user_side_nav.jsp" />
-			</c:if>
+				<c:if test="${userRole eq Role.ADMIN}">
+					<jsp:include page="../admin/admin_side_nav.jsp" />
+				</c:if>
 
-			<div id="my_clubs"><jsp:include page="my_clubs.jsp" /></div>
-			<div id="all_clubs"><jsp:include page="all_clubs.jsp" /></div>
+				<c:if test="${userRole eq Role.USER}">
+					<jsp:include page="../user/user_side_nav.jsp" />
+				</c:if>
+
+				<div id="my_clubs"><jsp:include page="my_clubs.jsp" /></div>
+				<div id="all_clubs"><jsp:include page="all_clubs.jsp" /></div>
+			</div>
+
 		</div>
-
-
 	</div>
-
 	<jsp:include page="../general/footer.jsp" />
 </body>
 </html>

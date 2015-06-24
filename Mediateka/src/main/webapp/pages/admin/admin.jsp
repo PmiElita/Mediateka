@@ -16,10 +16,11 @@
 </head>
 
 <body>
-
-	<jsp:include page="../general/nav.jsp" />
-	<jsp:include page="admin_side_nav.jsp" />
-	<jsp:include page="admin_central.jsp" />
+	<div class="main">
+		<jsp:include page="../general/nav.jsp" />
+		<jsp:include page="admin_side_nav.jsp" />
+		<jsp:include page="admin_central.jsp" />
+	</div>
 	<jsp:include page="../general/footer.jsp" />
 </body>
 </html>

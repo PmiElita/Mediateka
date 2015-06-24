@@ -9,29 +9,29 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<div class="main">
+		<form action="createClub" method="post">
+			<div class="input-field col s5">
+				<i class="mdi-action-account-circle prefix"></i> <input
+					name="club_name" id="club_name" class="validate" type="text">
+				<label class="active" for="club_name">Club name</label>
+			</div>
+			<div class="input-field col s5">
+				<i class="mdi-action-account-circle prefix"></i>
+				<textarea name="club_description" cols="40" rows="5"></textarea>
+				<label class="active" for="club_description">Description</label>
+			</div>
+			<div class="input-field col s5">
+				<input type='file' name="avaClub" id="avaClub"
+					onchange="readURL(this);" /> <img id="ava" src="#"
+					alt="aclub avatar" />
+			</div>
 
-	<form action="createClub" method="post">
-		<div class="input-field col s5">
-			<i class="mdi-action-account-circle prefix"></i> <input
-				name="club_name" id="club_name" class="validate" type="text">
-			<label class="active" for="club_name">Club name</label>
-		</div>
-		<div class="input-field col s5">
-			<i class="mdi-action-account-circle prefix"></i>
-			<textarea name="club_description" cols="40" rows="5"></textarea>
-			<label class="active" for="club_description">Description</label>
-		</div>
-		<div class="input-field col s5">
-			<input type='file' name="avaClub" id="avaClub"
-				onchange="readURL(this);" /> <img id="ava" src="#"
-				alt="aclub avatar" />
-		</div>
+			<input type="submit" value="save"
+				onclick="javaScript: performAjaxSubmit ()">
 
-		<input type="submit" value="save"
-			onclick="javaScript: performAjaxSubmit ()">
-
-	</form>
-
+		</form>
+		<div class="main">
 </body>
 <script>
 	function performAjaxSubmit() {

@@ -9,8 +9,8 @@
 <fmt:requestEncoding value="utf-8" />
 
 
-<div class="parallax-container my-parallax">
-	<div class="parallax">
+<div class="parallax-container my-parallax" style="max-height:100%">
+	<div class="parallax" style="max-height:100%">
 		<img src="images/parallax1.jpg">
 	</div>
 

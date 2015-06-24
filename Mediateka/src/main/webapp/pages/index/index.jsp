@@ -5,12 +5,14 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <fmt:setLocale value="${cookie.lang.value}" />
-<fmt:setBundle basename="translations/index_page_notifications" var="msg" />
+<fmt:setBundle basename="translations/index_page_notifications"
+	var="msg" />
 
 <fmt:setBundle basename="menu" />
 <fmt:requestEncoding value="utf-8" />
 
 <html>
+
 
 <head>
 <jsp:include page="../general/head.jsp" />
@@ -19,18 +21,20 @@
 </head>
 
 <body>
+<div class="main">
 	<jsp:include page="../general/nav.jsp" />
+
 	
-	
-	<c:if test="${notification ne null }">
-		<fmt:message bundle="${msg}" key="${notification}" />
-	</c:if>
-	
-	
-	
-	<jsp:include page="index_slider.jsp" />
-	<jsp:include page="index_central.jsp" />
+		<c:if test="${notification ne null }">
+			<fmt:message bundle="${msg}" key="${notification}" />
+		</c:if>
+
+
+
+		<jsp:include page="index_slider.jsp" />
+		<jsp:include page="index_central.jsp" />
+	</div>
 	<jsp:include page="../general/footer.jsp" />
-	
+
 </body>
 </html>

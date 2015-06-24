@@ -20,35 +20,36 @@
 
 <body>
 
-	<jsp:include page="../general/nav.jsp" />
+	<div class="main">
+		<jsp:include page="../general/nav.jsp" />
 
-	<div class="parallax-container my-parallax">
+		<div class="parallax-container my-parallax">
 
-		<div class="parallax">
-			<img src="images/parallax1.jpg">
-		</div>
-
-		<div class="row" style="margin-top: -1em">
-			<div class="col s12">
-				<ul class="tabs">
-					<li class="tab col s3"><a href="#my_events"
-						style="margin-left: 5em">My events</a></li>
-					<li class="tab col s3"><a href="#all_events">All events</a></li>
-				</ul>
+			<div class="parallax">
+				<img src="images/parallax1.jpg">
 			</div>
-			<c:if test="${userRole eq Role.ADMIN}">
-				<jsp:include page="../admin/admin_side_nav.jsp" />
-			</c:if>
 
-			<c:if test="${userRole eq Role.USER}">
-				<jsp:include page="../user/user_side_nav.jsp" />
-			</c:if>
+			<div class="row" style="margin-top: -1em">
+				<div class="col s12">
+					<ul class="tabs">
+						<li class="tab col s3"><a href="#my_events"
+							style="margin-left: 5em">My events</a></li>
+						<li class="tab col s3"><a href="#all_events">All events</a></li>
+					</ul>
+				</div>
+				<c:if test="${userRole eq Role.ADMIN}">
+					<jsp:include page="../admin/admin_side_nav.jsp" />
+				</c:if>
+
+				<c:if test="${userRole eq Role.USER}">
+					<jsp:include page="../user/user_side_nav.jsp" />
+				</c:if>
 
 
-			<div id="my_events"><jsp:include page="my_events.jsp" /></div>
-			<div id="all_events"><jsp:include page="all_events.jsp" /></div>
+				<div id="my_events"><jsp:include page="my_events.jsp" /></div>
+				<div id="all_events"><jsp:include page="all_events.jsp" /></div>
+			</div>
 		</div>
-
 	</div>
 
 	<jsp:include page="../general/footer.jsp" />
