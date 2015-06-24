@@ -57,10 +57,17 @@ public class FormRecordService {
 			ReflectiveOperationException {
 		return FormRecordDAO.getFormRecordAll();
 	}
-	
+
 	public static List<FormRecord> getFormRecordsByDateRange(
 			Timestamp dateFrom, Timestamp dateTill) throws SQLException,
 			ReflectiveOperationException {
 		return FormRecordDAO.getFormRecordsByDateRange(dateFrom, dateTill);
+	}
+
+	public static List<FormRecord> getFormRecordsByUserIdAndDateRange(
+			Integer userId, Timestamp dateFrom, Timestamp dateTill)
+			throws SQLException, ReflectiveOperationException {
+		return FormRecordDAO.getFormRecordsByUserIdAndDateRange(userId,
+				dateFrom, dateTill);
 	}
 }

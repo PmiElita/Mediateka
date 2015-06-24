@@ -31,7 +31,7 @@ public class Transformer {
 			for (int i = 0; i < annotatedFields.size(); i++) {
 				String columnName = annotatedFields.get(i)
 						.getAnnotation(Column.class).name();
-				if (annotatedFields.get(i).getType().isEnum()){
+				if (annotatedFields.get(i).getType().isEnum()&&rs.getObject(columnName)!=null){
 					
 					setMethods.get(i).invoke(temp, Enum.valueOf((Class<Enum>) annotatedFields.get(i).getType(), (String)rs.getObject(columnName)));
 				} else {

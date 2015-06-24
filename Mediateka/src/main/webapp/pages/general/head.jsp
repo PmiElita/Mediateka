@@ -19,5 +19,4 @@
 	media="screen,projection" />
 	
 <link rel="stylesheet" type="text/css" href="css/DateTimePicker.css" />
-	
 <jsp:include page="../general/script.jsp" />

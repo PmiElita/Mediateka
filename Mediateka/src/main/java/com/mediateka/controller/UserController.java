@@ -3,6 +3,7 @@ package com.mediateka.controller;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +17,7 @@ import org.apache.log4j.Logger;
 import com.google.gson.Gson;
 import com.mediateka.annotation.Controller;
 import com.mediateka.annotation.Request;
+import com.mediateka.comparator.UsersByFullname;
 import com.mediateka.exception.WrongInputException;
 import com.mediateka.form.SearchUserForm;
 import com.mediateka.model.User;
@@ -144,8 +146,9 @@ public class UserController {
 			}
 
 			request.setAttribute("qeury", searchUserForm.getQuery());
+			Collections.sort(users, new UsersByFullname());
 			request.setAttribute("users", users);
-			request.getRequestDispatcher("pages/fedunets12.06/users.jsp")
+			request.getRequestDispatcher("pages/users/users_central.jsp")
 					.forward(request, response);
 			;
 
@@ -174,8 +177,9 @@ public class UserController {
 						+ searchUserForm.getQuery());
 			}
 			request.setAttribute("qeury", searchUserForm.getQuery());
+			Collections.sort(users, new UsersByFullname());
 			request.setAttribute("users", users);
-			request.getRequestDispatcher("pages/fedunets12.06/users.jsp")
+			request.getRequestDispatcher("pages/users/users.jsp")
 					.forward(request, response);
 
 		} catch (WrongInputException e) {

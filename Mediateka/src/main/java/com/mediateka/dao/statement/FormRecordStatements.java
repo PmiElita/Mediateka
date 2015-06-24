@@ -37,4 +37,6 @@ public class FormRecordStatements {
 	public static final String SELECT_FORM_RECORD_ALL = "SELECT * FROM form_record";
 	
 	public static final String CALL_GET_FORM_RECORDS_BY_DATE_RANGE= "CALL GetFormRecordsByDateRange(?,?)";
+	
+	public static final String CALL_GET_FORM_RECORDS_BY_USER_ID_AND_DATE_RANGE= "CALL GetFormRecordsByUserIdAndDateRange(?,?,?)";
 }

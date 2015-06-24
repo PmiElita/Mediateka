@@ -49,7 +49,7 @@ public class FormRecordDAO {
 			PreparedStatement statement = connection
 					.prepareStatement(SELECT_FORM_RECORD_BY_USER_ID);
 			FormRecord formRecord = new FormRecord();
-			formRecord.setId(formRecordUserId);
+			formRecord.setUserId(formRecordUserId);
 			Transformer.valueIntoPreparedStatement(statement, formRecord,
 					SELECT_FORM_RECORD_BY_USER_ID_ORDER);
 			ResultSet resultSet = statement.executeQuery();
@@ -150,6 +150,20 @@ public class FormRecordDAO {
 			CallableStatement statement = connection.prepareCall(CALL_GET_FORM_RECORDS_BY_DATE_RANGE);
 			statement.setTimestamp(1, dateFrom);
 			statement.setTimestamp(2, dateTill);
+			ResultSet resultSet =statement.executeQuery();
+			
+			return Transformer.transformResultSetIntoList(resultSet, FormRecord.class);
+		}
+	}
+	
+	public static List<FormRecord> getFormRecordsByUserIdAndDateRange(Integer userId,
+			Timestamp dateFrom, Timestamp dateTill) throws SQLException,
+			ReflectiveOperationException {
+		try (Connection connection = ConnectionManager.getConnection()) {
+			CallableStatement statement = connection.prepareCall(CALL_GET_FORM_RECORDS_BY_USER_ID_AND_DATE_RANGE);
+			statement.setInt(1, userId);
+			statement.setTimestamp(2, dateFrom);
+			statement.setTimestamp(3, dateTill);
 			ResultSet resultSet =statement.executeQuery();
 			
 			return Transformer.transformResultSetIntoList(resultSet, FormRecord.class);

@@ -1,0 +1,43 @@
+.main-activity {
+	padding-bottom: 2.0em;
+	width: 73.0%;
+	margin: auto;
+}
+
+.select-activity {
+    padding-top: 2.0em;	
+	padding-bottom: 1.0em;
+	padding-left: 0.75rem;
+	margin: auto;
+}
+
+ a.ath {
+	color: #000;
+}
+
+.user_label {
+	font-size: 20px;
+}
+
+.text_label {
+	font-size: 15px;
+}
+
+div.user {
+	padding-top: 1.0em;
+}
+
+.user {
+	padding-left:2.5em;
+	padding-bottom: 1.0em;
+}
+
+
+div.user:hover{
+		-webkit-box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0
+		rgba(0, 0, 0, 0.19);
+	-moz-box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0
+		rgba(0, 0, 0, 0.19);
+	box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0
+		rgba(0, 0, 0, 0.19);
+}
