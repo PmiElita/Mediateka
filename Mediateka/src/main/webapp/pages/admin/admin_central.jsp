@@ -8,6 +8,11 @@
 <fmt:setBundle basename="menu" />
 <fmt:requestEncoding value="utf-8" />
 
+<fmt:setLocale value="${cookie.lang.value}" />
+<fmt:setBundle basename="translations/admin" var="msg" />
+
+
+
 <div class="admin-info" style="margin-top: 2em; margin-bottom: 2.3em">
 	<div class="section white">
 		<div class="container">
@@ -18,7 +23,9 @@
 						<div class="col s12 m8 offset-m2 l6 offset-l3 my-card">
 							<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
 								<div style="margin-top: -2em">
-									<h3 style="color: black">Users</h3>
+									<h3 style="color: black">
+										<fmt:message bundle="${msg}" key="users" />
+									</h3>
 									<div class="row valign-wrapper">
 										<div class="col s10">
 											<img src="images/admin/users.png" alt=""
@@ -37,7 +44,9 @@
 						<div class="col s12 m8 offset-m2 l6 offset-l3 my-card">
 							<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
 								<div style="margin-top: -2em">
-									<h3 style="color: black">Clubs</h3>
+									<h3 style="color: black">
+										<fmt:message bundle="${msg}" key="clubs" />
+									</h3>
 									<div class="row valign-wrapper">
 										<div class="col s10">
 											<img src="images/admin/clubs.png" alt=""
@@ -56,7 +65,9 @@
 						<div class="col s12 m8 offset-m2 l6 offset-l3 my-card">
 							<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
 								<div style="margin-top: -2em">
-									<h3 style="color: black">Events</h3>
+									<h3 style="color: black">
+										<fmt:message bundle="${msg}" key="events" />
+									</h3>
 									<div class="row valign-wrapper">
 										<div class="col s8">
 											<img style="margin-top: 0em" src="images/admin/events.png"
@@ -77,7 +88,9 @@
 						<div class="col s12 m8 offset-m2 l6 offset-l3 my-card">
 							<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
 								<div style="margin-top: -2em">
-									<h3 style="color: black">Info</h3>
+									<h3 style="color: black">
+										<fmt:message bundle="${msg}" key="info" />
+									</h3>
 									<div class="row valign-wrapper">
 										<div class="col s9">
 											<img src="images/admin/info.png" alt=""
@@ -96,7 +109,9 @@
 						<div class="col s12 m8 offset-m2 l6 offset-l3 my-card">
 							<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
 								<div style="margin-top: -2em">
-									<h3 style="color: black">Books</h3>
+									<h3 style="color: black">
+										<fmt:message bundle="${msg}" key="books" />
+									</h3>
 									<div class="row valign-wrapper">
 										<div class="col s9">
 											<img src="images/admin/books.png" alt=""
@@ -114,7 +129,9 @@
 					<div class="col s12 m8 offset-m2 l6 offset-l3 my-card">
 						<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
 							<div style="margin-top: -2em">
-								<h3 style="color: black">Reports</h3>
+								<h3 style="color: black">
+									<fmt:message bundle="${msg}" key="reports" />
+								</h3>
 								<div class="row valign-wrapper">
 									<div class="col s8">
 										<img style="margin-top: 0em" src="images/admin/reports.png"
