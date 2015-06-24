@@ -1,56 +1,133 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link class="jsbin"
-	href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/base/jquery-ui.css"
-	rel="stylesheet" type="text/css" />
-<script class="jsbin"
-	src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-<script class="jsbin"
-	src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.0/jquery-ui.min.js"></script>
-<script src="js/viewImage.js"></script>
-<script type="text/javascript"
-	src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-<title>Insert title here</title>
-</head>
-<body>
-	<form id="myForm" enctype="multipart/form-data">
-		<input type="hidden" name="clubId" id="clubId" value="1">
-		<textarea name="text" id="text" placeholder="text"></textarea>
-		<div>
-			<input type="file" id="image" name="image" multiple accept="image/*">
-			<input type="file" id="video" name="video" onchange="readURL(this)"
-				accept="video/*"> <input type="file" id="audio" name="audio"
-				onchange="readURL(this)" accept="audio/*"> <label
-				id="number" hidden="true">1</label>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<form id="myForm" class="col s12" enctype="multipart/form-data">
+
+	<input type="hidden" name="clubId" id="clubId" value="1">
+	<div class="main-info container z-depth-1">
+		<div class="row">
+			<div class="col s10">
+				<div class="input-field">
+					<i class="mdi-editor-mode-edit prefix"></i>
+					<textarea id="icon_prefix2" class="materialize-textarea"
+						name="text" id="text"></textarea>
+					<label for="icon_prefix2">Message</label>
+				</div>
+			</div>
+
+			<div class="col s2" style="padding-top: 3.9em">
+				<button class="btn waves-effect" type="submit" name="action">
+					<i class="small mdi-content-send"></i>
+				</button>
+			</div>
+
 
 		</div>
-		<div id="selectedFiles"></div>
+		<div class="row">
+			<div class="col offset-s10" >
+				<button class="btn waves-effect" type="submit" name="action">
+					<i class="small mdi-content-send"></i>
+				</button>
+			</div>
+		</div>
+		<div id="progress"></div>
+		<div class="row">
+			<div class="file-field input-field col s1 offset-s8">
+				<div class="btn">
+					<span><i class="small mdi-image-camera-alt"></i></span> <input
+						type="file" id="image" name="image" multiple accept="image/*">
 
-		<input type="submit" value="upload">
-	</form>	
-	<form id="clubForm" action="record" method="post">		
-	</form>
-</body>
+				</div>
+			</div>
+			<div class="file-field input-field col s1">
+				<div class="btn">
+					<span><i class="small mdi-av-video-collection"></i></span> <input
+						type="file" id="video" name="video" multiple accept="video/*">
+				</div>
+
+			</div>
+			<div class="file-field input-field col s1">
+				<div class="btn">
+					<span><i class="small mdi-av-queue-music"></i></span> <input
+						type="file" id="audio" name="audio" multiple accept="audio/*"
+						onload="loading();">
+				</div>
+			</div>
+			<div id="selectedImages"></div>
+			<div id="selectedVideos"></div>
+			<div id="selectedAudios"></div>
+		</div>
+	</div>
+	<label id="number" hidden="true">1</label>
+
+
+
+	<!-- 	<div class="row"> -->
+	<!-- 		<div class="input-field col s6"> -->
+	<!-- 			<input type="submit" value="upload"> -->
+	<!-- 			<button class="btn waves-effect" type="submit" name="action"> -->
+	<!-- 				<i class="small mdi-file-file-upload"></i> -->
+	<!-- 			</button> -->
+	<!-- 		</div> -->
+	<!-- 	</div> -->
+
+</form>
+<form id="clubForm" action="record" method="post"></form>
+<div style="padding-top: 4.0em">
+	<c:forEach var="record" items="${records}">
+		<div class="main-info container z-depth-1">
+			<div class="row">
+				<c:out value="${record.text}" />
+				<c:forEach var="media" items="${mediaMap.get(record.id)}">
+			${record.id}
+			${media.path}
+			<c:choose>
+						<c:when test="${media.type == 'IMAGE'}">
+							<img src='<c:out value="${media.path}"></c:out>' width='200'
+								height='150'>
+						</c:when>
+						<c:when test="${media.type == 'VIDEO'}">
+							<video controls>
+								<source src='<c:out value="${media.path}"></c:out>'>
+							</video>
+						</c:when>
+						<c:when test="${media.type == 'AUDIO'}">
+							<audio controls>
+								<source src='<c:out value="${media.path}"></c:out>'>
+							</audio>
+						</c:when>
+					</c:choose>
+				</c:forEach>
+				<a><span><i
+						class="tiny mdi-action-thumb-down  waves-effect waves-red"></i></span></a> <a><span><i
+						class="tiny mdi-action-thumb-up waves-effect waves-green "></i></span></a>
+			</div>
+		</div>
+
+
+	</c:forEach>
+</div>
 <script>
+	function loading() {
+		var html = "<div class='progress'><div class='determinate' style='width: 70%''></div></div>";
+		$("#progress").append(html);
+
+	}
+
 	var selDiv = "";
-	var storedFiles = [];
+	var storedImages = [];
+	var storedVideos = [];
+	var storedAudios = [];
 	var num;
 
-	// 	function isEmpty(form){
-	// 		if(storedFiles.length > 0){
-	// 			form.submit();
-	// 		}
-
-	// 	}
 	$(document).ready(function() {
 		$("#image").on("change", handleFileSelect);
 		$("#video").on("change", handleFileSelect);
+		$("#audio").on("change", handleFileSelect);
 
-		selDiv = $("#selectedFiles");
+		$("img").on("mouseover", bigImg);
+
 		$("#myForm").on("submit", handleForm);
 
 		$("body").on("click", ".selFile", removeFile);
@@ -65,22 +142,62 @@
 					// 					if (!f.type.match("image.*")) {
 					// 						return;
 					// 					}
-					storedFiles.push(f);
-					alert(f);
+					if (f.type.match("image.*")) {
+						storedImages.push(f);
+						selDiv = $("#selectedImages");
+						alert(f);
 
-					var reader = new FileReader();
-					reader.onload = function(e) {
-						//						num = viewFile();
-						// 						$('#' + 'photo' + num).attr('src', e.target.result)
-						// 						.width(150).height(200);
-						// 						$('#' + 'photo' + num).attr('data-file', f.name);
-						// 						$('#' + 'photo' + num).attr('class', "selFile");
-						var html = "<div><img src=\"" + e.target.result + "\" data-file='"+f.name+"' class='selFile' title='Click to remove'><button name='"+f.name+"'>x</button>"
-								+ f.name + "<br clear=\"left\"/></div>";
-						selDiv.append(html);
+						var reader = new FileReader();
+						reader.onload = function(e) {
+							//						num = viewFile();
+							// 						$('#' + 'photo' + num).attr('src', e.target.result)
+							// 						.width(150).height(200);
+							// 						$('#' + 'photo' + num).attr('data-file', f.name);
+							// 						$('#' + 'photo' + num).attr('class', "selFile");
+							var html = "<div class='col s1'><img src=\"" + e.target.result + "\" data-file='"+f.name+"' width='150' height='100' class='selFile' title='Click to remove'><button name='"+f.name+"'>x</button"
+									+ f.name + "<br clear=\"left\"/></div>";
+							selDiv.append(html);
 
+						}
+						reader.readAsDataURL(f);
+					} else if (f.type.match("video.*")) {
+						storedVideos.push(f);
+						alert(f);
+						selDiv = $("#selectedVideos");
+
+						var reader = new FileReader();
+						reader.onload = function(e) {
+							//						num = viewFile();
+							// 						$('#' + 'photo' + num).attr('src', e.target.result)
+							// 						.width(150).height(200);
+							// 						$('#' + 'photo' + num).attr('data-file', f.name);
+							// 						$('#' + 'photo' + num).attr('class', "selFile");
+
+							var html = "<div><video width = '400' class='selFile' title='Click to remove' controls><source src=\"" + e.target.result + "\"></video></div>";
+							selDiv.append(html);
+						}
+						reader.readAsDataURL(f);
+					} else if (f.type.match("audio.*")) {
+						storedAudios.push(f);
+						alert(f);
+
+						selDiv = $("#selectedAudios");
+
+						var reader = new FileReader();
+						reader.onload = function(e) {
+							//						num = viewFile();
+							// 						$('#' + 'photo' + num).attr('src', e.target.result)
+							// 						.width(150).height(200);
+							// 						$('#' + 'photo' + num).attr('data-file', f.name);
+							// 						$('#' + 'photo' + num).attr('class', "selFile");
+							var html = "<div><audio class='selFile' title='Click to remove' controls><source src=\"" + e.target.result + "\"></audio></div>";
+							selDiv.append(html);
+
+						}
+						reader.readAsDataURL(f);
+					} else {
+						return;
 					}
-					reader.readAsDataURL(f);
 				});
 
 	}
@@ -89,9 +206,15 @@
 		e.preventDefault();
 		var data = new FormData();
 
-		for (var i = 0, len = storedFiles.length; i < len; i++) {
-			data.append('image', storedFiles[i]);
-			data.append('text', $('textarea#text').val());
+		data.append('text', $('textarea#text').val());
+		for (var i = 0, len = storedImages.length; i < len; i++) {
+			data.append('image', storedImages[i]);
+		}
+		for (var i = 0, len = storedVideos.length; i < len; i++) {
+			data.append('video', storedVideos[i]);
+		}
+		for (var i = 0, len = storedAudios.length; i < len; i++) {
+			data.append('audio', storedAudios[i]);
 		}
 
 		var xhr = new XMLHttpRequest();
@@ -101,7 +224,6 @@
 			if (this.status == 200) {
 				console.log(e.currentTarget.responseText);
 				alert(' items uploaded.');
-				$("#clubForm").submit();
 			}
 		}
 
@@ -110,13 +232,36 @@
 
 	function removeFile(e) {
 		var file = $(this).data("file");
-		for (var i = 0; i < storedFiles.length; i++) {
-			if (storedFiles[i].name === file) {
-				storedFiles.splice(i, 1);
+		for (var i = 0; i < storedImages.length; i++) {
+			if (storedImages[i].name === file) {
+				storedImages.splice(i, 1);
+				break;
+			}
+		}
+		for (var i = 0; i < storedVideos.length; i++) {
+			if (storedVideos[i].name === file) {
+				storedVideos.splice(i, 1);
+				break;
+			}
+		}
+		for (var i = 0; i < storedAudios.length; i++) {
+			if (storedAudios[i].name === file) {
+				storedAudios.splice(i, 1);
 				break;
 			}
 		}
 		$(this).parent().remove();
 	}
+
+	function bigImg(e) {
+
+		var x = $(this);
+		x.style.height = "300px";
+		x.style.width = "450px";
+	}
+
+	function normalImg(x) {
+		x.style.height = "100px";
+		x.style.width = "150px";
+	}
 </script>
-</html>
