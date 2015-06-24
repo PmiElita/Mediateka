@@ -8,71 +8,70 @@
 	<input type="hidden" name="clubId" id="clubId" value="1">
 	<div class="main-info container z-depth-1">
 		<div class="row">
-			<div class="col s10">
-				<div class="input-field">
-					<i class="mdi-editor-mode-edit prefix"></i>
-					<textarea id="icon_prefix2" class="materialize-textarea"
-						name="text" id="text"></textarea>
-					<label for="icon_prefix2">Message</label>
-				</div>
-			</div>
-
-			<div class="col s2" style="padding-top: 3.9em">
-				<button class="btn waves-effect" type="submit" name="action">
-					<i class="small mdi-content-send"></i>
-				</button>
-			</div>
-
-
-		</div>
-		<div class="row">
-			<div class="col offset-s10">
-				<button class="btn waves-effect" type="submit" name="action">
-					<i class="small mdi-content-send"></i>
-				</button>
-
-			</div>
-		</div>
-		<div id="progress"></div>
-		<div class="row">
-			<div class="file-field input-field col s1 offset-s8">
-				<div class="btn">
-					<span><i class="small mdi-image-camera-alt"></i></span> <input
-						type="file" id="image" name="image" multiple accept="image/*">
-
-				</div>
-			</div>
-			<div class="file-field input-field col s1">
-				<div class="btn">
-					<span><i class="small mdi-av-video-collection"></i></span> <input
-						type="file" id="video" name="video" multiple accept="video/*"
-						onload="loading();">
+			<div class="row" style="margin-left: 3em">
+				<div class="col s10" style="margin-top: 2em">
+					<div class="input-field">
+						<i class="mdi-editor-mode-edit prefix"></i>
+						<textarea id="icon_prefix2" class="materialize-textarea"
+							name="text" id="text"></textarea>
+						<label for="icon_prefix2">Message</label>
+					</div>
 				</div>
 
 			</div>
-			<div class="file-field input-field col s1">
-				<div class="btn">
-					<span><i class="small mdi-av-queue-music"></i></span> <input
-						type="file" id="audio" name="audio" multiple accept="audio/*">
+
+			<div class="col offset-s10" style="margin-top: -5em">
+				<div style="margin-left:0.5em">
+					<button class="btn waves-effect" type="submit" name="action">
+						<i class="small mdi-content-send"></i>
+					</button>
 				</div>
 			</div>
-			<div id="selectedImages"></div>
-			<div id="selectedVideos"></div>
-			<div id="selectedAudios"></div>
+
+			<div id="progress"></div>
+			<div class="row" style="margin-left: 4em">
+				<div class="file-field input-field col s1 offset-s8">
+					<div class="btn">
+						<span><i class="small mdi-image-camera-alt"></i></span> <input
+							type="file" id="image" name="image" multiple accept="image/*">
+
+					</div>
+				</div>
+				<div class="file-field input-field col s1">
+					<div class="btn">
+						<span><i class="small mdi-av-video-collection"></i></span> <input
+							type="file" id="video" name="video" multiple accept="video/*"
+							onload="loading();">
+					</div>
+
+				</div>
+				<div class="file-field input-field col s1">
+					<div class="btn">
+						<span><i class="small mdi-av-queue-music"></i></span> <input
+							type="file" id="audio" name="audio" multiple accept="audio/*">
+					</div>
+				</div>
+				<div class="row">
+					<div class="col s8">
+						<div id="selectedImages"></div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col s8">
+						<div id="selectedVideos"></div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col s8">
+						<div id="selectedAudios"></div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 	<label id="number" hidden="true">1</label>
-
-
-
-	<!-- 	<div class="row"> -->
-	<!-- 		<div class="input-field col s6"> -->
-	<!-- 			<input type="submit" value="upload"> -->
-	<!-- 			<button class="btn waves-effect" type="submit" name="action"> -->
-	<!-- 				<i class="small mdi-file-file-upload"></i> -->
-	<!-- 			</button> -->
-	<!-- 		</div> -->
-	<!-- 	</div> -->
 
 </form>
 <form id="clubForm" action="record" method="post"></form>
@@ -133,9 +132,6 @@
 		filesArr
 				.forEach(function(f) {
 
-					// 					if (!f.type.match("image.*")) {
-					// 						return;
-					// 					}
 					if (f.type.match("image.*")) {
 						storedImages.push(f);
 						selDiv = $("#selectedImages");
@@ -143,13 +139,8 @@
 
 						var reader = new FileReader();
 						reader.onload = function(e) {
-							//						num = viewFile();
-							// 						$('#' + 'photo' + num).attr('src', e.target.result)
-							// 						.width(150).height(200);
-							// 						$('#' + 'photo' + num).attr('data-file', f.name);
-							// 						$('#' + 'photo' + num).attr('class', "selFile");
-							var html = "<div class='col s1'><img src=\"" + e.target.result + "\" data-file='"+f.name+"' width='150' height='100' class='selFile' title='Click to remove'><button name='"+f.name+"'>x</button"
-									+ f.name + "<br clear=\"left\"/></div>";
+							var html = "<img src=\"" + e.target.result + "\" data-file='"+f.name+"'height='100' class='selFile' title='Click to remove'><button name='"+f.name+"'>x</button"
+									+ f.name + "<br clear=\"left\"/>";
 							selDiv.append(html);
 
 						}
@@ -161,11 +152,6 @@
 
 						var reader = new FileReader();
 						reader.onload = function(e) {
-							//						num = viewFile();
-							// 						$('#' + 'photo' + num).attr('src', e.target.result)
-							// 						.width(150).height(200);
-							// 						$('#' + 'photo' + num).attr('data-file', f.name);
-							// 						$('#' + 'photo' + num).attr('class', "selFile");
 
 							var html = "<div><video width = '400' class='selFile' title='Click to remove' controls><source src=\"" + e.target.result + "\"></video></div>";
 							selDiv.append(html);
@@ -179,11 +165,7 @@
 
 						var reader = new FileReader();
 						reader.onload = function(e) {
-							//						num = viewFile();
-							// 						$('#' + 'photo' + num).attr('src', e.target.result)
-							// 						.width(150).height(200);
-							// 						$('#' + 'photo' + num).attr('data-file', f.name);
-							// 						$('#' + 'photo' + num).attr('class', "selFile");
+
 							var html = "<div><audio class='selFile' title='Click to remove' controls><source src=\"" + e.target.result + "\"></audio></div>";
 							selDiv.append(html);
 
@@ -193,7 +175,6 @@
 						return;
 					}
 				});
-
 	}
 
 	function handleForm(e) {
@@ -210,10 +191,6 @@
 		for (var i = 0, len = storedAudios.length; i < len; i++) {
 			data.append('audio', storedAudios[i]);
 		}
-		// 		if(($('textarea').val() == "") && (storedImages.length == 0) && 
-		// 				(storedAudios.length == 0) && (storedVideos.length == 0)){
-		// 			return;
-		// 		}
 
 		var xhr = new XMLHttpRequest();
 		xhr.open('POST', 'loadRecord', true);
