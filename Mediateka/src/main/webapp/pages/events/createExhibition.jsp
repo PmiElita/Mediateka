@@ -19,6 +19,7 @@
 <body>
 	<div class="main">
 		<jsp:include page="../general/nav.jsp" />
+				<jsp:include page="../user/user_side_nav.jsp"/>
 		<div id="creation_form">
 			<div class="container">
 

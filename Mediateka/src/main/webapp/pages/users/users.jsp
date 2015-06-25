@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-     <%@ taglib prefix="u" uri="../../WEB-INF/tld/showUsers.tld"%> <!-- change path, remove one ../-->
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="u" uri="../../WEB-INF/tld/showUsers.tld"%>
+<!-- change path, remove one ../-->
 <!DOCTYPE html >
 <html>
 <head>
@@ -9,8 +10,10 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<jsp:include page="../general/nav.jsp" />
-	<jsp:include page="users_central.jsp"/>
+	<div class="main">
+		<jsp:include page="../general/nav.jsp" />
+		<jsp:include page="users_central.jsp" />
+	</div>
 	<jsp:include page="../general/footer.jsp" />
 </body>
 </html>

@@ -8,7 +8,7 @@
 		<div class="container">
 			<div class="row" style="margin-top: 0em; margin-left:-4em">
 
-				<div class="col s6">
+				<div class="col s4">
 					<a href="CreateExhibition">
 						<div
 							class="col s12 m8 offset-m2 l6 offset-l3 my-card my-small-card">
@@ -25,7 +25,7 @@
 					</a>
 				</div>
 
-				<div class="col s6">
+				<div class="col s4 offset-s2">
 					<a href="CreateMeeting">
 						<div
 							class="col s12 m8 offset-m2 l6 offset-l3 my-card my-small-card">

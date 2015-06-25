@@ -8,15 +8,12 @@
 <fmt:setLocale value="${cookie.lang.value}" />
 <fmt:setBundle basename="translations/side_nav" var="msg" scope="session" />
 
-
-
 <jsp:include page="../form/new_event_form.jsp" />
 <jsp:include page="../events/create_event.jsp" />
 
 <div class="container-side">
 	<div id="sidebar" >
 		<ul>
-					<li><a href="tmp">TMP</a></li>
 			<li><a href="clubs"><fmt:message bundle="${msg}"
 						key="user.clubs" /></a></li>
 			<li><a href="events"><fmt:message bundle="${msg}"

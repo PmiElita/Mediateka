@@ -14,8 +14,7 @@
 <style>
 .image-cover-t {
 	color: white;
-	position: absolute;
-	margin-left: 3em;
+	position: relative;
 	margin-top: 1em;
 	z-index: 1000;
 	text-shadow: black 1.0px 0.0px, black 1.0px 1.0px, black 0.0px 1.0px,
@@ -27,27 +26,28 @@
 </style>
 </head>
 
-<div class="section white">
-
+<div class="section white center">
 
 	<form>
 		<div class="row my-picture-row">
 			<div class="col s12" style="background-color: #212121;">
 				<div
 					class="waves-effect waves-block waves-light my-picture-wrap col s8 offset-s2">
-					<h3 class="image-cover-t">${club_name}HiHi</h3>
+
 					<a title="Change picture" href="" data-target="modal15"
-						class="modal-trigger waves-effect" style="min-width: 100%"><img
+						class="modal-trigger waves-effect" style="min-width: 100%">
+						<h3 class="image-cover-t">${club_name}HiHi</h3> <img
 						class="my-picture-club" src="images/club/club_default.png"
-						id="ava"></a>
+						id="ava">
+					</a>
 				</div>
 			</div>
 		</div>
 	</form>
 
-	<div class="container">
+	<div class="container" style="margin-top: 7em">
 
-		<div class="row" style="margin-left: -7em">
+		<div class="row" style="margin-left: -3.5em">
 			<div class="col s3">
 				<a href="" data-target="modal7" class="modal-trigger">
 					<div class="col s12 m8 offset-m2 l6 offset-l3 my-cardmy-small-card">
