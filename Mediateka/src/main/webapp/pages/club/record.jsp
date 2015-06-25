@@ -2,8 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<form id="recordForm" enctype="multipart/form-data"
-	onsubmit="handleForm(e);">
+<form id="recordForm" enctype="multipart/form-data">
 
 	<input type="hidden" name="clubId" id="clubId" value="1">
 	<div class="main-info container z-depth-1">
@@ -12,16 +11,15 @@
 				<div class="col s10" style="margin-top: 2em">
 					<div class="input-field">
 						<i class="mdi-editor-mode-edit prefix"></i>
-						<textarea id="icon_prefix2" class="materialize-textarea"
-							name="text" id="text"></textarea>
-						<label for="icon_prefix2">Message</label>
+						<textarea class="materialize-textarea" name="text" id="text"></textarea>
+						<label for="text">Message</label>
 					</div>
 				</div>
 
 			</div>
 
 			<div class="col offset-s10" style="margin-top: -5em">
-				<div style="margin-left:0.5em">
+				<div style="margin-left: 0.5em">
 					<button class="btn waves-effect" type="submit" name="action">
 						<i class="small mdi-content-send"></i>
 					</button>
@@ -40,8 +38,7 @@
 				<div class="file-field input-field col s1">
 					<div class="btn">
 						<span><i class="small mdi-av-video-collection"></i></span> <input
-							type="file" id="video" name="video" multiple accept="video/*"
-							onload="loading();">
+							type="file" id="video" name="video" multiple accept="video/*">
 					</div>
 
 				</div>
@@ -74,7 +71,7 @@
 	<label id="number" hidden="true">1</label>
 
 </form>
-<form id="clubForm" action="record" method="post"></form>
+<!-- <form id="clubForm" action="record" method="post"></form> -->
 <div style="padding-top: 4.0em">
 	<c:forEach var="record" items="${records}">
 		<div class="main-info container z-depth-1">
@@ -181,7 +178,7 @@
 		alert(1);
 		e.preventDefault();
 		var data = new FormData();
-		data.append('text', $('textarea').val());
+		data.append('text', document.getElementById('text').value);
 		for (var i = 0, len = storedImages.length; i < len; i++) {
 			data.append('image', storedImages[i]);
 		}
@@ -190,6 +187,11 @@
 		}
 		for (var i = 0, len = storedAudios.length; i < len; i++) {
 			data.append('audio', storedAudios[i]);
+		}
+		if ((document.getElementById('text').value == "")
+				&& (storedImages.length == 0) && (storedAudios.length == 0)
+				&& (storedVideos.length == 0)) {
+			return;
 		}
 
 		var xhr = new XMLHttpRequest();
