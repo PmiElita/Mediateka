@@ -1,5 +1,6 @@
 package com.mediateka.dao;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -195,6 +196,18 @@ public class BookDAO {
 					.prepareStatement(BookStatements.SELECT_BOOK_ALL);
 			ResultSet rs = statement.executeQuery();
 			return Transformer.transformResultSetIntoList(rs, Book.class);
+		}
+	}
+
+	public static List<Book> getBooksByRegexp(String regexp)
+			throws SQLException, ReflectiveOperationException {
+		try (Connection connection = ConnectionManager.getConnection()) {
+			CallableStatement statement = connection
+					.prepareCall(BookStatements.CALL_GET_BOOKS_BY_REGEXP);
+			statement.setString(1, regexp);
+			ResultSet resultSet = statement.executeQuery();
+			return Transformer
+					.transformResultSetIntoList(resultSet, Book.class);
 		}
 	}
 }

@@ -19,11 +19,11 @@
 		</h4>
 		<div class="row">
 			<form action="users" method="post" id="searchUsers" class="col s12"
-				onsubmit="return submitForm()">
+				onsubmit="return submitUserForm();">
 				<p id="message"></p>
 				<div class="input-field">
-					<input id="query" name="query" type="text" required
-						autocomplete="off" onkeyup="clearMessage()"> <label
+					<input id="userQuery" name="query" type="text" required
+						autocomplete="off" onkeyup="clearMessage();"> <label
 						for="search"><i class="mdi-action-search"></i></label>
 				</div>
 			</form>
@@ -32,7 +32,7 @@
 
 	<div class="modal-footer">
 		<button class=" modal-action  waves-effect waves-green btn-flat"
-			onclick="submitForm()">
+			onclick="submitUserForm();">
 			<fmt:message bundle="${msg}" key="confirm" />
 		</button>
 	</div>

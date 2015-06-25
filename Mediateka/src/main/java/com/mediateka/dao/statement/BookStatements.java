@@ -49,4 +49,6 @@ public class BookStatements {
 	public static final String[] SELECT_BOOK_BY_STATE_ORDER = { "state" };
 
 	public static final String SELECT_BOOK_ALL = "SELECT * FROM book";
+	
+	public static final String CALL_GET_BOOKS_BY_REGEXP = "CALL getBooksByRegexp(?)";
 }

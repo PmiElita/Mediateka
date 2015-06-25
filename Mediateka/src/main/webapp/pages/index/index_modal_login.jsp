@@ -8,11 +8,11 @@
 <fmt:setBundle basename="translations/index" var="msg" scope="session" />
 <jsp:useBean id="consts" class="com.mediateka.util.RegExps"
 	scope="session" />
-
-
+	<script type="text/javascript" src="js/index.js"></script>
 <div id="modal1" class="modal">
 	<div class="modal-content">
-		<form action="login" method="post">
+		<form action="login" method="post" id="loginForm" onsubmit="return checkSubmit();">
+			<label id="message" style="color:red;"></label>
 			<div class="container" style="margin-top: 1em">
 				<button class="btn waves-effect blue titler" type="submit"
 					name="login">
@@ -34,7 +34,7 @@
 						<div class="input-field col s6">
 							<i class="small mdi-communication-vpn-key prefix"></i><input
 								id="password_log" class="validate" type="password"
-								name="password" /> <label for="password_log"> <fmt:message
+								name="password" required /> <label for="password_log"> <fmt:message
 									bundle="${msg}" key="password_field" />
 							</label>
 						</div>

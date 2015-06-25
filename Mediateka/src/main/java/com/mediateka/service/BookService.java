@@ -58,4 +58,9 @@ public class BookService {
 			SQLException {
 		return BookDAO.getBookAll();
 	}
+
+	public static List<Book> getBooksByRegexp(String regexp)
+			throws SQLException, ReflectiveOperationException {
+		return BookDAO.getBooksByRegexp(regexp);
+	}
 }

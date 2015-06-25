@@ -1,6 +1,6 @@
 
 $(function () {
-$('#query').autocomplete({
+$('#userQuery').autocomplete({
     serviceUrl: 'get_users_by_regexp', // Страница для обработки запросов автозаполнения
     minChars: 1,
     maxHeight: 400,
@@ -20,7 +20,7 @@ function clearMessage(){
 	}
 }
 
-function submitForm(){
+function submitUserForm(){
 
 	var query = document.getElementById("query");
 	var message = document.getElementById("message");
