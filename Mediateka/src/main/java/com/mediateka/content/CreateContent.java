@@ -48,6 +48,8 @@ public class CreateContent {
 		contentGroup.setState(State.ACTIVE);
 		contentGroup.setText(fileLoader.getParameterMap().get("text"));
 
+		System.out.println(contentGroup);
+
 		contentGroup = ContentGroupService.callSaveContentGroup(contentGroup);
 		try {
 			for (int i = 0; i < fileLoader.getAllFilePathes().size(); i++) {

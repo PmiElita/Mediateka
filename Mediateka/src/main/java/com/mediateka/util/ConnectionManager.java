@@ -21,6 +21,8 @@ public class ConnectionManager {
 		}
 		pool = new ConnectionPool("MediatekaPool", 20, 30, 40, 3600,
 				"jdbc:mysql://localhost:3306/mediateka?useUnicode=true&characterEncoding=UTF-8", "root", "root");
+		//pool = new ConnectionPool("MediatekaPool", 20, 30, 40, 3600, "jdbc:mysql://localhost:3306/mediateka", "root","root");
+		
 	}
 
 	public static Connection getConnection() {

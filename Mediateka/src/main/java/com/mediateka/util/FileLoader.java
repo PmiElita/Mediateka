@@ -2,7 +2,9 @@ package com.mediateka.util;
 
 import java.io.File;
 import java.io.FileInputStream;
-
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -125,9 +127,9 @@ public class FileLoader {
 								uploadedFile.getName());
 						parser.parse(fileInputStream, contenthandler, metadata);
 					}
-					if (item.getContentType().equals(							
+					if (Files.probeContentType(Paths.get(filePath)).equals(							
 							metadata.get(Metadata.CONTENT_TYPE)) == false) {
-						System.out.println(item.getContentType() + " "
+						System.out.println(Files.probeContentType(Paths.get(filePath)) + " " + item.getContentType() + " "
 								+ metadata.get(Metadata.CONTENT_TYPE));
 						uploadedFile.delete();
 						throw new WrongInputException("wrong file type");

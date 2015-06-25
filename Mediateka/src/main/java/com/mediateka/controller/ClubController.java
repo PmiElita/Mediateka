@@ -3,6 +3,10 @@ package com.mediateka.controller;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +22,7 @@ import com.mediateka.exception.WrongInputException;
 import com.mediateka.form.ClubRegistrationForm;
 import com.mediateka.model.Club;
 import com.mediateka.model.ClubEventMember;
+import com.mediateka.model.ContentGroup;
 import com.mediateka.model.Media;
 import com.mediateka.model.enums.ClubEventMemberType;
 import com.mediateka.model.enums.ContentGroupType;
@@ -25,6 +30,7 @@ import com.mediateka.model.enums.MediaType;
 import com.mediateka.model.enums.State;
 import com.mediateka.service.ClubEventMemberService;
 import com.mediateka.service.ClubService;
+import com.mediateka.service.ContentGroupService;
 import com.mediateka.service.MediaService;
 import com.mediateka.util.FileLoader;
 import com.mediateka.util.FormValidator;
@@ -177,12 +183,13 @@ public class ClubController {
 		session.setAttribute("userId", 2);
 		request.getRequestDispatcher("pages/club/record.jsp").forward(request,
 				response);
-		
+
 	}
-	
+
 	@Request(url = "record", method = "post")
 	public static void createRecordPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException, SQLException, ReflectiveOperationException {
+			HttpServletResponse response) throws ServletException, IOException,
+			SQLException, ReflectiveOperationException {
 		HttpSession session = request.getSession();
 		String type = "club" + session.getAttribute("clubId");
 		request.getRequestDispatcher("pages/club/club.jsp").forward(request,
@@ -191,7 +198,23 @@ public class ClubController {
 
 	@Request(url = "club", method = "get")
 	public static void clubGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+			HttpServletResponse response) throws ServletException, IOException,
+			ReflectiveOperationException, SQLException {
+		HttpSession session = request.getSession();
+		session.setAttribute("clubId", 1);
+		session.setAttribute("userId", 2);
+		List<ContentGroup> records = ContentGroupService
+				.getContentGroupByClubId(1);
+		Map<Integer, List<Media>> mediaMap = new HashMap<Integer, List<Media>>();
+		if (records != null) {
+			for (ContentGroup contentGroup : records) {
+				mediaMap.put(contentGroup.getId(), MediaService
+						.getMediaContentGroupId(contentGroup.getId()));
+			}
+		}
+
+		request.setAttribute("mediaMap", mediaMap);
+		request.setAttribute("records", records);
 		request.getRequestDispatcher("pages/club/club.jsp").forward(request,
 				response);
 	}
