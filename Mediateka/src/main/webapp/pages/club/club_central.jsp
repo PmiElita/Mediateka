@@ -26,7 +26,7 @@
 </style>
 </head>
 
-<div class="section white center">
+<div class="section white center" style="padding-top:0">
 
 	<form>
 		<div class="row my-picture-row">

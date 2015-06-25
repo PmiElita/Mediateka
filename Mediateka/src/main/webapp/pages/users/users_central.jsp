@@ -20,11 +20,27 @@
 <script src="js/myautoc.js"></script>
 <link type="text/css" rel="stylesheet" href="css/oleh_style.css"
 	media="screen,projection" />
-<div class="main-activity">
-	<h4>
+	
+	<style>
+.image-cover-t {
+	color: white;
+	position: relative;
+	margin-top: 1em;
+	z-index: 1000;
+	text-shadow: black 1.0px 0.0px, black 1.0px 1.0px, black 0.0px 1.0px,
+		black -1.0px 1.0px, black -1.0px 0.0px, black -1.0px -1.0px, black
+		0.0px -1.0px, black 1.0px -1.0px, black 0.0 0.0 3.0px, black 0.0 0.0
+		3.0px, black 0.0 0.0 3.0px, black 0.0 0.0 3.0px, black 0.0 0.0 3.0px,
+		black 0.0 0.0 3.0px, black 0.0 0.0 3.0px, black 0.0 0.0 3.0px;
+}
+</style>
+	
+	
+<div class="main-activity container">
+	<h4 class="image-cover-t">
 		<fmt:message bundle="${msg}" key="searchUser" />
 	</h4>
-	<div class="row">
+	<div class="row section white">
 		<form id="searchUsers" class="col s12" onsubmit="return reloadUsers()">
 			<p id="message"></p>
 			<div class="input-field">
@@ -39,7 +55,7 @@
 		</button>
 	</div>
 
-	<div id="users">
+	<div id="users" class="section white">
 		<p>${message }</p>
 		<u:showUsers users="${users}" locale="${cookie.lang.value}" />
 

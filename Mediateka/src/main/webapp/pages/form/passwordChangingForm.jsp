@@ -13,49 +13,56 @@
 	<div class="main">
 		<jsp:include page="../general/nav.jsp" />
 
-		<div class="container" style="margin-top: 5em">
-			<form class="form-horizontal" action="changePassword" method="post">
-				<fieldset>
 
-					<!-- Form Name -->
-					<legend>Form Name</legend>
+		<div class="parallax-container my-parallax">
+			<div class="parallax">
+				<img src="images/parallax1.jpg">
+			</div>
+			<div class="container" style="margin-top: 5em">
+				<form class="form-horizontal" action="changePassword" method="post">
+					<fieldset>
 
-					<!-- Text input-->
-					<input type="hidden" name="token" id="token" value="${token}" />
+						<!-- Form Name -->
+						<legend>Form Name</legend>
 
-					<!-- Text input-->
-					<div class="control-group">
-						<p>New password</p>
-						<div class="controls">
-							<input id="password" name="password" type="text"
-								class="input-xlarge" required="">
+						<!-- Text input-->
+						<input type="hidden" name="token" id="token" value="${token}" />
 
+						<!-- Text input-->
+						<div class="control-group">
+							<p>New password</p>
+							<div class="controls">
+								<input id="password" name="password" type="text"
+									class="input-xlarge" required="">
+
+							</div>
 						</div>
-					</div>
 
-					<!-- Text input-->
-					<div class="control-group">
-						<p>Confirm password</p>
-						<div class="controls">
-							<input id="password" name="confirmPassword" type="text"
-								class="input-xlarge" required="">
+						<!-- Text input-->
+						<div class="control-group">
+							<p>Confirm password</p>
+							<div class="controls">
+								<input id="password" name="confirmPassword" type="text"
+									class="input-xlarge" required="">
+							</div>
 						</div>
-					</div>
 
 
 
-					<!-- Button -->
-					<div class="control-group">
-						<label class="control-label" for="button"></label>
-						<div class="controls">
-							<button id="button" name="button" class="btn btn-primary">Send</button>
+						<!-- Button -->
+						<div class="control-group">
+							<label class="control-label" for="button"></label>
+							<div class="controls">
+								<button id="button" name="button" class="btn btn-primary">Send</button>
+							</div>
 						</div>
-					</div>
 
-				</fieldset>
-			</form>
+					</fieldset>
+				</form>
+			</div>
 		</div>
 	</div>
+	
 	<jsp:include page="../general/footer.jsp" />
 </body>
 </html>

@@ -8,37 +8,72 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>Book statistics</title>
+<jsp:include page="../general/head.jsp" />
 </head>
 <body>
 
+	<div class="main">
+		<jsp:include page="../general/nav.jsp" />
 
-	<table border="1">
-		<tr>
-			<c:forEach var="group" items="${statistics}">
-				<td colspan="${group.value.size()}">${group.key}</td>
-			</c:forEach>
-		</tr>
+		<div class="parallax-container my-parallax">
+			<div class="parallax">
+				<img src="images/parallax1.jpg">
+			</div>
+			<div class="container">
+				<table>
+					<thead>
+
+						<!-- <tr>
+						<c:forEach var="group" items="${statistics}">
+							<td colspan="${group.value.size()}">${group.key}</td>
+						</c:forEach>
+					</tr>  -->
+
+						<tr>
+							<td>Name</td>
+							<td>Number</td>
+						</tr>
 
 
-		<tr>
-			<c:forEach var="group" items="${statistics}">
-				<c:forEach var="name" items="${group.value}">
-					<td> ${name.key} </td>
-				</c:forEach>
-			</c:forEach>
-		</tr>
+					</thead>
+
+					<tbody>
+
+						<c:forEach var="group" items="${statistics}">
+							<c:forEach var="name" items="${group.value}">
+								<tr>
+									<td>${name.key}</td>
+									<td>${name.value}</td>
+								</tr>
+							</c:forEach>
+						</c:forEach>
+
+						<!-- 
+					<tr>
+						<c:forEach var="group" items="${statistics}">
+							<c:forEach var="name" items="${group.value}">
+								<td>${name.key}</td>
+							</c:forEach>
+						</c:forEach>
+					</tr>
 
 
-		<tr>
-			<c:forEach var="group" items="${statistics}">
-				<c:forEach var="name" items="${group.value}">
-					<td> ${name.value} </td>
-				</c:forEach>
-			</c:forEach>
-		</tr>
+					<tr>
+						<c:forEach var="group" items="${statistics}">
+							<c:forEach var="name" items="${group.value}">
+								<td>${name.value}</td>
+							</c:forEach>
+						</c:forEach>
+					</tr>
+					 -->
 
-	</table>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
 
+	<jsp:include page="../general/footer.jsp" />
 </body>
 </html>

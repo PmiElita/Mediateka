@@ -16,25 +16,31 @@
 <head>
 
 <jsp:include page="../general/head.jsp" />
-	
+
 </head>
 
 <body>
 	<div class="main">
 		<jsp:include page="../general/nav.jsp" />
 
-		<c:if test="${userRole eq Role.ADMIN}">
-			<jsp:include page="../admin/admin_side_nav.jsp" />
-		</c:if>
+		<div class="parallax-container my-parallax">
+			<div class="parallax">
+				<img src="images/parallax1.jpg">
+			</div>
+			<c:if test="${userRole eq Role.ADMIN}">
+				<jsp:include page="../admin/admin_side_nav.jsp" />
+			</c:if>
 
-		<c:if test="${userRole eq Role.USER}">
-			<jsp:include page="../user/user_side_nav.jsp" />
-		</c:if>
+			<c:if test="${userRole eq Role.USER}">
+				<jsp:include page="../user/user_side_nav.jsp" />
+			</c:if>
 
-		<jsp:include page="club_central.jsp" />
-		
-		<jsp:include page="record.jsp"/>
+			<jsp:include page="club_central.jsp" />
+
+			<jsp:include page="record.jsp" />
+		</div>
 	</div>
+
 	<jsp:include page="../general/footer.jsp" />
 </body>
 </html>

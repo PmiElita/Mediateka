@@ -18,8 +18,14 @@
 <body>
 	<div class="main">
 		<jsp:include page="../general/nav.jsp" />
-		<jsp:include page="admin_side_nav.jsp" />
-		<jsp:include page="admin_central.jsp" />
+		
+		<div class="parallax-container my-parallax">
+			<div class="parallax">
+				<img src="images/parallax1.jpg">
+			</div>
+			<jsp:include page="admin_side_nav.jsp" />
+			<jsp:include page="admin_central.jsp" />
+		</div>
 	</div>
 	<jsp:include page="../general/footer.jsp" />
 </body>

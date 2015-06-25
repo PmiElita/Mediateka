@@ -31,7 +31,7 @@
 		<form>
 			<div class="row">
 				<div class="col s12" style="background-color: #212121;">
-					<div class="waves-effect waves-block waves-light my-picture-wrap col s8 offset-s2">
+					<div class="waves-effect waves-block waves-light my-picture-wrap col s12">
 						
 						<a title="Change picture" href="" data-target="modal16"
 							class="modal-trigger waves-effect" style="min-width: 100%">

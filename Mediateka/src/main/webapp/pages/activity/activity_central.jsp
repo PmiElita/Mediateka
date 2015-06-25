@@ -18,7 +18,7 @@
 	media="screen,projection" />
 
 <jsp:include page="../user/user_side_nav.jsp" />
-<div class="container">
+<div class="container section white">
 	<div class="main-activity">
 
 		<div class="row select-activity">

@@ -10,7 +10,7 @@
 
 
 <div class="admin-info" style="margin-top: 2em; margin-bottom: 2.3em">
-	<div class="section white">
+	<div class="section">
 		<div class="container">
 
 			<div class="row">

@@ -23,96 +23,102 @@
 <body>
 	<div class="main">
 		<jsp:include page="../general/nav.jsp" />
-		<jsp:include page="../admin/admin_side_nav.jsp" />
 
-		<div id="creation_form">
+		<div class="parallax-container my-parallax">
+			<div class="parallax">
+				<img src="images/parallax1.jpg">
+			</div>
+			<jsp:include page="../admin/admin_side_nav.jsp" />
 
-			<div class="container">
-				<form id="create_book" onsubmit="return valid();" action="CreateBook" method="post"
-					enctype="multipart/form-data">
+			<div id="creation_form">
 
-					<button type="submit" class="btn waves-effect blue titler"
-						id="submit" style="margin-top: 2.5em" >
-						<fmt:message bundle="${msg}" key="create_book" />
-					</button>
+				<div class="container section white">
+					<form id="create_book" onsubmit="return valid();"
+						action="CreateBook" method="post" enctype="multipart/form-data">
 
-					<h6 style="color: blue">${message}</h6>
+						<button type="submit" class="btn waves-effect blue titler"
+							id="submit" style="margin-top: 2.5em">
+							<fmt:message bundle="${msg}" key="create_book" />
+						</button>
 
-					<div class="row" style="margin-top: 0em">
-						<div class="col s12">
-							<div class="row" style="margin-bottom: 0em">
-								<div class="input-field col s6">
-									<p>
-										<fmt:message bundle="${msg}" key="book_name" />
-									</p>
-									<input id="name" name="name" type="text" class="validate"
-										pattern=".{1,45}" required  autocomplete="off">
+						<h6 style="color: blue">${message}</h6>
+
+						<div class="row" style="margin-top: 0em">
+							<div class="col s12">
+								<div class="row" style="margin-bottom: 0em">
+									<div class="input-field col s6">
+										<p>
+											<fmt:message bundle="${msg}" key="book_name" />
+										</p>
+										<input id="name" name="name" type="text" class="validate"
+											pattern=".{1,45}" required autocomplete="off">
+									</div>
+
+									<div class="input-field col s6">
+										<p>
+											<fmt:message bundle="${msg}" key="book_author" />
+										</p>
+										<input id="author" name="author" type="text" class="validate"
+											pattern=".{1,45}" required>
+									</div>
 								</div>
 
-								<div class="input-field col s6">
-									<p>
-										<fmt:message bundle="${msg}" key="book_author" />
-									</p>
-									<input id="author" name="author" type="text" class="validate"
-										pattern=".{1,45}" required >
+								<div class="row">
+
+									<div class="input-field col s4">
+										<select name="type" id="type" class="browser-default"
+											style="margin-top: 0.75em" required>
+											<option selected disabled value="0"><fmt:message
+													bundle="${msg}" key="book_type" /></option>
+											<c:forEach var="types" items="${book_type}">
+												<option value="${types.getId()}">
+													<fmt:message bundle="${msg}"
+														key="book_type.${types.getName()}" />
+
+												</option>
+											</c:forEach>
+										</select>
+									</div>
+
+									<div class="input-field col s4">
+										<select name="meaning" id="meaning" class="browser-default"
+											style="margin-top: 0.75em" required>
+											<option selected disabled value="0"><fmt:message
+													bundle="${msg}" key="book_meaning" /></option>
+											<c:forEach var="meanings" items="${book_meaning}">
+												<option value="${meanings.getId()}">
+													<fmt:message bundle="${msg}"
+														key="book_meaning.${meanings.getName()}" />
+												</option>
+											</c:forEach>
+										</select>
+									</div>
+
+
+									<div class="input-field col s4">
+										<select name="language" id="language" class="browser-default"
+											style="margin-top: 0.75em" required>
+											<option selected disabled value="0"><fmt:message
+													bundle="${msg}" key="book_language" /></option>
+											<c:forEach var="languages" items="${book_language}">
+												<option value="${languages.getId()}">
+													<fmt:message bundle="${msg}"
+														key="book_language.${languages.getName()}" />
+												</option>
+											</c:forEach>
+										</select>
+									</div>
+
 								</div>
-							</div>
-
-							<div class="row">
-
-								<div class="input-field col s4">
-									<select name="type" id="type" class="browser-default"
-										style="margin-top: 0.75em" required >
-										<option selected disabled value="0"><fmt:message
-												bundle="${msg}" key="book_type" /></option>
-										<c:forEach var="types" items="${book_type}">
-											<option value="${types.getId()}">
-												<fmt:message bundle="${msg}"
-													key="book_type.${types.getName()}" />
-
-											</option>
-										</c:forEach>
-									</select>
-								</div>
-
-								<div class="input-field col s4">
-									<select name="meaning" id="meaning" class="browser-default"
-										style="margin-top: 0.75em" required >
-										<option selected disabled value="0"><fmt:message
-												bundle="${msg}" key="book_meaning" /></option>
-										<c:forEach var="meanings" items="${book_meaning}">
-											<option value="${meanings.getId()}">
-												<fmt:message bundle="${msg}"
-													key="book_meaning.${meanings.getName()}" />
-											</option>
-										</c:forEach>
-									</select>
-								</div>
-
-
-								<div class="input-field col s4">
-									<select name="language" id="language" class="browser-default"
-										style="margin-top: 0.75em" required >
-										<option selected disabled value="0"><fmt:message
-												bundle="${msg}" key="book_language" /></option>
-										<c:forEach var="languages" items="${book_language}">
-											<option value="${languages.getId()}">
-												<fmt:message bundle="${msg}"
-													key="book_language.${languages.getName()}" />
-											</option>
-										</c:forEach>
-									</select>
-								</div>
-
 							</div>
 						</div>
-					</div>
 
-					<input class="btn" type="file" name="image"
-						placeholder="book cover screenshot..." onchange="readURL(this);"
-						style="width: 60em"> <img id="photo"
-						src="images/default.png">
-				</form>
+						<input class="btn" type="file" name="image"
+							placeholder="book cover screenshot..." onchange="readURL(this);"
+							style="width: 60em"> <img id="photo"
+							src="images/default.png">
+					</form>
+				</div>
 			</div>
 		</div>
 	</div>

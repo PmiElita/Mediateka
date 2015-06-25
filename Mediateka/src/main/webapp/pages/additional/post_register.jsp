@@ -16,20 +16,29 @@
 
 <body>
 	<div class="main">
-		<jsp:include page="../general/nav.jsp" />
 
-		<div style="margin-top: 10em; margin-right: 0em"
-			class="container offset-s4">
-			<div class="row">
-				<h1 class="col8 ">Thanks!</h1>
+		<div class="parallax-container my-parallax">
+			<div class="parallax">
+				<img src="images/parallax1.jpg">
 			</div>
-			<div class="row">
-				<p style="font-size: 1.5em" class="col8">Check out your e-mail
-					to confirm your registration.</p>
+
+			<div style="margin-top: 10em; margin-right: 0em"
+				class="container section white">
+				<div class="row offset-s4">
+					<h1 class="col8 ">Thanks!</h1>
+				</div>
+				<div class="row">
+					<p style="font-size: 1.5em" class="col8">Check out your e-mail
+						to confirm your registration.</p>
+				</div>
+
+				<div class="row">
+					<a style="font-size: 1.5em" class="col8">Back to main page.</a>
+				</div>
 			</div>
 		</div>
-		<div style="min-height: 195px"></div>
 	</div>
+
 	<jsp:include page="../general/footer.jsp" />
 
 </body>

@@ -6536,6 +6536,8 @@ right
 .container {
 	padding: 0 1.5rem;
 	margin: 0 auto;
+	margin-top: 1em;
+	margin-bottom: 2em;
 	max-width: 1280px;
 	width: 90%;
 }
@@ -6553,12 +6555,12 @@ right
 }
 
 .container .row {
-	margin-left: -0.75rem;
-	margin-right: -0.75rem;
+	margin-left: 0.5rem;
+	margin-right: 0.5rem;
 }
 
 .section {
-	padding-top: 1rem;
+	padding-top: 0.5rem;
 	padding-bottom: 1rem;
 }
 
