@@ -89,11 +89,12 @@ public class EventController {
 			currentTime.setHours(0);
 			currentTime.setMinutes(0);
 			currentTime.setSeconds(0);
+			currentTime.setNanos(0);
 
 			Timestamp dateFrom = convertIntoTimestamp(form.getDateFrom(),
-					"yyyy-MM-dd");
-			Timestamp dateTill = convertIntoTimestamp(form.getDateFrom(),
-					"yyyy-MM-dd");
+					"dd.MM.yyyy");
+			Timestamp dateTill = convertIntoTimestamp(form.getDateTill(),
+					"dd.MM.yyyy");
 			if (dateFrom.getTime() <= 0 || dateTill.getTime() <= 0)
 				throw new WrongInputException("Date is too big or too small. ");
 			if (currentTime.getTime() > dateFrom.getTime())
@@ -101,7 +102,6 @@ public class EventController {
 			if (dateFrom.getTime() > dateTill.getTime())
 				throw new WrongInputException(
 						"Date from cant be bigger than date till. ");
-
 			Event event = new Event();
 			event.setName(form.getName());
 			event.setType(EventType.EXHIBITION);
@@ -156,9 +156,9 @@ public class EventController {
 			currentTime.setSeconds(0);
 
 			Timestamp dateFrom = convertIntoTimestamp(form.getDate(),
-					"yyyy-MM-dd");
+					"dd.MM.yyyy");
 			Timestamp dateTill = convertIntoTimestamp(form.getDate(),
-					"yyyy-MM-dd");
+					"dd.MM.yyyy");
 
 			int[] timeFrom = timeValid(form.getTimeFrom());
 			int[] timeTill = timeValid(form.getTimeTill());
@@ -171,6 +171,9 @@ public class EventController {
 				throw new WrongInputException("Date is too big or too small. ");
 			if (currentTime.getTime() > dateFrom.getTime())
 				throw new WrongInputException("Date has gone. ");
+			if (dateFrom.getTime() > dateTill.getTime())
+				throw new WrongInputException(
+						"Date from cant be biger than date till. ");
 
 			Event event = new Event();
 			event.setName(form.getName());
@@ -214,7 +217,7 @@ public class EventController {
 			HttpServletResponse response) throws ServletException, IOException,
 			SQLException, ReflectiveOperationException {
 
-		request.getSession().setAttribute("eventId", 31);
+		request.getSession().setAttribute("eventId", 48);
 		request.getSession().setAttribute("userId", 2);
 
 		Event event = getEventById(Integer.parseInt(request.getSession()
@@ -226,7 +229,7 @@ public class EventController {
 		}
 		request.setAttribute("event", event);
 
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
 		String dateFrom = format.format(event.getDateFrom());
 		if (event.getType() == EventType.EXHIBITION) {
 			String dateTill = format.format(event.getDateTill());

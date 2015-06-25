@@ -11,7 +11,7 @@
 <html>
 
 <head>
-
+<script src= "js/eventCreation.js"></script>
 <jsp:include page="../general/head.jsp" />
 </head>
 
@@ -38,19 +38,19 @@
 
 						<div class="col s4">
 							<label for="date" id="labelDate">Date:</label> <input id="date"
-								name="date" type="text" data-field="date">
+								name="date" type="text" data-field="date" required onchange="meeting()">
 							<div id="dtBox"></div>
 						</div>
 
 						<div class="col s4">
 							<label for="timeFrom" id="labelTimeFrom">Time from:</label> <input
-								id="timeFrom" name="timeFrom" type="text" data-field="time">
+								id="timeFrom" name="timeFrom" type="text" data-field="time" required onchange="timeChangeMeeting()">
 
 						</div>
 
 						<div class="col s4">
 							<label for="timeTill" id="labelDateTill">Time till:</label> <input
-								id="timeTill" name="timeTill" type="text" data-field="time">
+								id="timeTill" name="timeTill" type="text" data-field="time" required onchange="timeChangeMeeting()">
 						</div>
 					</div>
 
@@ -59,7 +59,7 @@
 						<textarea name="description" pattern=".{0,255}"
 							class="materialize-textarea"></textarea>
 						<input type="submit" id="submit" value="Create meeting"
-							class="btn">
+							class="btn" disabled="true">
 					</div>
 
 				</form>

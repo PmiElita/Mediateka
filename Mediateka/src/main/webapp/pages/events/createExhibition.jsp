@@ -11,7 +11,7 @@
 <html>
 
 <head>
-
+<script src= "js/eventCreation.js"></script>
 <jsp:include page="../general/head.jsp" />
 </head>
 
@@ -38,13 +38,13 @@
 
 						<div class="col s6">
 							<label for="dateFrom" id="labelDateFrom">Date from:</label> <input
-								id="dateFrom" name="dateFrom" type="text" data-field="date">
+								id="dateFrom" name="dateFrom" type="text" data-field="date" required onchange="dateChangeExhibition()">
 							<div id="dtBox"></div>
 						</div>
 
 						<div class="col s6">
 							<label for="dateTill" id="labelDateTill">Date till:</label> <input
-								id="dateFrom" name="dateFrom" type="text" data-field="date">
+								id="dateTill" name="dateTill" type="text" data-field="date" required onchange="dateChangeExhibition()">
 						</div>
 					</div>
 
@@ -53,7 +53,7 @@
 						<textarea name="description" pattern=".{0,255}"
 							class="materialize-textarea"></textarea>
 						<input type="submit" id="submit" value="Create exhibition"
-							class="btn">
+							class="btn" disabled="true">
 					</div>
 				</form>
 			</div>

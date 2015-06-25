@@ -4,8 +4,8 @@ function dateChangeExhibition() {
 	var currentTime = new Date();
 	currentTime.setHours(0, 0, 0);
 	if (dateTillString != "" && dateFromString != "") {
-		var dateFrom = getDateFromFormat(dateFromString, "yyyy-MM-dd");
-		var dateTill = getDateFromFormat(dateTillString, "yyyy-MM-dd");
+		var dateFrom = getDateFromFormat(dateFromString, "dd.MM.yyyy");
+		var dateTill = getDateFromFormat(dateTillString, "dd.MM.yyyy");
 		if (dateFrom <= 0 || dateTill <= 0) {
 			document.getElementById("wrongDate").innerHTML = "Date format is wrong";
 			return false;
@@ -33,7 +33,7 @@ function dateChangeMeeting() {
 	var currentTime = new Date();
 	currentTime.setHours(0, 0, 0);
 	if (dateString != "") {
-		var date = getDateFromFormat(dateString, "yyyy-MM-dd");
+		var date = getDateFromFormat(dateString, "dd.MM.yyyy");
 		if (date <= 0) {
 			document.getElementById("wrongDate").innerHTML = "Date format is wrong";
 			return false;
@@ -44,7 +44,6 @@ function dateChangeMeeting() {
 				return false;
 			} else {
 				document.getElementById("wrongDate").innerHTML = "";
-				document.getElementById("submit").disabled = false;
 				return true;
 			}
 		}
@@ -55,8 +54,9 @@ function timeChangeMeeting() {
 	var dateString = document.getElementById("date").value;
 	var timeFromString = document.getElementById("timeFrom").value;
 	var timeTillString = document.getElementById("timeTill").value;
-	if (dateString != "" && timeFromString != "" && timeTillString != "") {
-		var date = getDateFromFormat(dateString, "yyyy-MM-dd");
+	if (dateString != "" && timeFromString != "" && timeTillString != ""
+			&& dateChangeMeeting() == true) {
+		var date = getDateFromFormat(dateString, "dd.MM.yyyy");
 		var dateNew = new Date();
 		dateNew.setTime(date);
 		var current = new Date();
@@ -71,7 +71,7 @@ function timeChangeMeeting() {
 				&& dateNew.getDate() == current.getDate()) {
 			if (timeFromHour < currentHour
 					|| (timeFromHour == currentHour && timeFromMinute <= currentMinute)) {
-				document.getElementById("wrongTime").innerHTML = "Time from must be less than current time. ";
+				document.getElementById("wrongTime").innerHTML = "Time from must be biger than current time. ";
 				document.getElementById("submit").disabled = true;
 				return false;
 			} else if (timeFromHour > timeTillHour
@@ -89,11 +89,22 @@ function timeChangeMeeting() {
 			document.getElementById("wrongTime").innerHTML = "Time from must be less than time till. ";
 			document.getElementById("submit").disabled = true;
 			return false;
-		} else {
+		} else if (timeFromHour < timeTillHour
+				|| (timeFromHour == timeTillHour && timeFromMinute <= timeTillMinute)) {
 			document.getElementById("wrongTime").innerHTML = "";
 			document.getElementById("submit").disabled = false;
 			return true;
+		} else {
+			document.getElementById("wrongTime").innerHTML = "";
+			document.getElementById("wrongDate").innerHTML = "";
+			document.getElementById("submit").disabled = true;
+			return false;
 		}
+	} else if (dateString == "" || timeFromString == "" || timeTillString == "") {
+		document.getElementById("wrongTime").innerHTML = "";
+		document.getElementById("wrongDate").innerHTML = "";
+		document.getElementById("submit").disabled = true;
+		return false;
 	}
 }
 
