@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javax.servlet.jsp.JspException;
@@ -33,8 +32,7 @@ public class ShowUsers extends SimpleTagSupport {
 		if (this.locale.equals("uk-UA")) {
 			messages = ResourceBundle.getBundle("translations/users_uk_UA");
 		} else {
-			messages = ResourceBundle.getBundle("translations/users_en",
-					new Locale(this.locale));
+			messages = ResourceBundle.getBundle("translations/users_en");
 		}
 		
 		

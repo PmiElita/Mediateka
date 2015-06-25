@@ -13,8 +13,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.mediateka.annotation.Controller;
 import com.mediateka.annotation.Request;
+import com.mediateka.annotation.Roles;
 import com.mediateka.comparator.FormRecordsByDateFrom;
 import com.mediateka.model.FormRecord;
+import com.mediateka.model.enums.Role;
 import com.mediateka.service.FormRecordService;
 
 @Controller
@@ -24,6 +26,7 @@ public class ActivityController {
 	private static final long MONTH_MILIS = 2592000000l;
 
 	@Request(url = "activity", method = "get")
+	@Roles({Role.ADMIN, Role.USER})
 	public static void getActivity(HttpServletRequest request,
 			HttpServletResponse response) throws ReflectiveOperationException,
 			SQLException, ServletException, IOException {

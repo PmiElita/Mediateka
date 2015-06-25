@@ -21,11 +21,11 @@ public class BookStatements {
 
 	public static final String SELECT_BOOK_BY_NAME_REGEX = "SELECT * "
 			+ "FROM " + "book " + "WHERE " + "name REGEXP ?";
-	public static final String[] SELECT_BOOK_BY_NAME_REGEX_ORDER = { "id" };
+	public static final String[] SELECT_BOOK_BY_NAME_REGEX_ORDER = { "name" };
 
 	public static final String SELECT_BOOK_BY_AUTHOR_REGEX = "SELECT *"
 			+ "FROM " + "book " + "WHERE " + "author REGEXP ?";
-	public static final String[] SELECT_BOOK_BY_AUTHOR_REGEX_ORDER = { "id" };
+	public static final String[] SELECT_BOOK_BY_AUTHOR_REGEX_ORDER = { "author" };
 
 	public static final String SELECT_BOOK_BY_TYPE = "SELECT book.* " + "FROM "
 			+ "book, book_type " + "WHERE " + "book.type_id = book_type.id "

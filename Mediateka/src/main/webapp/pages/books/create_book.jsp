@@ -17,6 +17,7 @@
 <head>
 <jsp:include page="../general/head.jsp" />
 <script src="js/bookCreation.js"></script>
+<script src="js/jquery.autocomplete.js"></script>
 </head>
 
 <body>
@@ -24,15 +25,14 @@
 		<jsp:include page="../general/nav.jsp" />
 		<jsp:include page="../admin/admin_side_nav.jsp" />
 
-
 		<div id="creation_form">
 
 			<div class="container">
-				<form id="create_book" action="CreateBook" method="post"
+				<form id="create_book" onsubmit="return valid();" action="CreateBook" method="post"
 					enctype="multipart/form-data">
 
 					<button type="submit" class="btn waves-effect blue titler"
-						id="submit" style="margin-top: 2.5em" disabled>
+						id="submit" style="margin-top: 2.5em" >
 						<fmt:message bundle="${msg}" key="create_book" />
 					</button>
 
@@ -46,7 +46,7 @@
 										<fmt:message bundle="${msg}" key="book_name" />
 									</p>
 									<input id="name" name="name" type="text" class="validate"
-										pattern=".{1,45}" required onchange="valid()">
+										pattern=".{1,45}" required  autocomplete="off">
 								</div>
 
 								<div class="input-field col s6">
@@ -54,7 +54,7 @@
 										<fmt:message bundle="${msg}" key="book_author" />
 									</p>
 									<input id="author" name="author" type="text" class="validate"
-										pattern=".{1,45}" required onchange="valid()">
+										pattern=".{1,45}" required >
 								</div>
 							</div>
 
@@ -62,7 +62,7 @@
 
 								<div class="input-field col s4">
 									<select name="type" id="type" class="browser-default"
-										style="margin-top: 0.75em" required onchange="valid()">
+										style="margin-top: 0.75em" required >
 										<option selected disabled value="0"><fmt:message
 												bundle="${msg}" key="book_type" /></option>
 										<c:forEach var="types" items="${book_type}">
@@ -77,7 +77,7 @@
 
 								<div class="input-field col s4">
 									<select name="meaning" id="meaning" class="browser-default"
-										style="margin-top: 0.75em" required onchange="valid()">
+										style="margin-top: 0.75em" required >
 										<option selected disabled value="0"><fmt:message
 												bundle="${msg}" key="book_meaning" /></option>
 										<c:forEach var="meanings" items="${book_meaning}">
@@ -92,7 +92,7 @@
 
 								<div class="input-field col s4">
 									<select name="language" id="language" class="browser-default"
-										style="margin-top: 0.75em" required onchange="valid()">
+										style="margin-top: 0.75em" required >
 										<option selected disabled value="0"><fmt:message
 												bundle="${msg}" key="book_language" /></option>
 										<c:forEach var="languages" items="${book_language}">

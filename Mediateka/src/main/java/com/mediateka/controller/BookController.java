@@ -1,9 +1,25 @@
 package com.mediateka.controller;
 
+import static com.mediateka.service.BookLanguageService.getBookLanguageById;
+import static com.mediateka.service.BookLanguageService.getBookLanguageByState;
+import static com.mediateka.service.BookMeaningService.getBookMeaningById;
+import static com.mediateka.service.BookMeaningService.getBookMeaningByState;
+import static com.mediateka.service.BookService.getBookById;
+import static com.mediateka.service.BookService.saveBook;
+import static com.mediateka.service.BookService.updateBook;
+import static com.mediateka.service.BookTypeService.getBookTypeById;
+import static com.mediateka.service.BookTypeService.getBookTypeByState;
+import static com.mediateka.service.MediaService.callSaveMedia;
+import static com.mediateka.service.MediaService.getMediaById;
+
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
+import com.google.gson.Gson;
 import com.mediateka.annotation.Controller;
 import com.mediateka.annotation.Request;
 import com.mediateka.exception.WrongInputException;
@@ -22,15 +39,10 @@ import com.mediateka.model.enums.MediaType;
 import com.mediateka.model.enums.Role;
 import com.mediateka.model.enums.State;
 import com.mediateka.service.BookMeaningService;
+import com.mediateka.service.BookService;
 import com.mediateka.service.UserService;
 import com.mediateka.util.FileLoader;
 import com.mediateka.util.RegExps;
-
-import static com.mediateka.service.MediaService.*;
-import static com.mediateka.service.BookMeaningService.*;
-import static com.mediateka.service.BookTypeService.*;
-import static com.mediateka.service.BookLanguageService.*;
-import static com.mediateka.service.BookService.*;
 
 @Controller
 public class BookController {
@@ -235,6 +247,7 @@ public class BookController {
 		request.removeAttribute("imagePath");
 	}
 
+	
 	@Request(url = "UpdateBook", method = "post")
 	public static void bookUpdatePost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
@@ -449,4 +462,49 @@ public class BookController {
 
 	}
 
+	@Request(url = "getBookNameByRegexp", method = "get")
+	public static void getBookNameByRegexp(HttpServletRequest request,
+			HttpServletResponse response) throws SQLException,
+			ReflectiveOperationException, IOException {
+		
+		String regexp=request.getParameter("query");
+		List<String> bookNames = new ArrayList<String>();
+		List<Book> books = BookService.getBookByNameRegex(regexp);
+		if (books!=null){
+		for (Book book : books){
+			bookNames.add(book.getName());
+		}
+		}
+		Collections.sort(bookNames);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("query", request.getParameter("name"));
+		map.put("suggestions", bookNames);
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		response.getWriter().write(new Gson().toJson(map));
+		
+	}
+	
+	@Request(url = "getAuthorsByRegexp", method = "get")
+	public static void getAuthorsByRegexp(HttpServletRequest request,
+			HttpServletResponse response) throws SQLException,
+			ReflectiveOperationException, IOException {
+		
+		String regexp=request.getParameter("query");
+		List<String> authors = new ArrayList<String>();
+		List<Book> books = BookService.getBookByAuthorRegex(regexp);
+		if (books!=null){
+		for (Book book : books){
+			authors.add(book.getAuthor());
+		}
+		}
+		Collections.sort(authors);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("query", request.getParameter("query"));
+		map.put("suggestions", authors);
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		response.getWriter().write(new Gson().toJson(map));
+		
+	}
 }

@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javax.servlet.jsp.JspException;
@@ -35,8 +34,7 @@ public class ShowActivity extends SimpleTagSupport {
 		if (this.locale.equals("uk-UA")) {
 			messages = ResourceBundle.getBundle("translations/activity_uk_UA");
 		} else {
-			messages = ResourceBundle.getBundle("translations/activity_en",
-					new Locale(this.locale));
+			messages = ResourceBundle.getBundle("translations/activity_en");
 		}
 
 		if (formRecords != null) {
