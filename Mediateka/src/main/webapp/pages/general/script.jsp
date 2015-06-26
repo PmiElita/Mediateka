@@ -37,6 +37,10 @@
 		$('select').material_select();
 
 		$('ul.tabs').tabs();
+		
+	    $('.collapsible').collapsible({
+	        accordion : false
+	      });
 	});
 </script>
 

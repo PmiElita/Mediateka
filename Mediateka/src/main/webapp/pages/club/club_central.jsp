@@ -26,7 +26,7 @@
 </style>
 </head>
 
-<div class="section white center" style="padding-top:0">
+<div class="section center" style="padding-top:0">
 
 	<form>
 		<div class="row my-picture-row">
@@ -45,9 +45,9 @@
 		</div>
 	</form>
 
-	<div class="container" style="margin-top: 7em">
+	<div class="container" style="margin-top: 7%">
 
-		<div class="row" style="margin-left: -3.5em">
+		<div class="row" style="margin-left: -5em">
 			<div class="col s3">
 				<a href="" data-target="modal7" class="modal-trigger">
 					<div class="col s12 m8 offset-m2 l6 offset-l3 my-cardmy-small-card">

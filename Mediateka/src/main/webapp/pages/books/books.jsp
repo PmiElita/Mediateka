@@ -19,11 +19,10 @@
 </head>
 
 <style>
-.image-cover-t {
+.book-cover-t {
 	color: white;
 	position: relative;
 	margin-top: 1em;
-	z-index: 1000;
 	text-shadow: black 1.0px 0.0px, black 1.0px 1.0px, black 0.0px 1.0px,
 		black -1.0px 1.0px, black -1.0px 0.0px, black -1.0px -1.0px, black
 		0.0px -1.0px, black 1.0px -1.0px, black 0.0 0.0 3.0px, black 0.0 0.0
@@ -48,7 +47,7 @@
 				<div class="container">
 
 					<div style="width: 15em; margin: auto">
-						<h2 class="image-cover-t">
+						<h2 class="book-cover-t">
 							<fmt:message bundle="${msg}" key="books" />
 						</h2>
 					</div>
