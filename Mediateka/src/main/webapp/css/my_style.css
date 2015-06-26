@@ -89,6 +89,7 @@ section {
 .my-admin-card {
 	width: 12.0em;
 	height: 12.0em;
+	border-radius:5%;
 }
 
 .section white .container #infoText {

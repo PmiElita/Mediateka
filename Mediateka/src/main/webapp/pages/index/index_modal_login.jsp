@@ -13,14 +13,14 @@
 	<div class="modal-content">
 		<form action="login" method="post" id="loginForm" onsubmit="return checkSubmit();">
 			<label id="message" style="color:red;"></label>
-			<div class="container" style="margin-top: 1em">
+			<div class="container" style="margin-top: 1em; width:90%">
 				<button class="btn waves-effect blue titler" type="submit"
 					name="login">
 					<fmt:message bundle="${msg}" key="login_header" />
 					<i class="mdi-content-send right"></i>
 				</button>
 				<div class="row" style="margin-top: 1em">
-					<div class="col s12">
+
 
 						<div class="input-field col s6">
 							<i class="mdi-action-account-circle prefix"></i> <input
@@ -38,7 +38,7 @@
 									bundle="${msg}" key="password_field" />
 							</label>
 						</div>
-					</div>
+
 				</div>
 			</div>
 		</form>

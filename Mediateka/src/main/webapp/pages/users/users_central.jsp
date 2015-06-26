@@ -55,9 +55,9 @@
 		</button>
 	</div>
 
-	<div id="users" class="section white">
+	<div id="users" class="white" style="border-radius:5%">
 		<p>${message }</p>
-		<u:showUsers users="${users}" locale="${cookie.lang.value}" />
+		<u:showUsers users="${users}" locale="${cookie.lang.value}"/>
 
 	</div>
 </div>

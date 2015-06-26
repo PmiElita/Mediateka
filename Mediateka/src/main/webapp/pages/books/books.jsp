@@ -17,6 +17,21 @@
 <jsp:include page="search_book.jsp" />
 </head>
 
+	<style>
+.image-cover-t {
+	color: white;
+	position: relative;
+	margin-top: 1em;
+	z-index: 1000;
+	text-shadow: black 1.0px 0.0px, black 1.0px 1.0px, black 0.0px 1.0px,
+		black -1.0px 1.0px, black -1.0px 0.0px, black -1.0px -1.0px, black
+		0.0px -1.0px, black 1.0px -1.0px, black 0.0 0.0 3.0px, black 0.0 0.0
+		3.0px, black 0.0 0.0 3.0px, black 0.0 0.0 3.0px, black 0.0 0.0 3.0px,
+		black 0.0 0.0 3.0px, black 0.0 0.0 3.0px, black 0.0 0.0 3.0px;
+}
+</style>
+
+
 <body>
 	<div class="main">
 		<jsp:include page="../general/nav.jsp" />
@@ -28,11 +43,11 @@
 
 			<jsp:include page="../admin/admin_side_nav.jsp" />
 
-			<div class="section white">
+			<div class="section">
 				<div class="container">
 
 					<div style="width: 15em; margin: auto">
-						<h2>Books</h2>
+						<h2 class="image-cover-t">Books</h2>
 					</div>
 
 					<div class="row" style="margin-left: -7em; margin-top: 4em">

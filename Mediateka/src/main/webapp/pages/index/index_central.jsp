@@ -15,7 +15,7 @@
 	</div>
 
 
-	<div class="main_poster">
+	<div class="main_poster" style="margin-top:1em">
 
 		<div class="row">
 

@@ -19,7 +19,7 @@
 
 			<form action="anonymousRegisterNewUser" method="post">
 
-				<div class="container">
+				<div class="container" style="width:90%">
 					<div style="margin-top: -3.5em">
 						<button class="btn waves-effect blue titler" type="submit"
 							name="action">

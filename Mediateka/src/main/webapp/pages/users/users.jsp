@@ -17,6 +17,7 @@
 			<div class="parallax">
 				<img src="images/parallax1.jpg">
 			</div>
+			<jsp:include page="../admin/admin_side_nav.jsp" />
 			<jsp:include page="users_central.jsp" />
 		</div>
 	</div>
