@@ -9,10 +9,10 @@ public class ExhibitionRegistrationForm {
 	@Validation(regexp = RegExps.ANY_CHARACTERS, maxLength = 45, minLength = 1)
 	private String name;
 
-	@DateField(format = "dd-MM-yyyy")
+	@DateField(format = "dd.MM.yyyy")
 	private String dateFrom;
 
-	@DateField(format = "dd-MM-yyyy")
+	@DateField(format = "dd.MM.yyyy")
 	private String dateTill;
 
 	@Validation(regexp = RegExps.ANY_CHARACTERS, maxLength = 255, minLength = 0)

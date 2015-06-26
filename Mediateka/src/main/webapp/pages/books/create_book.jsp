@@ -116,7 +116,7 @@
 						<input class="btn" type="file" name="image"
 							placeholder="book cover screenshot..." onchange="readURL(this);"
 							style="width: 60em"> <img id="photo"
-							src="images/default.png">
+							src="${imgPath}">
 					</form>
 				</div>
 			</div>

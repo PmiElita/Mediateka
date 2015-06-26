@@ -3,6 +3,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@page import="com.mediateka.model.enums.State"%>
 
 <fmt:setLocale value="${locale}" />
 <fmt:setBundle basename="menu" />
@@ -27,10 +28,10 @@
 		<div id="creation_form">
 			<div class="container">
 
-				<h3>Create meeting</h3>
+				<h3>Update meeting</h3>
 				${message}
-				<form name="createMeeting" id="create_meeting"
-					action="CreateMeeting" method="post">
+				<form name="updateMeeting" id="update_meeting"
+					action="UpdateMeeting" method="post" enctype="multipart/form-data">
 
 					<div class="row">
 						Name:<input type="text" id="name" name="name" required
@@ -70,8 +71,8 @@
 			 					  <c:if test="${event.state eq State.BLOCKED}"><input type="radio" name="state" value="active">Active <input type="radio" name="state" value="blocked" checked>Blocked</c:if><br>
 							<!-- XXX -->
 							
-						<input type="submit" id="submit" value="Create meeting"
-							class="btn" disabled="true">
+						<input type="submit" id="submit" value="Update meeting"
+							class="btn">
 					</div>
 
 				</form>

@@ -151,9 +151,8 @@ public class EventController {
 
 			Timestamp currentTime = new Timestamp(
 					new java.util.Date().getTime());
-			currentTime.setHours(0);
-			currentTime.setMinutes(0);
 			currentTime.setSeconds(0);
+			currentTime.setNanos(0);
 
 			Timestamp dateFrom = convertIntoTimestamp(form.getDate(),
 					"dd.MM.yyyy");
@@ -217,8 +216,11 @@ public class EventController {
 			HttpServletResponse response) throws ServletException, IOException,
 			SQLException, ReflectiveOperationException {
 
-		request.getSession().setAttribute("eventId", 48);
+		request.getSession().setAttribute("eventId", 7);
 		request.getSession().setAttribute("userId", 2);
+
+		request.setAttribute("message",
+				request.getSession().getAttribute("message"));
 
 		Event event = getEventById(Integer.parseInt(request.getSession()
 				.getAttribute("eventId").toString()));
@@ -259,15 +261,17 @@ public class EventController {
 		request.removeAttribute("dateTill");
 		request.removeAttribute("timeFrom");
 		request.removeAttribute("timeTill");
+		request.getSession().removeAttribute("message");
 	}
 
-	// ?????
 	@Request(url = "UpdateExhibition", method = "post")
 	public static void exhibitionUpdatePost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			SQLException, ReflectiveOperationException {
+
 		int eventId = Integer.parseInt(request.getSession()
 				.getAttribute("eventId").toString());
+
 		try {
 			FileLoader fileLoader = new FileLoader();
 			fileLoader.loadFile(request, "event ava");
@@ -280,23 +284,19 @@ public class EventController {
 				throw new WrongInputException("Event name to long. ");
 			}
 
-			// event type valid
-			if (map.get("type") == null)
-				throw new WrongInputException("Event type is empty. ");
-			else if (!map.get("type").toString().toUpperCase()
-					.equals("MEETING")
-					&& !map.get("type").toString().toUpperCase()
-							.equals("EXHIBITION"))
-				throw new WrongInputException("Event type is incorrect. ");
-
 			// event date valid
 			Timestamp dateFrom;
 			Timestamp dateTill;
+			Timestamp currentTime = new Timestamp(
+					new java.util.Date().getTime());
 			try {
 				dateFrom = DateConverter.convertIntoTimestamp(
 						map.get("dateFrom"), "yyyy-MM-dd");
 				dateTill = DateConverter.convertIntoTimestamp(
 						map.get("dateTill"), "yyyy-MM-dd");
+				if (dateFrom.getTime() < currentTime.getTime())
+					throw new WrongInputException(
+							"Date from cant be less than current time. ");
 				if (dateTill.getTime() < dateFrom.getTime())
 					throw new WrongInputException(
 							"Date till must be equals or greater than date from");
@@ -335,8 +335,8 @@ public class EventController {
 
 			Event event = new Event();
 			event.setId(eventId);
+			event.setType(EventType.EXHIBITION);
 			event.setName(map.get("name"));
-			event.setType(EventType.valueOf(map.get("type").toUpperCase()));
 			event.setDateFrom(dateFrom);
 			event.setDateTill(dateTill);
 			if (request.getSession().getAttribute("clubId") != null)
@@ -346,16 +346,120 @@ public class EventController {
 			event.setState(State.valueOf(map.get("state").toUpperCase()));
 			event.setAvaId(media.getId());
 			updateEventById(event);
-			request.setAttribute("message", "Event updated. ");
-
-			request.getRequestDispatcher("pages/fedunets12.06/update_event.jsp")
-					.forward(request, response);
+			request.getSession().setAttribute("message", "Event updated. ");
+			response.sendRedirect("UpdateEvent");
 		} catch (WrongInputException e) {
 			logger.warn(e);
-			request.setAttribute("message", e.getMessage());
-			request.getRequestDispatcher("pages/fedunets12.06/update_event.jsp")
-					.forward(request, response);
-			request.removeAttribute("message");
+			request.getSession().setAttribute("message", e.getMessage());
+			response.sendRedirect("UpdateEvent");
+		}
+	}
+
+	@SuppressWarnings("deprecation")
+	@Request(url = "UpdateMeeting", method = "post")
+	public static void meetingUpdatePost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException,
+			SQLException, ReflectiveOperationException {
+
+		int eventId = Integer.parseInt(request.getSession()
+				.getAttribute("eventId").toString());
+
+		try {
+			FileLoader fileLoader = new FileLoader();
+			fileLoader.loadFile(request, "event ava");
+			HashMap<String, String> map = fileLoader.getParameterMap();
+
+			// event name valid
+			if (map.get("name") == null || map.get("name").equals(""))
+				throw new WrongInputException("Event name is empty. ");
+			else if (map.get("name").length() > 250) {
+				throw new WrongInputException("Event name to long. ");
+			}
+
+			// event date valid
+			Timestamp dateFrom;
+			Timestamp dateTill;
+			Timestamp currentTime = new Timestamp(
+					new java.util.Date().getTime());
+			currentTime.setSeconds(0);
+			currentTime.setNanos(0);
+
+			int[] timeFrom = timeValid(map.get("timeFrom"));
+			int[] timeTill = timeValid(map.get("timeTill"));
+			try {
+				dateFrom = DateConverter.convertIntoTimestamp(
+						map.get("dateFrom"), "dd.MM.yyyy");
+				dateTill = DateConverter.convertIntoTimestamp(
+						map.get("dateTill"), "dd.MM.yyyy");
+			} catch (ParseException e) {
+				logger.warn(e);
+				throw new WrongInputException("Illigal date format. ");
+			}
+			dateFrom.setHours(timeFrom[0]);
+			dateFrom.setMinutes(timeFrom[1]);
+			dateTill.setHours(timeTill[0]);
+			dateTill.setMinutes(timeTill[1]);
+			if (dateFrom.getTime() < currentTime.getTime())
+				throw new WrongInputException(
+						"Date from cant be less than current time. ");
+			if (dateTill.getTime() < dateFrom.getTime())
+				throw new WrongInputException(
+						"Date till must be equals or greater than date from");
+			if (dateFrom.getTime() <= 0)
+				throw new WrongInputException("Date is too big or too small. ");
+			if (currentTime.getTime() > dateFrom.getTime())
+				throw new WrongInputException("Date has gone. ");
+			if (dateFrom.getTime() > dateTill.getTime())
+				throw new WrongInputException(
+						"Date from cant be biger than date till. ");
+
+			// event description valid
+			if (map.get("description") == null)
+				map.put("description", "");
+			else if (map.get("description").length() > 255)
+				throw new WrongInputException("Event description is too long. ");
+
+			// event media valid
+			Media media = new Media();
+			try {
+				fileLoader.getAllFilePathes();
+				media = new Media();
+				media.setName(fileLoader.getDefaultFileName());
+				media.setPath(fileLoader.getRelativePath());
+				media.setType(MediaType.IMAGE);
+				media.setState(State.ACTIVE);
+				media = callSaveMedia(media);
+			} catch (WrongInputException e) {
+				Event event = getEventById(eventId);
+				media = getMediaById(event.getAvaId());
+			}
+
+			// event state valid
+			if (map.get("state") == null || map.get("state") == "")
+				throw new WrongInputException("Event state is empty. ");
+			else if (!map.get("state").toUpperCase().equals("ACTIVE")
+					&& !map.get("state").toUpperCase().equals("BLOCKED"))
+				throw new WrongInputException("No such event type. ");
+
+			Event event = new Event();
+			event.setId(eventId);
+			event.setType(EventType.MEETING);
+			event.setName(map.get("name"));
+			event.setDateFrom(dateFrom);
+			event.setDateTill(dateTill);
+			if (request.getSession().getAttribute("clubId") != null)
+				event.setClubId(Integer.parseInt(request.getSession()
+						.getAttribute("clubId").toString()));
+			event.setDescription(map.get("description"));
+			event.setState(State.valueOf(map.get("state").toUpperCase()));
+			event.setAvaId(media.getId());
+			updateEventById(event);
+			request.getSession().setAttribute("message", "Event updated. ");
+			response.sendRedirect("UpdateEvent");
+		} catch (WrongInputException e) {
+			logger.warn(e);
+			request.getSession().setAttribute("message", e.getMessage());
+			response.sendRedirect("UpdateEvent");
 		}
 	}
 }

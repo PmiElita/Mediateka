@@ -15,7 +15,6 @@
 <jsp:include page="../general/head.jsp" />
 </head>
 
-
 <body>
 	<div class="main">
 		<jsp:include page="../general/nav.jsp" />
@@ -61,7 +60,7 @@
 							<textarea name="description" pattern=".{0,255}"
 								class="materialize-textarea"></textarea>
 							<input type="submit" id="submit" value="Create exhibition"
-								class="btn" disabled="true">
+								class="btn">
 						</div>
 					</form>
 				</div>

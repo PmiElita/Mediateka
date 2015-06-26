@@ -3,6 +3,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@page import="com.mediateka.model.enums.State"%>
 
 <fmt:setLocale value="${locale}" />
 <fmt:setBundle basename="menu" />
@@ -20,7 +21,6 @@
 <jsp:include page="../general/head.jsp" />
 </head>
 
-
 <body>
 	<div class="main">
 		<jsp:include page="../general/nav.jsp" />
@@ -31,7 +31,7 @@
 
 				${message}
 				<form name="updateExhibition" id="update_exhibition"
-					action="UpdateExhibition" method="post">
+					action="UpdateExhibition" method="post" enctype="multipart/form-data">
 
 					<div class="row">
 						Name:<input type="text" id="name" name="name" required
@@ -62,8 +62,8 @@
 						State:<c:if test="${event.state eq State.ACTIVE}"><input type="radio" name="state" value="active" checked>Active <input type="radio" name="state" value="blocked">Blocked</c:if>
 			  				  <c:if test="${event.state eq State.BLOCKED}"><input type="radio" name="state" value="active">Active <input type="radio" name="state" value="blocked" checked>Blocked</c:if><br>
 							<!-- XXX -->
-						<input type="submit" id="submit" value="Create exhibition"
-							class="btn" disabled="true">
+						<input type="submit" id="submit" value="Update exhibition"
+							class="btn">
 					</div>
 				</form>
 			</div>

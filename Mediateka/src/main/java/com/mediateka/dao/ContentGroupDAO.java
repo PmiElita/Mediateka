@@ -9,9 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import com.mediateka.dao.statement.ClubStatements;
 import com.mediateka.dao.statement.ContentGroupStatements;
-import com.mediateka.model.Club;
 import com.mediateka.model.ContentGroup;
 import com.mediateka.model.enums.ContentGroupType;
 import com.mediateka.model.enums.State;
@@ -30,16 +28,18 @@ public class ContentGroupDAO {
 			statement.executeUpdate();
 		}
 	}
-	
-	public static ContentGroup callSaveContentGroup(ContentGroup contentGroup) throws SQLException, ReflectiveOperationException{
+
+	public static ContentGroup callSaveContentGroup(ContentGroup contentGroup)
+			throws SQLException, ReflectiveOperationException {
 		try (Connection connection = ConnectionManager.getConnection()) {
-			CallableStatement statement = connection.prepareCall(ContentGroupStatements.CALL_INSERT_CONTENT_GROUP);
-			
+			CallableStatement statement = connection
+					.prepareCall(ContentGroupStatements.CALL_INSERT_CONTENT_GROUP);
+
 			Transformer.valueIntoPreparedStatement(statement, contentGroup,
-					ContentGroupStatements.CALL_INSERT_CONTENT_GROUP_ORDER);	
-			
+					ContentGroupStatements.CALL_INSERT_CONTENT_GROUP_ORDER);
+
 			ResultSet resultSet = statement.executeQuery();
-			
+
 			return Transformer.transformResultSetIntoObject(resultSet,
 					ContentGroup.class);
 		}

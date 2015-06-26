@@ -9,7 +9,7 @@ public class MeetingRegistrationForm {
 	@Validation(regexp = RegExps.ANY_CHARACTERS, maxLength = 45, minLength = 1)
 	String name;
 
-	@DateField(format = "dd-MM-yyyy")
+	@DateField(format = "dd.MM.yyyy")
 	String date;
 
 	@Validation(regexp = RegExps.ANY_CHARACTERS, maxLength = 5, minLength = 5)

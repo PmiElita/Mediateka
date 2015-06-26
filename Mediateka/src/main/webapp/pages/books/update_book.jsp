@@ -41,13 +41,13 @@
 								<div class="input-field col s6">
 									<p>Book name</p>
 									<input id="name" name="name" type="text" class="validate"
-										pattern=".{1,45}" value="${book.getName()}">
+										pattern=".{1,45}" required value="${book.getName()}">
 								</div>
 
 								<div class="input-field col s6">
 									<p>Book author</p>
 									<input id="author" name="author" type="text" class="validate"
-										pattern=".{1,45}" value="${book.getAuthor()}">
+										pattern=".{1,45}" required value="${book.getAuthor()}">
 								</div>
 							</div>
 
@@ -55,7 +55,7 @@
 
 								<div class="input-field col s4">
 									<select name="type" id="type" class="browser-default"
-										style="margin-top: 0.75em">
+										style="margin-top: 0.75em" required>
 										<option disabled>Book type..</option>
 										<c:forEach var="types" items="${book_type}">
 											<c:choose>
@@ -74,7 +74,7 @@
 
 								<div class="input-field col s4">
 									<select name="meaning" id="meaning" class="browser-default"
-										style="margin-top: 0.75em">
+										style="margin-top: 0.75em" required>
 										<option disabled>Book meaning...</option>
 										<c:forEach var="meanings" items="${book_meaning}">
 											<c:choose>
@@ -94,7 +94,7 @@
 
 								<div class="input-field col s4">
 									<select name="language" id="language" class="browser-default"
-										style="margin-top: 0.75em">
+										style="margin-top: 0.75em" required>
 										<option disabled>Book language...</option>
 										<c:forEach var="languages" items="${book_language}">
 											<c:choose>
@@ -139,7 +139,7 @@
    				   </c:otherwise>
 									</c:choose>
 								</div>
-								<div style="display: inline-block">
+								<div style="display: inline-block; margin-right: 10em">
 									<c:choose>
 										<c:when test="${book.state eq State.DELETED}">
 											<input type="radio" name="state" value="DELETED" checked>deleted

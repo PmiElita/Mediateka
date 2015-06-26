@@ -67,13 +67,15 @@ public class BookController {
 				getBookMeaningByState(State.ACTIVE));
 		request.setAttribute("book_language",
 				getBookLanguageByState(State.ACTIVE));
-
+		request.setAttribute("imgPath",
+				getMediaById(3).getPath().replace("\\", "/"));
 		logger.debug((getBookTypeByState(State.ACTIVE) == null));
 		request.getRequestDispatcher("pages/books/create_book.jsp").forward(
 				request, response);
 		request.removeAttribute("book_type");
 		request.removeAttribute("book_meaning");
 		request.removeAttribute("book_language");
+		request.removeAttribute("imgPath");
 	}
 
 	@Request(url = "CreateBook", method = "post")
@@ -247,7 +249,6 @@ public class BookController {
 		request.removeAttribute("imagePath");
 	}
 
-	
 	@Request(url = "UpdateBook", method = "post")
 	public static void bookUpdatePost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
@@ -456,8 +457,7 @@ public class BookController {
 		newMeaning.setState(State.ACTIVE);
 
 		BookMeaningService.saveBookMeaning(newMeaning);
-		
-		
+
 		response.sendRedirect(request.getRequestURL().toString());
 
 	}
@@ -466,14 +466,14 @@ public class BookController {
 	public static void getBookNameByRegexp(HttpServletRequest request,
 			HttpServletResponse response) throws SQLException,
 			ReflectiveOperationException, IOException {
-		
-		String regexp=request.getParameter("query");
+
+		String regexp = request.getParameter("query");
 		List<String> bookNames = new ArrayList<String>();
 		List<Book> books = BookService.getBookByNameRegex(regexp);
-		if (books!=null){
-		for (Book book : books){
-			bookNames.add(book.getName());
-		}
+		if (books != null) {
+			for (Book book : books) {
+				bookNames.add(book.getName());
+			}
 		}
 		Collections.sort(bookNames);
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -482,21 +482,21 @@ public class BookController {
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().write(new Gson().toJson(map));
-		
+
 	}
-	
+
 	@Request(url = "getAuthorsByRegexp", method = "get")
 	public static void getAuthorsByRegexp(HttpServletRequest request,
 			HttpServletResponse response) throws SQLException,
 			ReflectiveOperationException, IOException {
-		
-		String regexp=request.getParameter("query");
+
+		String regexp = request.getParameter("query");
 		List<String> authors = new ArrayList<String>();
 		List<Book> books = BookService.getBookByAuthorRegex(regexp);
-		if (books!=null){
-		for (Book book : books){
-			authors.add(book.getAuthor());
-		}
+		if (books != null) {
+			for (Book book : books) {
+				authors.add(book.getAuthor());
+			}
 		}
 		Collections.sort(authors);
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -505,6 +505,6 @@ public class BookController {
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().write(new Gson().toJson(map));
-		
+
 	}
 }
