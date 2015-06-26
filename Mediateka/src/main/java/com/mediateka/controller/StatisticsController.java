@@ -35,7 +35,7 @@ public class StatisticsController {
 		request.setAttribute("statistics", bookStatistics);
 		
 		
-		request.getRequestDispatcher("pages/table/statistics.jsp").forward(
+		request.getRequestDispatcher("pages/table/bookStatistics.jsp").forward(
 				request, response);
 	}
 
