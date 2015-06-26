@@ -38,21 +38,18 @@
 			<jsp:include page="club_central.jsp" />
 
 			<div class="container">
-					<ul class="collapsible center" data-collapsible="accordion"
-						style="margin-top: 5%">
-						<li>
-							<div class="collapsible-header">
-								<a class="btn-floating btn-large waves-effect waves-light red"><i
-									class="large material-icons">queue</i></a>
-							</div>
-							<div class="collapsible-body">
-								<jsp:include page="record.jsp" />
-							</div>
-						</li>
-					</ul>
-				</div>
+				<ul class="collapsible center" data-collapsible="accordion"
+					style="margin-top: 5%">
+					<li>
+						<div class="collapsible-header" style="font-size:2em">Add media</div>
+						<div class="collapsible-body">
+							<jsp:include page="record.jsp" />
+						</div>
+					</li>
+				</ul>
 			</div>
 		</div>
+	</div>
 
 	<jsp:include page="../general/footer.jsp" />
 </body>

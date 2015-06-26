@@ -26,7 +26,7 @@
 </style>
 </head>
 
-<div class="section white center">
+<div class="section center">
 
 		<form>
 			<div class="row">

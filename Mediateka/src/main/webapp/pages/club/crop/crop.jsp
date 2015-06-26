@@ -15,15 +15,15 @@
 	margin: 10px 0;
 }
 </style>
+
 </head>
 <body>
 
 	<script src="pages/event/crop/crop.js"></script>
 
-	<div id="modal15" class="modal" style="width: 90%">
+	<div id="modal15" class="modal" style="width: 80%; background:transparent">
 		<div class="modal-content">
-			<div style="margin-top: 5em"></div>
-			<div class="container" style="height: 33.5em;">
+			<div style="height: 30em;">
 				<div class="crop-container">
 
 
@@ -32,11 +32,11 @@
 						<div class="spinner" style="display: none">Loading...</div>
 					</div>
 					<div class="action">
-						<input type="file" id="file" style="float: left; width: 250px">
+						<input type="file" id="file" style="float: left; width: 250px;" class="image-cover-t">
 						<input type="button" id="btnCrop" value="Confirm"
-							style="float: right"> <input type="button" id="btnZoomIn"
-							value="+" style="float: right"> <input type="button"
-							id="btnZoomOut" value="-" style="float: right">
+							style="float: right; margin-top:1em; margin-left:3em"> <input type="button" id="btnZoomIn"
+							value="+" style="float: right; margin-top:1em"> <input type="button"
+							id="btnZoomOut" value="-" style="float: right; margin-top:1em">
 					</div>
 				</div>
 			</div>

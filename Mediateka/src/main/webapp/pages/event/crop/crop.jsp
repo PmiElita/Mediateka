@@ -15,28 +15,39 @@
 	margin: 10px 0;
 }
 </style>
+
+<style>
+.image-cover-t {
+	color: white;
+	position: relative;
+	z-index: 1000;
+	text-shadow: black 1.0px 0.0px, black 1.0px 1.0px, black 0.0px 1.0px,
+		black -1.0px 1.0px, black -1.0px 0.0px, black -1.0px -1.0px, black
+		0.0px -1.0px, black 1.0px -1.0px, black 0.0 0.0 3.0px, black 0.0 0.0
+		3.0px, black 0.0 0.0 3.0px, black 0.0 0.0 3.0px, black 0.0 0.0 3.0px,
+		black 0.0 0.0 3.0px, black 0.0 0.0 3.0px, black 0.0 0.0 3.0px;
+}
+</style>
 </head>
 <body>
 
 	<script src="pages/event/crop/crop.js"></script>
 
-	<div id="modal16" class="modal" style="width: 90%">
+	<div id="modal16" class="modal" style="width: 80%; background:transparent">
 		<div class="modal-content">
-			<div style="margin-top: 5em"></div>
-			<div class="container" style="height: 33.5em">
+			<div style="height: 30em">
 				<div class="crop-container">
-
 
 					<div class="imageBox">
 						<div class="thumbBox"></div>
 						<div class="spinner" style="display: none">Loading...</div>
 					</div>
 					<div class="action">
-						<input type="file" id="file" style="float: left; width: 250px">
+						<input type="file" id="file" style="float: left; width: 250px; color:white" class="image-cover-t">
 						<input type="button" id="btnCrop" value="Confirm"
-							style="float: right"> <input type="button" id="btnZoomIn"
-							value="+" style="float: right"> <input type="button"
-							id="btnZoomOut" value="-" style="float: right">
+							style="float: right; margin-top:1em;"> <input type="button" id="btnZoomIn"
+							value="+" style="float: right; margin-top:1em;"> <input type="button"
+							id="btnZoomOut" value="-" style="float: right; margin-top:1em">
 					</div>
 				</div>
 			</div>

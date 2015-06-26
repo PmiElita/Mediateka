@@ -2,20 +2,34 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
+<style>
+.image-cover-t {
+	color: white;
+	position: relative;
+	margin-top: 1em;
+	z-index: 1000;
+	text-shadow: black 1.0px 0.0px, black 1.0px 1.0px, black 0.0px 1.0px,
+		black -1.0px 1.0px, black -1.0px 0.0px, black -1.0px -1.0px, black
+		0.0px -1.0px, black 1.0px -1.0px, black 0.0 0.0 3.0px, black 0.0 0.0
+		3.0px, black 0.0 0.0 3.0px, black 0.0 0.0 3.0px, black 0.0 0.0 3.0px,
+		black 0.0 0.0 3.0px, black 0.0 0.0 3.0px, black 0.0 0.0 3.0px;
+}
+</style>
+
 <form id="recordForm" enctype="multipart/form-data">
 
 	<input type="hidden" name="clubId" id="clubId" value="1">
-	<div class="main-info container z-depth-1">
+	<div class="main-info container z-depth-1" style="width: 100%">
 		<div class="row">
-			<div class="row" style="margin-left: 3em">
+			<div class="row">
 				<div class="col s10" style="margin-top: 2em">
-					<div class="input-field">
+					<div class="input-field image-cover-t">
 						<i class="mdi-editor-mode-edit prefix"></i>
 						<textarea class="materialize-textarea" name="text" id="text"></textarea>
-						<label for="text">Message</label>
+						<label for="text" style="font-size: 1.5em" style="color:white">Message</label>
 					</div>
 				</div>
-
 			</div>
 
 			<div class="col offset-s10" style="margin-top: -5em">
@@ -27,44 +41,38 @@
 			</div>
 
 			<div id="progress"></div>
-			<div class="row" style="margin-left: 4em">
-				<div class="file-field input-field col s1 offset-s8">
+			<div class="row" style="margin-left: -8em">
+				<div class="file-field input-field col s2 offset-s3">
 					<div class="btn">
 						<span><i class="small mdi-image-camera-alt"></i></span> <input
 							type="file" id="image" name="image" multiple accept="image/*">
 
 					</div>
 				</div>
-				<div class="file-field input-field col s1">
+				<div class="file-field input-field col s2 offset-s1">
 					<div class="btn">
 						<span><i class="small mdi-av-video-collection"></i></span> <input
 							type="file" id="video" name="video" multiple accept="video/*">
 					</div>
 
 				</div>
-				<div class="file-field input-field col s1">
+				<div class="file-field input-field col s2 offset-s1">
 					<div class="btn">
 						<span><i class="small mdi-av-queue-music"></i></span> <input
 							type="file" id="audio" name="audio" multiple accept="audio/*">
 					</div>
 				</div>
-				<div class="row">
-					<div class="col s8">
-						<div id="selectedImages"></div>
-					</div>
-				</div>
+			</div>
+			<div class="row" style="margin-top: 5em">
+				<div id="selectedImages"></div>
+			</div>
 
-				<div class="row">
-					<div class="col s8">
-						<div id="selectedVideos"></div>
-					</div>
-				</div>
+			<div class="row">
+				<div id="selectedVideos"></div>
+			</div>
 
-				<div class="row">
-					<div class="col s8">
-						<div id="selectedAudios"></div>
-					</div>
-				</div>
+			<div class="row">
+				<div id="selectedAudios"></div>
 			</div>
 		</div>
 	</div>
