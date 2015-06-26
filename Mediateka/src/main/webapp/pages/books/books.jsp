@@ -6,9 +6,10 @@
 
 <%@page import="com.mediateka.model.enums.Role"%>
 
-<fmt:setLocale value="${locale}" />
-<fmt:setBundle basename="menu" />
-<fmt:requestEncoding value="utf-8" />
+
+<fmt:setLocale value="${cookie.lang.value}" />
+<fmt:setBundle basename="translations/books" var="msg" />
+
 
 <html>
 
@@ -17,7 +18,7 @@
 <jsp:include page="search_book.jsp" />
 </head>
 
-	<style>
+<style>
 .image-cover-t {
 	color: white;
 	position: relative;
@@ -47,13 +48,15 @@
 				<div class="container">
 
 					<div style="width: 15em; margin: auto">
-						<h2 class="image-cover-t">Books</h2>
+						<h2 class="image-cover-t">
+							<fmt:message bundle="${msg}" key="books" />
+						</h2>
 					</div>
 
 					<div class="row" style="margin-left: -7em; margin-top: 4em">
 
 						<div class="col s3">
-							<a title="Find book" href="" data-target="modal14"
+							<a title="<fmt:message bundle="${msg}" key="find_book" />" href="" data-target="modal14"
 								class="modal-trigger">
 								<div class="col s12 m8 offset-m2 l6 offset-l3 my-card">
 									<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
@@ -71,7 +74,7 @@
 						</div>
 
 						<div class="col s3">
-							<a title="Create book" href="CreateBook">
+							<a title="<fmt:message bundle="${msg}" key="create_book" />" href="CreateBook">
 								<div class="col s12 m8 offset-m2 l6 offset-l3 my-card">
 									<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
 										<div style="margin-top: 2em">
@@ -87,7 +90,7 @@
 							</a>
 						</div>
 						<div class="col s3">
-							<a title="Update book" href="UpdateBook">
+							<a title="<fmt:message bundle="${msg}" key="update_book" />" href="UpdateBook">
 								<div class="col s12 m8 offset-m2 l6 offset-l3 my-card">
 									<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
 										<div style="margin-top: 2em">
@@ -103,7 +106,7 @@
 							</a>
 						</div>
 						<div class="col s3">
-							<a title="Book statistics" href="bookStatistics">
+							<a title="<fmt:message bundle="${msg}" key="book_statistics" />" href="bookStatistics">
 								<div class="col s12 m8 offset-m2 l6 offset-l3 my-card">
 									<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
 										<div style="margin-top: 2em">
