@@ -27,6 +27,7 @@ import com.mediateka.service.ProfessionService;
 import com.mediateka.service.UserService;
 import com.mediateka.util.FormValidator;
 import com.mediateka.util.ObjectFiller;
+import com.mediateka.util.Translator;
 
 @Controller
 public class UserController {
@@ -247,12 +248,17 @@ public class UserController {
 			User user = UserService.getUserById(userId);
 			String buttonText = null;
 			if (user != null) {
+				Translator translator = new Translator("translations/users", request);
+
 				if (user.getState().equals(State.BLOCKED)) {
 					user.setState(State.ACTIVE);
-					buttonText = "Block";
+					
+					buttonText = translator.getMessage("button.block");
+//					buttonText = "Block";
 				} else if (user.getState().equals(State.ACTIVE)) {
 					user.setState(State.BLOCKED);
-					buttonText = "Unblock";
+					buttonText = translator.getMessage("button.unblock");
+//					buttonText = "Unblock";
 				}
 				UserService.updateUser(user);
 			} else {
