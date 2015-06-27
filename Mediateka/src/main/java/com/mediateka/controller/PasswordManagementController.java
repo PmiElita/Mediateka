@@ -91,11 +91,26 @@ public class PasswordManagementController {
 
 		response.sendRedirect("cabinet");
 	}
+	
+
+	
+	@Request(url = "invalidatePassword", method = "get")
+	public static void forgotPasswordPage(HttpServletRequest request,
+			HttpServletResponse response) throws SecurityException, IllegalArgumentException, IOException, ReflectiveOperationException, SQLException, MessagingException, ServletException {
+
+		request.getRequestDispatcher("pages/form/forgot_password_form.jsp").forward(
+				request, response);
+		
+	}
+	
+	
 
 	@Request(url = "invalidatePassword", method = "post")
 	public static void invalidatePassword(HttpServletRequest request,
-			HttpServletResponse response) throws SecurityException, IllegalArgumentException, IOException, ReflectiveOperationException, SQLException, MessagingException {
+			HttpServletResponse response) throws SecurityException, IllegalArgumentException, IOException, ReflectiveOperationException, SQLException, MessagingException, ServletException {
 
+		System.out.println("DOING THIS");
+		
 		PasswordInvalidationForm form = new PasswordInvalidationForm();
 		ObjectFiller.fill(form, request);
 		
@@ -103,7 +118,9 @@ public class PasswordManagementController {
 			FormValidator.validate(form);
 		} catch (WrongInputException e) {
 			logger.warn("failed to validate password invalidation form");
-			response.sendRedirect("index");
+			request.setAttribute("notification", "no_user_with_such_email");
+			request.getRequestDispatcher("pages/index/index.jsp").forward(
+					request, response);
 			return;
 		}
 		
@@ -111,7 +128,10 @@ public class PasswordManagementController {
 		
 		if (user == null){
 			logger.warn("no user with such email");
-			response.sendRedirect("index");
+			System.out.println("HEREEEEEE");
+			request.setAttribute("notification", "no_user_with_such_email");
+			request.getRequestDispatcher("pages/index/index.jsp").forward(
+					request, response);
 			return;
 		}
 		
@@ -119,18 +139,34 @@ public class PasswordManagementController {
 		String token = SecurityStringGenerator.generateString(64);
 		user.setPasswordChangingToken(token);
 		
-		UserService.saveUser(user);
+		UserService.updateUser(user);
 
 		// send mail
-		String mailBody = " <a href=\"http://localhost:8080/Mediateka/changePassword?token="
+		String mailBody = " <a href=\"http://localhost:8080/Mediateka/setNewPasswordByToken?token="
 				+ token + "\">click here</a> ";
 
+		try{
 		EmailSender.sendMail(user.getEmail(), "password changing page",
 				mailBody);
-
-		response.sendRedirect("checkYourEmailPage");
+		}catch (Exception e){
+			request.setAttribute("notification", "can_not_send_email");
+			request.getRequestDispatcher("pages/index/index.jsp").forward(
+					request, response);
+			
+			user.setPasswordChangingToken(null);
+			UserService.updateUser(user);
+			return;
+		}
+		request.setAttribute("notification", "check_your_email");
+		request.getRequestDispatcher("pages/index/index.jsp").forward(
+				request, response);
+		
 
 
 	}
 
+	
+	
+	
+	
 }

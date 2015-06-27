@@ -232,15 +232,21 @@ public class RegisterUserController {
 		String token = SecurityStringGenerator.generateString(64);
 		newUser.setPasswordChangingToken(token);
 
-		UserService.saveUser(newUser);
 
 		String emailBody = "<a href=\"http://localhost:8080/Mediateka/confirmRegistration?token="
 				+ StringEscapeUtils.escapeHtml4(token)
 				+ "\"> click here to confirm your registration </a>";
-
+		try{
 		EmailSender.sendMail(form.getEmail(), "registration confirmation link",
 				emailBody);
-
+		} catch (Exception e){
+			request.setAttribute("notification", "can_not_send_email");
+			request.getRequestDispatcher("pages/index/index.jsp").forward(
+					request, response);
+			
+			return;
+		}
+		UserService.saveUser(newUser);
 		request.getRequestDispatcher("pages/additional/post_register.jsp")
 				.forward(request, response);
 

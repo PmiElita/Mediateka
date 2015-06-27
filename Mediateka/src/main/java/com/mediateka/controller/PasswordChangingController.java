@@ -42,7 +42,7 @@ public class PasswordChangingController {
 	 * @throws ReflectiveOperationException
 	 * @throws SQLException
 	 */
-	@Request(url = "changePassword", method = "get")
+	@Request(url = "setNewPasswordByToken", method = "get")
 	public static void showPage(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			ReflectiveOperationException, SQLException {
@@ -67,7 +67,7 @@ public class PasswordChangingController {
 		
 		request.setAttribute("token", request.getParameter("token"));
 
-		request.getRequestDispatcher("pages/form/passwordChangingForm.jsp")
+		request.getRequestDispatcher("pages/form/password_setting_by_token_form.jsp")
 				.forward(request, response);
 		return;
 
@@ -85,7 +85,7 @@ public class PasswordChangingController {
 	 * @throws SQLException
 	 * @throws NoSuchAlgorithmException
 	 */
-	@Request(url = "changePassword", method = "post")
+	@Request(url = "setNewPasswordByToken", method = "post")
 	public static void changePassword(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			ReflectiveOperationException, SQLException,
