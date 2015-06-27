@@ -1,5 +1,6 @@
 package com.mediateka.controller;
 
+import java.io.IOException;
 import java.sql.SQLException;
 
 import javax.servlet.ServletException;
@@ -20,9 +21,9 @@ public class RecordController {
 	
 	@Request(url="loadRecord", method="post")
 	public static void loadRecordPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, SQLException, ReflectiveOperationException{
+			HttpServletResponse response) throws ServletException, SQLException, ReflectiveOperationException, IOException{
 		System.out.println("laodRecord");		
-		CreateContent.createContent(request, ContentGroupType.COMMENT);
+		CreateContent.createContent(request,response, ContentGroupType.COMMENT);
 	}
 	
 //	@Request(url="like", method="post")

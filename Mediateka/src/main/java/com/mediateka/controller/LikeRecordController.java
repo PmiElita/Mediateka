@@ -46,7 +46,7 @@ public class LikeRecordController {
 				.getContentGroupById(contentGroupId);
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
-		response.getWriter().write(new Gson().toJson(contentGroup));
+		response.getWriter().write(new Gson().toJson(contentGroup));	
 
 	}
 

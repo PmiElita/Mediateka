@@ -166,7 +166,7 @@ public class ClubController {
 			ReflectiveOperationException, SQLException {
 
 		request.getAttribute("clubId");
-		CreateContent.createContent(request, ContentGroupType.IMAGE);
+		CreateContent.createContent(request, response, ContentGroupType.IMAGE);
 		request.getRequestDispatcher("pages/club/club.jsp").forward(request,
 				response);
 
