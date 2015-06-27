@@ -36,7 +36,7 @@
 			</c:if>
 
 			<jsp:include page="club_central.jsp" />
-
+			Description: <c:out value="${club.description}"/><br>
 			<div class="container">
 				<ul class="collapsible center" data-collapsible="accordion"
 					style="margin-top: 5%">

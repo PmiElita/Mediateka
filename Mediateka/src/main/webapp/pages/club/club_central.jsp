@@ -36,7 +36,7 @@
 
 					<a title="Change picture" href="" data-target="modal15"
 						class="modal-trigger waves-effect" style="min-width: 100%">
-						<h3 class="image-cover-t">${club_name}HiHi</h3> <img
+						<h3 class="image-cover-t">${club.name}</h3> <img
 						class="my-picture-club" src="images/club/club_default.png"
 						id="ava">
 					</a>

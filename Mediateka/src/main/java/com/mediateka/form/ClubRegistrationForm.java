@@ -4,11 +4,11 @@ import com.mediateka.annotation.Validation;
 import com.mediateka.util.RegExps;
 
 public class ClubRegistrationForm {
-	
-	@Validation(regexp=RegExps.ONLY_CHARS, maxLength = 250, minLength=1)
+
+	@Validation(regexp = RegExps.ANY_CHARACTERS, maxLength = 250, minLength = 1)
 	private String name;
-	
-	@Validation(regexp=RegExps.ANY_CHARACTERS, maxLength = 250, minLength=0)
+
+	@Validation(regexp = RegExps.ANY_CHARACTERS, maxLength = 250, minLength = 0)
 	private String description;
 
 	public String getName() {

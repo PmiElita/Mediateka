@@ -17,9 +17,12 @@ import org.apache.log4j.Logger;
 import com.google.gson.Gson;
 import com.mediateka.annotation.Controller;
 import com.mediateka.annotation.Request;
+import com.mediateka.comparator.ClubsByMembersNumber;
 import com.mediateka.comparator.UsersByFullname;
 import com.mediateka.exception.WrongInputException;
 import com.mediateka.form.SearchUserForm;
+import com.mediateka.model.Club;
+import com.mediateka.model.ClubEventMember;
 import com.mediateka.model.User;
 import com.mediateka.model.enums.State;
 import com.mediateka.search.UserSearch;
@@ -28,6 +31,10 @@ import com.mediateka.service.UserService;
 import com.mediateka.util.FormValidator;
 import com.mediateka.util.ObjectFiller;
 import com.mediateka.util.Translator;
+
+import static com.mediateka.service.ClubEventMemberService.*;
+import static com.mediateka.service.ClubService.*;
+import static com.mediateka.service.MediaService.*;
 
 @Controller
 public class UserController {
@@ -40,12 +47,56 @@ public class UserController {
 		request.getRequestDispatcher("pages/events/events.jsp").forward(
 				request, response);
 	}
-	
+
 	@Request(url = "clubs", method = "get")
 	public static void clubsGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+			HttpServletResponse response) throws ServletException, IOException,
+			NumberFormatException, SQLException, ReflectiveOperationException {
+
+		request.getSession().setAttribute("userId", 1);
+
+		// my clubs
+		List<ClubEventMember> memberer = getClubEventMemberByUserId(Integer
+				.parseInt(request.getSession().getAttribute("userId")
+						.toString()));
+		List<ClubEventMember> clubMemberer = new ArrayList<>();
+		for (ClubEventMember member : memberer)
+			if (member.getClubId() != null)
+				clubMemberer.add(member);
+		List<Club> myClubs = new ArrayList<>();
+		for (ClubEventMember member : clubMemberer) {
+			myClubs.add(getClubById(member.getClubId()));
+		}
+		Collections.sort(myClubs, new ClubsByMembersNumber());
+		List<Club> myActiveClubs = new ArrayList<>();
+		List<Club> myBlockedClubs = new ArrayList<>();
+		for (Club club : myClubs) {
+			if (club.getState() == State.ACTIVE)
+				myActiveClubs.add(club);
+			else if (club.getState() == State.BLOCKED)
+				myBlockedClubs.add(club);
+		}
+
+		// my clubs avas
+		List<String> myActiveClubsAvas = new ArrayList<>();
+		List<String> myBlockedClubsAvas = new ArrayList<>();
+		for (Club club : myActiveClubs)
+			myActiveClubsAvas.add(getMediaById(club.getAvaId()).getPath()
+					.replace("\\", "/"));
+		for (Club club : myBlockedClubs)
+			myBlockedClubsAvas.add(getMediaById(club.getAvaId()).getPath()
+					.replace("\\", "/"));
+
+		request.setAttribute("myActiveClubsAvas", myActiveClubsAvas);
+		request.setAttribute("myBlockedClubsAvas", myBlockedClubsAvas);
+		request.setAttribute("myActiveClubs", myActiveClubs);
+		request.setAttribute("myBlockedClubs", myBlockedClubs);
 		request.getRequestDispatcher("pages/clubs/clubs.jsp").forward(request,
 				response);
+		request.removeAttribute("myActiveClubs");
+		request.removeAttribute("myBlockedClubs");
+		request.removeAttribute("myActiveClubsAvas");
+		request.removeAttribute("myBlockedClubsAvas");
 	}
 
 	@Request(url = "cabinet", method = "get")
@@ -71,7 +122,8 @@ public class UserController {
 		switch (user.getRole()) {
 		case ADMIN:
 		case MODERATOR:
-			request.setAttribute("professions", ProfessionService.getProfessionAll());
+			request.setAttribute("professions",
+					ProfessionService.getProfessionAll());
 
 			request.getRequestDispatcher("pages/admin/admin.jsp").forward(
 					request, response);
@@ -141,7 +193,7 @@ public class UserController {
 		try {
 			SearchUserForm searchUserForm = new SearchUserForm();
 			ObjectFiller.fill(searchUserForm, request);
-			if (searchUserForm.getQuery()==null||searchUserForm.equals("")){
+			if (searchUserForm.getQuery() == null || searchUserForm.equals("")) {
 				throw new WrongInputException("");
 			}
 			FormValidator.validate(searchUserForm);
@@ -162,8 +214,8 @@ public class UserController {
 		} catch (WrongInputException e) {
 			logger.warn("search user wrong input", e);
 			request.setAttribute("message", e.getMessage());
-			request.getRequestDispatcher("pages/users/users.jsp")
-					.forward(request, response);
+			request.getRequestDispatcher("pages/users/users.jsp").forward(
+					request, response);
 
 		}
 	}
@@ -176,7 +228,7 @@ public class UserController {
 		try {
 			SearchUserForm searchUserForm = new SearchUserForm();
 			ObjectFiller.fill(searchUserForm, request);
-			
+
 			FormValidator.validate(searchUserForm);
 			String[] query = searchUserForm.getQuery().split(" ");
 			List<User> users = UserSearch.getUserByRegexps(query);
@@ -187,8 +239,8 @@ public class UserController {
 			request.setAttribute("qeury", searchUserForm.getQuery());
 			Collections.sort(users, new UsersByFullname());
 			request.setAttribute("users", users);
-			request.getRequestDispatcher("pages/users/users.jsp")
-					.forward(request, response);
+			request.getRequestDispatcher("pages/users/users.jsp").forward(
+					request, response);
 
 		} catch (WrongInputException e) {
 			logger.warn("search user wrong input", e);
@@ -248,17 +300,18 @@ public class UserController {
 			User user = UserService.getUserById(userId);
 			String buttonText = null;
 			if (user != null) {
-				Translator translator = new Translator("translations/users", request);
+				Translator translator = new Translator("translations/users",
+						request);
 
 				if (user.getState().equals(State.BLOCKED)) {
 					user.setState(State.ACTIVE);
-					
+
 					buttonText = translator.getMessage("button.block");
-//					buttonText = "Block";
+					// buttonText = "Block";
 				} else if (user.getState().equals(State.ACTIVE)) {
 					user.setState(State.BLOCKED);
 					buttonText = translator.getMessage("button.unblock");
-//					buttonText = "Unblock";
+					// buttonText = "Unblock";
 				}
 				UserService.updateUser(user);
 			} else {

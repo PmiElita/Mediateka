@@ -3,9 +3,6 @@ package com.mediateka.controller;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,6 +34,8 @@ import com.mediateka.service.MediaService;
 import com.mediateka.util.FileLoader;
 import com.mediateka.util.FormValidator;
 import com.mediateka.util.ObjectFiller;
+
+import static com.mediateka.service.ClubService.*;
 
 @Controller
 public class ClubController {
@@ -166,10 +165,6 @@ public class ClubController {
 			HttpServletResponse response) throws ServletException, IOException,
 			ReflectiveOperationException, SQLException {
 
-		HttpSession session = request.getSession();
-		Club club = ClubService.getClubById((Integer) session
-				.getAttribute("clubId"));
-		String type = "club" + session.getAttribute("clubId");
 		request.getAttribute("clubId");
 		CreateContent.createContent(request, ContentGroupType.IMAGE);
 		request.getRequestDispatcher("pages/club/club.jsp").forward(request,
@@ -192,8 +187,7 @@ public class ClubController {
 	public static void createRecordPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			SQLException, ReflectiveOperationException {
-		HttpSession session = request.getSession();
-		String type = "club" + session.getAttribute("clubId");
+
 		request.getRequestDispatcher("pages/club/club.jsp").forward(request,
 				response);
 	}
@@ -202,24 +196,48 @@ public class ClubController {
 	public static void clubGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			ReflectiveOperationException, SQLException {
-		HttpSession session = request.getSession();
-		session.setAttribute("clubId", 1);
-		session.setAttribute("userId", 2);
-		List<ContentGroup> records = ContentGroupService
-				.getContentGroupByClubId(1);		
-		Map<Integer, List<Media>> mediaMap = new HashMap<Integer, List<Media>>();
-		if (records != null) {
-			Collections.sort(records);
-			for (ContentGroup contentGroup : records) {
-				mediaMap.put(contentGroup.getId(), MediaService
-						.getMediaContentGroupId(contentGroup.getId()));
-			}
-		}
 
-		request.setAttribute("mediaMap", mediaMap);
-		request.setAttribute("records", records);
-		request.getRequestDispatcher("pages/club/club.jsp").forward(request,
-				response);
+		try {
+			int clubId = 0;
+			if (request.getParameter("id") == null
+					|| request.getParameter("id") == ""
+					|| getClubById(Integer.parseInt(request.getParameter("id")
+							.toString())) == null) {
+				request.setAttribute("message", "No such club!");
+				request.getRequestDispatcher("error404.jsp").forward(request,
+						response);
+				request.removeAttribute("message");
+			} else {
+				clubId = Integer
+						.parseInt(request.getParameter("id").toString());
+				Club club = getClubById(clubId);
+				List<ContentGroup> records = ContentGroupService
+						.getContentGroupByClubId(clubId);
+				Map<Integer, List<Media>> mediaMap = new HashMap<Integer, List<Media>>();
+				if (records != null) {
+					for (ContentGroup contentGroup : records) {
+						mediaMap.put(contentGroup.getId(), MediaService
+								.getMediaContentGroupId(contentGroup.getId()));
+					}
+				}
+
+				request.setAttribute("mediaMap", mediaMap);
+				request.setAttribute("records", records);
+				request.setAttribute("club", club);
+
+				request.getRequestDispatcher("pages/club/club.jsp").forward(
+						request, response);
+
+				request.removeAttribute("mediaMap");
+				request.removeAttribute("records");
+				request.removeAttribute("club");
+			}
+		} catch (NumberFormatException e) {
+			request.setAttribute("message", "No such club!");
+			request.getRequestDispatcher("error404.jsp").forward(request,
+					response);
+			request.removeAttribute("message");
+		}
 	}
 
 	@Request(url = "club_videos", method = "get")

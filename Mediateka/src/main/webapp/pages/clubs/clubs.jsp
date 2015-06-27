@@ -3,9 +3,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
 <%@page import="com.mediateka.model.enums.Role"%>
-
 
 <fmt:setLocale value="${locale}" />
 <fmt:setBundle basename="menu" />
@@ -17,6 +15,20 @@
 
 <jsp:include page="../general/head.jsp" />
 <jsp:include page="create_club.jsp" />
+<style>
+.image-cover-t {
+	color: white;
+	position: relative;
+	margin-top: 1em;
+	z-index: 1000;
+	text-align: center;
+	text-shadow: black 1.0px 0.0px, black 1.0px 1.0px, black 0.0px 1.0px,
+		black -1.0px 1.0px, black -1.0px 0.0px, black -1.0px -1.0px, black
+		0.0px -1.0px, black 1.0px -1.0px, black 0.0 0.0 3.0px, black 0.0 0.0
+		3.0px, black 0.0 0.0 3.0px, black 0.0 0.0 3.0px, black 0.0 0.0 3.0px,
+		black 0.0 0.0 3.0px, black 0.0 0.0 3.0px, black 0.0 0.0 3.0px;
+}
+</style>
 </head>
 
 
