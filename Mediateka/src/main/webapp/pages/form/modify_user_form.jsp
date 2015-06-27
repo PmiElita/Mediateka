@@ -34,6 +34,8 @@
 			</c:if>
 			<div class="container section white">
 				<label style="color: #2196F3;">${message }</label>
+
+				<h3><fmt:message bundle="${msg}" key="user_form" /></h3>
 				<form id="modifyUser" action="modifyUser" method="post"
 					onsubmit="return submitModify();">
 
@@ -158,6 +160,53 @@
 
 					</div>
 				</form>
+				
+				<h3><fmt:message bundle="${msg}" key="password_form" /></h3>
+				
+								<form action="resetPassword" method="post">
+
+					<div class="row">
+						<div class="input-field col s6">
+							<p>
+								<fmt:message bundle="${msg}" key="old_password" />
+							</p>
+							<input id="password" name="oldPassword" type="password"
+								title="<fmt:message bundle="${msg}" key="password_requirements" />"
+								class="validate" required>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="input-field col s6">
+							<p>
+								<fmt:message bundle="${msg}" key="password" />
+							</p>
+							<input id="password" name="newPassword" type="password"
+								title="<fmt:message bundle="${msg}" key="password_requirements" />"
+								pattern="${consts.getPassword() }" class="validate" required
+								onchange=" this.setCustomValidity(this.validity.patternMismatch ? this.title : ''); if(this.checkValidity()) form.confirmPassword.pattern = this.value;">
+						</div>
+
+						<div class="input-field col s6">
+							<p>
+								<fmt:message bundle="${msg}" key="confirm_password" />
+							</p>
+							<input id="password" name="confirmNewPassword" type="password"
+								title="<fmt:message bundle="${msg}" key="password_requirements" />"
+								pattern="${consts.getPassword() }" class="validate" required>
+						</div>
+					</div>
+
+					<button class="btn waves-effect blue titler" type="submit"
+						name="action" style="margin-bottom: 3.5em">
+						<fmt:message bundle="${msg}" key="button" />
+						<i class="mdi-content-send right"></i>
+					</button>
+
+				</form>
+				
+				
+				
 			</div>
 		</div>
 	</div>

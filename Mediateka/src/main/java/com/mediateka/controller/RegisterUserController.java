@@ -335,15 +335,6 @@ public class RegisterUserController {
 		return;
 	}
 
-	@Request(url = "resetPassword", method = "get")
-	public static void changePasswordPage(HttpServletRequest request,
-			HttpServletResponse response) throws IOException,
-			ReflectiveOperationException, SQLException, ServletException {
-
-		request.getRequestDispatcher("pages/form/reset_password_form.jsp")
-				.forward(request, response);
-		return;
-	}
 
 	@Request(url = "resetPassword", method = "post")
 	public static void changePassword(HttpServletRequest request,
