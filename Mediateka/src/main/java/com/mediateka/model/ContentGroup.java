@@ -1,12 +1,13 @@
 package com.mediateka.model;
 
 import java.sql.Timestamp;
+import java.util.Comparator;
 
 import com.mediateka.annotation.Column;
 import com.mediateka.model.enums.ContentGroupType;
 import com.mediateka.model.enums.State;
 
-public class ContentGroup {
+public class ContentGroup implements Comparable<ContentGroup>{
 
 	@Column(name = "id")
 	private Integer id;
@@ -148,5 +149,14 @@ public class ContentGroup {
 				+ clubId + ", state=" + state + ", like=" + like + ", dislike="
 				+ dislike + ", parentId=" + parentId + "]";
 	}
+
+	@Override
+	public int compareTo(ContentGroup o) {
+		// TODO Auto-generated method stub
+		return o.getCreationDate().compareTo(this.getCreationDate());
+	}
+
+
+	
 
 }

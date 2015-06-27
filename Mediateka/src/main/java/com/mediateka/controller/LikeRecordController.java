@@ -1,44 +1,53 @@
 package com.mediateka.controller;
 
+import java.io.IOException;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.google.gson.Gson;
 import com.mediateka.annotation.Controller;
 import com.mediateka.annotation.Request;
+import com.mediateka.model.ContentGroup;
 import com.mediateka.model.LikeRecord;
+import com.mediateka.service.ContentGroupService;
 import com.mediateka.service.LikeRecordService;
 
 @Controller
 public class LikeRecordController {
-
-	@Request(url = "like", method = "post")
-	public static void likePost(HttpServletRequest request,
-			HttpServletResponse response) throws SQLException, ReflectiveOperationException {
-		
+	
+	@Request(url = "likes", method = "get")
+	public static void likeDislikeGet(HttpServletRequest request,
+			HttpServletResponse response) throws SQLException,
+			ReflectiveOperationException, IOException {
+		Integer likeState = Integer.parseInt(request.getParameter("likeState"));
+		System.out.println(likeState);
 		HttpSession session = request.getSession();
 		Integer userId = (Integer) session.getAttribute("userId");
-		Integer contentGroupId = (Integer) request.getAttribute("contentGroupId");
-		LikeRecord likeRecord = LikeRecordService.getLikeRecordByContentGroupId(contentGroupId);
-		if(likeRecord == null){
+		Integer contentGroupId = (Integer) request
+				.getAttribute("contentGroupId");
+		contentGroupId = 36;
+		LikeRecord likeRecord = LikeRecordService
+				.getLikeRecordByUserIdAndContentGroupId(userId, contentGroupId);
+		if (likeRecord == null) {
 			likeRecord.setUserId(userId);
 			likeRecord.setContentGroupId(contentGroupId);
-			likeRecord.setState(1);
+			likeRecord.setState(likeState);
 			LikeRecordService.saveLikeRecord(likeRecord);
 		} else {
-			if(userId == likeRecord.getUserId()){
-				
-			}
+			likeRecord.setState(likeState);
+			LikeRecordService.updateLikeRecord(likeRecord);
 		}
-		
-	}
-	
-	@Request(url = "dislike", method = "post")
-	public static void dislikePost(HttpServletRequest request,
-			HttpServletResponse response){
-		
+		ContentGroup contentGroup = ContentGroupService
+				.getContentGroupById(contentGroupId);
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		response.getWriter().write(new Gson().toJson(contentGroup));
+
 	}
 
 }

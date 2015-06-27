@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -204,9 +206,10 @@ public class ClubController {
 		session.setAttribute("clubId", 1);
 		session.setAttribute("userId", 2);
 		List<ContentGroup> records = ContentGroupService
-				.getContentGroupByClubId(1);
+				.getContentGroupByClubId(1);		
 		Map<Integer, List<Media>> mediaMap = new HashMap<Integer, List<Media>>();
 		if (records != null) {
+			Collections.sort(records);
 			for (ContentGroup contentGroup : records) {
 				mediaMap.put(contentGroup.getId(), MediaService
 						.getMediaContentGroupId(contentGroup.getId()));

@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 import static com.mediateka.dao.statement.LikeRecordStatements.*;
 
@@ -66,7 +67,7 @@ public class LikeRecordDAO {
 		}
 	}
 
-	public static LikeRecord getLikeRecordByUserId(Integer userId)
+	public static List<LikeRecord> getLikeRecordByUserId(Integer userId)
 			throws SQLException, ReflectiveOperationException {
 
 		LikeRecord likeRecord = new LikeRecord();
@@ -81,14 +82,14 @@ public class LikeRecordDAO {
 					SELECT_LIKE_RECORD_BY_USER_ID_ORDER);
 
 			ResultSet rs = statement.executeQuery();
-			return Transformer.transformResultSetIntoObject(rs,
-					LikeRecord.class);
+			return Transformer.transformResultSetIntoList(rs, LikeRecord.class);
 
 		}
 	}
 
-	public static LikeRecord getLikeRecordByContentGroupId(Integer contentGroupId)
-			throws SQLException, ReflectiveOperationException {
+	public static List<LikeRecord> getLikeRecordByContentGroupId(
+			Integer contentGroupId) throws SQLException,
+			ReflectiveOperationException {
 
 		LikeRecord likeRecord = new LikeRecord();
 		likeRecord.setContentGroupId(contentGroupId);
@@ -100,6 +101,28 @@ public class LikeRecordDAO {
 
 			Transformer.valueIntoPreparedStatement(statement, likeRecord,
 					SELECT_LIKE_RECORD_BY_CONTENT_GROUP_ID_ORDER);
+
+			ResultSet rs = statement.executeQuery();
+			return Transformer.transformResultSetIntoList(rs, LikeRecord.class);
+
+		}
+	}
+
+	public static LikeRecord getLikeRecordByUserIdAndContentGroupId(
+			Integer userId, Integer contentGroupId) throws SQLException,
+			ReflectiveOperationException {
+
+		LikeRecord likeRecord = new LikeRecord();
+		likeRecord.setContentGroupId(contentGroupId);
+		likeRecord.setUserId(userId);
+
+		try (Connection connection = ConnectionManager.getConnection()) {
+
+			PreparedStatement statement = connection
+					.prepareStatement(SELECT_LIKE_RECORD_BY_USER_ID_AND_CONTENT_GROUP_ID);
+
+			Transformer.valueIntoPreparedStatement(statement, likeRecord,
+					SELECT_LIKE_RECORD_BY_USER_ID_AND_CONTENT_GROUP_ID_ORDER);
 
 			ResultSet rs = statement.executeQuery();
 			return Transformer.transformResultSetIntoObject(rs,

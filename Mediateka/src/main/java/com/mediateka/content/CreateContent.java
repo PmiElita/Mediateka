@@ -4,7 +4,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -47,7 +50,7 @@ public class CreateContent {
 		contentGroup.setType(contentGroupType);
 		contentGroup.setState(State.ACTIVE);
 		contentGroup.setText(fileLoader.getParameterMap().get("text"));
-
+		contentGroup.setCreationDate(Timestamp.valueOf(LocalDateTime.now()));
 		System.out.println(contentGroup);
 
 		contentGroup = ContentGroupService.callSaveContentGroup(contentGroup);

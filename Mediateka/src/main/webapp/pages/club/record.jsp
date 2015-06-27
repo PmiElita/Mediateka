@@ -52,7 +52,8 @@
 				<div class="file-field input-field col s2 offset-s1">
 					<div class="btn">
 						<span><i class="small mdi-av-video-collection"></i></span> <input
-							type="file" id="video" name="video" multiple accept="video/*">
+							type="file" id="video" name="video" onloadstart="alert(5);"
+							multiple accept="video/*">
 					</div>
 
 				</div>
@@ -84,10 +85,11 @@
 	<c:forEach var="record" items="${records}">
 		<div class="main-info container z-depth-1">
 			<div class="row">
+				<fmt:formatDate value="${record.creationDate}"
+					pattern="dd.MM.yyyy HH:mm" />
 				<c:out value="${record.text}" />
 				<c:forEach var="media" items="${mediaMap.get(record.id)}">
-			${record.id}
-			${media.path}
+			${record.id}		
 			<c:choose>
 						<c:when test="${media.type == 'IMAGE'}">
 							<img src='<c:out value="${media.path}"></c:out>' width='200'
@@ -105,9 +107,14 @@
 						</c:when>
 					</c:choose>
 				</c:forEach>
-				<a><span><i
-						class="tiny mdi-action-thumb-down  waves-effect waves-red"></i></span></a> <a><span><i
-						class="tiny mdi-action-thumb-up waves-effect waves-green "></i></span></a>
+				<a><span><i onclick="like('1');"
+						class="tiny mdi-action-thumb-up waves-effect waves-green "></i></span></a> <span
+					onclick="document.getElementById('recordLike').innerHTML = 0"
+					id="recordLike${record.id}">${record.like }</span> <a><span><i
+						onclick="like('-1');"
+						class="tiny mdi-action-thumb-down  waves-effect waves-red"></i></span></a> <span
+					id="recordDislike${record.id}"><c:out
+						value="${record.dislike }"></c:out></span>
 			</div>
 		</div>
 
@@ -121,6 +128,29 @@
 	var storedAudios = [];
 	var num;
 
+	function like(value, id) {
+		alert(value);
+		$
+				.ajax({
+					type : 'get',
+					url : 'likes',
+					dataType : 'JSON',
+					data : {
+						"likeState" : value,
+						"recordId" : id
+					},
+					complete : function(data) {
+
+						// 				alert(JSON.stringify(data));				
+						// 				alert(data.responseJSON);
+						// 				alert(data.responseJSON.id);
+						var id = data.responseJSON.id;
+						document.getElementById("recordLike" + id).innerHTML = data.responseJSON.like;
+						document.getElementById("recordDislike" + id).innerHTML = data.responseJSON.dislike;
+					}
+				});
+
+	}
 	$(document).ready(function() {
 		$("#image").on("change", handleFileSelect);
 		$("#video").on("change", handleFileSelect);
