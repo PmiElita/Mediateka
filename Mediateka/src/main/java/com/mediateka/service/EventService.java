@@ -40,9 +40,9 @@ public class EventService {
 		EventDAO.updateEventById(event);
 	}
 
-	public static void getEventAll() throws SQLException,
+	public static List<Event> getEventAll() throws SQLException,
 			ReflectiveOperationException {
-		EventDAO.getEventAll();
+		return EventDAO.getEventAll();
 	}
 
 	public static List<Event> getEventsByDate(Timestamp date)

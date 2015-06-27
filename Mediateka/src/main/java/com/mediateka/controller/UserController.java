@@ -23,9 +23,13 @@ import com.mediateka.exception.WrongInputException;
 import com.mediateka.form.SearchUserForm;
 import com.mediateka.model.Club;
 import com.mediateka.model.ClubEventMember;
+import com.mediateka.model.Event;
 import com.mediateka.model.User;
+import com.mediateka.model.enums.Role;
 import com.mediateka.model.enums.State;
 import com.mediateka.search.UserSearch;
+import com.mediateka.service.ClubService;
+import com.mediateka.service.EventService;
 import com.mediateka.service.ProfessionService;
 import com.mediateka.service.UserService;
 import com.mediateka.util.FormValidator;
@@ -43,15 +47,95 @@ public class UserController {
 
 	@Request(url = "events", method = "get")
 	public static void eventsGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("pages/events/events.jsp").forward(
-				request, response);
+			HttpServletResponse response) throws ServletException, IOException,
+			SQLException, ReflectiveOperationException {
+		Integer userId = (Integer) request.getSession().getAttribute("userId");
+
+		System.out.println("events");
+		if (userId == null) {
+			request.getRequestDispatcher("pages/error404.jsp").forward(request,
+					response);
+			return;
+		}
+
+		User user = UserService.getUserById(userId);
+		if (user == null) {
+			logger.error("no user with such id : " + userId);
+			response.sendRedirect("index");
+			return;
+		}
+
+		switch (user.getRole()) {
+		case ADMIN:
+		case MODERATOR:
+
+			List<Event> allEvents = EventService.getEventAll();
+
+			List<Event> requestedEvents = new ArrayList<Event>();
+			for (Event c : allEvents) {
+				if (c.getState() == State.REQUESTED) {
+					requestedEvents.add(c);
+				}
+			}
+
+			request.setAttribute("events", requestedEvents);
+
+			request.getRequestDispatcher("pages/table/admin_events.jsp")
+					.forward(request, response);
+			break;
+
+		case USER:
+			request.getRequestDispatcher("pages/events/events.jsp").forward(
+					request, response);
+			break;
+
+		default:
+			logger.error("unknown user role " + user.getRole().toString());
+			response.sendRedirect("index");
+			break;
+		}
+
 	}
 
 	@Request(url = "clubs", method = "get")
 	public static void clubsGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			NumberFormatException, SQLException, ReflectiveOperationException {
+
+		System.out.println("clubs");
+		Integer userId = (Integer) request.getSession().getAttribute("userId");
+
+		if (userId == null) {
+			request.getRequestDispatcher("pages/error404.jsp").forward(request,
+					response);
+			return;
+		}
+
+		User user = UserService.getUserById(userId);
+		if (user == null) {
+			logger.error("no user with such id : " + userId);
+			response.sendRedirect("index");
+			return;
+		}
+
+		if ((user.getRole() == Role.ADMIN)
+				|| (user.getRole() == Role.MODERATOR)) {
+			List<Event> allEvents = EventService.getEventAll();
+
+			List<Event> requestedEvents = new ArrayList<Event>();
+			for (Event c : allEvents) {
+				if (c.getState() == State.REQUESTED) {
+					requestedEvents.add(c);
+				}
+			}
+
+			request.setAttribute("events", requestedEvents);
+
+			request.getRequestDispatcher("pages/table/admin_events.jsp")
+					.forward(request, response);
+			return;
+
+		}
 
 		request.getSession().setAttribute("userId", 1);
 

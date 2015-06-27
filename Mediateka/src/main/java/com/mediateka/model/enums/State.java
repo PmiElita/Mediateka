@@ -2,6 +2,8 @@ package com.mediateka.model.enums;
 
 public enum State {
 
-	ACTIVE, BLOCKED, DELETED;
+	ACTIVE, BLOCKED, DELETED,
+	
+	REQUESTED,
 
 }
