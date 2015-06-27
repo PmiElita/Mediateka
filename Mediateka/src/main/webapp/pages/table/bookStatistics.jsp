@@ -23,7 +23,7 @@
 			<div class="parallax">
 				<img src="images/parallax1.jpg">
 			</div>
-			<div class="container">
+			<div class="container section white">
 				<table>
 					<thead>
 

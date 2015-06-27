@@ -10,7 +10,7 @@
 }
 
 .action {
-	width: 400px;
+	width: 425px;
 	height: 30px;
 	margin: 10px 0;
 }
@@ -45,7 +45,7 @@
 					<div class="action">
 						<input type="file" id="file" style="float: left; width: 250px; color:white" class="image-cover-t">
 						<input type="button" id="btnCrop" value="Confirm"
-							style="float: right; margin-top:1em;"> <input type="button" id="btnZoomIn"
+							style="float: right; margin-top:1em; margin-left:3em"> <input type="button" id="btnZoomIn"
 							value="+" style="float: right; margin-top:1em;"> <input type="button"
 							id="btnZoomOut" value="-" style="float: right; margin-top:1em">
 					</div>

@@ -30,7 +30,7 @@
 				<form id="update_book" action="UpdateBook" method="post"
 					enctype="multipart/form-data">
 
-					<button type="submit" class="btn waves-effect blue titler"
+					<button type="submit" class="btn waves-effect titler"
 						style="margin-top: 2.5em">Update book</button>
 
 					<h6 style="color: blue">${message}</h6>

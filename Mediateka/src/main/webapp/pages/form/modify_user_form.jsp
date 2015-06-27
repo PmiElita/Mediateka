@@ -39,10 +39,9 @@
 				<form id="modifyUser" action="modifyUser" method="post"
 					onsubmit="return submitModify();">
 
-					<button class="btn waves-effect blue titler" type="submit"
+					<button class="btn waves-effect titler" type="submit"
 						name="action" style="margin-bottom: 0.5em; margin-top: 2em">
 						<fmt:message bundle="${msg}" key="button" />
-						<i class="mdi-content-send right"></i>
 					</button>
 
 					<div class="row">

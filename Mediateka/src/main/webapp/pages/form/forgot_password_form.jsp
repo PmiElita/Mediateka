@@ -16,6 +16,8 @@
 <html>
 <head>
 <jsp:include page="../general/head.jsp" />
+<jsp:include page="../index/index_modal_login.jsp" />
+<jsp:include page="../index/index_modal_register.jsp" />
 </head>
 <body>
 
@@ -41,10 +43,9 @@
 					</div>
 				</div>
 
-				<button class="btn waves-effect blue titler" type="submit"
-					name="action" style="margin-bottom: 3.5em" onclick="show();">
+				<button class="btn waves-effect titler" type="submit"
+					name="action" style="margin-bottom: 3.5em; margin-left:1em" onclick="show();">
 					<fmt:message bundle="${msg}" key="button" />
-					<i class="mdi-content-send right"></i>
 				</button>
 
 			</div>

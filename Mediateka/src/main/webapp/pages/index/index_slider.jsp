@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 	
-<div class="slider">
+<div class="slider" style="margin-top:1em">
 	<ul class="slides">
 		<li><img src="images/slide_1.jpg">
 			<div class="caption center-align">

@@ -20,10 +20,9 @@
 
 				<div class="container" style="width: 95%">
 					<div style="margin-top: -3.5em">
-						<button class="btn waves-effect blue titler" type="submit"
+						<button class="btn waves-effect titler" type="submit"
 							name="action" style="margin-bottom: 3.5em">
 							<fmt:message bundle="${msg}" key="registration.formName" />
-							<i class="mdi-content-send right"></i>
 						</button>
 
 

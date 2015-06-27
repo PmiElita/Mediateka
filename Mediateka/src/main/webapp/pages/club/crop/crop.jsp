@@ -10,7 +10,7 @@
 }
 
 .action {
-	width: 400px;
+	width: 425px;
 	height: 30px;
 	margin: 10px 0;
 }

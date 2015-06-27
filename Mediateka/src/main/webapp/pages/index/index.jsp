@@ -28,10 +28,7 @@
 		<c:if test="${notification ne null }">
 			<fmt:message bundle="${msg}" key="${notification}" />
 		</c:if>
-
-
-
-		<jsp:include page="index_slider.jsp" />
+		
 		<jsp:include page="index_central.jsp" />
 	</div>
 	<jsp:include page="../general/footer.jsp" />

@@ -36,7 +36,7 @@
 					<form id="create_book" onsubmit="return valid();"
 						action="CreateBook" method="post" enctype="multipart/form-data">
 
-						<button type="submit" class="btn waves-effect blue titler"
+						<button type="submit" class="btn waves-effect titler"
 							id="submit" style="margin-top: 2.5em">
 							<fmt:message bundle="${msg}" key="create_book" />
 						</button>

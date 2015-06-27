@@ -7770,6 +7770,7 @@ small {
 }
 
 .btn, .btn-large, .btn-flat {
+	color: white;
 	border: none;
 	border-radius: 2px;
 	display: inline-block;
@@ -7812,7 +7813,7 @@ small {
 .btn, .btn-large {
 	text-decoration: none;
 	color: #FFF;
-	background-color: #616161;
+	background-color: black;
 	text-align: center;
 	letter-spacing: .5px;
 	-webkit-transition: .2s ease-out;

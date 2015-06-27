@@ -5,13 +5,14 @@
 	<div class="modal-content">
 		<div id="creation_form">
 			<form>
-				<h3 class="titler">Add video</h3>
-				<button class="btn waves-effect blue titler" type="submit"
-					name="action">
-					Add <i class="mdi-content-send right"></i>
-				</button>
 
 				<div class="container">
+
+					<h3 class="titler">Add video</h3>
+					<button class="btn waves-effect titler" type="submit"
+						name="action">
+						Add 
+					</button>
 
 					<div class="row">
 						<div class="col s12">

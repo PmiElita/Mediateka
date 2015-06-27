@@ -9,13 +9,14 @@
 <fmt:requestEncoding value="utf-8" />
 
 
-<div class="parallax-container my-parallax" style="max-height:100%">
-	<div class="parallax" style="max-height:100%">
+<div class="parallax-container my-parallax" style="max-height: 100%">
+	<div class="parallax" style="max-height: 100%">
 		<img src="images/parallax1.jpg">
 	</div>
 
+	<jsp:include page="index_slider.jsp" />
 
-	<div class="main_poster" style="margin-top:2em">
+	<div class="main_poster" style="margin-top: 2em">
 
 		<div class="row">
 
@@ -86,7 +87,7 @@
 
 	<div class="main-info">
 		<div class="section white">
-			<div class="container">
+			<div class="container" style="width:90%">
 				<p>Перша львівська медіатека – це проект громадського центру
 					нового типу, діє при Центральній бібліотеці для дорослих ім. Лесі
 					Українки. Медіатека – інтерактивний громадський центр, який

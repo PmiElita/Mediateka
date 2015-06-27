@@ -20,9 +20,9 @@
 </head>
 
 <body>
-	<div class="main">
-		<jsp:include page="../general/nav.jsp" />
 
+	<jsp:include page="../general/nav.jsp" />
+	<div class="main">
 		<div class="parallax-container my-parallax">
 			<div class="parallax">
 				<img src="images/parallax1.jpg">
@@ -41,7 +41,8 @@
 				<ul class="collapsible center" data-collapsible="accordion"
 					style="margin-top: 5%">
 					<li>
-						<div class="collapsible-header" style="font-size:2em">Add media</div>
+						<div class="collapsible-header" style="font-size: 2em">Add
+							media</div>
 						<div class="collapsible-body">
 							<jsp:include page="record.jsp" />
 						</div>
@@ -50,7 +51,7 @@
 			</div>
 		</div>
 	</div>
-
 	<jsp:include page="../general/footer.jsp" />
+
 </body>
 </html>

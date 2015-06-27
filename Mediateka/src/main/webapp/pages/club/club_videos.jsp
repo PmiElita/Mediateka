@@ -17,6 +17,20 @@
 <jsp:include page="add_video.jsp" />
 </head>
 
+
+<style>
+.image-cover-t {
+	color: white;
+	position: relative;
+	margin-top: 1em;
+	text-shadow: black 1.0px 0.0px, black 1.0px 1.0px, black 0.0px 1.0px,
+		black -1.0px 1.0px, black -1.0px 0.0px, black -1.0px -1.0px, black
+		0.0px -1.0px, black 1.0px -1.0px, black 0.0 0.0 3.0px, black 0.0 0.0
+		3.0px, black 0.0 0.0 3.0px, black 0.0 0.0 3.0px, black 0.0 0.0 3.0px,
+		black 0.0 0.0 3.0px, black 0.0 0.0 3.0px, black 0.0 0.0 3.0px;
+}
+</style>
+
 <body>
 	<div class="main">
 		<jsp:include page="../general/nav.jsp" />
@@ -34,10 +48,10 @@
 				<jsp:include page="../user/user_side_nav.jsp" />
 			</c:if>
 
-			<div class="section white">
+			<div class="section">
 				<div class="container">
-					<h3>Club Name</h3>
-					<h4>Videos</h4>
+					<h3 class="image-cover-t">Club Name</h3>
+					<h4 class="image-cover-t">Videos</h4>
 					<div class="row" style="margin-left: -7em">
 						<div class="col s3">
 							<a title="Add video" href="" data-target="modal9"
