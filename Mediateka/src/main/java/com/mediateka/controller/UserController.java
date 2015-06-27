@@ -131,7 +131,7 @@ public class UserController {
 
 			request.setAttribute("events", requestedEvents);
 
-			request.getRequestDispatcher("pages/table/admin_events.jsp")
+			request.getRequestDispatcher("pages/table/admin_clubs.jsp")
 					.forward(request, response);
 			return;
 
