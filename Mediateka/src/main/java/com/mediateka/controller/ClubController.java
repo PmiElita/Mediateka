@@ -23,14 +23,17 @@ import com.mediateka.model.Club;
 import com.mediateka.model.ClubEventMember;
 import com.mediateka.model.ContentGroup;
 import com.mediateka.model.Media;
+import com.mediateka.model.User;
 import com.mediateka.model.enums.ClubEventMemberType;
 import com.mediateka.model.enums.ContentGroupType;
 import com.mediateka.model.enums.MediaType;
+import com.mediateka.model.enums.Role;
 import com.mediateka.model.enums.State;
 import com.mediateka.service.ClubEventMemberService;
 import com.mediateka.service.ClubService;
 import com.mediateka.service.ContentGroupService;
 import com.mediateka.service.MediaService;
+import com.mediateka.service.UserService;
 import com.mediateka.util.FileLoader;
 import com.mediateka.util.FormValidator;
 import com.mediateka.util.ObjectFiller;
@@ -246,4 +249,86 @@ public class ClubController {
 		request.getRequestDispatcher("pages/club/club_videos.jsp").forward(
 				request, response);
 	}
+
+	@Request(url = "activateClub", method = "get")
+	public static void activateClub(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException,
+			ReflectiveOperationException, SQLException {
+
+		Integer userId = (Integer) request.getSession().getAttribute("userId");
+
+		if (userId == null) {
+			return;
+		}
+
+		User user = UserService.getUserById(userId);
+		if (user == null) {
+			logger.error("no user with such id : " + userId);
+			return;
+		}
+
+		if (user.getRole() != Role.ADMIN) {
+			return;
+		}
+
+		System.out.println("5");
+		String idString = request.getParameter("id");
+
+		if (idString == null) {
+			return;
+		}
+
+		Integer clubId = Integer.parseInt(idString);
+
+		if (clubId == null) {
+			return;
+		}
+
+		Club club = ClubService.getClubById(clubId);
+
+		club.setState(State.ACTIVE);
+		ClubService.updateClub(club);
+
+		return;
+	}
+
+	@Request(url = "deleteClub", method = "get")
+	public static void deleteClub(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException,
+			ReflectiveOperationException, SQLException {
+
+		Integer userId = (Integer) request.getSession().getAttribute("userId");
+
+		if (userId == null) {
+			response.getWriter().write("");
+			return;
+		}
+
+		User user = UserService.getUserById(userId);
+		if (user == null) {
+			logger.error("no user with such id : " + userId);
+			response.getWriter().write("");
+			return;
+		}
+
+		if (user.getRole() != Role.ADMIN) {
+			response.getWriter().write("");
+			return;
+		}
+
+		Integer clubId = Integer.parseInt(request.getParameter("id"));
+
+		if (clubId == null) {
+			response.getWriter().write("");
+			return;
+		}
+
+		Club club = ClubService.getClubById(clubId);
+
+		club.setState(State.DELETED);
+		ClubService.updateClub(club);
+		response.getWriter().write("");
+		return;
+	}
+
 }

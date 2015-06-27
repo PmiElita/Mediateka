@@ -21,10 +21,14 @@ import com.mediateka.form.MeetingRegistrationForm;
 import com.mediateka.model.ClubEventMember;
 import com.mediateka.model.Event;
 import com.mediateka.model.Media;
+import com.mediateka.model.User;
 import com.mediateka.model.enums.ClubEventMemberType;
 import com.mediateka.model.enums.EventType;
 import com.mediateka.model.enums.MediaType;
+import com.mediateka.model.enums.Role;
 import com.mediateka.model.enums.State;
+import com.mediateka.service.EventService;
+import com.mediateka.service.UserService;
 import com.mediateka.util.DateConverter;
 import com.mediateka.util.FileLoader;
 import com.mediateka.util.FormValidator;
@@ -462,4 +466,88 @@ public class EventController {
 			response.sendRedirect("UpdateEvent");
 		}
 	}
+
+	@Request(url = "activateEvent", method = "get")
+	public static void activateEvent(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException,
+			ReflectiveOperationException, SQLException {
+
+		Integer userId = (Integer) request.getSession().getAttribute("userId");
+
+		if (userId == null) {
+			return;
+		}
+
+		User user = UserService.getUserById(userId);
+		if (user == null) {
+			logger.error("no user with such id : " + userId);
+			return;
+		}
+
+		if (user.getRole() != Role.ADMIN) {
+			return;
+		}
+
+		String idString = request.getParameter("id");
+
+		if (idString == null) {
+			return;
+		}
+
+		Integer eventId = Integer.parseInt(idString);
+
+		if (eventId == null) {
+			return;
+		}
+
+		Event event = EventService.getEventById(eventId);
+
+		event.setState(State.ACTIVE);
+		EventService.updateEventById(event);
+
+		return;
+	}
+
+	@Request(url = "deleteEvent", method = "get")
+	public static void deleteEvent(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException,
+			ReflectiveOperationException, SQLException {
+
+		Integer userId = (Integer) request.getSession().getAttribute("userId");
+
+		if (userId == null) {
+			return;
+		}
+
+		User user = UserService.getUserById(userId);
+		if (user == null) {
+			logger.error("no user with such id : " + userId);
+			return;
+		}
+
+		if (user.getRole() != Role.ADMIN) {
+			return;
+		}
+
+		System.out.println("5");
+		String idString = request.getParameter("id");
+
+		if (idString == null) {
+			return;
+		}
+
+		Integer eventId = Integer.parseInt(idString);
+
+		if (eventId == null) {
+			return;
+		}
+
+		Event event = EventService.getEventById(eventId);
+
+		event.setState(State.DELETED);
+		EventService.updateEventById(event);
+
+		return;
+	}
+
 }
