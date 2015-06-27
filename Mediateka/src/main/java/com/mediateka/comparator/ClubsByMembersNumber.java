@@ -23,8 +23,6 @@ public class ClubsByMembersNumber implements Comparator<Club> {
 					.getId());
 			List<ClubEventMember> members2 = getClubEventMemberByClubId(club2
 					.getId());
-			System.out.println(members1.size());
-			System.out.println(members2.size());
 			int number1 = 0;
 			int number2 = 0;
 			if (members1 != null)
@@ -37,9 +35,9 @@ public class ClubsByMembersNumber implements Comparator<Club> {
 					for (ClubEventMember member : members2)
 						if (member.getState() == State.ACTIVE)
 							number2++;
-			if (number1 > number2)
+			if (number1 < number2)
 				result = 1;
-			else if (number1 < number2)
+			else if (number1 > number2)
 				result = -1;
 			return result;
 		} catch (SQLException | ReflectiveOperationException e) {

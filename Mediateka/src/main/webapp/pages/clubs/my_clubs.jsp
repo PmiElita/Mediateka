@@ -22,7 +22,7 @@
 		<div class="row my-picture-row">
 			<div class="col s8 offset-s2">
 				<div class="waves-effect waves-block waves-light my-picture-wrap">
-					<a href="club?id=${item.id}">
+					<a href="club?clubId=${item.id}">
 						<div align="center">
 							<h3 class="image-cover-t"><c:out value="${item.name}"/>
 							</h3><img class="my-picture-club" src="${myActiveClubsAvas[status.index]}" align="middle">
@@ -42,7 +42,7 @@
 		<div class="row my-picture-row">
 			<div class="col s8 offset-s2">
 				<div class="waves-effect waves-block waves-light my-picture-wrap">
-					<a href="club?id=${item.id}">
+					<a href="club?clubId=${item.id}">
 						<div align="center">
 							<h3 class="image-cover-t"><c:out value="${item.name}"/>
 							</h3><img class="my-picture-club" src="${myBlockedClubsAvas[status.index]}" align="middle">

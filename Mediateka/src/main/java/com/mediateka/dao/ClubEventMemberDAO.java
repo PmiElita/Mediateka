@@ -73,7 +73,7 @@ public class ClubEventMemberDAO {
 			PreparedStatement statement = connection
 					.prepareStatement(SELECT_CLUB_EVENT_MEMBER_BY_CLUB_ID);
 			ClubEventMember clubEventMember = new ClubEventMember();
-			clubEventMember.setUserId(clubId);
+			clubEventMember.setClubId(clubId);
 			Transformer.valueIntoPreparedStatement(statement, clubEventMember,
 					SELECT_CLUB_EVENT_MEMBER_BY_CLUB_ID_ORDER);
 			ResultSet resultSet = statement.executeQuery();
