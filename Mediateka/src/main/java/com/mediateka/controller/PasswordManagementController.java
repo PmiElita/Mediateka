@@ -155,13 +155,15 @@ public class PasswordManagementController {
 			
 			user.setPasswordChangingToken(null);
 			UserService.updateUser(user);
+			System.out.println("can't send email");
 			return;
 		}
 		request.setAttribute("notification", "check_your_email");
 		request.getRequestDispatcher("pages/index/index.jsp").forward(
 				request, response);
 		
-
+		
+		System.out.println("DONE");
 
 	}
 

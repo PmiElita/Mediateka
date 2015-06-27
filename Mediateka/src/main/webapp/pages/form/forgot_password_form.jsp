@@ -31,28 +31,54 @@
 					<fmt:message bundle="${msg}" key="${notification}" />
 				</c:if>
 
-				<form action="invalidatePassword" method="post">
 
-					<div class="row">
-						<div class="input-field col s6">
-							<p>
-								<fmt:message bundle="${msg}" key="email" />
-							</p>
-							<input id="email" name="email" class="validate" required>
-						</div>
+				<div class="row">
+					<div class="input-field col s6">
+						<p>
+							<fmt:message bundle="${msg}" key="email" />
+						</p>
+						<input id="email" name="email" class="validate" required>
 					</div>
+				</div>
 
-					<button class="btn waves-effect blue titler" type="submit"
-						name="action" style="margin-bottom: 3.5em">
-						<fmt:message bundle="${msg}" key="button" />
-						<i class="mdi-content-send right"></i>
-					</button>
+				<button class="btn waves-effect blue titler" type="submit"
+					name="action" style="margin-bottom: 3.5em" onclick="show();">
+					<fmt:message bundle="${msg}" key="button" />
+					<i class="mdi-content-send right"></i>
+				</button>
 
-				</form>
 			</div>
 		</div>
 	</div>
+	<script type="text/javascript">
+		function show() {
+			wrongEmail = false;
+			$.ajax({
+				url : 'checkemail',
+				data : {
+					email : document.getElementById("email").value
+				},
+				success : function(data) {
+					if (data == 'true') {
+						Materialize.toast("wrong email", 1000);
+					} else {
+						Materialize.toast("check your email", 3000);
 
+						$.ajax({
+							url : 'invalidatePassword',
+							type : 'post',
+							dataType : 'json',
+							data : {
+								email : document.getElementById("email").value
+							}
+						});
+
+					}
+				}
+			});
+
+		}
+	</script>
 	<jsp:include page="../general/footer.jsp" />
 </body>
 </html>
