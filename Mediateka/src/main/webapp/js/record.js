@@ -5,7 +5,7 @@ var storedAudios = [];
 var num;
 
 function like(value, id) {
-	alert(value);
+	// alert(value);
 	$
 			.ajax({
 				type : 'get',
@@ -13,7 +13,7 @@ function like(value, id) {
 				dataType : 'JSON',
 				data : {
 					"likeState" : value,
-					"recordId" : id
+					"contentGroupId" : id
 				},
 				complete : function(data) {
 
@@ -101,6 +101,12 @@ function handleForm(e) {
 	e.preventDefault();
 	var data = new FormData();
 	data.append('text', document.getElementById('text').value);
+	data.append('clubId', document.getElementById('clubId').innerHTML
+			.toString());
+	if (document.getElementById('eventId') != null) {
+	data.appent('eventId', document.getElementById('clubId').innerHTML
+			.toString());
+	}
 	for (var i = 0, len = storedImages.length; i < len; i++) {
 		data.append('image', storedImages[i]);
 	}
@@ -135,7 +141,7 @@ function handleForm(e) {
 			var date = new Date(responseJSON["contentGroup"].creationDate);
 			alert(JSON.stringify(responseJSON));
 			var dateString = date.getDate() + "." + date.getMonth() + "."
-					+ date.getFullYear() + +" " + date.getHours() + ":"
+					+ date.getFullYear() + " " + date.getHours() + ":"
 					+ date.getMinutes();
 			recordList = $("#uploaded");
 			var html = "<div class=\"main-info container z-depth-1\"> <div class=\"row\">"

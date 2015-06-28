@@ -19,7 +19,14 @@
 <script src="js/record.js"></script>
 <form id="recordForm" enctype="multipart/form-data">
 
-	<input type="hidden" name="clubId" id="clubId" value="1">
+	
+	<c:if test="${clubId } != null" >
+		<input type="hidden" name="clubId" id="clubId" value='${clubId }'>
+	</c:if>
+	<c:if test="${eventId } != null" >
+		<input type="hidden" name="eventId" id="eventId" value="${eventId }">
+	</c:if>
+	
 	<div class="section white main-info container z-depth-1" style="width: 100%">
 		<div class="row">
 			<div class="row">
@@ -107,10 +114,10 @@
 							</c:when>
 						</c:choose>
 					</c:forEach>
-					<a><span><i onclick="like('1');"
+					<a><span><i onclick="like('1',${record.id});"
 							class="tiny mdi-action-thumb-up waves-effect waves-green "></i></span></a> <span
 						id="recordLike${record.id}">${record.like }</span> <a><span><i
-							onclick="like('-1');"
+							onclick="like('-1',${record.id});"
 							class="tiny mdi-action-thumb-down  waves-effect waves-red"></i></span></a> <span
 						id="recordDislike${record.id}"><c:out
 							value="${record.dislike }"></c:out></span>

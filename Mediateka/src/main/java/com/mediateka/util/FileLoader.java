@@ -2,6 +2,7 @@ package com.mediateka.util;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.io.FileUtils;
 import org.apache.tika.metadata.Metadata;
 import org.apache.tika.parser.AutoDetectParser;
 import org.apache.tika.sax.BodyContentHandler;
@@ -33,6 +35,54 @@ public class FileLoader {
 	private List<String> filePaths = new ArrayList<String>();
 	private HashMap<String, String> parameterMap = new HashMap<String, String>();
 	private List<MediaType> mediaTypes = new ArrayList<MediaType>();
+
+	public boolean loadFile(HttpServletRequest request) throws ServletException {
+		String folderName = "temp";
+		String uploadFolder = request.getServletContext().getRealPath("")
+				+ "media\\" + folderName;
+		File source = new File(uploadFolder);
+		if (source.exists() == false) {
+			source.mkdir();
+			new File(source.getAbsolutePath() + "\\images").mkdir();
+			new File(source.getAbsolutePath() + "\\videos").mkdir();
+			new File(source.getAbsolutePath() + "\\audios").mkdir();
+		}
+
+		boolean returnState = loadFile(request, folderName);
+		String type = "";
+		if (parameterMap.get("clubId") != null) {
+			type = "club" + request.getAttribute("clubId");
+		} else if (parameterMap.get("eventId") != null) {
+			type = "event" + request.getAttribute("eventId");
+		}
+		System.out.println(type);
+		System.out.println(type.replaceAll("[0-9]", "") + "\\" + type);
+		type = type.replaceAll("[0-9]", "") + "\\" + type;
+		String destFolder = request.getServletContext().getRealPath("")
+				+ "media\\" + type;
+		System.out.println(destFolder);
+		File dest = new File(destFolder);
+		for (int i = 0; i < filePaths.size(); i++) {
+			System.out.println(filePaths.get(i));
+			filePaths.set(i, filePaths.get(i).replace("temp", type));
+			System.out.println(filePaths.get(i));
+		}
+		String typeAray[] = { "images", "videos", "audios" };
+		try {
+			for (int i = 0; i < typeAray.length; i++) {
+				File[] fileList = new File(uploadFolder + "\\" + typeAray[i])
+						.listFiles();
+				for (File file : fileList) {
+					FileUtils.moveFileToDirectory(file, new File(destFolder
+							+ "\\" + typeAray[i]), false);
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return returnState;
+
+	}
 
 	public boolean loadFile(HttpServletRequest request, String folderName)
 			throws ServletException {
@@ -126,10 +176,13 @@ public class FileLoader {
 								uploadedFile.getName());
 						parser.parse(fileInputStream, contenthandler, metadata);
 					}
-					if (Files.probeContentType(Paths.get(filePath)).equals(							
+					if (Files.probeContentType(Paths.get(filePath)).equals(
 							metadata.get(Metadata.CONTENT_TYPE)) == false) {
-						System.out.println(Files.probeContentType(Paths.get(filePath)) + " " + item.getContentType() + " "
-								+ metadata.get(Metadata.CONTENT_TYPE));
+						System.out.println(Files.probeContentType(Paths
+								.get(filePath))
+								+ " "
+								+ item.getContentType()
+								+ " " + metadata.get(Metadata.CONTENT_TYPE));
 						uploadedFile.delete();
 						throw new WrongInputException("wrong file type");
 					}

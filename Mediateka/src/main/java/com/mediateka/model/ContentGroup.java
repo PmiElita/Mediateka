@@ -7,7 +7,7 @@ import com.mediateka.annotation.Column;
 import com.mediateka.model.enums.ContentGroupType;
 import com.mediateka.model.enums.State;
 
-public class ContentGroup implements Comparable<ContentGroup>{
+public class ContentGroup{
 
 	@Column(name = "id")
 	private Integer id;
@@ -149,14 +149,6 @@ public class ContentGroup implements Comparable<ContentGroup>{
 				+ clubId + ", state=" + state + ", like=" + like + ", dislike="
 				+ dislike + ", parentId=" + parentId + "]";
 	}
-
-	@Override
-	public int compareTo(ContentGroup o) {
-		// TODO Auto-generated method stub
-		return o.getCreationDate().compareTo(this.getCreationDate());
-	}
-
-
 	
 
 }

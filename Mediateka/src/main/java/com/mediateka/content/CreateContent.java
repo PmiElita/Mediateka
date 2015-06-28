@@ -41,24 +41,29 @@ public class CreateContent {
 			SQLException, ReflectiveOperationException, IOException {
 
 		HttpSession session = request.getSession();
-
 		FileLoader fileLoader = new FileLoader();
 		String type = null;
-		if (session.getAttribute("clubId") != null) {
-			type = "club" + session.getAttribute("clubId");
-		} else if (session.getAttribute("eventId") != null) {
-			type = "club" + session.getAttribute("clubId");
-		}
-		System.out.println(type.replaceAll("[0-9]", "") + "\\" + type);
-		fileLoader
-				.loadFile(request, type.replaceAll("[0-9]", "") + "\\" + type);
+//		if (request.getAttribute("clubId") != null) {
+//			type = "club" + request.getAttribute("clubId");
+//		} else if (request.getAttribute("eventId") != null) {
+//			type = "event" + request.getAttribute("eventId");
+//		}
+//		System.out.println(type);
+//		System.out.println(type.replaceAll("[0-9]", "") + "\\" + type);
+//		fileLoader
+//				.loadFile(request, type.replaceAll("[0-9]", "") + "\\" + type);
+		fileLoader.loadFile(request);
 		ContentGroup contentGroup = new ContentGroup();
 		contentGroup.setDislike(0);
 		contentGroup.setLike(0);
 		contentGroup.setName(fileLoader.getParameterMap().get("name"));
-		contentGroup.setClubId((Integer) session.getAttribute("clubId"));
-		contentGroup.setEventId((Integer) session.getAttribute("eventId"));
+		if(fileLoader.getParameterMap().get("clubId") != null){
+			contentGroup.setClubId(Integer.parseInt(fileLoader.getParameterMap().get("clubId")));
+		} else if(fileLoader.getParameterMap().get("eventId")!=null){
+			contentGroup.setEventId(Integer.parseInt(fileLoader.getParameterMap().get("eventId")));
+		}		
 		contentGroup.setCreatorId((Integer) session.getAttribute("userId"));
+		contentGroup.setCreatorId(1);
 		contentGroup.setType(contentGroupType);
 		contentGroup.setState(State.ACTIVE);
 		contentGroup.setText(fileLoader.getParameterMap().get("text"));

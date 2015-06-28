@@ -10,9 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.mediateka.annotation.Controller;
 import com.mediateka.annotation.Request;
 import com.mediateka.content.CreateContent;
-import com.mediateka.model.ContentGroup;
 import com.mediateka.model.enums.ContentGroupType;
-import com.mediateka.service.ContentGroupService;
 
 
 @Controller
@@ -22,7 +20,9 @@ public class RecordController {
 	@Request(url="loadRecord", method="post")
 	public static void loadRecordPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, SQLException, ReflectiveOperationException, IOException{
-		System.out.println("laodRecord");		
+		System.out.println("laodRecord");			
+		System.out.println(request.getParameterMap());
+		//request.setAttribute("clubId", 2);
 		CreateContent.createContent(request,response, ContentGroupType.COMMENT);
 	}
 	

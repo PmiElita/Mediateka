@@ -16,6 +16,7 @@ import org.apache.log4j.Logger;
 
 import com.mediateka.annotation.Controller;
 import com.mediateka.annotation.Request;
+import com.mediateka.comparator.ContentGroupByDate;
 import com.mediateka.content.CreateContent;
 import com.mediateka.exception.WrongInputException;
 import com.mediateka.form.ClubRegistrationForm;
@@ -90,7 +91,7 @@ public class ClubController {
 				+ "media\\club\\club" + club.getId());
 		clubDir.mkdirs();
 		new File(clubDir.getAbsolutePath() + "\\images").mkdir();
-		new File(clubDir.getAbsolutePath() + "\\video").mkdir();
+		new File(clubDir.getAbsolutePath() + "\\videos").mkdir();
 		new File(clubDir.getAbsolutePath() + "\\audios").mkdir();
 
 		request.getRequestDispatcher("pages/club/loadAlbum.jsp").forward(
@@ -202,9 +203,9 @@ public class ClubController {
 
 		try {
 			int clubId = 0;
-			if (request.getParameter("id") == null
-					|| request.getParameter("id") == ""
-					|| getClubById(Integer.parseInt(request.getParameter("id")
+			if (request.getParameter("clubId") == null
+					|| request.getParameter("clubId") == ""
+					|| getClubById(Integer.parseInt(request.getParameter("clubId")
 							.toString())) == null) {
 				request.setAttribute("message", "No such club!");
 				request.getRequestDispatcher("error404.jsp").forward(request,
@@ -212,10 +213,11 @@ public class ClubController {
 				request.removeAttribute("message");
 			} else {
 				clubId = Integer
-						.parseInt(request.getParameter("id").toString());
+						.parseInt(request.getParameter("clubId").toString());
 				Club club = getClubById(clubId);
 				List<ContentGroup> records = ContentGroupService
 						.getContentGroupByClubId(clubId);
+				records.sort(new ContentGroupByDate());
 				Map<Integer, List<Media>> mediaMap = new HashMap<Integer, List<Media>>();
 				if (records != null) {
 					for (ContentGroup contentGroup : records) {
@@ -226,6 +228,7 @@ public class ClubController {
 
 				request.setAttribute("mediaMap", mediaMap);
 				request.setAttribute("records", records);
+				request.setAttribute("clubId", club.getId());
 				request.setAttribute("club", club);
 
 				request.getRequestDispatcher("pages/club/club.jsp").forward(

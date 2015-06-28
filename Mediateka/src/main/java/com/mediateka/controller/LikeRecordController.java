@@ -2,8 +2,6 @@ package com.mediateka.controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,7 +17,7 @@ import com.mediateka.service.LikeRecordService;
 
 @Controller
 public class LikeRecordController {
-	
+
 	@Request(url = "likes", method = "get")
 	public static void likeDislikeGet(HttpServletRequest request,
 			HttpServletResponse response) throws SQLException,
@@ -28,12 +26,13 @@ public class LikeRecordController {
 		System.out.println(likeState);
 		HttpSession session = request.getSession();
 		Integer userId = (Integer) session.getAttribute("userId");
-		Integer contentGroupId = (Integer) request
-				.getAttribute("contentGroupId");
-		contentGroupId = 36;
+		Integer contentGroupId = Integer.parseInt(request.getParameter("contentGroupId"));
+		// contentGroupId = 36;
+		System.out.println(contentGroupId);
 		LikeRecord likeRecord = LikeRecordService
 				.getLikeRecordByUserIdAndContentGroupId(userId, contentGroupId);
 		if (likeRecord == null) {
+			likeRecord = new LikeRecord();
 			likeRecord.setUserId(userId);
 			likeRecord.setContentGroupId(contentGroupId);
 			likeRecord.setState(likeState);
@@ -46,7 +45,7 @@ public class LikeRecordController {
 				.getContentGroupById(contentGroupId);
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
-		response.getWriter().write(new Gson().toJson(contentGroup));	
+		response.getWriter().write(new Gson().toJson(contentGroup));
 
 	}
 
