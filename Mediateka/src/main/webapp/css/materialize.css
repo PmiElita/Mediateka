@@ -6540,7 +6540,6 @@ right
 	margin-bottom: 2em;
 	max-width: 1280px;
 	width: 90%;
-	border-radius:5%;
 }
 
 @media only screen and (min-width : 601px) {
@@ -6563,7 +6562,6 @@ right
 .section {
 	padding-top: 0.5rem;
 	padding-bottom: 1rem;
-	border-radius:5%;
 }
 
 .section.no-pad {

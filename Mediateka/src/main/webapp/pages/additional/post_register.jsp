@@ -22,7 +22,7 @@
 				<img src="images/parallax1.jpg">
 			</div>
 
-			<div style="margin-top: 10em; margin-right: 0em"
+			<div style="margin-top: 10em;"
 				class="container section white">
 				<div class="row offset-s4">
 					<h1 class="col8 ">Thanks!</h1>
@@ -33,7 +33,7 @@
 				</div>
 
 				<div class="row">
-					<a style="font-size: 1.5em" class="col8">Back to main page.</a>
+					<a href="index" style="font-size: 1.5em" class="col8">Back to main page.</a>
 				</div>
 			</div>
 		</div>

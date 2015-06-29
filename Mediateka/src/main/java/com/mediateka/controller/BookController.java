@@ -48,6 +48,15 @@ import com.mediateka.util.RegExps;
 public class BookController {
 	private static Logger logger = Logger.getLogger(BookController.class);
 
+	
+	@Request(url = "bookPage", method = "get")
+	public static void goToBookPageGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException,
+			SQLException, ReflectiveOperationException {
+		request.getRequestDispatcher("pages/books/book_page.jsp").forward(request,
+				response);
+	}
+	
 	// create book
 
 	@Request(url = "books", method = "get")

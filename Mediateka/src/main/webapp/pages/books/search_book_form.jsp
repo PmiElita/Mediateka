@@ -5,7 +5,7 @@
 <script src="js/myautoc.js"></script>
 <link type="text/css" rel="stylesheet" href="css/oleh_style.css"
 	media="screen,projection" />
-<div class="row main-activity section white">
+<div class="row main-activity section white container"  style="margin-top:1em">
 	<div class="modal-content div-margin">
 		<h4>Search book</h4>
 		<div class="row">

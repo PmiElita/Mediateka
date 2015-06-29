@@ -36,8 +36,8 @@
 					<form id="create_book" onsubmit="return valid();"
 						action="CreateBook" method="post" enctype="multipart/form-data">
 
-						<button type="submit" class="btn waves-effect titler"
-							id="submit" style="margin-top: 2.5em">
+						<button type="submit" class="btn waves-effect titler" id="submit"
+							style="margin-top: 2.5em; margin-left:1.25em">
 							<fmt:message bundle="${msg}" key="create_book" />
 						</button>
 
@@ -113,10 +113,21 @@
 							</div>
 						</div>
 
-						<input class="btn" type="file" name="image"
-							placeholder="book cover screenshot..." onchange="readURL(this);"
-							style="width: 60em"> <img id="photo"
-							src="${imgPath}">
+						<div class="row">
+							<div class="col s3">
+								<div class="file-field input-field">
+									<input class="file-path validate" type="hidden"/>
+									<div class="btn">
+										<span>Book titler</span> <input type="file" name="image"
+											onchange="readURL(this);" />
+									</div>
+								</div>
+							</div>
+							<div class="col s9">
+								<img style="height:200px" id="photo" src="images/book_title.jpg">
+							</div>
+						</div>
+
 					</form>
 				</div>
 			</div>

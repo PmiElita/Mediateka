@@ -42,7 +42,7 @@
 
 			<jsp:include page="../admin/admin_side_nav.jsp" />
 
-			<div class="section">
+			<div class="section" >
 				<div class="container">
 
 					<div style="width: 15em; margin: auto">

@@ -1,3 +1,9 @@
+* 
+{
+  margin: 0;
+  padding: 0;
+}
+
 html, body {
 	height: 100%;
 	margin: 0;
@@ -118,30 +124,31 @@ section {
 	font-size: 2.0em;
 }
 
-.profile-tooltipped span {
+.profile-tooltipped #div {
+	
 	background-color: rgba(255.0, 255.0, 255.0, 0.5);
-	border-radius: 15.0px 15.0px 15.0px 0.0px;
+	border-radius: 0.0px 15.0px 15.0px 15.0px;
 	box-shadow: 1.0px 1.0px 10.0px rgba(0.0, 0.0, 0.0, 0.5);
 	color: #000;
-	margin-left: -200.0px;
-	margin-top: 60.0px;
+
+	
 	opacity: 0.0;
 	padding: 10.0px 10.0px 10.0px 20.0px;
 	position: absolute;
 	text-decoration: none;
 	visibility: hidden;
-	width: 300.0px;
+	width: 285.0px;
 	min-height: 10.0em;
 	z-index: 100.0;
 }
 
-.profile-tooltipped:hover span {
+.profile-tooltipped:hover #div {
 	opacity: 1.0;
 	visibility: visible;
 	z-index:1001;
 }
 
-.profile-tooltipped span img {
+.profile-tooltipped #div img {
 	border: 0.0 none;
 	float: left;
 	opacity: 0.0;
@@ -150,12 +157,12 @@ section {
 	z-index: -1.0;
 }
 
-.profile-tooltipped:hover span img {
+.profile-tooltipped:hover #div img {
 	opacity: 1.0;
 	visibility: visible;
 }
 
-.profile-tooltipped span p {
+.profile-tooltipped #div p {
 	margin-left: 6.0em;
 	margin-bottom: -3.0em;
 }

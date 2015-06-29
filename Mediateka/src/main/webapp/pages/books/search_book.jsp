@@ -6,6 +6,8 @@
 <html>
 <head>
 <jsp:include page="../general/head.jsp" />
+<jsp:include page="../index/index_modal_login.jsp" />
+<jsp:include page="../index/index_modal_register.jsp" />
 </head>
 <body>
 	<div class="main">
@@ -24,9 +26,10 @@
 					<jsp:include page="../user/user_side_nav.jsp" />
 				</c:if>
 						<div id="search_book_form"><jsp:include page="search_book_form.jsp" /></div>
-				<div id="search_book_central" class="row main-activity section white"><jsp:include page="search_book_central.jsp" /></div>
+				<div id="search_book_central" class="row main-activity section white container"><jsp:include page="search_book_central.jsp" /></div>
 </div>
 </div>
+<div style="margin-bottom:1em"></div>
 	<jsp:include page="../general/footer.jsp" />
 </body>
 </html>

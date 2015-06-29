@@ -35,12 +35,12 @@
 			<div class="container section white">
 				<label style="color: #2196F3;">${message }</label>
 
-				<h3><fmt:message bundle="${msg}" key="user_form" /></h3>
+				<h3 style="margin-left:1em"><fmt:message bundle="${msg}" key="user_form" /></h3>
 				<form id="modifyUser" action="modifyUser" method="post"
 					onsubmit="return submitModify();">
 
 					<button class="btn waves-effect titler" type="submit"
-						name="action" style="margin-bottom: 0.5em; margin-top: 2em">
+						name="action" style="margin-bottom: 0.5em; margin-top: 2em; margin-left:1em">
 						<fmt:message bundle="${msg}" key="button" />
 					</button>
 
@@ -160,7 +160,7 @@
 					</div>
 				</form>
 				
-				<h3><fmt:message bundle="${msg}" key="password_form" /></h3>
+				<h3 style="margin-left:1em"><fmt:message bundle="${msg}" key="password_form" /></h3>
 				
 								<form action="resetPassword" method="post">
 
@@ -196,16 +196,13 @@
 						</div>
 					</div>
 
-					<button class="btn waves-effect blue titler" type="submit"
-						name="action" style="margin-bottom: 3.5em">
+					<button class="btn waves-effect titler" type="submit"
+						name="action" style="margin-bottom: 3.5em; margin-left:1em">
 						<fmt:message bundle="${msg}" key="button" />
-						<i class="mdi-content-send right"></i>
 					</button>
 
 				</form>
-				
-				
-				
+	
 			</div>
 		</div>
 	</div>
