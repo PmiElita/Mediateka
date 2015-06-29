@@ -101,8 +101,6 @@ public class UserController {
 			HttpServletResponse response) throws ServletException, IOException,
 			NumberFormatException, SQLException, ReflectiveOperationException {
 
-		request.getSession().setAttribute("userId", 1);
-
 		Integer userId = (Integer) request.getSession().getAttribute("userId");
 
 		if (userId == null) {
@@ -135,51 +133,51 @@ public class UserController {
 					.forward(request, response);
 			return;
 
-		} else if (user.getRole() == Role.USER) {
-
-			// my clubs
-			List<ClubEventMember> memberer = getClubEventMemberByUserId(Integer
-					.parseInt(request.getSession().getAttribute("userId")
-							.toString()));
-			List<ClubEventMember> clubMemberer = new ArrayList<>();
-			for (ClubEventMember member : memberer)
-				if (member.getClubId() != null)
-					clubMemberer.add(member);
-			List<Club> myClubs = new ArrayList<>();
-			for (ClubEventMember member : clubMemberer) {
-				myClubs.add(getClubById(member.getClubId()));
-			}
-			Collections.sort(myClubs, new ClubsByMembersNumber());
-			List<Club> myActiveClubs = new ArrayList<>();
-			List<Club> myBlockedClubs = new ArrayList<>();
-			for (Club club : myClubs) {
-				if (club.getState() == State.ACTIVE)
-					myActiveClubs.add(club);
-				else if (club.getState() == State.BLOCKED)
-					myBlockedClubs.add(club);
-			}
-
-			// my clubs avas
-			List<String> myActiveClubsAvas = new ArrayList<>();
-			List<String> myBlockedClubsAvas = new ArrayList<>();
-			for (Club club : myActiveClubs)
-				myActiveClubsAvas.add(getMediaById(club.getAvaId()).getPath()
-						.replace("\\", "/"));
-			for (Club club : myBlockedClubs)
-				myBlockedClubsAvas.add(getMediaById(club.getAvaId()).getPath()
-						.replace("\\", "/"));
-
-			request.setAttribute("myActiveClubsAvas", myActiveClubsAvas);
-			request.setAttribute("myBlockedClubsAvas", myBlockedClubsAvas);
-			request.setAttribute("myActiveClubs", myActiveClubs);
-			request.setAttribute("myBlockedClubs", myBlockedClubs);
-			request.getRequestDispatcher("pages/clubs/clubs.jsp").forward(
-					request, response);
-			request.removeAttribute("myActiveClubs");
-			request.removeAttribute("myBlockedClubs");
-			request.removeAttribute("myActiveClubsAvas");
-			request.removeAttribute("myBlockedClubsAvas");
 		}
+
+		// my clubs
+		List<ClubEventMember> memberer = getClubEventMemberByUserId(Integer
+				.parseInt(request.getSession().getAttribute("userId")
+						.toString()));
+		List<ClubEventMember> clubMemberer = new ArrayList<>();
+		for (ClubEventMember member : memberer)
+			if (member.getClubId() != null)
+				clubMemberer.add(member);
+		List<Club> myClubs = new ArrayList<>();
+		for (ClubEventMember member : clubMemberer) {
+			myClubs.add(getClubById(member.getClubId()));
+		}
+		Collections.sort(myClubs, new ClubsByMembersNumber());
+		List<Club> myActiveClubs = new ArrayList<>();
+		List<Club> myBlockedClubs = new ArrayList<>();
+		for (Club club : myClubs) {
+			if (club.getState() == State.ACTIVE)
+				myActiveClubs.add(club);
+			else if (club.getState() == State.BLOCKED)
+				myBlockedClubs.add(club);
+		}
+
+		// my clubs avas
+		List<String> myActiveClubsAvas = new ArrayList<>();
+		List<String> myBlockedClubsAvas = new ArrayList<>();
+		for (Club club : myActiveClubs)
+			myActiveClubsAvas.add(getMediaById(club.getAvaId()).getPath()
+					.replace("\\", "/"));
+		for (Club club : myBlockedClubs)
+			myBlockedClubsAvas.add(getMediaById(club.getAvaId()).getPath()
+					.replace("\\", "/"));
+
+		request.setAttribute("myActiveClubsAvas", myActiveClubsAvas);
+		request.setAttribute("myBlockedClubsAvas", myBlockedClubsAvas);
+		request.setAttribute("myActiveClubs", myActiveClubs);
+		request.setAttribute("myBlockedClubs", myBlockedClubs);
+		request.getRequestDispatcher("pages/clubs/clubs.jsp").forward(request,
+				response);
+		request.removeAttribute("myActiveClubs");
+		request.removeAttribute("myBlockedClubs");
+		request.removeAttribute("myActiveClubsAvas");
+		request.removeAttribute("myBlockedClubsAvas");
+
 	}
 
 	@Request(url = "cabinet", method = "get")
