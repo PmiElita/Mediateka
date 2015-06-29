@@ -15,13 +15,11 @@
 			onsubmit="return checkSubmit();">
 			<label id="message" style="color: red;"></label>
 			<div class="container" style="margin-top: 1em; width: 90%">
-				<button class="btn waves-effect titler" type="submit"
+				<button style="margin-left:4em" class="btn waves-effect titler" type="submit"
 					name="login">
 					<fmt:message bundle="${msg}" key="login_header" />
 				</button>
 				<div class="row" style="margin-top: 1em">
-
-
 					<div class="input-field col s6">
 						<i class="mdi-action-account-circle prefix"></i> <input
 							id="login_log" class="validate" type="text" name="email"

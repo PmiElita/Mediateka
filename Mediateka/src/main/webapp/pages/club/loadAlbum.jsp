@@ -6,34 +6,59 @@
 
 <html>
 <head>
+<jsp:include page="../general/head.jsp" />
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link class="jsbin"
-	href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/base/jquery-ui.css"
-	rel="stylesheet" type="text/css" />
-<script class="jsbin"
-	src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-<script class="jsbin"
-	src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.0/jquery-ui.min.js"></script>
+
 <script src="js/viewImage.js"></script>
-<title>Insert title here</title>
+<title>Load album</title>
+
+
 </head>
 <body>
+	<div class="main">
 
-	<form id="myForm" action="loadAlbum" method="post"
-		enctype="multipart/form-data">
+		<div class="parallax-container my-parallax">
+			<div class="parallax">
+				<img src="images/parallax1.jpg">
+			</div>
 
-		<input type="text" id = "name" name="name" placeholder="album name">
-		Files: <input type="file" id="image" name="image" multiple
-			onchange="readURL(this)" accept="image/*"><br /> 
-			<label id="number"
-			hidden="true">1</label>
+			<jsp:include page="../user/user_side_nav.jsp" />
 
-		<div id="selectedFiles"></div>		
+			<div class="container section white">
+				<form id="myForm" action="loadAlbum" method="post"
+					enctype="multipart/form-data">
 
-		<input type="submit" value="upload">
-	</form>
+					<div class="row">
+						Album name:<input type="text" id="name" name="name" required
+							pattern=".{1,45}" form="createClub"><br>
+					</div>
+
+					Files:
+					<div class="row">
+						<div class="col s3">
+							<div class="row">
+								<div class="file-field input-field">
+									<input class="file-path validate" type="hidden" />
+									<div class="btn">
+										<span>Choose files</span> <input type="file" id="image"
+											name="image" onchange="readURL(this);" accept="image/*" />
+									</div>
+									<label id="number" hidden="true">1</label>
+								</div>
+							</div>
+							<div class="row" style="margin-top: 5em">
+								<button class="btn" type="submit">Upload</button>
+							</div>
+						</div>
+						<div class="col s9">
+							<div id="selectedFiles"></div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<jsp:include page="../general/footer.jsp" />
 </body>
-<script>
-	
-</script>
+
 </html>

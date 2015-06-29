@@ -22,7 +22,7 @@
 
 				<div class="container" style="width: 90%">
 					<div style="margin-top: -3.5em">
-						<button id="submit_button" class="btn waves-effect titler"
+						<button  style="margin-left:4em" id="submit_button" class="btn waves-effect titler"
 							type="submit" name="submit_button">
 
 							<fmt:message bundle="${msg}" key="registration.register_button" />

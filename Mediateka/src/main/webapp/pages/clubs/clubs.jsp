@@ -14,7 +14,6 @@
 <head>
 
 <jsp:include page="../general/head.jsp" />
-<jsp:include page="create_club.jsp" />
 <style>
 .image-cover-t {
 	color: white;
