@@ -4,22 +4,22 @@ public class UserStatements {
 	public static final String INSERT_USER = "INSERT INTO user "
 			+ "(form_id, first_name, last_name, middle_name, birth_date,"
 			+ " nationality, education, profession_id, edu_institution,"
-			+ " phone, adress, join_date, email, password, role, state, is_form_active, salt, password_changing_token)"
-			+ " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ";
+			+ " phone, adress, join_date, email, password, role, state, is_form_active, salt, password_changing_token, social_id)"
+			+ " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ";
 	public static final String[] INSERT_USER_ORDER = { "form_id", "first_name",
 			"last_name", "middle_name", "birth_date", "nationality",
 			"education", "profession_id", "edu_institution", "phone", "adress",
 			"join_date", "email", "password", "role", "state",
-			"is_form_active", "salt", "password_changing_token" };
+			"is_form_active", "salt", "password_changing_token","social_id" };
 
 	public static final String UPDATE_USER_BY_ID = "UPDATE user SET form_id=?, first_name=?, last_name=?, middle_name=?, birth_date=?,"
 			+ " nationality=?, education=?, profession_id=?, edu_institution=?,"
-			+ " phone=?, adress=?, join_date=?, email=?, password=?, role=?, state=?, is_form_active=?,salt=?, password_changing_token=? WHERE id =?";
+			+ " phone=?, adress=?, join_date=?, email=?, password=?, role=?, state=?, is_form_active=?,salt=?, password_changing_token=?, social_id=? WHERE id =?";
 	public static final String[] UPDATE_USER_BY_ID_ORDER = { "form_id",
 			"first_name", "last_name", "middle_name", "birth_date",
 			"nationality", "education", "profession_id", "edu_institution",
 			"phone", "adress", "join_date", "email", "password", "role",
-			"state", "is_form_active", "salt", "password_changing_token", "id" };
+			"state", "is_form_active", "salt", "password_changing_token","social_id", "id" };
 
 	public static final String SELECT_USER_BY_ID = "SELECT * FROM user WHERE id =?";
 	public static final String[] SELECT_USER_BY_ID_ORDER = { "id" };
@@ -56,5 +56,9 @@ public class UserStatements {
 	public static final String CALL_GET_USERS_BY_TWO_REGEXP = "CALL getUsersByTwoRegexp(?,?)";
 	
 	public static final String CALL_GET_USERS_BY_THREE_REGEXP = "CALL getUsersByThreeRegexp(?,?,?)";
+	
+	public static final String SELECT_USER_BY_SOCIAL_ID="SELECT * FROM user WHERE social_id=?";
+	
+	public static final String[] SELECT_USER_BY_SOCIAL_ID_ORDER ={"social_id"};
 
 }

@@ -226,4 +226,16 @@ public class UserDAO {
 					.transformResultSetIntoList(resultSet, User.class);
 		}
 	}
+	
+	public static User getUserBySocialId(String socialId) throws SQLException,
+			ReflectiveOperationException {
+		try (Connection connection = ConnectionManager.getConnection()) {
+			PreparedStatement statement = connection.prepareStatement(SELECT_USER_BY_SOCIAL_ID);
+			User user = new User();
+			user.setSocialId(socialId);
+			Transformer.valueIntoPreparedStatement(statement, user, SELECT_USER_BY_SOCIAL_ID_ORDER);
+			ResultSet resultSet = statement.executeQuery();
+			return Transformer.transformResultSetIntoObject(resultSet, User.class);
+		}
+	}
 }

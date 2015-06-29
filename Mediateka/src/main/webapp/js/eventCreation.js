@@ -1,6 +1,7 @@
 function dateChangeExhibition() {
-	var dateFromString = document.getElementById("dateFrom").value;
+	var dateFromString =document.getElementById("dateFrom").value;
 	var dateTillString = document.getElementById("dateTill").value;
+    alert(document.getElementById("name").value);
 	var currentTime = new Date();
 	currentTime.setHours(0, 0, 0);
 	if (dateTillString != "" && dateFromString != "") {

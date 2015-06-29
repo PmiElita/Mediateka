@@ -70,4 +70,9 @@ public class FormRecordService {
 		return FormRecordDAO.getFormRecordsByUserIdAndDateRange(userId,
 				dateFrom, dateTill);
 	}
+
+	public static int getFormRecordCountByBookId(Integer bookId)
+			throws SQLException, ReflectiveOperationException {
+		return FormRecordDAO.getFormRecordCountByBookId(bookId);
+	}
 }

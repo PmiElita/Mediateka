@@ -22,9 +22,8 @@ function clearMessage(){
 
 function submitUserForm(){
 
-	var query = document.getElementById("query");
+	var query = document.getElementById("userQuery");
 	var message = document.getElementById("message");
-
 	if (query.value!=""){
 	   $.ajax({
 			url:'ckeckUsers',
@@ -71,3 +70,17 @@ function blockUser(button){
 				   }
 		});
 }
+
+
+$(function () {
+$('#bookQuery').autocomplete({
+    serviceUrl: 'get_books_by_regexp', // Страница для обработки запросов автозаполнения
+    minChars: 1,
+    maxHeight: 400,
+    width: 300,
+    onSelect: function(suggestion){ 
+    	
+    	 } // Callback функция, срабатывающая на выбор одного из предложенных вариантов,
+ 
+});
+});

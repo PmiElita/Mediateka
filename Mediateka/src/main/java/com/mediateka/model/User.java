@@ -68,6 +68,9 @@ public class User {
 	@Column(name = "password_changing_token")
 	private String passwordChangingToken;
 
+	@Column(name="social_id")
+	private String socialId;
+	
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", formId=" + formId + ", firstName="
@@ -240,6 +243,14 @@ public class User {
 
 	public void setPasswordChangingToken(String passwordChangingToken) {
 		this.passwordChangingToken = passwordChangingToken;
+	}
+
+	public String getSocialId() {
+		return socialId;
+	}
+
+	public void setSocialId(String socialId) {
+		this.socialId = socialId;
 	}
 
 }

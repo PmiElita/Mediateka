@@ -39,4 +39,8 @@ public class FormRecordStatements {
 	public static final String CALL_GET_FORM_RECORDS_BY_DATE_RANGE= "CALL GetFormRecordsByDateRange(?,?)";
 	
 	public static final String CALL_GET_FORM_RECORDS_BY_USER_ID_AND_DATE_RANGE= "CALL GetFormRecordsByUserIdAndDateRange(?,?,?)";
+
+    public static final String SELECT_FORM_RECORD_COUNT_BY_BOOK_ID="SELECT count(*) FROM form_record  WHERE book_id=?";
+    
+    public static final String[] SELECT_FORM_RECORD_COUNT_BY_BOOK_ID_ORDER = {"book_id"};
 }

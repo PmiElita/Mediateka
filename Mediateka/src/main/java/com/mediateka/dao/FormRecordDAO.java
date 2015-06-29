@@ -1,5 +1,7 @@
 package com.mediateka.dao;
 
+import static com.mediateka.dao.statement.FormRecordStatements.*;
+
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,8 +9,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.List;
-
-import static com.mediateka.dao.statement.FormRecordStatements.*;
 
 import com.mediateka.model.FormRecord;
 import com.mediateka.model.enums.State;
@@ -142,31 +142,55 @@ public class FormRecordDAO {
 					FormRecord.class);
 		}
 	}
-	
+
 	public static List<FormRecord> getFormRecordsByDateRange(
 			Timestamp dateFrom, Timestamp dateTill) throws SQLException,
 			ReflectiveOperationException {
 		try (Connection connection = ConnectionManager.getConnection()) {
-			CallableStatement statement = connection.prepareCall(CALL_GET_FORM_RECORDS_BY_DATE_RANGE);
+			CallableStatement statement = connection
+					.prepareCall(CALL_GET_FORM_RECORDS_BY_DATE_RANGE);
 			statement.setTimestamp(1, dateFrom);
 			statement.setTimestamp(2, dateTill);
-			ResultSet resultSet =statement.executeQuery();
-			
-			return Transformer.transformResultSetIntoList(resultSet, FormRecord.class);
+			ResultSet resultSet = statement.executeQuery();
+
+			return Transformer.transformResultSetIntoList(resultSet,
+					FormRecord.class);
 		}
 	}
-	
-	public static List<FormRecord> getFormRecordsByUserIdAndDateRange(Integer userId,
-			Timestamp dateFrom, Timestamp dateTill) throws SQLException,
-			ReflectiveOperationException {
+
+	public static List<FormRecord> getFormRecordsByUserIdAndDateRange(
+			Integer userId, Timestamp dateFrom, Timestamp dateTill)
+			throws SQLException, ReflectiveOperationException {
 		try (Connection connection = ConnectionManager.getConnection()) {
-			CallableStatement statement = connection.prepareCall(CALL_GET_FORM_RECORDS_BY_USER_ID_AND_DATE_RANGE);
+			CallableStatement statement = connection
+					.prepareCall(CALL_GET_FORM_RECORDS_BY_USER_ID_AND_DATE_RANGE);
 			statement.setInt(1, userId);
 			statement.setTimestamp(2, dateFrom);
 			statement.setTimestamp(3, dateTill);
-			ResultSet resultSet =statement.executeQuery();
-			
-			return Transformer.transformResultSetIntoList(resultSet, FormRecord.class);
+			ResultSet resultSet = statement.executeQuery();
+
+			return Transformer.transformResultSetIntoList(resultSet,
+					FormRecord.class);
 		}
+	}
+
+	public static int getFormRecordCountByBookId(Integer bookId)
+			throws SQLException, ReflectiveOperationException {
+		int result = 0;
+		try (Connection connection = ConnectionManager.getConnection()) {
+
+			PreparedStatement statement = connection
+					.prepareStatement(SELECT_FORM_RECORD_COUNT_BY_BOOK_ID);
+			FormRecord formRecord = new FormRecord();
+			formRecord.setBookId(bookId);
+			Transformer.valueIntoPreparedStatement(statement, formRecord,
+					SELECT_FORM_RECORD_COUNT_BY_BOOK_ID_ORDER);
+			ResultSet resultSet = statement.executeQuery();
+			if (resultSet.next()) {
+				result = resultSet.getInt(0);
+			}
+
+		}
+		return result;
 	}
 }

@@ -210,4 +210,21 @@ public class BookDAO {
 					.transformResultSetIntoList(resultSet, Book.class);
 		}
 	}
+
+	public static List<Book> getBooksByNameAndAuthor(String name, String author)
+			throws SQLException, ReflectiveOperationException {
+		try (Connection connection = ConnectionManager.getConnection()) {
+			PreparedStatement statement = connection
+					.prepareStatement(BookStatements.SELECT_BOOK_BY_NAME_AND_AUTHOR);
+			Book book = new Book();
+			book.setName(name);
+			book.setAuthor(author);
+			Transformer.valueIntoPreparedStatement(statement, book,
+					BookStatements.SELECT_BOOK_BY_NAME_AND_AUTHOR_ORDER);
+			;
+			ResultSet resultSet = statement.executeQuery();
+			return Transformer
+					.transformResultSetIntoList(resultSet, Book.class);
+		}
+	}
 }

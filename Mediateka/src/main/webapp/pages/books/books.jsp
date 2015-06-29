@@ -15,7 +15,6 @@
 
 <head>
 <jsp:include page="../general/head.jsp" />
-<jsp:include page="search_book.jsp" />
 </head>
 
 <style>
@@ -55,8 +54,8 @@
 					<div class="row" style="margin-left: -7em; margin-top: 4em">
 
 						<div class="col s3">
-							<a title="<fmt:message bundle="${msg}" key="find_book" />" href="" data-target="modal14"
-								class="modal-trigger">
+							<a title="<fmt:message bundle="${msg}" key="find_book" />" href="searchBook" >
+							
 								<div class="col s12 m8 offset-m2 l6 offset-l3 my-card">
 									<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
 										<div style="margin-top: 2em">
