@@ -36,18 +36,14 @@
 			</c:if>
 
 			<jsp:include page="club_central.jsp" />
-			<label id="clubId" hidden="true"><c:out value="${club.id}"/></label>
-			Description: <c:out value="${club.description}"/><br>
+			<label id="clubId" hidden="true"><c:out value="${club.id}" /></label>
+			Description:
+			<c:out value="${club.description}" />
+			<br>
 			<div class="container">
 				<ul class="collapsible center" data-collapsible="accordion"
 					style="margin-top: 5%">
-					<li>
-						<div class="collapsible-header" style="font-size: 2em">Add
-							media</div>
-						<div class="collapsible-body">
-							<jsp:include page="record.jsp" />
-						</div>
-					</li>
+					<li><jsp:include page="record.jsp" /></li>
 				</ul>
 			</div>
 		</div>

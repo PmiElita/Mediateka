@@ -51,9 +51,9 @@ public class FileLoader {
 		boolean returnState = loadFile(request, folderName);
 		String type = "";
 		if (parameterMap.get("clubId") != null) {
-			type = "club" + request.getAttribute("clubId");
+			type = "club" + parameterMap.get("clubId");
 		} else if (parameterMap.get("eventId") != null) {
-			type = "event" + request.getAttribute("eventId");
+			type = "event" + parameterMap.get("eventId");
 		}
 		System.out.println(type);
 		System.out.println(type.replaceAll("[0-9]", "") + "\\" + type);

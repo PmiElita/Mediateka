@@ -5,7 +5,7 @@ var storedAudios = [];
 var num;
 
 function like(value, id) {
-	// alert(value);
+	 alert(value);
 	$
 			.ajax({
 				type : 'get',
@@ -17,9 +17,9 @@ function like(value, id) {
 				},
 				complete : function(data) {
 
-					// alert(JSON.stringify(data));
-					// alert(data.responseJSON);
-					// alert(data.responseJSON.id);
+					 alert(JSON.stringify(data));
+					 alert(data.responseJSON);
+					 alert(data.responseJSON.id);
 					var id = data.responseJSON.id;
 					document.getElementById("recordLike" + id).innerHTML = data.responseJSON.like;
 					document.getElementById("recordDislike" + id).innerHTML = data.responseJSON.dislike;
@@ -35,6 +35,7 @@ $(document).ready(function() {
 	$("#recordForm").on("submit", handleForm);
 
 	$("body").on("click", ".selFile", removeFile);
+
 });
 
 function handleFileSelect(e) {
@@ -101,11 +102,13 @@ function handleForm(e) {
 	e.preventDefault();
 	var data = new FormData();
 	data.append('text', document.getElementById('text').value);
-	data.append('clubId', document.getElementById('clubId').innerHTML
-			.toString());
+	if (document.getElementById('clubId') != null) {
+		data.append('clubId', document.getElementById('clubId').innerHTML
+				.toString());
+	}
 	if (document.getElementById('eventId') != null) {
-	data.appent('eventId', document.getElementById('clubId').innerHTML
-			.toString());
+		data.appent('eventId', document.getElementById('clubId').innerHTML
+				.toString());
 	}
 	for (var i = 0, len = storedImages.length; i < len; i++) {
 		data.append('image', storedImages[i]);

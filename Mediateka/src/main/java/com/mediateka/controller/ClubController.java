@@ -3,6 +3,7 @@ package com.mediateka.controller;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -205,38 +206,99 @@ public class ClubController {
 			int clubId = 0;
 			if (request.getParameter("clubId") == null
 					|| request.getParameter("clubId") == ""
-					|| getClubById(Integer.parseInt(request.getParameter("clubId")
-							.toString())) == null) {
+					|| getClubById(Integer.parseInt(request.getParameter(
+							"clubId").toString())) == null) {
 				request.setAttribute("message", "No such club!");
 				request.getRequestDispatcher("error404.jsp").forward(request,
 						response);
 				request.removeAttribute("message");
 			} else {
-				clubId = Integer
-						.parseInt(request.getParameter("clubId").toString());
+				clubId = Integer.parseInt(request.getParameter("clubId")
+						.toString());
 				Club club = getClubById(clubId);
 				List<ContentGroup> records = ContentGroupService
 						.getContentGroupByClubId(clubId);
 				records.sort(new ContentGroupByDate());
 				Map<Integer, List<Media>> mediaMap = new HashMap<Integer, List<Media>>();
+				Map<Integer, List<Media>> imageMap = new HashMap<Integer, List<Media>>();
+				Map<Integer, List<Media>> videoMap = new HashMap<Integer, List<Media>>();
+				Map<Integer, List<Media>> audioMap = new HashMap<Integer, List<Media>>();
 				if (records != null) {
 					for (ContentGroup contentGroup : records) {
+						List<Media> images = new ArrayList<Media>();
+						List<Media> videos = new ArrayList<Media>();
+						List<Media> audios = new ArrayList<Media>();
 						mediaMap.put(contentGroup.getId(), MediaService
 								.getMediaContentGroupId(contentGroup.getId()));
+						List<Media> medias = MediaService
+								.getMediaContentGroupId(contentGroup.getId());
+						System.out.println(medias);
+						if (medias != null) {
+							for (Media media : medias) {
+								System.out.println(media);
+								if (media.getType().equals(MediaType.IMAGE)) {
+									images.add(media);
+								}
+								if (media.getType().equals(MediaType.VIDEO)) {
+									videos.add(media);
+								}
+								if (media.getType().equals(MediaType.AUDIO)) {
+									audios.add(media);
+								}
+							}
+							if (images != null) {
+								if (images.size() > 0) {
+									imageMap.put(contentGroup.getId(), images);
+								}
+
+							}
+							if (videos != null) {
+								if (videos.size() > 0) {
+									videoMap.put(contentGroup.getId(), videos);
+								}
+
+							}
+							if (audios != null) {
+								if (audios.size() > 0) {
+									audioMap.put(contentGroup.getId(), audios);
+								}
+
+							}
+
+						} else {
+							images = videos = audios = null;
+						}
+
 					}
 				}
 
+				User user = UserService.getUserById((Integer) request
+						.getSession().getAttribute("userId"));
+				String name = user.getFirstName() + " " + user.getLastName();
+				System.out.println(mediaMap);
+				System.out.println(imageMap);
+				System.out.println(videoMap);
+				System.out.println(audioMap);
 				request.setAttribute("mediaMap", mediaMap);
+				request.setAttribute("imageMap", imageMap);
+				request.setAttribute("videoMap", videoMap);
+				request.setAttribute("audioMap", audioMap);
 				request.setAttribute("records", records);
 				request.setAttribute("clubId", club.getId());
 				request.setAttribute("club", club);
+				request.setAttribute("userName", name);
 
 				request.getRequestDispatcher("pages/club/club.jsp").forward(
 						request, response);
 
 				request.removeAttribute("mediaMap");
+				request.removeAttribute("imageMap");
+				request.removeAttribute("videoMap");
+				request.removeAttribute("audioMap");
 				request.removeAttribute("records");
 				request.removeAttribute("club");
+				request.removeAttribute("clubId");
+				request.removeAttribute("userName");
 			}
 		} catch (NumberFormatException e) {
 			request.setAttribute("message", "No such club!");
