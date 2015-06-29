@@ -177,7 +177,6 @@ public class RegisterUserController {
 					request, response);
 			return;
 		}
-
 		User userWithSuchEmail = UserService.getUserByEmail(form.getEmail());
 		if (userWithSuchEmail != null) {
 			// such email is already in use
@@ -188,7 +187,6 @@ public class RegisterUserController {
 
 			return;
 		}
-
 		if (!form.getPassword().equals(form.getConfirmPassword())) {
 			logger.warn("failed to validate registration form");
 			logger.warn(form);
@@ -206,7 +204,6 @@ public class RegisterUserController {
 		newUser.setBirthDate(new Date(new SimpleDateFormat("dd.MM.yyyy").parse(
 				form.getBirthDate()).getTime()));
 
-		newUser.setBirthDate(new Date(0));
 		newUser.setNationality(form.getNationality());
 		newUser.setProfessionId(Integer.parseInt(form.getProfession()));
 		newUser.setEducation(form.getEducation());

@@ -26,7 +26,7 @@
 			<div class="container section white">
 
 				<ul class="collapsible" data-collapsible="accordion">
-					<c:forEach items="${clubs}" var="current">
+					<c:forEach items="${requestedClubs}" var="current">
 						<li id="clubNo${current.id}">
 							<div class="collapsible-header">
 								<c:out value="${current.name}" />

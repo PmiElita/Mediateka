@@ -77,7 +77,8 @@ public class UserController {
 				}
 			}
 
-			request.setAttribute("events", requestedEvents);
+			request.setAttribute("requestedEvents", requestedEvents);
+			request.setAttribute("allEvents", allEvents);
 
 			request.getRequestDispatcher("pages/table/admin_events.jsp")
 					.forward(request, response);
@@ -127,7 +128,8 @@ public class UserController {
 				}
 			}
 
-			request.setAttribute("events", requestedEvents);
+			request.setAttribute("requestedEvents", requestedEvents);
+			request.setAttribute("allEvents", allEvents);
 
 			request.getRequestDispatcher("pages/table/admin_clubs.jsp")
 					.forward(request, response);

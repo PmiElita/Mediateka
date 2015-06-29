@@ -17,12 +17,13 @@
 
 		<div id="creation_form">
 
-			<form action="anonymousRegisterNewUser" method="post">
+			<form id="registrationForm" action="anonymousRegisterNewUser"
+				method="post" onsubmit="this.submit_button.disabled = true;">
 
-				<div class="container" style="width:90%">
+				<div class="container" style="width: 90%">
 					<div style="margin-top: -3.5em">
-						<button class="btn waves-effect titler" type="submit"
-							name="action">
+						<button id="submit_button" class="btn waves-effect titler"
+							type="submit" name="submit_button">
 
 							<fmt:message bundle="${msg}" key="registration.register_button" />
 						</button>
@@ -60,7 +61,7 @@
 											<fmt:message bundle="${msg}" key="registration.password" />
 										</p>
 										<input id="password" name="password" type="password"
-											title = "<fmt:message bundle="${msg}" key="registration.password_requirements" />"
+											title="<fmt:message bundle="${msg}" key="registration.password_requirements" />"
 											pattern="${consts.getPassword() }" class="validate" required
 											onchange=" this.setCustomValidity(this.validity.patternMismatch ? this.title : ''); if(this.checkValidity()) form.confirmPassword.pattern = this.value;">
 									</div>
@@ -70,7 +71,7 @@
 												key="registration.confirm_password" />
 										</p>
 										<input id="password" name="confirmPassword" type="password"
-											title = "<fmt:message bundle="${msg}" key="registration.password_requirements" />"
+											title="<fmt:message bundle="${msg}" key="registration.password_requirements" />"
 											pattern="${consts.getPassword() }" class="validate" required>
 									</div>
 								</div>
@@ -151,7 +152,8 @@
 										<p>
 											<fmt:message bundle="${msg}" key="registration.birth_date" />
 										</p>
-										<input id="birthDate" name="birthDate" type="text" data-field="date">
+										<input id="birthDate" name="birthDate" type="text"
+											data-field="date">
 										<div id="dtBox"></div>
 									</div>
 									<div class="input-field col s3">
