@@ -142,7 +142,7 @@ public class UserController {
 				.parseInt(request.getSession().getAttribute("userId")
 						.toString()));
 		List<ClubEventMember> clubMemberer = new ArrayList<>();
-		if (memberer != null)
+		if (!(memberer == null)) 
 			for (ClubEventMember member : memberer)
 				if (member.getClubId() != null)
 					clubMemberer.add(member);

@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -218,12 +219,13 @@ public class ClubController {
 				Club club = getClubById(clubId);
 				List<ContentGroup> records = ContentGroupService
 						.getContentGroupByClubId(clubId);
-				records.sort(new ContentGroupByDate());
+				
 				Map<Integer, List<Media>> mediaMap = new HashMap<Integer, List<Media>>();
 				Map<Integer, List<Media>> imageMap = new HashMap<Integer, List<Media>>();
 				Map<Integer, List<Media>> videoMap = new HashMap<Integer, List<Media>>();
 				Map<Integer, List<Media>> audioMap = new HashMap<Integer, List<Media>>();
 				if (records != null) {
+					Collections.sort(records, new ContentGroupByDate());
 					for (ContentGroup contentGroup : records) {
 						List<Media> images = new ArrayList<Media>();
 						List<Media> videos = new ArrayList<Media>();

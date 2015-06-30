@@ -21,6 +21,7 @@ import com.mediateka.annotation.Request;
 import com.mediateka.exception.WrongInputException;
 import com.mediateka.form.AnonymousUserRegistrationForm;
 import com.mediateka.form.PasswordChangingForm;
+import com.mediateka.form.SocialRegistrationForm;
 import com.mediateka.form.UserRegistrationForm;
 import com.mediateka.model.User;
 import com.mediateka.model.enums.Role;
@@ -229,18 +230,17 @@ public class RegisterUserController {
 		String token = SecurityStringGenerator.generateString(64);
 		newUser.setPasswordChangingToken(token);
 
-
 		String emailBody = "<a href=\"http://localhost:8080/Mediateka/confirmRegistration?token="
 				+ StringEscapeUtils.escapeHtml4(token)
 				+ "\"> click here to confirm your registration </a>";
-		try{
-		EmailSender.sendMail(form.getEmail(), "registration confirmation link",
-				emailBody);
-		} catch (Exception e){
+		try {
+			EmailSender.sendMail(form.getEmail(),
+					"registration confirmation link", emailBody);
+		} catch (Exception e) {
 			request.setAttribute("notification", "can_not_send_email");
 			request.getRequestDispatcher("pages/index/index.jsp").forward(
 					request, response);
-			
+
 			return;
 		}
 		UserService.saveUser(newUser);
@@ -332,7 +332,6 @@ public class RegisterUserController {
 		return;
 	}
 
-
 	@Request(url = "resetPassword", method = "post")
 	public static void changePassword(HttpServletRequest request,
 			HttpServletResponse response) throws IOException,
@@ -344,19 +343,18 @@ public class RegisterUserController {
 		ObjectFiller.fill(form, request);
 		FormValidator.validate(form);
 
-		
 		Integer myId = (Integer) request.getSession().getAttribute("userId");
 
-		if (myId == null){
+		if (myId == null) {
 			request.getSession().invalidate();
 			response.sendRedirect("index");
 			System.out.println("ID = "
 					+ request.getSession().getAttribute("userId"));
-			return;			
+			return;
 		}
-		
+
 		User me = UserService.getUserById(myId);
-		
+
 		if (me == null) {
 			request.getSession().invalidate();
 			response.sendRedirect("index");
@@ -384,6 +382,87 @@ public class RegisterUserController {
 				response);
 
 		return;
+	}
+
+	@Request(url = "socialRegistration", method = "post")
+	public static void socialRegistration(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException,
+			SecurityException, IllegalArgumentException, ParseException,
+			ReflectiveOperationException, SQLException {
+		logger.debug("registering new user fro msocial network");
+		SocialRegistrationForm socialRegistrationForm = new SocialRegistrationForm();
+		ObjectFiller.fill(socialRegistrationForm, request);
+		try {
+			FormValidator.validate(socialRegistrationForm);
+		} catch (WrongInputException e) {
+			logger.warn("failed to validate registration form", e);
+			logger.warn(socialRegistrationForm.toString());
+			request.setAttribute("notification",
+					"registration form validation failed");
+			request.getRequestDispatcher("pages/index/index.jsp").forward(
+					request, response);
+			return;
+		}
+
+		User userWithSuchEmail = UserService.getUserByEmail(socialRegistrationForm.getEmail());
+		if (userWithSuchEmail != null) {
+			// such email is already in use
+			logger.debug("given email is already in use");
+			request.setAttribute("notification", "email is already taken");
+			request.getRequestDispatcher("pages/index/index.jsp").forward(
+					request, response);
+
+			return;
+		}
+
+
+		User newUser = new User();
+		newUser.setFirstName(socialRegistrationForm.getFirstName());
+		newUser.setMiddleName(socialRegistrationForm.getMiddleName());
+		newUser.setLastName(socialRegistrationForm.getLastName());
+
+		newUser.setBirthDate(new Date(new SimpleDateFormat("dd.MM.yyyy").parse(
+				socialRegistrationForm.getBirthDate()).getTime()));
+
+		newUser.setNationality(socialRegistrationForm.getNationality());
+		newUser.setProfessionId(Integer.parseInt(socialRegistrationForm.getProfession()));
+		newUser.setEducation(socialRegistrationForm.getEducation());
+		newUser.setEduInstitution(socialRegistrationForm.getInstitution());
+
+		newUser.setEmail(socialRegistrationForm.getEmail());
+		newUser.setPhone(socialRegistrationForm.getPhone());
+		newUser.setAdress(socialRegistrationForm.getAddress());
+		newUser.setRole(Role.USER);
+		newUser.setJoinDate(new Date(new java.util.Date().getTime()));
+
+		newUser.setState(State.BLOCKED);
+
+		newUser.setFormId(null);
+		newUser.setIsFormActive(true);
+
+		newUser.setSocialId(socialRegistrationForm.getSocialId());
+	
+
+		String token = SecurityStringGenerator.generateString(64);
+		newUser.setPasswordChangingToken(token);
+
+		String emailBody = "<a href=\"http://localhost:8080/Mediateka/confirmRegistration?token="
+				+ StringEscapeUtils.escapeHtml4(token)
+				+ "\"> click here to confirm your registration </a>";
+		try {
+			EmailSender.sendMail(socialRegistrationForm.getEmail(),
+					"registration confirmation link", emailBody);
+		} catch (Exception e) {
+			request.setAttribute("notification", "can_not_send_email");
+			request.getRequestDispatcher("pages/index/index.jsp").forward(
+					request, response);
+
+			return;
+		}
+		UserService.saveUser(newUser);
+		request.getRequestDispatcher("pages/additional/post_register.jsp")
+				.forward(request, response);
+
 	}
 
 }

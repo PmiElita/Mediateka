@@ -37,13 +37,18 @@
 						</label>
 					</div>
 
-
+                    <div class="row">
 					<div class="input-field col s6">
 						<a href="invalidatePassword"> <fmt:message bundle="${msg}"
 								key="forgot_password" />
 						</a>
 					</div>
-
+						<div class="col s6">
+						<a href="vkLogin"><img alt="VK" src="images/vk.png" height="40px;"></a>
+						<a href="googleLogin"><img alt="Google+" src="images/google.png" height="40px;"></a>
+						<a href="facebookLogin"><img alt="Facebook" src="images/facebook.png" height="40px;"></a>
+					</div>
+					</div>
 
 				</div>
 			</div>

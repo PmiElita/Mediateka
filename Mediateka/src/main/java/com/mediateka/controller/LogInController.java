@@ -80,7 +80,13 @@ public class LogInController {
 
 			return;
 		}
-
+        if (user.getSocialId()!=null){
+        	logger.warn("trying to login as social user");
+        	request.setAttribute("notification", "invalid email or password");
+			request.getRequestDispatcher("pages/index/index.jsp").forward(
+					request, response);
+			return;
+        }
 		String saltedPassword = SaltedPasswordGenerator.generate(
 				form.getPassword(), user.getSalt());
 		if (!user.getPassword().equals(saltedPassword)) {
@@ -140,7 +146,7 @@ public class LogInController {
 		String email = request.getParameter("email");
 		User user = UserService.getUserByEmail(email);
 		String message = "success";
-		if (user == null) {
+		if (user == null||user.getSocialId()!=null) {
 			logger.warn("no user with such email");
 			message = "invalid email or password";
 

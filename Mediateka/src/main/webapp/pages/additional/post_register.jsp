@@ -15,6 +15,7 @@
 </head>
 
 <body>
+	<jsp:include page="../general/nav.jsp" />
 	<div class="main">
 
 		<div class="parallax-container my-parallax">
@@ -22,8 +23,8 @@
 				<img src="images/parallax1.jpg">
 			</div>
 
-			<div style="margin-top: 10em;"
-				class="container section white">
+			<div style="margin-top: 10em; margin-right: 0em"
+				class=" section white coll s12">
 				<div class="row offset-s4">
 					<h1 class="col8 ">Thanks!</h1>
 				</div>
@@ -33,7 +34,7 @@
 				</div>
 
 				<div class="row">
-					<a href="index" style="font-size: 1.5em" class="col8">Back to main page.</a>
+					<a style="font-size: 1.5em" class="col8" href="index">Back to main page.</a>
 				</div>
 			</div>
 		</div>
