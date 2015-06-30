@@ -56,28 +56,35 @@
 			</c:if>
 
 			<div class="container center">
-				<div class="row" style="margin-left: -5em">
+				<div class="row">
 					<div class="col s4 offset-s3">
 						<h2 class="book-cover-t right">Book title</h2>
 					</div>
 
 					<div class="col s1 left">
-						<div style="margin-top:1.75em" class="fixed-action-btn">
-							<a href="searchBook" class="btn-floating btn-medium green">+ </a>
-							<ul style="font-size:0.75em">
-								<li><a class="btn-floating btn-large blue book-cover-href" style="color:black">Search</a></li>
-
-									<li><a href="UpdateBook"
-										class="btn-floating yellow darken-1 book-cover-href" style="color:black">Edit</a></li>
-
-							</ul>
+						<div style="margin-top: 1.75em" class="fixed-action-btn">
+							<a title="Search" href="searchBook"
+								class="btn-floating btn-medium white book-cover-t"><i><img
+									src="images/admin/search_book.png" width="20em" /></i> </a>
+									
+							<c:if test="${userRole eq Role.ADMIN}">
+								<ul style="font-size: 0.75em">
+									<li style="margin-top: 2.5em; margin-left: -1em"><a
+										href="UpdateBook"
+										class="btn-floating btn-large black book-cover-href"
+										style="color: black">Edit</a></li>
+								</ul>
+							</c:if>
+							<c:if test="${userRole ne Role.ADMIN}">
+							<div style="height:7em"></div>
+							</c:if>
 						</div>
 					</div>
 
-
-
 				</div>
-				<img alt="Book name" src="images/book_title.jpg" width="45%" style="margin-top:-7em">
+
+				<img alt="Book name" src="images/book_title.jpg" width="45%"
+					style="margin-top: -7em">
 
 				<div class="container section white">
 					<h5>Info</h5>

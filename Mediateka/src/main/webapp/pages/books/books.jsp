@@ -15,6 +15,8 @@
 
 <head>
 <jsp:include page="../general/head.jsp" />
+<jsp:include page="../index/index_modal_login.jsp" />
+<jsp:include page="../index/index_modal_register.jsp" />
 </head>
 
 <style>
@@ -42,8 +44,9 @@
 
 			<jsp:include page="../admin/admin_side_nav.jsp" />
 
-			<div class="section" >
-				<div class="container">
+
+			<div class="container">
+				<div class="section">
 
 					<div style="width: 15em; margin: auto">
 						<h2 class="book-cover-t">
@@ -51,11 +54,12 @@
 						</h2>
 					</div>
 
-					<div class="row" style="margin-left: -7em; margin-top: 4em">
+					<div class="row" style="margin-left: -5em; margin-top: 4em">
 
 						<div class="col s3">
-							<a title="<fmt:message bundle="${msg}" key="find_book" />" href="searchBook" >
-							
+							<a title="<fmt:message bundle="${msg}" key="find_book" />"
+								href="searchBook">
+
 								<div class="col s12 m8 offset-m2 l6 offset-l3 my-card">
 									<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
 										<div style="margin-top: 2em">
@@ -72,7 +76,8 @@
 						</div>
 
 						<div class="col s3">
-							<a title="<fmt:message bundle="${msg}" key="create_book" />" href="CreateBook">
+							<a title="<fmt:message bundle="${msg}" key="create_book" />"
+								href="CreateBook">
 								<div class="col s12 m8 offset-m2 l6 offset-l3 my-card">
 									<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
 										<div style="margin-top: 2em">
@@ -88,7 +93,8 @@
 							</a>
 						</div>
 						<div class="col s3">
-							<a title="<fmt:message bundle="${msg}" key="update_book" />" href="UpdateBook">
+							<a title="<fmt:message bundle="${msg}" key="update_book" />"
+								href="UpdateBook">
 								<div class="col s12 m8 offset-m2 l6 offset-l3 my-card">
 									<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
 										<div style="margin-top: 2em">
@@ -104,7 +110,8 @@
 							</a>
 						</div>
 						<div class="col s3">
-							<a title="<fmt:message bundle="${msg}" key="book_statistics" />" href="bookStatistics">
+							<a title="<fmt:message bundle="${msg}" key="book_statistics" />"
+								href="bookStatistics">
 								<div class="col s12 m8 offset-m2 l6 offset-l3 my-card">
 									<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
 										<div style="margin-top: 2em">
@@ -119,9 +126,12 @@
 								</div>
 							</a>
 						</div>
+
 					</div>
 				</div>
+				<div style="height: 5em"></div>
 			</div>
+			
 		</div>
 	</div>
 

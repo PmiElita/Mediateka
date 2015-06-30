@@ -14,6 +14,8 @@
 <head>
 
 <jsp:include page="../general/head.jsp" />
+<jsp:include page="../index/index_modal_login.jsp" />
+<jsp:include page="../index/index_modal_register.jsp" />
 <style>
 .image-cover-t {
 	color: white;
@@ -59,7 +61,7 @@
 				<c:if test="${userRole eq Role.USER}">
 					<jsp:include page="../user/user_side_nav.jsp" />
 				</c:if>
-
+				
 				<div id="my_clubs"><jsp:include page="my_clubs.jsp" /></div>
 				<div id="all_clubs"><jsp:include page="all_clubs.jsp" /></div>
 			</div>

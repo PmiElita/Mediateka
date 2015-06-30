@@ -36,8 +36,8 @@
 </style>
 	
 	
-<div class="main-activity container">
-	<h4 class="image-cover-t">
+<div class="main-activity container white section">
+	<h4>
 		<fmt:message bundle="${msg}" key="searchUser" />
 	</h4>
 	<div class="row section white">
@@ -55,7 +55,7 @@
 		</button>
 	</div>
 
-	<div id="users" class="white" style="border-radius:5%">
+	<div id="users" class="white">
 		<p>${message }</p>
 		<u:showUsers users="${users}" locale="${cookie.lang.value}"/>
 

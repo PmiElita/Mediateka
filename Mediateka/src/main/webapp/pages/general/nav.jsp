@@ -16,6 +16,21 @@
 
 		<ul class="right hide-on-med-and-down">
 
+			<li><a title="Events" href="events" class="waves-effect"> <i
+					style="width: 1em"><img style="width: 120%; height: 70%; margin-top:0.15em; margin-left:-0.25em"
+						src="images/admin/events.png" /></i>
+			</a></li>
+
+			<li><a title="Clubs" href="clubs" class="waves-effect"> <i
+					style="width: 1em"><img style="width: 120%; margin-left:-0.15em"
+						src="images/admin/clubs.png" /></i>
+			</a></li>
+
+			<li><a title=Books" href="searchBook" class="waves-effect"> <i
+					style="width: 1em"><img style="width: 120%; margin-left:-0.15em"
+						src="images/admin/books.png" /></i>
+			</a></li>
+
 			<li><a style="font-size: 1.5em" id="top-user-name">${userName}</a></li>
 			<c:if test="${userRole ne null}">
 				<li class="profile-tooltipped"><a
@@ -48,13 +63,14 @@
 				</a></li>
 			</c:if>
 
-			<li style="height:4.5em"><c:if test="${cookie.lang.value eq 'en-US'}">
-					<a href="chooseLanguage?lang=uk"><div style="margin-top:0.7em"></div><img
-						title="<fmt:message bundle="${msg}" key="change_language" />"
+			<li style="height: 4.5em"><c:if
+					test="${cookie.lang.value eq 'en-US'}">
+					<a href="chooseLanguage?lang=uk"><div style="margin-top: 0.7em"></div>
+						<img title="<fmt:message bundle="${msg}" key="change_language" />"
 						src="images/UAFlag.png" alt="Ukrainian" title="" /></a>
 				</c:if> <c:if test="${cookie.lang.value eq 'uk-UA'}">
-					<a href="chooseLanguage?lang=en"><div style="margin-top:0.7em"></div><img
-						title="<fmt:message bundle="${msg}" key="change_language" />"
+					<a href="chooseLanguage?lang=en"><div style="margin-top: 0.7em"></div>
+						<img title="<fmt:message bundle="${msg}" key="change_language" />"
 						src="images/GBFlag.png" alt="English" /></a>
 				</c:if></li>
 		</ul>

@@ -126,13 +126,10 @@ section {
 
 .profile-tooltipped #div {
 	
-	background-color: rgba(255.0, 255.0, 255.0, 0.5);
+	background-color: rgba(255.0, 255.0, 255.0);
 	border-radius: 0.0px 15.0px 15.0px 15.0px;
 	box-shadow: 1.0px 1.0px 10.0px rgba(0.0, 0.0, 0.0, 0.5);
 	color: #000;
-
-	
-	opacity: 0.0;
 	padding: 10.0px 10.0px 10.0px 20.0px;
 	position: absolute;
 	text-decoration: none;
@@ -143,7 +140,6 @@ section {
 }
 
 .profile-tooltipped:hover #div {
-	opacity: 1.0;
 	visibility: visible;
 	z-index:1001;
 }

@@ -14,6 +14,8 @@
 
 <head>
 <jsp:include page="../general/head.jsp" />
+<jsp:include page="../index/index_modal_login.jsp" />
+<jsp:include page="../index/index_modal_register.jsp" />
 </head>
 
 <body>

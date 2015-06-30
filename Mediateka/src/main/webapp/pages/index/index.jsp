@@ -21,16 +21,15 @@
 </head>
 
 <body>
-<div class="main">
-	<jsp:include page="../general/nav.jsp" />
+	<div class="main">
+		<jsp:include page="../general/nav.jsp" />
 
-	
-		<c:if test="${notification ne null }">
-			<fmt:message bundle="${msg}" key="${notification}" />
-		</c:if>
-		
-		<jsp:include page="index_central.jsp" />
-	</div>
+			<c:if test="${notification ne null }">
+				<fmt:message bundle="${msg}" key="${notification}" />
+			</c:if>
+
+			<jsp:include page="index_central.jsp" />
+		</div>
 	<jsp:include page="../general/footer.jsp" />
 
 </body>

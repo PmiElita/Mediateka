@@ -8,86 +8,86 @@
 <fmt:setBundle basename="menu" />
 <fmt:requestEncoding value="utf-8" />
 
-
 <div class="parallax-container my-parallax" style="max-height: 100%">
 	<div class="parallax" style="max-height: 100%">
 		<img src="images/parallax1.jpg">
 	</div>
 
-	<jsp:include page="index_slider.jsp" />
+	<div class="container white" style="padding: 0; margin-top: 0">
 
-	<div class="main_poster" style="margin-top: 2em">
+		<jsp:include page="index_slider.jsp" />
 
-		<div class="row">
+		<div class="main_poster" style="margin-top: 2em">
 
-			<div class="col s3 offset-s1_5">
-				<div class="card medium">
-					<div class="card-image waves-effect waves-block waves-light">
-						<img class="activator" src="images/events/event1.jpg">
-					</div>
-					<div class="card-content">
-						<span class="card-title activator grey-text text-darken-4">Event
-							1 <i class="mdi-navigation-more-vert right"></i>
-						</span>
-						<p>
-							<a href="#!">LINK</a>
-						</p>
-					</div>
-					<div class="card-reveal">
-						<span class="card-title grey-text text-darken-4">Event 1 <i
-							class="mdi-navigation-close right"></i></span>
-						<p>It takes place right now!.</p>
+			<div class="row">
+
+				<div class="col s4">
+					<div class="card medium">
+						<div class="card-image waves-effect waves-block waves-light">
+							<img class="activator" src="images/events/event1.jpg">
+						</div>
+						<div class="card-content">
+							<span class="card-title activator grey-text text-darken-4">Event
+								1 <i class="mdi-navigation-more-vert right"></i>
+							</span>
+							<p>
+								<a href="#!">LINK</a>
+							</p>
+						</div>
+						<div class="card-reveal">
+							<span class="card-title grey-text text-darken-4">Event 1 <i
+								class="mdi-navigation-close right"></i></span>
+							<p>It takes place right now!.</p>
+						</div>
 					</div>
 				</div>
-			</div>
 
-			<div class="col s3">
-				<div class="card medium">
-					<div class="card-image waves-effect waves-block waves-light">
-						<img class="activator" src="images/events/event1.jpg">
-					</div>
-					<div class="card-content">
-						<span class="card-title activator grey-text text-darken-4">Event
-							2 <i class="mdi-navigation-more-vert right"></i>
-						</span>
-						<p>
-							<a href="#!">LINK</a>
-						</p>
-					</div>
-					<div class="card-reveal">
-						<span class="card-title grey-text text-darken-4">Event 2 <i
-							class="mdi-navigation-close right"></i></span>
-						<p>It takes place right now!.</p>
+				<div class="col s4">
+					<div class="card medium">
+						<div class="card-image waves-effect waves-block waves-light">
+							<img class="activator" src="images/events/event1.jpg">
+						</div>
+						<div class="card-content">
+							<span class="card-title activator grey-text text-darken-4">Event
+								2 <i class="mdi-navigation-more-vert right"></i>
+							</span>
+							<p>
+								<a href="#!">LINK</a>
+							</p>
+						</div>
+						<div class="card-reveal">
+							<span class="card-title grey-text text-darken-4">Event 2 <i
+								class="mdi-navigation-close right"></i></span>
+							<p>It takes place right now!.</p>
+						</div>
 					</div>
 				</div>
-			</div>
 
-			<div class="col s3">
-				<div class="card medium">
-					<div class="card-image waves-effect waves-block waves-light">
-						<img class="activator" src="images/events/event1.jpg">
-					</div>
-					<div class="card-content">
-						<span class="card-title activator grey-text text-darken-4">Event
-							3 <i class="mdi-navigation-more-vert right"></i>
-						</span>
-						<p>
-							<a href="#!">LINK</a>
-						</p>
-					</div>
-					<div class="card-reveal">
-						<span class="card-title grey-text text-darken-4">Event 3 <i
-							class="mdi-navigation-close right"></i></span>
-						<p>It takes place right now!.</p>
+				<div class="col s4">
+					<div class="card medium">
+						<div class="card-image waves-effect waves-block waves-light">
+							<img class="activator" src="images/events/event1.jpg">
+						</div>
+						<div class="card-content">
+							<span class="card-title activator grey-text text-darken-4">Event
+								3 <i class="mdi-navigation-more-vert right"></i>
+							</span>
+							<p>
+								<a href="#!">LINK</a>
+							</p>
+						</div>
+						<div class="card-reveal">
+							<span class="card-title grey-text text-darken-4">Event 3 <i
+								class="mdi-navigation-close right"></i></span>
+							<p>It takes place right now!.</p>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 
-	<div class="main-info">
-		<div class="section white">
-			<div class="container" style="width:90%">
+		<div class="section">
+			<div class="main-info">
 				<p>Перша львівська медіатека – це проект громадського центру
 					нового типу, діє при Центральній бібліотеці для дорослих ім. Лесі
 					Українки. Медіатека – інтерактивний громадський центр, який
