@@ -6,6 +6,13 @@
 <script src="js/search_book.js" type="text/javascript">
 	
 </script>
+
+
+
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<fmt:setLocale value="${cookie.lang.value}" />
+<fmt:setBundle basename="translations/search_book" var="msg" />
+
 <div id="main" class=" row main-books">
 
 	<c:forEach var="item" items="${bookItems }">
@@ -23,7 +30,9 @@
 	<c:if test="${haveMoreResults }">
 		<div class="row main-books">
 			<button class="  waves-effect waves-green btn-flat book-scroll"
-				onclick="doScroll()">show more results</button>
+				onclick="doScroll()">
+				<fmt:message bundle="${msg}" key="show_more_results" />
+			</button>
 			<p id="index" hidden>${index }</p>
 		</div>
 	</c:if>

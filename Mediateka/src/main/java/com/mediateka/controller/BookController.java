@@ -420,56 +420,6 @@ public class BookController {
 		}
 	}
 
-	@Request(url = "sergij_test_add_meaning", method = "get")
-	public static void addNewBookMeaningPage(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException,
-			SQLException, ReflectiveOperationException {
-
-		request.getRequestDispatcher(
-				"pages/form/tmp_form_for_adding_book_related_stuff.jsp")
-				.forward(request, response);
-		return;
-	}
-
-	@Request(url = "sergij_test_add_meaning", method = "post")
-	public static void addNewBookMeaning(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException,
-			SQLException, ReflectiveOperationException {
-
-		String meaningName = request.getParameter("meaning");
-		if (!meaningName.matches(RegExps.ONLY_CHARS)) {
-			response.sendRedirect("index");
-			return;
-		}
-
-		Integer myId = (Integer) request.getSession().getAttribute("userId");
-
-		if (myId == null) {
-			response.sendRedirect("index");
-			return;
-		}
-
-		User me = UserService.getUserById(myId);
-		if (me == null) {
-			response.sendRedirect("index");
-			request.getSession().invalidate();
-			return;
-		}
-
-		if (me.getRole() != Role.ADMIN) {
-			response.sendRedirect("index");
-			return;
-		}
-
-		BookMeaning newMeaning = new BookMeaning();
-		newMeaning.setName(meaningName);
-		newMeaning.setState(State.ACTIVE);
-
-		BookMeaningService.saveBookMeaning(newMeaning);
-
-		response.sendRedirect(request.getRequestURL().toString());
-
-	}
 
 	@Request(url = "getBookNameByRegexp", method = "get")
 	public static void getBookNameByRegexp(HttpServletRequest request,

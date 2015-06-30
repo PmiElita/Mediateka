@@ -398,4 +398,55 @@ public class ClubController {
 		return;
 	}
 
+	@Request(url = "sendEmailToClubMembers", method = "get")
+	public static void sendEmailToClubMembers(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException,
+			ReflectiveOperationException, SQLException {
+
+		String clubIdString = request.getParameter("clubId");
+		if (clubIdString == null) {
+			response.sendRedirect("index");
+			return;
+		}
+		
+		Integer clubId = Integer.parseInt(clubIdString);
+		if (clubId== null) {
+			response.sendRedirect("index");
+			return;
+		}
+		
+		//check if you are the creator of the club
+		
+		Integer myId = (Integer) request.getSession().getAttribute("userId");
+		
+		if (myId == null){
+			response.sendRedirect("index");
+			return;
+		}
+
+		List<ClubEventMember> members = ClubEventMemberService.getClubEventMemberByClubId(clubId);
+		if (members == null){
+			response.sendRedirect("index");
+			return;
+		}
+		
+		boolean IAmTheClubCreator = false;
+		for (ClubEventMember member : members){
+			if ((member.getUserId().equals(myId)) && (member.getType() == ClubEventMemberType.CREATOR)){
+				IAmTheClubCreator = true;
+				break;
+			}
+		}
+
+		if (!IAmTheClubCreator){
+			response.sendRedirect("index");
+			return;
+		}
+		request.setAttribute("clubId", clubId);
+		request.getRequestDispatcher(
+				"pages/club/send_email_to_members_form.jsp").forward(request,
+				response);
+		return;
+
+	}
 }
