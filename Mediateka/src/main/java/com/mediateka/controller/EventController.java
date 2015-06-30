@@ -110,7 +110,7 @@ public class EventController {
 			event.setName(form.getName());
 			event.setType(EventType.EXHIBITION);
 			event.setDescription(form.getDescription());
-			event.setState(State.BLOCKED);
+			event.setState(State.REQUESTED);
 			event.setDateFrom(dateFrom);
 			event.setDateTill(dateTill);
 			if (request.getSession().getAttribute("club_id") != null)
@@ -182,7 +182,7 @@ public class EventController {
 			event.setName(form.getName());
 			event.setType(EventType.MEETING);
 			event.setDescription(form.getDescription());
-			event.setState(State.BLOCKED);
+			event.setState(State.REQUESTED);
 			event.setDateFrom(dateFrom);
 			event.setDateTill(dateTill);
 			if (request.getSession().getAttribute("club_id") != null)

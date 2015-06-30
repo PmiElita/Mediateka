@@ -22,7 +22,8 @@
 			<li><a href="" data-target="modal18"
 				class="modal-trigger waves-effect"><fmt:message bundle="${msg}"
 						key="user.create_event" /></a></li>
-			<li><a href="createClub" class="waves-effect">Create club</a></li>
+			<li><a href="createClub" class="waves-effect"><fmt:message bundle="${msg}"
+						key="user.create_club" /></a></li>
 			<li><a href="activity"><fmt:message bundle="${msg}"
 						key="user.activity" /></a></li>
 			<li><a href="cabinet"><fmt:message bundle="${msg}"

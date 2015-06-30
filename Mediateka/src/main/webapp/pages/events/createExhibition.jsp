@@ -4,8 +4,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<fmt:setLocale value="${locale}" />
-<fmt:setBundle basename="menu" />
+<fmt:setLocale value="${cookie.lang.value}" />
+<fmt:setBundle basename="translations/create_event" var="msg" />
 <fmt:requestEncoding value="utf-8" />
 
 <html>
@@ -26,15 +26,18 @@
 			<jsp:include page="../user/user_side_nav.jsp" />
 			<div id="creation_form">
 				<div class="container section white">
-		
-					<h3>Create exhibition</h3>
+
+					<h3>
+						<fmt:message bundle="${msg}" key="exhibition.create_exhibition" />
+					</h3>
 
 					${message}
 					<form name="createExhibition" id="create_exhibition"
 						action="CreateExhibition" method="post">
 
 						<div class="row">
-							Name:<input type="text" id="name" name="name" required
+							<fmt:message bundle="${msg}" key="exhibition.name" />
+							<input type="text" id="name" name="name" required
 								pattern=".{1,45}"><br>
 						</div>
 
@@ -42,24 +45,27 @@
 							<p id="wrongDate"></p>
 
 							<div class="col s6">
-								<label for="dateFrom" id="labelDateFrom">Date from:</label> <input
+								<label for="dateFrom" id="labelDateFrom"><fmt:message
+										bundle="${msg}" key="exhibition.date_from" /></label> <input
 									id="dateFrom" name="dateFrom" type="text" data-field="date"
 									required onchange="dateChangeExhibition()">
 								<div id="dtBox"></div>
 							</div>
 
 							<div class="col s6">
-								<label for="dateTill" id="labelDateTill">Date till:</label> <input
+								<label for="dateTill" id="labelDateTill"><fmt:message
+										bundle="${msg}" key="exhibition.date_till" />:</label> <input
 									id="dateTill" name="dateTill" type="text" data-field="date"
 									required onchange="dateChangeExhibition()">
 							</div>
 						</div>
 
 						<div class="row">
-							Description:
+							<fmt:message bundle="${msg}" key="exhibition.description" />
 							<textarea name="description" pattern=".{0,255}"
 								class="materialize-textarea"></textarea>
-							<input type="submit" id="submit" value="Create exhibition"
+							<input type="submit" id="submit"
+								value="<fmt:message bundle="${msg}" key="exhibition.create_exhibition_button" />"
 								class="btn">
 						</div>
 					</form>
