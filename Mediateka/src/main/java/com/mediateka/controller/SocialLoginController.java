@@ -93,7 +93,7 @@ public class SocialLoginController {
 	public static void googleVKLoginCode(HttpServletRequest request,
 			HttpServletResponse response) throws SQLException,
 			ReflectiveOperationException, ServletException, IOException {
-		request.getRequestDispatcher("pages/fedunets12.06/googleLogin.jsp")
+		request.getRequestDispatcher("pages/additional/googleLogin.jsp")
 				.forward(request, response);
 	}
 
