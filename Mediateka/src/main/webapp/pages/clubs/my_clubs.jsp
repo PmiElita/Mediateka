@@ -16,7 +16,8 @@
 <div class="events_poster">
 <div class="main-info">
 <div id="my_active_clubs">
-<c:if test="${!myActiveClubs.isEmpty()}">
+<c:choose>
+<c:when test="${!myActiveClubs.isEmpty()}">
 <div class="section white">
 	<div class="container">
 	<c:forEach var="item" items="${myActiveClubs}"  varStatus="status">
@@ -35,10 +36,29 @@
 		</c:forEach>
 	</div>
 	</div>
-	</c:if>
+	</c:when>
+	<c:otherwise>
+<div class="section white">
+	<div class="container">
+		<div class="row my-picture-row">
+			<div class="col s8 offset-s2">
+				<div class="waves-effect waves-block waves-light my-picture-wrap">
+						<div align="center">
+							<h2>There are no such clubs!
+							</h2>
+						</div>
+				</div>
+			</div>
+		</div>
 	</div>
+	</div>
+	</c:otherwise>
+	</c:choose>
+	</div>
+	
 	<div id="my_blocked_clubs">
-	<c:if test="${!myBlockedClubs.isEmpty()}">
+	<c:choose>
+	<c:when test="${!myBlockedClubs.isEmpty()}">
 	<div class="section white">
 	<div class="container">
 	<c:forEach var="item" items="${myBlockedClubs}"  varStatus="status">
@@ -57,9 +77,25 @@
 		</c:forEach>
 	</div>
 	</div>
-	</c:if>
+	</c:when>
+	<c:otherwise>
+	<div class="section white">
+	<div class="container">
+		<div class="row my-picture-row">
+			<div class="col s8 offset-s2">
+				<div class="waves-effect waves-block waves-light my-picture-wrap">
+						<div align="center">
+							<h2>There are no such clubs!
+							</h2>
+						</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+	</c:otherwise>
+	</c:choose>
 	</div>
 	</div>
 	</div>
 	</div>
-</div>

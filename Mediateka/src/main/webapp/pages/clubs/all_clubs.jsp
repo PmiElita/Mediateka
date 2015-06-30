@@ -2,9 +2,13 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+<div class="row" style="margin-top: -1em">
+<br>
+</div>
 <div class="events_poster">
 <div class="main-info">
-<c:if test="${!allClubs.isEmpty()}">
+<c:choose>
+<c:when test="${!(allClubs==null)}">
 <div class="section white">
 	<div class="container">
 	<c:forEach var="item" items="${allClubs}"  varStatus="status">
@@ -23,6 +27,23 @@
 			</c:forEach>
 		</div>
 	</div>
-	</c:if>
+	</c:when>
+	<c:otherwise>
+<div class="section white">
+	<div class="container">
+		<div class="row my-picture-row">
+			<div class="col s8 offset-s2">
+				<div class="waves-effect waves-block waves-light my-picture-wrap">
+						<div align="center">
+							<h2>There are no such clubs!
+							</h2>
+							</div>
+							</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</c:otherwise>
+	</c:choose>
 </div>
 </div>

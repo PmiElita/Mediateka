@@ -197,7 +197,6 @@ public class UserController {
 		request.removeAttribute("myBlockedClubsAvas");
 		request.removeAttribute("allClubs");
 		request.removeAttribute("allClubsAvas");
-
 	}
 
 	@Request(url = "cabinet", method = "get")
