@@ -57,20 +57,27 @@
 
 			<div class="container center">
 				<div class="row" style="margin-left: -5em">
-					<div class="col s6">
+					<div class="col s4 offset-s3">
 						<h2 class="book-cover-t right">Book title</h2>
 					</div>
-					<div class="col s3 " style="margin-top: 3.5em">
-						<a href="searchBook" class="left book-cover-href"> Back to
-							book search </a>
+
+					<div class="col s1 left">
+						<div style="margin-top:1.75em" class="fixed-action-btn">
+							<a href="searchBook" class="btn-floating btn-medium green">+ </a>
+							<ul style="font-size:0.75em">
+								<li><a class="btn-floating btn-large blue book-cover-href" style="color:black">Search</a></li>
+
+									<li><a href="UpdateBook"
+										class="btn-floating yellow darken-1 book-cover-href" style="color:black">Edit</a></li>
+
+							</ul>
+						</div>
 					</div>
-					<div class="col s3 " style="margin-top: 3.5em">
-						<c:if test="${userRole eq Role.ADMIN}">
-							<a href="UpdateBook" class="left book-cover-href"> Edit </a>
-						</c:if>
-					</div>
+
+
+
 				</div>
-				<img alt="Book name" src="images/book_title.jpg" width="45%">
+				<img alt="Book name" src="images/book_title.jpg" width="45%" style="margin-top:-7em">
 
 				<div class="container section white">
 					<h5>Info</h5>

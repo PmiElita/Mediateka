@@ -19,6 +19,7 @@
 						key="user.clubs" /></a></li>
 			<li><a href="events"><fmt:message bundle="${msg}"
 						key="user.events" /></a></li>
+			<li><a href="searchBook" class="waves-effect">Find book</a></li>
 			<li><a href="" data-target="modal18"
 				class="modal-trigger waves-effect"><fmt:message bundle="${msg}"
 						key="user.create_event" /></a></li>
