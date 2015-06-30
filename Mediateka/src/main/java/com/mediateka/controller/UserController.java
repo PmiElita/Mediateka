@@ -142,9 +142,10 @@ public class UserController {
 				.parseInt(request.getSession().getAttribute("userId")
 						.toString()));
 		List<ClubEventMember> clubMemberer = new ArrayList<>();
-		for (ClubEventMember member : memberer)
-			if (member.getClubId() != null)
-				clubMemberer.add(member);
+		if (memberer != null)
+			for (ClubEventMember member : memberer)
+				if (member.getClubId() != null)
+					clubMemberer.add(member);
 		List<Club> myClubs = new ArrayList<>();
 		for (ClubEventMember member : clubMemberer) {
 			myClubs.add(getClubById(member.getClubId()));
@@ -169,6 +170,21 @@ public class UserController {
 			myBlockedClubsAvas.add(getMediaById(club.getAvaId()).getPath()
 					.replace("\\", "/"));
 
+		// all clubs
+		List<Club> allClubs = getClubByState(State.ACTIVE);
+		if (allClubs != null)
+			Collections.sort(allClubs, new ClubsByMembersNumber());
+
+		// all clubs avas
+		List<String> allClubsAvas = new ArrayList<>();
+		if (allClubs != null)
+			for (Club club : allClubs) {
+				allClubsAvas.add(getMediaById(club.getAvaId()).getPath()
+						.replace("\\", "/"));
+			}
+
+		request.setAttribute("allClubs", allClubs);
+		request.setAttribute("allClubsAvas", allClubsAvas);
 		request.setAttribute("myActiveClubsAvas", myActiveClubsAvas);
 		request.setAttribute("myBlockedClubsAvas", myBlockedClubsAvas);
 		request.setAttribute("myActiveClubs", myActiveClubs);
@@ -179,6 +195,8 @@ public class UserController {
 		request.removeAttribute("myBlockedClubs");
 		request.removeAttribute("myActiveClubsAvas");
 		request.removeAttribute("myBlockedClubsAvas");
+		request.removeAttribute("allClubs");
+		request.removeAttribute("allClubsAvas");
 
 	}
 

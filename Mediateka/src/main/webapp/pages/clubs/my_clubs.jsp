@@ -16,6 +16,7 @@
 <div class="events_poster">
 <div class="main-info">
 <div id="my_active_clubs">
+<c:if test="${!myActiveClubs.isEmpty()}">
 <div class="section white">
 	<div class="container">
 	<c:forEach var="item" items="${myActiveClubs}"  varStatus="status">
@@ -34,8 +35,10 @@
 		</c:forEach>
 	</div>
 	</div>
-	</div><br>
+	</c:if>
+	</div>
 	<div id="my_blocked_clubs">
+	<c:if test="${!myBlockedClubs.isEmpty()}">
 	<div class="section white">
 	<div class="container">
 	<c:forEach var="item" items="${myBlockedClubs}"  varStatus="status">
@@ -54,6 +57,7 @@
 		</c:forEach>
 	</div>
 	</div>
+	</c:if>
 	</div>
 	</div>
 	</div>
