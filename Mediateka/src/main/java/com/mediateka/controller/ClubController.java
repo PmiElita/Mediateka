@@ -219,9 +219,13 @@ private static final int defaultClubAvaId = 2;
 				Map<Integer, List<Media>> imageMap = new HashMap<Integer, List<Media>>();
 				Map<Integer, List<Media>> videoMap = new HashMap<Integer, List<Media>>();
 				Map<Integer, List<Media>> audioMap = new HashMap<Integer, List<Media>>();
+				Map<Integer, String> creatorRecordMap = new HashMap<Integer, String>();
 				if (records != null) {
 					Collections.sort(records, new ContentGroupByDate());
 					for (ContentGroup contentGroup : records) {
+						User creator = UserService.getUserById(contentGroup.getCreatorId());
+						String cratorName = creator.getFirstName() + " " + creator.getLastName();
+						creatorRecordMap.put(contentGroup.getId(), cratorName);
 						List<Media> images = new ArrayList<Media>();
 						List<Media> videos = new ArrayList<Media>();
 						List<Media> audios = new ArrayList<Media>();
@@ -270,8 +274,7 @@ private static final int defaultClubAvaId = 2;
 				}
 
 				User user = UserService.getUserById((Integer) request
-						.getSession().getAttribute("userId"));
-				String name = user.getFirstName() + " " + user.getLastName();
+						.getSession().getAttribute("userId"));										
 				System.out.println(mediaMap);
 				System.out.println(imageMap);
 				System.out.println(videoMap);
@@ -283,7 +286,8 @@ private static final int defaultClubAvaId = 2;
 				request.setAttribute("records", records);
 				request.setAttribute("clubId", club.getId());
 				request.setAttribute("club", club);
-				request.setAttribute("userName", name);
+				request.setAttribute("creatorName", creatorRecordMap);
+				request.setAttribute("index", 0);
 
 				request.getRequestDispatcher("pages/club/club.jsp").forward(
 						request, response);
@@ -295,7 +299,7 @@ private static final int defaultClubAvaId = 2;
 				request.removeAttribute("records");
 				request.removeAttribute("club");
 				request.removeAttribute("clubId");
-				request.removeAttribute("userName");
+				request.removeAttribute("creatorName");
 			}
 		} catch (NumberFormatException e) {
 			request.setAttribute("message", "No such club!");
