@@ -1,5 +1,7 @@
 package com.mediateka.controller;
 
+import static com.mediateka.service.ClubService.getClubById;
+
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -40,8 +42,6 @@ import com.mediateka.service.UserService;
 import com.mediateka.util.FileLoader;
 import com.mediateka.util.FormValidator;
 import com.mediateka.util.ObjectFiller;
-
-import static com.mediateka.service.ClubService.*;
 
 @Controller
 public class ClubController {
@@ -158,9 +158,6 @@ public class ClubController {
 	@Request(url = "loadAlbum", method = "get")
 	public static void createAlbumGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		session.setAttribute("clubId", 1);
-		session.setAttribute("userId", 2);
 		request.getRequestDispatcher("pages/club/loadAlbum.jsp").forward(
 				request, response);
 
@@ -172,7 +169,10 @@ public class ClubController {
 			ReflectiveOperationException, SQLException {
 
 		request.getAttribute("clubId");
+		request.setAttribute("isSigned", "true");
+		
 		CreateContent.createContent(request, response, ContentGroupType.IMAGE);
+		
 		request.getRequestDispatcher("pages/club/club.jsp").forward(request,
 				response);
 
@@ -270,7 +270,17 @@ public class ClubController {
 				request.setAttribute("clubId", club.getId());
 				request.setAttribute("club", club);
 				request.setAttribute("userName", name);
+				
+				String isSigned = "false";
 
+				List<ClubEventMember> clubMembers = ClubEventMemberService.getClubEventMemberByClubId(club.getId());
+				
+				for (ClubEventMember member : clubMembers)
+					if (member.getUserId().equals(user.getId()))
+						isSigned = "true";
+
+				request.setAttribute("isSigned", isSigned);
+				
 				request.getRequestDispatcher("pages/club/club.jsp").forward(
 						request, response);
 
@@ -282,6 +292,7 @@ public class ClubController {
 				request.removeAttribute("club");
 				request.removeAttribute("clubId");
 				request.removeAttribute("userName");
+				request.removeAttribute("isSigned");
 			}
 		} catch (NumberFormatException e) {
 			request.setAttribute("message", "No such club!");

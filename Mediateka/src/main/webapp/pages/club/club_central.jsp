@@ -26,7 +26,7 @@
 </style>
 </head>
 
-<div class="section center" style="padding-top:0">
+<div class="section center" style="padding-top: 0">
 
 	<form>
 		<div class="row my-picture-row">
@@ -45,7 +45,29 @@
 		</div>
 	</form>
 
-	<div class="container" style="margin-top: 7%">
+	<div class="container white"
+		style="height: 24em; margin-bottom: 0; margin-top: -1em">
+		<div style="height: 3em"></div>
+		<div class="sign-event row center">
+
+			<c:if test="${isSigned eq 'false'}">
+				<div class="col s6">
+					<a class="btn" href="#" style="width: 15em">Sign to event</a>
+				</div>
+			</c:if>
+
+			<c:if test="${isSigned eq 'true'}">
+				<div class="col s6">
+					<a class="btn" href="#" style="width: 15em">Sign out</a>
+				</div>
+			</c:if>
+
+
+
+			<div class="col s6">
+				<a class="btn" href="#" style="width: 15em">Look participants</a>
+			</div>
+		</div>
 
 		<div class="row" style="margin-left: -5em">
 			<div class="col s3">

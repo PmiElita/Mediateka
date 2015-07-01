@@ -113,8 +113,6 @@ public class CreateContent {
 		response.setCharacterEncoding("UTF-8");
 		System.out.println(new Gson().toJson(contentGroup).toString());
 		response.getWriter().write(new Gson().toJson(recordMap));
-		
-		
 
 	}
 

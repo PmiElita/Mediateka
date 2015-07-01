@@ -1,11 +1,24 @@
 package com.mediateka.controller;
 
+import static com.mediateka.service.ClubEventMemberService.saveClubEventMember;
+import static com.mediateka.service.EventService.callSaveEvent;
+import static com.mediateka.service.EventService.getEventById;
+import static com.mediateka.service.EventService.updateEventById;
+import static com.mediateka.service.MediaService.callSaveMedia;
+import static com.mediateka.service.MediaService.getMediaById;
+import static com.mediateka.util.DateConverter.convertIntoTimestamp;
+import static com.mediateka.util.DateConverter.timeValid;
+
 import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -15,10 +28,12 @@ import org.apache.log4j.Logger;
 
 import com.mediateka.annotation.Controller;
 import com.mediateka.annotation.Request;
+import com.mediateka.comparator.ContentGroupByDate;
 import com.mediateka.exception.WrongInputException;
 import com.mediateka.form.ExhibitionRegistrationForm;
 import com.mediateka.form.MeetingRegistrationForm;
 import com.mediateka.model.ClubEventMember;
+import com.mediateka.model.ContentGroup;
 import com.mediateka.model.Event;
 import com.mediateka.model.Media;
 import com.mediateka.model.User;
@@ -27,18 +42,15 @@ import com.mediateka.model.enums.EventType;
 import com.mediateka.model.enums.MediaType;
 import com.mediateka.model.enums.Role;
 import com.mediateka.model.enums.State;
+import com.mediateka.service.ClubEventMemberService;
+import com.mediateka.service.ContentGroupService;
 import com.mediateka.service.EventService;
+import com.mediateka.service.MediaService;
 import com.mediateka.service.UserService;
 import com.mediateka.util.DateConverter;
 import com.mediateka.util.FileLoader;
 import com.mediateka.util.FormValidator;
 import com.mediateka.util.ObjectFiller;
-
-import static com.mediateka.service.ClubEventMemberService.saveClubEventMember;
-import static com.mediateka.service.EventService.*;
-import static com.mediateka.service.MediaService.callSaveMedia;
-import static com.mediateka.service.MediaService.getMediaById;
-import static com.mediateka.util.DateConverter.*;
 
 @Controller
 public class EventController {
@@ -46,41 +58,141 @@ public class EventController {
 	private static Logger logger = Logger.getLogger(EventController.class);
 
 	@Request(url = "event", method = "get")
-	public static void goToEventGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException,
-			SQLException, ReflectiveOperationException {
+	public static void goToEventGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException, SQLException, ReflectiveOperationException {
 
-		request.getRequestDispatcher("pages/event/event.jsp").forward(request,
-				response);
+		try {
+			int eventId = 0;
+			if (request.getParameter("eventId") == null || request.getParameter("eventId") == ""
+					|| getEventById(Integer.parseInt(request.getParameter("eventId").toString())) == null) {
+				request.setAttribute("message", "No such event!");
+				request.getRequestDispatcher("error404.jsp").forward(request, response);
+				request.removeAttribute("message");
+			} else {
+				eventId = Integer.parseInt(request.getParameter("eventId").toString());
+				Event event = getEventById(eventId);
+				List<ContentGroup> records = ContentGroupService.getContentGroupByEventId(eventId);
+
+				Map<Integer, List<Media>> mediaMap = new HashMap<Integer, List<Media>>();
+				Map<Integer, List<Media>> imageMap = new HashMap<Integer, List<Media>>();
+				Map<Integer, List<Media>> videoMap = new HashMap<Integer, List<Media>>();
+				Map<Integer, List<Media>> audioMap = new HashMap<Integer, List<Media>>();
+				if (records != null) {
+					Collections.sort(records, new ContentGroupByDate());
+					for (ContentGroup contentGroup : records) {
+						List<Media> images = new ArrayList<Media>();
+						List<Media> videos = new ArrayList<Media>();
+						List<Media> audios = new ArrayList<Media>();
+						mediaMap.put(contentGroup.getId(), MediaService.getMediaContentGroupId(contentGroup.getId()));
+						List<Media> medias = MediaService.getMediaContentGroupId(contentGroup.getId());
+						System.out.println(medias);
+						if (medias != null) {
+							for (Media media : medias) {
+								System.out.println(media);
+								if (media.getType().equals(MediaType.IMAGE)) {
+									images.add(media);
+								}
+								if (media.getType().equals(MediaType.VIDEO)) {
+									videos.add(media);
+								}
+								if (media.getType().equals(MediaType.AUDIO)) {
+									audios.add(media);
+								}
+							}
+							if (images != null) {
+								if (images.size() > 0) {
+									imageMap.put(contentGroup.getId(), images);
+								}
+
+							}
+							if (videos != null) {
+								if (videos.size() > 0) {
+									videoMap.put(contentGroup.getId(), videos);
+								}
+
+							}
+							if (audios != null) {
+								if (audios.size() > 0) {
+									audioMap.put(contentGroup.getId(), audios);
+								}
+
+							}
+
+						} else {
+							images = videos = audios = null;
+						}
+
+					}
+				}
+
+				User user = UserService.getUserById((Integer) request.getSession().getAttribute("userId"));
+				String name = user.getFirstName() + " " + user.getLastName();
+				System.out.println(mediaMap);
+				System.out.println(imageMap);
+				System.out.println(videoMap);
+				System.out.println(audioMap);
+				request.setAttribute("mediaMap", mediaMap);
+				request.setAttribute("imageMap", imageMap);
+				request.setAttribute("videoMap", videoMap);
+				request.setAttribute("audioMap", audioMap);
+				request.setAttribute("records", records);
+				request.setAttribute("eventId", event.getId());
+				request.setAttribute("event", event);
+				request.setAttribute("userName", name);
+
+				String isSigned = "false";
+
+				List<ClubEventMember> eventMembers = ClubEventMemberService.getClubEventMemberByEventId(event.getId());
+				
+				for (ClubEventMember member : eventMembers)
+					if (member.getUserId().equals(user.getId()))
+						isSigned = "true";
+
+				request.setAttribute("isSigned", isSigned);
+
+				request.getRequestDispatcher("pages/event/event.jsp").forward(request, response);
+
+				request.removeAttribute("mediaMap");
+				request.removeAttribute("imageMap");
+				request.removeAttribute("videoMap");
+				request.removeAttribute("audioMap");
+				request.removeAttribute("records");
+				request.removeAttribute("event");
+				request.removeAttribute("eventId");
+				request.removeAttribute("userName");
+				request.removeAttribute("isSigned");
+			}
+		} catch (NumberFormatException e) {
+			request.setAttribute("message", "No such club!");
+			request.getRequestDispatcher("error404.jsp").forward(request, response);
+			request.removeAttribute("message");
+		}
 	}
 
 	// create event
 
 	@Request(url = "CreateExhibition", method = "get")
-	public static void exhibitionCreateGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	public static void exhibitionCreateGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 
 		request.getSession().setAttribute("userId", 1);
-		request.getRequestDispatcher("pages/events/createExhibition.jsp")
-				.forward(request, response);
+		request.getRequestDispatcher("pages/events/createExhibition.jsp").forward(request, response);
 
 	}
 
 	@Request(url = "CreateMeeting", method = "get")
-	public static void meetingCreateGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	public static void meetingCreateGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 
 		request.getSession().setAttribute("userId", 1);
-		request.getRequestDispatcher("pages/events/createMeeting.jsp").forward(
-				request, response);
+		request.getRequestDispatcher("pages/events/createMeeting.jsp").forward(request, response);
 
 	}
 
 	@SuppressWarnings("deprecation")
 	@Request(url = "CreateExhibition", method = "post")
-	public static void exhibitionCreatePost(HttpServletRequest request,
-			HttpServletResponse response) throws ParseException, SQLException,
-			ReflectiveOperationException, ServletException, IOException {
+	public static void exhibitionCreatePost(HttpServletRequest request, HttpServletResponse response)
+			throws ParseException, SQLException, ReflectiveOperationException, ServletException, IOException {
 
 		ExhibitionRegistrationForm form = new ExhibitionRegistrationForm();
 		ObjectFiller.fill(form, request);
@@ -88,24 +200,20 @@ public class EventController {
 		try {
 			FormValidator.validate(form);
 
-			Timestamp currentTime = new Timestamp(
-					new java.util.Date().getTime());
+			Timestamp currentTime = new Timestamp(new java.util.Date().getTime());
 			currentTime.setHours(0);
 			currentTime.setMinutes(0);
 			currentTime.setSeconds(0);
 			currentTime.setNanos(0);
 
-			Timestamp dateFrom = convertIntoTimestamp(form.getDateFrom(),
-					"dd.MM.yyyy");
-			Timestamp dateTill = convertIntoTimestamp(form.getDateTill(),
-					"dd.MM.yyyy");
+			Timestamp dateFrom = convertIntoTimestamp(form.getDateFrom(), "dd.MM.yyyy");
+			Timestamp dateTill = convertIntoTimestamp(form.getDateTill(), "dd.MM.yyyy");
 			if (dateFrom.getTime() <= 0 || dateTill.getTime() <= 0)
 				throw new WrongInputException("Date is too big or too small. ");
 			if (currentTime.getTime() > dateFrom.getTime())
 				throw new WrongInputException("Date from has gone. ");
 			if (dateFrom.getTime() > dateTill.getTime())
-				throw new WrongInputException(
-						"Date from cant be bigger than date till. ");
+				throw new WrongInputException("Date from cant be bigger than date till. ");
 			Event event = new Event();
 			event.setName(form.getName());
 			event.setType(EventType.EXHIBITION);
@@ -114,8 +222,7 @@ public class EventController {
 			event.setDateFrom(dateFrom);
 			event.setDateTill(dateTill);
 			if (request.getSession().getAttribute("club_id") != null)
-				event.setClubId(Integer.parseInt(request.getSession()
-						.getAttribute("club_id").toString()));
+				event.setClubId(Integer.parseInt(request.getSession().getAttribute("club_id").toString()));
 			event.setAvaId(2);
 			event = callSaveEvent(event);
 
@@ -123,29 +230,25 @@ public class EventController {
 			clubEventMember.setEventId(event.getId());
 			clubEventMember.setState(State.ACTIVE);
 			clubEventMember.setType(ClubEventMemberType.CREATOR);
-			clubEventMember.setUserId((Integer) request.getSession()
-					.getAttribute("userId"));
+			clubEventMember.setUserId((Integer) request.getSession().getAttribute("userId"));
 			saveClubEventMember(clubEventMember);
 			String message = "Exhibition created. ";
 
 			request.setAttribute("message", message);
-			request.getRequestDispatcher("pages/events/createExhibition.jsp")
-					.forward(request, response);
+			request.getRequestDispatcher("pages/events/createExhibition.jsp").forward(request, response);
 			request.removeAttribute("message");
 		} catch (WrongInputException e) {
 			logger.warn(e);
 			request.setAttribute("message", e.getMessage());
-			request.getRequestDispatcher("pages/events/createExhibition.jsp")
-					.forward(request, response);
+			request.getRequestDispatcher("pages/events/createExhibition.jsp").forward(request, response);
 			request.removeAttribute("message");
 		}
 	}
 
 	@SuppressWarnings("deprecation")
 	@Request(url = "CreateMeeting", method = "post")
-	public static void meetingCreatePost(HttpServletRequest request,
-			HttpServletResponse response) throws ParseException, SQLException,
-			ReflectiveOperationException, ServletException, IOException {
+	public static void meetingCreatePost(HttpServletRequest request, HttpServletResponse response)
+			throws ParseException, SQLException, ReflectiveOperationException, ServletException, IOException {
 
 		MeetingRegistrationForm form = new MeetingRegistrationForm();
 		ObjectFiller.fill(form, request);
@@ -153,15 +256,12 @@ public class EventController {
 		try {
 			FormValidator.validate(form);
 
-			Timestamp currentTime = new Timestamp(
-					new java.util.Date().getTime());
+			Timestamp currentTime = new Timestamp(new java.util.Date().getTime());
 			currentTime.setSeconds(0);
 			currentTime.setNanos(0);
 
-			Timestamp dateFrom = convertIntoTimestamp(form.getDate(),
-					"dd.MM.yyyy");
-			Timestamp dateTill = convertIntoTimestamp(form.getDate(),
-					"dd.MM.yyyy");
+			Timestamp dateFrom = convertIntoTimestamp(form.getDate(), "dd.MM.yyyy");
+			Timestamp dateTill = convertIntoTimestamp(form.getDate(), "dd.MM.yyyy");
 
 			int[] timeFrom = timeValid(form.getTimeFrom());
 			int[] timeTill = timeValid(form.getTimeTill());
@@ -175,8 +275,7 @@ public class EventController {
 			if (currentTime.getTime() > dateFrom.getTime())
 				throw new WrongInputException("Date has gone. ");
 			if (dateFrom.getTime() > dateTill.getTime())
-				throw new WrongInputException(
-						"Date from cant be biger than date till. ");
+				throw new WrongInputException("Date from cant be biger than date till. ");
 
 			Event event = new Event();
 			event.setName(form.getName());
@@ -186,8 +285,7 @@ public class EventController {
 			event.setDateFrom(dateFrom);
 			event.setDateTill(dateTill);
 			if (request.getSession().getAttribute("club_id") != null)
-				event.setClubId(Integer.parseInt(request.getSession()
-						.getAttribute("club_id").toString()));
+				event.setClubId(Integer.parseInt(request.getSession().getAttribute("club_id").toString()));
 			event.setAvaId(2);
 			event = callSaveEvent(event);
 
@@ -195,20 +293,17 @@ public class EventController {
 			clubEventMember.setEventId(event.getId());
 			clubEventMember.setState(State.ACTIVE);
 			clubEventMember.setType(ClubEventMemberType.CREATOR);
-			clubEventMember.setUserId((Integer) request.getSession()
-					.getAttribute("userId"));
+			clubEventMember.setUserId((Integer) request.getSession().getAttribute("userId"));
 			saveClubEventMember(clubEventMember);
 			String message = "Meeting created. ";
 
 			request.setAttribute("message", message);
-			request.getRequestDispatcher("pages/events/createMeeting.jsp")
-					.forward(request, response);
+			request.getRequestDispatcher("pages/events/createMeeting.jsp").forward(request, response);
 			request.removeAttribute("message");
 		} catch (WrongInputException e) {
 			logger.warn(e);
 			request.setAttribute("message", e.getMessage());
-			request.getRequestDispatcher("pages/events/createMeeting.jsp")
-					.forward(request, response);
+			request.getRequestDispatcher("pages/events/createMeeting.jsp").forward(request, response);
 			request.removeAttribute("message");
 		}
 	}
@@ -216,15 +311,12 @@ public class EventController {
 	// update event
 
 	@Request(url = "UpdateEvent", method = "get")
-	public static void eventUpdateGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException,
-			SQLException, ReflectiveOperationException {
+	public static void eventUpdateGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException, SQLException, ReflectiveOperationException {
 
-		request.setAttribute("message",
-				request.getSession().getAttribute("message"));
+		request.setAttribute("message", request.getSession().getAttribute("message"));
 
-		Event event = getEventById(Integer.parseInt(request.getSession()
-				.getAttribute("eventId").toString()));
+		Event event = getEventById(Integer.parseInt(request.getSession().getAttribute("eventId").toString()));
 		if (event.getAvaId() != null) {
 			Media media = getMediaById(event.getAvaId());
 			String imagePath = media.getPath().replace("\\", "/");
@@ -238,20 +330,16 @@ public class EventController {
 			String dateTill = format.format(event.getDateTill());
 			request.setAttribute("dateFrom", dateFrom);
 			request.setAttribute("dateTill", dateTill);
-			request.getRequestDispatcher("pages/events/updateExhibition.jsp")
-					.forward(request, response);
+			request.getRequestDispatcher("pages/events/updateExhibition.jsp").forward(request, response);
 		} else if (event.getType() == EventType.MEETING) {
 			@SuppressWarnings("deprecation")
-			String timeFrom = event.getDateFrom().getHours() + ":"
-					+ event.getDateFrom().getMinutes();
+			String timeFrom = event.getDateFrom().getHours() + ":" + event.getDateFrom().getMinutes();
 			@SuppressWarnings("deprecation")
-			String timeTill = event.getDateTill().getHours() + ":"
-					+ event.getDateTill().getMinutes();
+			String timeTill = event.getDateTill().getHours() + ":" + event.getDateTill().getMinutes();
 			request.setAttribute("dateFrom", dateFrom);
 			request.setAttribute("timeFrom", timeFrom);
 			request.setAttribute("timeTill", timeTill);
-			request.getRequestDispatcher("pages/events/updateMeeting.jsp")
-					.forward(request, response);
+			request.getRequestDispatcher("pages/events/updateMeeting.jsp").forward(request, response);
 		} else {
 			logger.warn("No such event type, event id=" + event.getId());
 		}
@@ -266,12 +354,10 @@ public class EventController {
 	}
 
 	@Request(url = "UpdateExhibition", method = "post")
-	public static void exhibitionUpdatePost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException,
-			SQLException, ReflectiveOperationException {
+	public static void exhibitionUpdatePost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException, SQLException, ReflectiveOperationException {
 
-		int eventId = Integer.parseInt(request.getSession()
-				.getAttribute("eventId").toString());
+		int eventId = Integer.parseInt(request.getSession().getAttribute("eventId").toString());
 
 		try {
 			FileLoader fileLoader = new FileLoader();
@@ -288,19 +374,14 @@ public class EventController {
 			// event date valid
 			Timestamp dateFrom;
 			Timestamp dateTill;
-			Timestamp currentTime = new Timestamp(
-					new java.util.Date().getTime());
+			Timestamp currentTime = new Timestamp(new java.util.Date().getTime());
 			try {
-				dateFrom = DateConverter.convertIntoTimestamp(
-						map.get("dateFrom"), "yyyy-MM-dd");
-				dateTill = DateConverter.convertIntoTimestamp(
-						map.get("dateTill"), "yyyy-MM-dd");
+				dateFrom = DateConverter.convertIntoTimestamp(map.get("dateFrom"), "yyyy-MM-dd");
+				dateTill = DateConverter.convertIntoTimestamp(map.get("dateTill"), "yyyy-MM-dd");
 				if (dateFrom.getTime() < currentTime.getTime())
-					throw new WrongInputException(
-							"Date from cant be less than current time. ");
+					throw new WrongInputException("Date from cant be less than current time. ");
 				if (dateTill.getTime() < dateFrom.getTime())
-					throw new WrongInputException(
-							"Date till must be equals or greater than date from");
+					throw new WrongInputException("Date till must be equals or greater than date from");
 			} catch (ParseException e) {
 				logger.warn(e);
 				throw new WrongInputException("Illigal date format. ");
@@ -341,8 +422,7 @@ public class EventController {
 			event.setDateFrom(dateFrom);
 			event.setDateTill(dateTill);
 			if (request.getSession().getAttribute("clubId") != null)
-				event.setClubId(Integer.parseInt(request.getSession()
-						.getAttribute("clubId").toString()));
+				event.setClubId(Integer.parseInt(request.getSession().getAttribute("clubId").toString()));
 			event.setDescription(map.get("description"));
 			event.setState(State.valueOf(map.get("state").toUpperCase()));
 			event.setAvaId(media.getId());
@@ -358,12 +438,10 @@ public class EventController {
 
 	@SuppressWarnings("deprecation")
 	@Request(url = "UpdateMeeting", method = "post")
-	public static void meetingUpdatePost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException,
-			SQLException, ReflectiveOperationException {
+	public static void meetingUpdatePost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException, SQLException, ReflectiveOperationException {
 
-		int eventId = Integer.parseInt(request.getSession()
-				.getAttribute("eventId").toString());
+		int eventId = Integer.parseInt(request.getSession().getAttribute("eventId").toString());
 
 		try {
 			FileLoader fileLoader = new FileLoader();
@@ -380,18 +458,15 @@ public class EventController {
 			// event date valid
 			Timestamp dateFrom;
 			Timestamp dateTill;
-			Timestamp currentTime = new Timestamp(
-					new java.util.Date().getTime());
+			Timestamp currentTime = new Timestamp(new java.util.Date().getTime());
 			currentTime.setSeconds(0);
 			currentTime.setNanos(0);
 
 			int[] timeFrom = timeValid(map.get("timeFrom"));
 			int[] timeTill = timeValid(map.get("timeTill"));
 			try {
-				dateFrom = DateConverter.convertIntoTimestamp(
-						map.get("dateFrom"), "dd.MM.yyyy");
-				dateTill = DateConverter.convertIntoTimestamp(
-						map.get("dateTill"), "dd.MM.yyyy");
+				dateFrom = DateConverter.convertIntoTimestamp(map.get("dateFrom"), "dd.MM.yyyy");
+				dateTill = DateConverter.convertIntoTimestamp(map.get("dateTill"), "dd.MM.yyyy");
 			} catch (ParseException e) {
 				logger.warn(e);
 				throw new WrongInputException("Illigal date format. ");
@@ -401,18 +476,15 @@ public class EventController {
 			dateTill.setHours(timeTill[0]);
 			dateTill.setMinutes(timeTill[1]);
 			if (dateFrom.getTime() < currentTime.getTime())
-				throw new WrongInputException(
-						"Date from cant be less than current time. ");
+				throw new WrongInputException("Date from cant be less than current time. ");
 			if (dateTill.getTime() < dateFrom.getTime())
-				throw new WrongInputException(
-						"Date till must be equals or greater than date from");
+				throw new WrongInputException("Date till must be equals or greater than date from");
 			if (dateFrom.getTime() <= 0)
 				throw new WrongInputException("Date is too big or too small. ");
 			if (currentTime.getTime() > dateFrom.getTime())
 				throw new WrongInputException("Date has gone. ");
 			if (dateFrom.getTime() > dateTill.getTime())
-				throw new WrongInputException(
-						"Date from cant be biger than date till. ");
+				throw new WrongInputException("Date from cant be biger than date till. ");
 
 			// event description valid
 			if (map.get("description") == null)
@@ -449,8 +521,7 @@ public class EventController {
 			event.setDateFrom(dateFrom);
 			event.setDateTill(dateTill);
 			if (request.getSession().getAttribute("clubId") != null)
-				event.setClubId(Integer.parseInt(request.getSession()
-						.getAttribute("clubId").toString()));
+				event.setClubId(Integer.parseInt(request.getSession().getAttribute("clubId").toString()));
 			event.setDescription(map.get("description"));
 			event.setState(State.valueOf(map.get("state").toUpperCase()));
 			event.setAvaId(media.getId());
@@ -465,9 +536,8 @@ public class EventController {
 	}
 
 	@Request(url = "activateEvent", method = "get")
-	public static void activateEvent(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException,
-			ReflectiveOperationException, SQLException {
+	public static void activateEvent(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException, ReflectiveOperationException, SQLException {
 
 		Integer userId = (Integer) request.getSession().getAttribute("userId");
 
@@ -506,9 +576,8 @@ public class EventController {
 	}
 
 	@Request(url = "deleteEvent", method = "get")
-	public static void deleteEvent(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException,
-			ReflectiveOperationException, SQLException {
+	public static void deleteEvent(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException, ReflectiveOperationException, SQLException {
 
 		Integer userId = (Integer) request.getSession().getAttribute("userId");
 
