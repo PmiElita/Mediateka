@@ -45,6 +45,9 @@ import static com.mediateka.service.ClubService.*;
 
 @Controller
 public class ClubController {
+	
+	
+	private static final int defaultClubAvaId = 2; 
 
 	private static Logger logger = Logger.getLogger(ClubController.class);
 
@@ -60,8 +63,7 @@ public class ClubController {
 			HttpServletResponse response) throws ServletException, IOException,
 			SQLException, ReflectiveOperationException {
 
-		HttpSession session = request.getSession();
-		session.setAttribute("userId", 1);
+		HttpSession session = request.getSession();		
 
 		ClubRegistrationForm form = new ClubRegistrationForm();
 		ObjectFiller.fill(form, request);
@@ -81,7 +83,7 @@ public class ClubController {
 		club.setName(form.getName());
 		club.setDescription(form.getDescription());
 		club.setState(State.BLOCKED);
-		club.setAvaId(2);
+		club.setAvaId(defaultClubAvaId);
 		club = ClubService.callSaveClub(club);
 		clubEventMember.setClubId(club.getId());
 		clubEventMember.setUserId(Integer.parseInt(session.getAttribute(
@@ -96,21 +98,19 @@ public class ClubController {
 		new File(clubDir.getAbsolutePath() + "\\videos").mkdir();
 		new File(clubDir.getAbsolutePath() + "\\audios").mkdir();
 
-		request.getRequestDispatcher("pages/club/loadAlbum.jsp").forward(
-				request, response);
+//		request.getRequestDispatcher("pages/club/loadAlbum.jsp").forward(
+//				request, response);
 
 	}
 
 	@Request(url = "editClub", method = "get")
 	public static void editClubGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
-			ReflectiveOperationException, SQLException {
-		HttpSession session = request.getSession();
+			ReflectiveOperationException, SQLException {		
 		// change set atribute to atribute from sesion
-		Club club = ClubService.getClubById(1);
-		session.setAttribute("clubId", club.getId());
-		request.setAttribute("club", ClubService.getClubById((Integer) request
-				.getSession().getAttribute("clubId")));
+		Club club = ClubService.getClubById((Integer)(request.getAttribute("clubId")));
+		request.setAttribute("clubId", club.getId());
+		request.setAttribute("club", club);
 		request.setAttribute(
 				"clubAva",
 				MediaService.getMediaById(club.getAvaId()).getPath()
@@ -178,25 +178,6 @@ public class ClubController {
 
 	}
 
-	@Request(url = "record", method = "get")
-	public static void createRecordGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		session.setAttribute("clubId", 1);
-		session.setAttribute("userId", 2);
-		request.getRequestDispatcher("pages/club/record.jsp").forward(request,
-				response);
-
-	}
-
-	@Request(url = "record", method = "post")
-	public static void createRecordPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException,
-			SQLException, ReflectiveOperationException {
-
-		request.getRequestDispatcher("pages/club/club.jsp").forward(request,
-				response);
-	}
 
 	@Request(url = "club", method = "get")
 	public static void clubGet(HttpServletRequest request,
