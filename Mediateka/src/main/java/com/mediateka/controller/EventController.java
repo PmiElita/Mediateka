@@ -220,9 +220,6 @@ public class EventController {
 			HttpServletResponse response) throws ServletException, IOException,
 			SQLException, ReflectiveOperationException {
 
-		request.getSession().setAttribute("eventId", 7);
-		request.getSession().setAttribute("userId", 2);
-
 		request.setAttribute("message",
 				request.getSession().getAttribute("message"));
 

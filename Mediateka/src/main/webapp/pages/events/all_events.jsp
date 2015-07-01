@@ -15,7 +15,7 @@
 		<div class="row my-picture-row">
 			<div class="col s8 offset-s2">
 				<div class="waves-effect waves-block waves-light my-picture-wrap">
-				<a href="club?clubId=${item.id}">
+				<a href="event?eventId=${item.id}">
 						<div align="center">
 							<h3 class="image-cover-t"><c:out value="${item.name}"/>
 							</h3><img class="my-picture-club" src="${allEventsAvas[status.index]}" align="middle">
