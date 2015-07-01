@@ -28,7 +28,3 @@
 		</div>
 	</div>
 </div>
-<jsp:include page="../general/footer.jsp" />
-</body>
-
-</html>
