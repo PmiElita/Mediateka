@@ -5,7 +5,7 @@ var storedAudios = [];
 var num;
 
 function like(value, id) {
-	 alert(value);
+	alert(value);
 	$
 			.ajax({
 				type : 'get',
@@ -17,9 +17,9 @@ function like(value, id) {
 				},
 				complete : function(data) {
 
-					 alert(JSON.stringify(data));
-					 alert(data.responseJSON);
-					 alert(data.responseJSON.id);
+					alert(JSON.stringify(data));
+					alert(data.responseJSON);
+					alert(data.responseJSON.id);
 					var id = data.responseJSON.id;
 					document.getElementById("recordLike" + id).innerHTML = data.responseJSON.like;
 					document.getElementById("recordDislike" + id).innerHTML = data.responseJSON.dislike;
@@ -55,8 +55,7 @@ function handleFileSelect(e) {
 								+ e.target.result
 								+ "\" data-file='"
 								+ f.name
-								+ "'height='100' class='selFile' title='Click to remove'><button name='"
-								+ f.name + "'>x</button" + f.name
+								+ "'height='100' class='selFile' title='Click to remove'>"
 								+ "<br clear=\"left\"/>";
 						selDiv.append(html);
 
@@ -101,6 +100,7 @@ function handleForm(e) {
 
 	e.preventDefault();
 	var data = new FormData();
+	data.append('index', $('#index').text());	
 	data.append('text', document.getElementById('text').value);
 	if (document.getElementById('clubId') != null) {
 		data.append('clubId', document.getElementById('clubId').innerHTML
@@ -138,53 +138,18 @@ function handleForm(e) {
 			document.getElementById("selectedVideos").innerHTML = "";
 			document.getElementById("selectedAudios").innerHTML = "";
 			alert(JSON.stringify(e.currentTarget));
-			var responseJSON = JSON.parse(e.currentTarget.responseText);
-			// document.getElementById('recordList').appendChild(
-			// document.createTextNode());
-			var date = new Date(responseJSON["contentGroup"].creationDate);
-			alert(JSON.stringify(responseJSON));
-			var dateString = date.getDate() + "." + date.getMonth() + "."
-					+ date.getFullYear() + " " + date.getHours() + ":"
-					+ date.getMinutes();
-			recordList = $("#uploaded");
-			var html = "<div class=\"main-info container z-depth-1\"> <div class=\"row\">"
-					+ dateString;
-			var htmlText = responseJSON["contentGroup"].text;
-			html += htmlText;
-			var htmlImage = "";
-			var htmlVideo = "";
-			var htmlAudio = "";
-			for (var i = 0; i < responseJSON["mediaList"].length; i++) {
-				if (responseJSON["mediaList"][i].type == "IMAGE") {
-					htmlImage += "<img src='"
-							+ responseJSON["mediaList"][i].path
-							+ "' width='200' height='150'> ";
-				}
-				if (responseJSON["mediaList"][i].type == "VIDEO") {
-					htmlVideo = "<video controls>" + "<source src='"
-							+ responseJSON["mediaList"][i].path + "'</video>";
-				}
-				if (responseJSON["mediaList"][i].type == "AUDIO") {
-					htmlAudio = "<audio controls>" + "<source src='"
-							+ responseJSON["mediaList"][i].path + "'</audio>";
-				}
-			}
-			html += htmlImage + htmlVideo + htmlAudio;
-			html += "<a><span><i onclick='like('1');'"
-					+ " class='tiny mdi-action-thumb-up waves-effect waves-green '>"
-					+ "</i></span></a> <span "
-					+ "id='recordLike"
-					+ responseJSON["contentGroup"].id
-					+ "'>"
-					+ responseJSON["contentGroup"].like
-					+ "</span>"
-					+ "<a><span><i onclick='like('-1');' class='tiny mdi-action-thumb-down  waves-effect waves-red'></i></span></a>"
-					+ "<span id='recordDislike"
-					+ responseJSON["contentGroup"].id + "'>"
-					+ responseJSON["contentGroup"].dislike
-					+ "</span></div></div>";
-			recordList.prepend(html);
-			alert(html);
+			var responseJSON = JSON.parse(e.currentTarget.responseText);			
+			
+			loadIndex = document.getElementById('index').textContent;						
+			var loadEl = document.getElementById("load");
+			loadIndex++;			
+			$("#index").text(loadIndex);
+			loadEl.id = loadEl.id + loadIndex;			
+			$('#' + loadEl.id)
+					.load(
+							"viewNewRecord?recordId="
+									+ responseJSON["contentGroup"].id + "&index=" + document.getElementById("index").textContent);
+
 			alert(' items uploaded.');
 		}
 	}
@@ -196,22 +161,22 @@ function handleForm(e) {
 function removeFile(e) {
 	var file = $(this).data("file");
 	for (var i = 0; i < storedImages.length; i++) {
-		if (storedImages[i].name === file) {
+		if (storedImages[i].name == file) {
 			storedImages.splice(i, 1);
 			break;
 		}
 	}
 	for (var i = 0; i < storedVideos.length; i++) {
-		if (storedVideos[i].name === file) {
+		if (storedVideos[i].name == file) {
 			storedVideos.splice(i, 1);
 			break;
 		}
 	}
 	for (var i = 0; i < storedAudios.length; i++) {
-		if (storedAudios[i].name === file) {
+		if (storedAudios[i].name == file) {
 			storedAudios.splice(i, 1);
 			break;
 		}
 	}
-	$(this).parent().remove();
+	$(this).remove();
 }

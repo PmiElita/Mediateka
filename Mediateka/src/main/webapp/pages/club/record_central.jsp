@@ -3,7 +3,17 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+<!-- fotorama.css & fotorama.js. -->
+<link
+	href="http://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.css"
+	rel="stylesheet">
+<!-- 3 KB -->
+<script
+	src="http://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.js"></script>
+<!-- 16 KB -->
 
+<link href="http://vjs.zencdn.net/4.12/video-js.css" rel="stylesheet">
+<script src="http://vjs.zencdn.net/4.12/video.js"></script>
 
 <div id="load"></div>
 <label id="index" hidden="true">${index}</label>
@@ -24,17 +34,18 @@
 				<div align="left">
 					<c:out value="${record.text}" />
 				</div>
-				<div id='gallery${record.id }'>
-					<div class="fotorama 'gallery${record.id }'" data-nav="thumbs" data-width="700"
-						data-maxwidth="100%" data-ratio="16/9" data-allowfullscreen="true"
-						data-nav="thumbs" data-keyboard="true" align="center"
-						data-swipe="true">
-						<c:forEach var="image" items="${imageMap.get(record.id) }">
+				<div class="fotorama" id='gallery${record.id }' data-nav="thumbs"
+					data-width="700" data-maxwidth="100%" data-ratio="16/9"
+					data-allowfullscreen="true" data-nav="thumbs" data-keyboard="true"
+					align="center" data-swipe="true">
+					<c:forEach var="image" items="${imageMap.get(record.id) }">
 
-							<a href='<c:out value="${image.path}"></c:out>' data-thumb='<c:out value="${image.path}"></c:out>'><img
-								src='<c:out value="${image.path}"></c:out>' data-fit="scaledown"></a>
-						</c:forEach>
-					</div>
+						<a href='<c:out value="${image.path}"></c:out>'
+							data-thumb='<c:out value="${image.path}"></c:out>'>
+							<img
+							src='<c:out value="${image.path}"></c:out>' data-fit="scaledown">
+							</a>
+					</c:forEach>
 				</div>
 				<div class="fotorama " data-width="700" data-maxwidth="100%"
 					data-ratio="16/9" align="center" data-video="true"
