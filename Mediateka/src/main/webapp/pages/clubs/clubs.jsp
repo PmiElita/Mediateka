@@ -45,12 +45,11 @@
 			<div class="row" style="margin-top: -1em">
 				<div class="col s12">
 					<ul class="tabs">
-						<li class="tab col s3" style="margin-left: 5em;"><a
+						<li class="tab col s2" style="margin-left: 5em;"><a
 							href="#my_clubs">My clubs</a></li>
-						<li class="tab col s3"><a href="#all_clubs">All clubs</a></li>
-						<li class="tab col s3" style="margin-left: -5em"><a href=""
-							data-target="modal8" class="modal-trigger waves-effect">Create
-								club</a></li>
+						<li class="tab col s2" style="margin-left: -5em"><a
+							href="#all_clubs">All clubs</a></li>
+
 					</ul>
 				</div>
 

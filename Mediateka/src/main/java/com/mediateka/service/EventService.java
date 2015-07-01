@@ -7,6 +7,7 @@ import java.util.List;
 import com.mediateka.dao.EventDAO;
 import com.mediateka.model.Event;
 import com.mediateka.model.enums.EventType;
+import com.mediateka.model.enums.State;
 
 public class EventService {
 
@@ -35,6 +36,11 @@ public class EventService {
 		return EventDAO.getEventByType(type);
 	}
 
+	public static List<Event> getEventByState(State state) throws SQLException,
+			ReflectiveOperationException {
+		return EventDAO.getEventByState(state);
+	}
+
 	public static void updateEventById(Event event) throws SQLException,
 			ReflectiveOperationException {
 		EventDAO.updateEventById(event);
@@ -49,9 +55,9 @@ public class EventService {
 			throws SQLException, ReflectiveOperationException {
 		return EventDAO.getEventsByDate(date);
 	}
-	
+
 	public static Event callSaveEvent(Event event) throws SQLException,
-	ReflectiveOperationException {
+			ReflectiveOperationException {
 		return EventDAO.callSaveEvent(event);
 	}
 }

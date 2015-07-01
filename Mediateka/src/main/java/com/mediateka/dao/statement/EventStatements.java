@@ -6,7 +6,8 @@ public class EventStatements {
 			+ "(type, name, date_from, date_till, club_id, state, description)"
 			+ "VALUES (?,?,?,?,?,?,?,?)";
 	public static final String[] INSERT_EVENT_ORDER = { "type", "name",
-			"date_from", "date_till", "club_id", "state", "description", "ava_id" };
+			"date_from", "date_till", "club_id", "state", "description",
+			"ava_id" };
 
 	public static final String SELECT_EVENT_BY_ID = "SELECT  * FROM event WHERE id = ? AND state <> 'DELETED'";
 	public static final String[] SELECT_EVENT_BY_ID_ORDER = { "id" };
@@ -25,13 +26,18 @@ public class EventStatements {
 			+ " date_from=?, date_till=?, "
 			+ "club_id=?, state=?, description=?, ava_id=? WHERE id = ?";
 	public static final String[] UPDATE_EVENT_BY_ID_ORDER = { "type", "name",
-			"date_from", "date_till", "club_id", "state", "description", "ava_id", "id" };
+			"date_from", "date_till", "club_id", "state", "description",
+			"ava_id", "id" };
+
+	public static final String SELECT_EVENT_BY_STATE = "SELECT * FROM event WHERE state=?";
+	public static final String[] SELECT_EVENT_BY_STATE_ORDER = { "state" };
 
 	public static final String SELECT_EVENT_ALL = "SELECT * FROM event WHERE state <> 'DELETED'";
-	
-	public static final String CALL_GET_EVENTS_BY_DATE ="CALL GetEventsByDate(?)";
-	
+
+	public static final String CALL_GET_EVENTS_BY_DATE = "CALL GetEventsByDate(?)";
+
 	public static final String CALL_INSERT_EVENT = "CALL insertEvent (?,?,?,?,?,?,?,?)";
 	public static final String[] CALL_INSERT_EVENT_ORDER = { "type", "name",
-		"date_from", "date_till", "club_id", "state", "description", "ava_id" };
+			"date_from", "date_till", "club_id", "state", "description",
+			"ava_id" };
 }

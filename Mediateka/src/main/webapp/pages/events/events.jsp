@@ -16,6 +16,20 @@
 <jsp:include page="../index/index_modal_login.jsp" />
 <jsp:include page="../index/index_modal_register.jsp" />
 <jsp:include page="../general/head.jsp" />
+<style>
+.image-cover-t {
+	color: white;
+	position: relative;
+	margin-top: 1em;
+	z-index: 1000;
+	text-align: center;
+	text-shadow: black 1.0px 0.0px, black 1.0px 1.0px, black 0.0px 1.0px,
+		black -1.0px 1.0px, black -1.0px 0.0px, black -1.0px -1.0px, black
+		0.0px -1.0px, black 1.0px -1.0px, black 0.0 0.0 3.0px, black 0.0 0.0
+		3.0px, black 0.0 0.0 3.0px, black 0.0 0.0 3.0px, black 0.0 0.0 3.0px,
+		black 0.0 0.0 3.0px, black 0.0 0.0 3.0px, black 0.0 0.0 3.0px;
+}
+</style>
 </head>
 
 

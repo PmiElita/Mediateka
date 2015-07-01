@@ -18,6 +18,7 @@ import com.google.gson.Gson;
 import com.mediateka.annotation.Controller;
 import com.mediateka.annotation.Request;
 import com.mediateka.comparator.ClubsByMembersNumber;
+import com.mediateka.comparator.EventsByDate;
 import com.mediateka.comparator.UsersByFullname;
 import com.mediateka.exception.WrongInputException;
 import com.mediateka.form.SearchUserForm;
@@ -38,6 +39,7 @@ import com.mediateka.util.Translator;
 import static com.mediateka.service.ClubEventMemberService.*;
 import static com.mediateka.service.ClubService.*;
 import static com.mediateka.service.MediaService.*;
+import static com.mediateka.service.EventService.*;
 
 @Controller
 public class UserController {
@@ -48,9 +50,11 @@ public class UserController {
 	public static void eventsGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			SQLException, ReflectiveOperationException {
+
 		Integer userId = (Integer) request.getSession().getAttribute("userId");
 
-		System.out.println("events");
+		List<Event> allEvents = getEventByState(State.ACTIVE);
+
 		if (userId == null) {
 			request.getRequestDispatcher("pages/error404.jsp").forward(request,
 					response);
@@ -68,14 +72,7 @@ public class UserController {
 		case ADMIN:
 		case MODERATOR:
 
-			List<Event> allEvents = EventService.getEventAll();
-
-			List<Event> requestedEvents = new ArrayList<Event>();
-			for (Event c : allEvents) {
-				if (c.getState() == State.REQUESTED) {
-					requestedEvents.add(c);
-				}
-			}
+			List<Event> requestedEvents = getEventByState(State.REQUESTED);
 
 			request.setAttribute("requestedEvents", requestedEvents);
 			request.setAttribute("allEvents", allEvents);
@@ -85,8 +82,60 @@ public class UserController {
 			break;
 
 		case USER:
+			// my events
+			List<ClubEventMember> iMemberOfEvents = getClubEventMemberByUserId(userId);
+			List<Event> myEvents = new ArrayList<>();
+			if (iMemberOfEvents != null)
+				for (ClubEventMember member : iMemberOfEvents)
+					if (member.getEventId() != null
+							&& member.getState() == State.ACTIVE
+							&& getEventById(member.getEventId()) != null)
+						myEvents.add(getEventById(member.getEventId()));
+			Collections.sort(myEvents, new EventsByDate());
+			List<Event> myActiveEvents = new ArrayList<>();
+			List<Event> myBlockedEvents = new ArrayList<>();
+			for (Event event : myEvents) {
+				if (event.getState() == State.ACTIVE)
+					myActiveEvents.add(event);
+				else if (event.getState() == State.BLOCKED)
+					myBlockedEvents.add(event);
+			}
+
+			// all events
+			if (allEvents != null)
+				Collections.sort(allEvents, new EventsByDate());
+
+			// my events avas
+			List<String> myActiveEventsAvas = new ArrayList<>();
+			List<String> myBlockedEventsAvas = new ArrayList<>();
+			for (Event event : myActiveEvents)
+				myActiveEventsAvas.add(getMediaById(event.getAvaId()).getPath()
+						.replace("\\", "/"));
+			for (Event event : myBlockedEvents)
+				myBlockedEventsAvas.add(getMediaById(event.getAvaId())
+						.getPath().replace("\\", "/"));
+
+			// all events avas
+			List<String> allEventsAvas = new ArrayList<>();
+			if (allEvents != null)
+				for (Event event : allEvents)
+					allEventsAvas.add(getMediaById(event.getAvaId()).getPath()
+							.replace("\\", "/"));
+
+			request.setAttribute("myActiveEvents", myActiveEvents);
+			request.setAttribute("myBlockedEvents", myBlockedEvents);
+			request.setAttribute("myActiveEventsAvas", myActiveEventsAvas);
+			request.setAttribute("myBlockedEventsAvas", myBlockedEventsAvas);
+			request.setAttribute("allEvents", allEvents);
+			request.setAttribute("allEventsAvas", allEventsAvas);
 			request.getRequestDispatcher("pages/events/events.jsp").forward(
 					request, response);
+			request.removeAttribute("myActiveEvents");
+			request.removeAttribute("myBlockedEvents");
+			request.removeAttribute("myActiveEventsAvas");
+			request.removeAttribute("myBlockedEventsAvas");
+			request.removeAttribute("allEvents");
+			request.removeAttribute("allEventsAvas");
 			break;
 
 		default:
@@ -135,68 +184,69 @@ public class UserController {
 					.forward(request, response);
 			return;
 
-		}
-
-		// my clubs
-		List<ClubEventMember> memberer = getClubEventMemberByUserId(Integer
-				.parseInt(request.getSession().getAttribute("userId")
-						.toString()));
-		List<ClubEventMember> clubMemberer = new ArrayList<>();
-		if (!(memberer == null)) 
-			for (ClubEventMember member : memberer)
-				if (member.getClubId() != null)
-					clubMemberer.add(member);
-		List<Club> myClubs = new ArrayList<>();
-		for (ClubEventMember member : clubMemberer) {
-			myClubs.add(getClubById(member.getClubId()));
-		}
-		Collections.sort(myClubs, new ClubsByMembersNumber());
-		List<Club> myActiveClubs = new ArrayList<>();
-		List<Club> myBlockedClubs = new ArrayList<>();
-		for (Club club : myClubs) {
-			if (club.getState() == State.ACTIVE)
-				myActiveClubs.add(club);
-			else if (club.getState() == State.BLOCKED)
-				myBlockedClubs.add(club);
-		}
-
-		// my clubs avas
-		List<String> myActiveClubsAvas = new ArrayList<>();
-		List<String> myBlockedClubsAvas = new ArrayList<>();
-		for (Club club : myActiveClubs)
-			myActiveClubsAvas.add(getMediaById(club.getAvaId()).getPath()
-					.replace("\\", "/"));
-		for (Club club : myBlockedClubs)
-			myBlockedClubsAvas.add(getMediaById(club.getAvaId()).getPath()
-					.replace("\\", "/"));
-
-		// all clubs
-		List<Club> allClubs = getClubByState(State.ACTIVE);
-		if (allClubs != null)
-			Collections.sort(allClubs, new ClubsByMembersNumber());
-
-		// all clubs avas
-		List<String> allClubsAvas = new ArrayList<>();
-		if (allClubs != null)
-			for (Club club : allClubs) {
-				allClubsAvas.add(getMediaById(club.getAvaId()).getPath()
-						.replace("\\", "/"));
+		} else if (user.getRole() == Role.USER) {
+			// my clubs
+			List<ClubEventMember> memberer = getClubEventMemberByUserId(Integer
+					.parseInt(request.getSession().getAttribute("userId")
+							.toString()));
+			List<ClubEventMember> clubMemberer = new ArrayList<>();
+			if (memberer != null)
+				for (ClubEventMember member : memberer)
+					if (member.getClubId() != null
+							&& member.getState() == State.ACTIVE)
+						clubMemberer.add(member);
+			List<Club> myClubs = new ArrayList<>();
+			for (ClubEventMember member : clubMemberer) {
+				myClubs.add(getClubById(member.getClubId()));
+			}
+			Collections.sort(myClubs, new ClubsByMembersNumber());
+			List<Club> myActiveClubs = new ArrayList<>();
+			List<Club> myBlockedClubs = new ArrayList<>();
+			for (Club club : myClubs) {
+				if (club.getState() == State.ACTIVE)
+					myActiveClubs.add(club);
+				else if (club.getState() == State.BLOCKED)
+					myBlockedClubs.add(club);
 			}
 
-		request.setAttribute("allClubs", allClubs);
-		request.setAttribute("allClubsAvas", allClubsAvas);
-		request.setAttribute("myActiveClubsAvas", myActiveClubsAvas);
-		request.setAttribute("myBlockedClubsAvas", myBlockedClubsAvas);
-		request.setAttribute("myActiveClubs", myActiveClubs);
-		request.setAttribute("myBlockedClubs", myBlockedClubs);
-		request.getRequestDispatcher("pages/clubs/clubs.jsp").forward(request,
-				response);
-		request.removeAttribute("myActiveClubs");
-		request.removeAttribute("myBlockedClubs");
-		request.removeAttribute("myActiveClubsAvas");
-		request.removeAttribute("myBlockedClubsAvas");
-		request.removeAttribute("allClubs");
-		request.removeAttribute("allClubsAvas");
+			// my clubs avas
+			List<String> myActiveClubsAvas = new ArrayList<>();
+			List<String> myBlockedClubsAvas = new ArrayList<>();
+			for (Club club : myActiveClubs)
+				myActiveClubsAvas.add(getMediaById(club.getAvaId()).getPath()
+						.replace("\\", "/"));
+			for (Club club : myBlockedClubs)
+				myBlockedClubsAvas.add(getMediaById(club.getAvaId()).getPath()
+						.replace("\\", "/"));
+
+			// all clubs
+			List<Club> allClubs = getClubByState(State.ACTIVE);
+			if (allClubs != null)
+				Collections.sort(allClubs, new ClubsByMembersNumber());
+
+			// all clubs avas
+			List<String> allClubsAvas = new ArrayList<>();
+			if (allClubs != null)
+				for (Club club : allClubs) {
+					allClubsAvas.add(getMediaById(club.getAvaId()).getPath()
+							.replace("\\", "/"));
+				}
+
+			request.setAttribute("allClubs", allClubs);
+			request.setAttribute("allClubsAvas", allClubsAvas);
+			request.setAttribute("myActiveClubsAvas", myActiveClubsAvas);
+			request.setAttribute("myBlockedClubsAvas", myBlockedClubsAvas);
+			request.setAttribute("myActiveClubs", myActiveClubs);
+			request.setAttribute("myBlockedClubs", myBlockedClubs);
+			request.getRequestDispatcher("pages/clubs/clubs.jsp").forward(
+					request, response);
+			request.removeAttribute("myActiveClubs");
+			request.removeAttribute("myBlockedClubs");
+			request.removeAttribute("myActiveClubsAvas");
+			request.removeAttribute("myBlockedClubsAvas");
+			request.removeAttribute("allClubs");
+			request.removeAttribute("allClubsAvas");
+		}
 	}
 
 	@Request(url = "cabinet", method = "get")

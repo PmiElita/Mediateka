@@ -12,6 +12,7 @@ import java.util.List;
 
 import com.mediateka.model.Event;
 import com.mediateka.model.enums.EventType;
+import com.mediateka.model.enums.State;
 import com.mediateka.util.ConnectionManager;
 import com.mediateka.util.Transformer;
 
@@ -93,6 +94,21 @@ public class EventDAO {
 			event.setType(type);
 			Transformer.valueIntoPreparedStatement(statement, event,
 					SELECT_EVENT_BY_TYPE_ORDER);
+			ResultSet resultSet = statement.executeQuery();
+			return Transformer.transformResultSetIntoList(resultSet,
+					Event.class);
+		}
+	}
+
+	public static List<Event> getEventByState(State state) throws SQLException,
+			ReflectiveOperationException {
+		try (Connection connection = ConnectionManager.getConnection()) {
+			PreparedStatement statement = connection
+					.prepareStatement(SELECT_EVENT_BY_STATE);
+			Event event = new Event();
+			event.setState(state);
+			Transformer.valueIntoPreparedStatement(statement, event,
+					SELECT_EVENT_BY_STATE_ORDER);
 			ResultSet resultSet = statement.executeQuery();
 			return Transformer.transformResultSetIntoList(resultSet,
 					Event.class);
