@@ -41,30 +41,30 @@
 			<div class="parallax">
 				<img src="images/parallax1.jpg">
 			</div>
-
+			<div class="container section white">
+			
+			<c:choose><c:when test="${userRole eq Role.USER}">
 			<div class="row" style="margin-top: -1em">
 				<div class="col s12">
 					<ul class="tabs">
-						<li class="tab col s2" style="margin-left: 5em;"><a
-							href="#my_clubs">My clubs</a></li>
-						<li class="tab col s2" style="margin-left: -5em"><a
+						<li class="tab col s2"><a
+							href="#my_clubs"  style="margin-left: 5em;">My clubs</a></li>
+						<li class="tab col s2"><a
 							href="#all_clubs">All clubs</a></li>
 
 					</ul>
 				</div>
-
-				<c:if test="${userRole eq Role.ADMIN}">
-					<jsp:include page="../admin/admin_side_nav.jsp" />
-				</c:if>
-
-				<c:if test="${userRole eq Role.USER}">
 					<jsp:include page="../user/user_side_nav.jsp" />
-				</c:if>
 				
 				<div id="my_clubs"><jsp:include page="my_clubs.jsp" /></div>
 				<div id="all_clubs"><jsp:include page="all_clubs.jsp" /></div>
 			</div>
-
+			</c:when>
+			<c:otherwise>
+			<div id="all_clubs"><jsp:include page="all_clubs.jsp" /></div>
+			</c:otherwise>
+			</c:choose>
+			</div>
 		</div>
 	</div>
 	<jsp:include page="../general/footer.jsp" />

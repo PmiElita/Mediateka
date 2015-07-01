@@ -228,7 +228,7 @@ public class EventController {
 
 			ClubEventMember clubEventMember = new ClubEventMember();
 			clubEventMember.setEventId(event.getId());
-			clubEventMember.setState(State.ACTIVE);
+			clubEventMember.setState(State.REQUESTED);
 			clubEventMember.setType(ClubEventMemberType.CREATOR);
 			clubEventMember.setUserId((Integer) request.getSession().getAttribute("userId"));
 			saveClubEventMember(clubEventMember);

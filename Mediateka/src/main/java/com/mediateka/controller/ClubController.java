@@ -1,7 +1,5 @@
 package com.mediateka.controller;
 
-import static com.mediateka.service.ClubService.getClubById;
-
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -43,12 +41,12 @@ import com.mediateka.util.FileLoader;
 import com.mediateka.util.FormValidator;
 import com.mediateka.util.ObjectFiller;
 
+import static com.mediateka.service.ClubService.*;
+
 @Controller
 public class ClubController {
-	
-	
-	private static final int defaultClubAvaId = 2; 
 
+private static final int defaultClubAvaId = 2;
 	private static Logger logger = Logger.getLogger(ClubController.class);
 
 	@Request(url = "createClub", method = "get")
@@ -62,8 +60,6 @@ public class ClubController {
 	public static void createClubPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			SQLException, ReflectiveOperationException {
-
-		HttpSession session = request.getSession();		
 
 		ClubRegistrationForm form = new ClubRegistrationForm();
 		ObjectFiller.fill(form, request);
@@ -82,12 +78,12 @@ public class ClubController {
 
 		club.setName(form.getName());
 		club.setDescription(form.getDescription());
-		club.setState(State.BLOCKED);
-		club.setAvaId(defaultClubAvaId);
+		club.setState(State.REQUESTED);
+		club.setAvaId(2);
 		club = ClubService.callSaveClub(club);
 		clubEventMember.setClubId(club.getId());
-		clubEventMember.setUserId(Integer.parseInt(session.getAttribute(
-				"userId").toString()));
+		clubEventMember.setUserId(Integer.parseInt(request.getSession()
+				.getAttribute("userId").toString()));
 		clubEventMember.setState(State.ACTIVE);
 		clubEventMember.setType(ClubEventMemberType.CREATOR);
 		ClubEventMemberService.saveClubEventMember(clubEventMember);
@@ -98,19 +94,18 @@ public class ClubController {
 		new File(clubDir.getAbsolutePath() + "\\videos").mkdir();
 		new File(clubDir.getAbsolutePath() + "\\audios").mkdir();
 
-//		request.getRequestDispatcher("pages/club/loadAlbum.jsp").forward(
-//				request, response);
-
 	}
 
 	@Request(url = "editClub", method = "get")
 	public static void editClubGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
-			ReflectiveOperationException, SQLException {		
+			ReflectiveOperationException, SQLException {
+		HttpSession session = request.getSession();
 		// change set atribute to atribute from sesion
-		Club club = ClubService.getClubById((Integer)(request.getAttribute("clubId")));
-		request.setAttribute("clubId", club.getId());
-		request.setAttribute("club", club);
+		Club club = ClubService.getClubById(1);
+		session.setAttribute("clubId", club.getId());
+		request.setAttribute("club", ClubService.getClubById((Integer) request
+				.getSession().getAttribute("clubId")));
 		request.setAttribute(
 				"clubAva",
 				MediaService.getMediaById(club.getAvaId()).getPath()
@@ -158,6 +153,9 @@ public class ClubController {
 	@Request(url = "loadAlbum", method = "get")
 	public static void createAlbumGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		session.setAttribute("clubId", 1);
+		session.setAttribute("userId", 2);
 		request.getRequestDispatcher("pages/club/loadAlbum.jsp").forward(
 				request, response);
 
@@ -169,15 +167,31 @@ public class ClubController {
 			ReflectiveOperationException, SQLException {
 
 		request.getAttribute("clubId");
-		request.setAttribute("isSigned", "true");
-		
 		CreateContent.createContent(request, response, ContentGroupType.IMAGE);
-		
 		request.getRequestDispatcher("pages/club/club.jsp").forward(request,
 				response);
 
 	}
 
+	@Request(url = "record", method = "get")
+	public static void createRecordGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		session.setAttribute("clubId", 1);
+		session.setAttribute("userId", 2);
+		request.getRequestDispatcher("pages/club/record.jsp").forward(request,
+				response);
+
+	}
+
+	@Request(url = "record", method = "post")
+	public static void createRecordPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException,
+			SQLException, ReflectiveOperationException {
+
+		request.getRequestDispatcher("pages/club/club.jsp").forward(request,
+				response);
+	}
 
 	@Request(url = "club", method = "get")
 	public static void clubGet(HttpServletRequest request,
@@ -200,7 +214,7 @@ public class ClubController {
 				Club club = getClubById(clubId);
 				List<ContentGroup> records = ContentGroupService
 						.getContentGroupByClubId(clubId);
-				
+
 				Map<Integer, List<Media>> mediaMap = new HashMap<Integer, List<Media>>();
 				Map<Integer, List<Media>> imageMap = new HashMap<Integer, List<Media>>();
 				Map<Integer, List<Media>> videoMap = new HashMap<Integer, List<Media>>();
@@ -270,17 +284,7 @@ public class ClubController {
 				request.setAttribute("clubId", club.getId());
 				request.setAttribute("club", club);
 				request.setAttribute("userName", name);
-				
-				String isSigned = "false";
 
-				List<ClubEventMember> clubMembers = ClubEventMemberService.getClubEventMemberByClubId(club.getId());
-				
-				for (ClubEventMember member : clubMembers)
-					if (member.getUserId().equals(user.getId()))
-						isSigned = "true";
-
-				request.setAttribute("isSigned", isSigned);
-				
 				request.getRequestDispatcher("pages/club/club.jsp").forward(
 						request, response);
 
@@ -292,7 +296,6 @@ public class ClubController {
 				request.removeAttribute("club");
 				request.removeAttribute("clubId");
 				request.removeAttribute("userName");
-				request.removeAttribute("isSigned");
 			}
 		} catch (NumberFormatException e) {
 			request.setAttribute("message", "No such club!");
@@ -400,37 +403,39 @@ public class ClubController {
 			response.sendRedirect("index");
 			return;
 		}
-		
+
 		Integer clubId = Integer.parseInt(clubIdString);
-		if (clubId== null) {
-			response.sendRedirect("index");
-			return;
-		}
-		
-		//check if you are the creator of the club
-		
-		Integer myId = (Integer) request.getSession().getAttribute("userId");
-		
-		if (myId == null){
+		if (clubId == null) {
 			response.sendRedirect("index");
 			return;
 		}
 
-		List<ClubEventMember> members = ClubEventMemberService.getClubEventMemberByClubId(clubId);
-		if (members == null){
+		// check if you are the creator of the club
+
+		Integer myId = (Integer) request.getSession().getAttribute("userId");
+
+		if (myId == null) {
 			response.sendRedirect("index");
 			return;
 		}
-		
+
+		List<ClubEventMember> members = ClubEventMemberService
+				.getClubEventMemberByClubId(clubId);
+		if (members == null) {
+			response.sendRedirect("index");
+			return;
+		}
+
 		boolean IAmTheClubCreator = false;
-		for (ClubEventMember member : members){
-			if ((member.getUserId().equals(myId)) && (member.getType() == ClubEventMemberType.CREATOR)){
+		for (ClubEventMember member : members) {
+			if ((member.getUserId().equals(myId))
+					&& (member.getType() == ClubEventMemberType.CREATOR)) {
 				IAmTheClubCreator = true;
 				break;
 			}
 		}
 
-		if (!IAmTheClubCreator){
+		if (!IAmTheClubCreator) {
 			response.sendRedirect("index");
 			return;
 		}
