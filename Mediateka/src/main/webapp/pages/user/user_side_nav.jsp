@@ -11,6 +11,7 @@
 
 <jsp:include page="../form/new_event_form.jsp" />
 <jsp:include page="../events/create_event.jsp" />
+<jsp:include page="../club/create_club.jsp" />
 
 <div class="container-side">
 	<div id="sidebar">
@@ -19,7 +20,7 @@
 			<li><a href="" data-target="modal18"
 				class="modal-trigger waves-effect"><fmt:message bundle="${msg}"
 						key="user.create_event" /></a></li>
-			<li><a href="createClub" class="waves-effect"><fmt:message bundle="${msg}"
+			<li><a href="" data-target="modal20" class="modal-trigger class="waves-effect"><fmt:message bundle="${msg}"
 						key="user.create_club" /></a></li>
 			<li><a href="activity"><fmt:message bundle="${msg}"
 						key="user.activity" /></a></li>

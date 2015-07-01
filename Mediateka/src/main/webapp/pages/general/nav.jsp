@@ -17,7 +17,7 @@
 		<ul class="right hide-on-med-and-down">
 
 			<li><a title="Events" href="events" class="waves-effect"> <i
-					style="width: 1em"><img style="width: 120%; height: 70%; margin-top:0.15em; margin-left:-0.25em"
+					style="width: 1em"><img style="width: 120%; height: 60%; margin-top:0.35em; margin-left:-0.25em"
 						src="images/admin/events.png" /></i>
 			</a></li>
 
@@ -27,7 +27,7 @@
 			</a></li>
 
 			<li><a title=Books" href="searchBook" class="waves-effect"> <i
-					style="width: 1em"><img style="width: 120%; margin-left:-0.15em"
+					style="width: 1em"><img style="width: 120%; height:60%; margin-top:0.35em; margin-left:-0.15em"
 						src="images/admin/books.png" /></i>
 			</a></li>
 
