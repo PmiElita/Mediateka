@@ -3,6 +3,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@page import="com.mediateka.model.enums.EventType"%>
 
 <fmt:setLocale value="${locale}" />
 <fmt:setBundle basename="menu" />
@@ -20,71 +21,29 @@
 		<div class="main_poster" style="margin-top: 2em">
 
 			<div class="row">
-
+			<c:forEach var="item" items="${events}" varStatus="status">
 				<div class="col s4">
-					<div class="card medium">
-						<div class="card-image waves-effect waves-block waves-light">
-							<img class="activator" src="images/events/event1.jpg">
+					<div class="card medium" style="height:20em;">
+						<div class="card-image waves-effect waves-block waves-light" style="height:10em">
+							<img class="activator" src="images/events/event2.jpg">
 						</div>
 						<div class="card-content">
-							<span class="card-title activator grey-text text-darken-4">Event
-								1 <i class="mdi-navigation-more-vert right"></i>
+							<span class="card-title activator grey-text text-darken-4"><div style="color:red;">
+							<a href="event?eventId=${item.id}"><div align="center"><c:out value="${item.name}"/></div></a>
+							</div><i class="mdi-navigation-more-vert right"></i>
 							</span>
-							<p>
-								<a href="#!">LINK</a>
-							</p>
 						</div>
 						<div class="card-reveal">
-							<span class="card-title grey-text text-darken-4">Event 1 <i
+							<span class="card-title grey-text text-darken-4"><div style="color:red;">
+							<a href="event?eventId=${item.id}"><div align="center"><c:out value="${item.name}"/></div></a></div><i
 								class="mdi-navigation-close right"></i></span>
-							<p>It takes place right now!.</p>
+								<br>
+							<p><div style="color:green;">Event time:</div><c:out value="${dates[status.index]}"/></p>
+							<p><div style="color:green;">Description:</div><c:out value="${item.description}"/></p><br>
 						</div>
 					</div>
 				</div>
-
-				<div class="col s4">
-					<div class="card medium">
-						<div class="card-image waves-effect waves-block waves-light">
-							<img class="activator" src="images/events/event1.jpg">
-						</div>
-						<div class="card-content">
-							<span class="card-title activator grey-text text-darken-4">Event
-								2 <i class="mdi-navigation-more-vert right"></i>
-							</span>
-							<p>
-								<a href="#!">LINK</a>
-							</p>
-						</div>
-						<div class="card-reveal">
-							<span class="card-title grey-text text-darken-4">Event 2 <i
-								class="mdi-navigation-close right"></i></span>
-							<p>It takes place right now!.</p>
-						</div>
-					</div>
-				</div>
-
-				<div class="col s4">
-					<div class="card medium">
-						<div class="card-image waves-effect waves-block waves-light">
-							<img class="activator" src="images/events/event1.jpg">
-						</div>
-						<div class="card-content">
-							<span class="card-title activator grey-text text-darken-4">Event
-								3 <i class="mdi-navigation-more-vert right"></i>
-							</span>
-							<p>
-								<a href="#!">LINK</a>
-							</p>
-						</div>
-						<div class="card-reveal">
-							<span class="card-title grey-text text-darken-4">Event 3 <i
-								class="mdi-navigation-close right"></i></span>
-							<p>It takes place right now!.</p>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+			</c:forEach>
 
 		<div class="section">
 			<div class="main-info">

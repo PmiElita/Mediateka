@@ -1,12 +1,9 @@
 package com.mediateka.content;
 
-import static com.mediateka.service.ClubService.getClubById;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -21,15 +18,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.http.HttpResponse;
-import org.jdom.Document;
-import org.jdom.Element;
-import org.jdom.transform.JDOMResult;
-
 import com.google.gson.Gson;
 import com.mediateka.comparator.ContentGroupByDate;
 import com.mediateka.exception.WrongInputException;
-import com.mediateka.model.Club;
 import com.mediateka.model.ContentGroup;
 import com.mediateka.model.Media;
 import com.mediateka.model.User;
@@ -40,7 +31,6 @@ import com.mediateka.service.ContentGroupService;
 import com.mediateka.service.MediaService;
 import com.mediateka.service.UserService;
 import com.mediateka.util.FileLoader;
-import com.mysql.fabric.Response;
 
 public class CreateContent {
 
@@ -51,7 +41,6 @@ public class CreateContent {
 
 		HttpSession session = request.getSession();
 		FileLoader fileLoader = new FileLoader();
-		String type = null;
 		// if (request.getAttribute("clubId") != null) {
 		// type = "club" + request.getAttribute("clubId");
 		// } else if (request.getAttribute("eventId") != null) {
@@ -107,63 +96,65 @@ public class CreateContent {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		 List<Media> images = new ArrayList<Media>();
-		 List<Media> videos = new ArrayList<Media>();
-		 List<Media> audios = new ArrayList<Media>();
-		
-		 for (Media media : mediaList) {
-		 if (media.getType().equals(MediaType.IMAGE)) {
-		 images.add(media);
-		 }
-		 if (media.getType().equals(MediaType.VIDEO)) {
-		 videos.add(media);
-		 }
-		 if (media.getType().equals(MediaType.AUDIO)) {
-		 audios.add(media);
-		 }
-		 }
-		 User user = UserService.getUserById(contentGroup.getCreatorId());
-		
-		 Map<String, Object> recordMap = new HashMap<String, Object>();
-		 recordMap.put("contentGroup", contentGroup);
-		 recordMap.put("userFirstName", user.getFirstName());
-		 recordMap.put("userLastName", user.getLastName());
-		 Integer index = Integer.parseInt(fileLoader.getParameterMap().get("index"));
-		 System.out.println(index);
-		 recordMap.put("index", index + 1);
-		 if(images != null){
-		 recordMap.put("imageList", images);
-		 }
-		 if(videos != null){
-		 recordMap.put("videoList", videos);
-		 }
-		 if(audios != null){
-		 recordMap.put("audioList", audios);
-		 }
-		
+		List<Media> images = new ArrayList<Media>();
+		List<Media> videos = new ArrayList<Media>();
+		List<Media> audios = new ArrayList<Media>();
 
-		 response.setContentType("application/json");
-		 response.setCharacterEncoding("UTF-8");
-		 System.out.println(new Gson().toJson(contentGroup).toString());
-		 response.getWriter().write(new Gson().toJson(recordMap));	
+		for (Media media : mediaList) {
+			if (media.getType().equals(MediaType.IMAGE)) {
+				images.add(media);
+			}
+			if (media.getType().equals(MediaType.VIDEO)) {
+				videos.add(media);
+			}
+			if (media.getType().equals(MediaType.AUDIO)) {
+				audios.add(media);
+			}
+		}
+		User user = UserService.getUserById(contentGroup.getCreatorId());
+
+		Map<String, Object> recordMap = new HashMap<String, Object>();
+		recordMap.put("contentGroup", contentGroup);
+		recordMap.put("userFirstName", user.getFirstName());
+		recordMap.put("userLastName", user.getLastName());
+		Integer index = Integer.parseInt(fileLoader.getParameterMap().get(
+				"index"));
+		System.out.println(index);
+		recordMap.put("index", index + 1);
+		if (images != null) {
+			recordMap.put("imageList", images);
+		}
+		if (videos != null) {
+			recordMap.put("videoList", videos);
+		}
+		if (audios != null) {
+			recordMap.put("audioList", audios);
+		}
+
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		System.out.println(new Gson().toJson(contentGroup).toString());
+		response.getWriter().write(new Gson().toJson(recordMap));
 
 	}
-	
-	
-	public static void loadContent(HttpServletRequest request, HttpServletResponse response) throws ReflectiveOperationException, SQLException, ServletException, IOException{
-		
+
+	public static void loadContent(HttpServletRequest request,
+			HttpServletResponse response) throws ReflectiveOperationException,
+			SQLException, ServletException, IOException {
+
 		System.out.println("createContent");
 		int clubId = 0;
 		int eventId = 0;
 		System.out.println(request.getParameter("recordId"));
 		Integer recordId = Integer.parseInt(request.getParameter("recordId"));
-		ContentGroup contentGroup = ContentGroupService.getContentGroupById(recordId);
+		ContentGroup contentGroup = ContentGroupService
+				.getContentGroupById(recordId);
 		List<ContentGroup> records = new ArrayList<ContentGroup>();
 		records.add(contentGroup);
 		if (contentGroup.getClubId() != null) {
-			clubId = contentGroup.getClubId();			
+			clubId = contentGroup.getClubId();
 		} else if (contentGroup.getEventId() != null) {
-			eventId = contentGroup.getEventId();			
+			eventId = contentGroup.getEventId();
 		}
 
 		Map<Integer, List<Media>> mediaMap = new HashMap<Integer, List<Media>>();
@@ -225,7 +216,7 @@ public class CreateContent {
 
 			}
 		}
-	
+
 		System.out.println(mediaMap);
 		System.out.println(imageMap);
 		System.out.println(videoMap);
@@ -244,9 +235,9 @@ public class CreateContent {
 
 		request.setAttribute("creatorName", creatorRecordMap);
 
-		request.getRequestDispatcher("pages/club/record_central.jsp").forward(request,
-				response);
-		
+		request.getRequestDispatcher("pages/club/record_central.jsp").forward(
+				request, response);
+
 	}
 
 }

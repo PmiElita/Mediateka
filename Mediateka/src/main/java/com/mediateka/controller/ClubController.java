@@ -46,7 +46,6 @@ import static com.mediateka.service.ClubService.*;
 @Controller
 public class ClubController {
 
-private static final int defaultClubAvaId = 2;
 	private static Logger logger = Logger.getLogger(ClubController.class);
 
 	@Request(url = "createClub", method = "get")
@@ -223,8 +222,10 @@ private static final int defaultClubAvaId = 2;
 				if (records != null) {
 					Collections.sort(records, new ContentGroupByDate());
 					for (ContentGroup contentGroup : records) {
-						User creator = UserService.getUserById(contentGroup.getCreatorId());
-						String cratorName = creator.getFirstName() + " " + creator.getLastName();
+						User creator = UserService.getUserById(contentGroup
+								.getCreatorId());
+						String cratorName = creator.getFirstName() + " "
+								+ creator.getLastName();
 						creatorRecordMap.put(contentGroup.getId(), cratorName);
 						List<Media> images = new ArrayList<Media>();
 						List<Media> videos = new ArrayList<Media>();
@@ -273,8 +274,6 @@ private static final int defaultClubAvaId = 2;
 					}
 				}
 
-				User user = UserService.getUserById((Integer) request
-						.getSession().getAttribute("userId"));										
 				System.out.println(mediaMap);
 				System.out.println(imageMap);
 				System.out.println(videoMap);
