@@ -69,11 +69,11 @@ public class IndexController {
 			dateFrom = event.getDateFrom();
 			dateTill = event.getDateTill();
 			if (event.getType() == EventType.MEETING)
-				date = "Day: " + format.format(dateFrom) + " From-To: "
-						+ formatMeeting.format(dateFrom) + " - "
+				date = format.format(dateFrom) + "    "
+						+ formatMeeting.format(dateFrom) + "  -  "
 						+ formatMeeting.format(dateTill);
 			else if (event.getType() == EventType.EXHIBITION)
-				date = "From-To: " + format.format(dateFrom) + " - "
+				date = format.format(dateFrom) + "  -  "
 						+ format.format(dateTill);
 			dates.add(date);
 		}
