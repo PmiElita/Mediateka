@@ -10,11 +10,8 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -24,7 +21,6 @@ import org.apache.log4j.Logger;
 
 import com.mediateka.annotation.Controller;
 import com.mediateka.annotation.Request;
-import com.mediateka.comparator.ContentGroupByDate;
 import com.mediateka.content.CreateContent;
 import com.mediateka.exception.WrongInputException;
 import com.mediateka.form.ExhibitionRegistrationForm;
@@ -42,7 +38,6 @@ import com.mediateka.model.enums.State;
 import com.mediateka.service.ClubEventMemberService;
 import com.mediateka.service.ContentGroupService;
 import com.mediateka.service.EventService;
-import com.mediateka.service.MediaService;
 import com.mediateka.service.UserService;
 import com.mediateka.util.DateConverter;
 import com.mediateka.util.FileLoader;
@@ -77,11 +72,10 @@ public class EventController {
 						.getContentGroupByEventId(eventId);
 
 				CreateContent.setContent(request, response, records);
-				
-				
+
 				User user = UserService.getUserById((Integer) request
 						.getSession().getAttribute("userId"));
-				
+
 				request.setAttribute("eventId", event.getId());
 				request.setAttribute("event", event);
 
@@ -89,22 +83,22 @@ public class EventController {
 
 				List<ClubEventMember> eventMembers = ClubEventMemberService
 						.getClubEventMemberByEventId(event.getId());
-                if (eventMembers!=null){
-				if (eventMembers != null && user != null)
-					for (ClubEventMember member : eventMembers) {
-						if (member.getState() == State.ACTIVE
-								&& (member.getUserId() == user.getId()))
-							isSigned = "true";
-						else if ((member.getState() == State.BLOCKED || member
-								.getState() == State.DELETED)
-								&& (member.getUserId() == user.getId()))
-							request.setAttribute("badGuy", true);
-					}
-				request.setAttribute(
-						"imagePath",
-						getMediaById(event.getAvaId()).getPath().replace("\\",
-								"/"));
-                }
+				if (eventMembers != null) {
+					if (eventMembers != null && user != null)
+						for (ClubEventMember member : eventMembers) {
+							if (member.getState() == State.ACTIVE
+									&& (member.getUserId() == user.getId()))
+								isSigned = "true";
+							else if ((member.getState() == State.BLOCKED || member
+									.getState() == State.DELETED)
+									&& (member.getUserId() == user.getId()))
+								request.setAttribute("badGuy", true);
+						}
+					request.setAttribute(
+							"imagePath",
+							getMediaById(event.getAvaId()).getPath().replace(
+									"\\", "/"));
+				}
 				request.setAttribute("isSigned", isSigned);
 
 				request.getRequestDispatcher("pages/event/event.jsp").forward(
@@ -647,16 +641,19 @@ public class EventController {
 		ClubEventMember memberer = new ClubEventMember();
 		if (member != null)
 			for (ClubEventMember mem : member) {
-				if (mem.getEventId() == eventId
-						&& (mem.getState() == State.ACTIVE)) {
-					isMember = true;
-					memberer = mem;
-				} else if (mem.getEventId() == eventId
-						&& (mem.getState() == State.UNSIGNED))
-					memberer = mem;
-				else if (mem.getEventId() == eventId
-						&& (mem.getState() == State.BLOCKED || mem.getState() == State.DELETED))
-					blockedDeleted = true;
+				if (mem.getEventId() != null) {
+					if (mem.getEventId() == eventId
+							&& mem.getState() == State.ACTIVE) {
+						isMember = true;
+						memberer = mem;
+					} else if (mem.getEventId() == eventId
+							&& mem.getState() == State.UNSIGNED)
+						memberer = mem;
+					else if (mem.getEventId() == eventId
+							&& (mem.getState() == State.BLOCKED || mem
+									.getState() == State.DELETED))
+						blockedDeleted = true;
+				}
 			}
 		if (isMember) {
 			memberer.setState(State.UNSIGNED);

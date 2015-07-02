@@ -45,7 +45,9 @@ import com.mediateka.util.FileLoader;
 import com.mediateka.util.FormValidator;
 import com.mediateka.util.ObjectFiller;
 
+import static com.mediateka.service.ClubEventMemberService.*;
 import static com.mediateka.service.ClubService.*;
+import static com.mediateka.service.MediaService.getMediaById;
 
 @Controller
 public class ClubController {
@@ -70,7 +72,6 @@ public class ClubController {
 		try {
 			FormValidator.validate(form);
 		} catch (WrongInputException e) {
-			System.out.println(e);
 			logger.warn("failed to validate registration form", e);
 			response.sendRedirect("index");
 			return;
@@ -238,10 +239,8 @@ public class ClubController {
 								.getMediaContentGroupId(contentGroup.getId()));
 						List<Media> medias = MediaService
 								.getMediaContentGroupId(contentGroup.getId());
-						System.out.println(medias);
 						if (medias != null) {
 							for (Media media : medias) {
-								System.out.println(media);
 								if (media.getType().equals(MediaType.IMAGE)) {
 									images.add(media);
 								}
@@ -278,24 +277,48 @@ public class ClubController {
 					}
 				}
 
-				List<ChatMessage> chatMessages = ChatMessageService.getChatMessageByClubId(clubId);
-				
-				Map<ChatMessage,String> map = new LinkedHashMap<ChatMessage, String>();
-				if (chatMessages!=null){
-					Collections.sort(chatMessages, new ChatMessageByCreationDate());
-				for (int i =0; i<ChatController.MESSAGE_COUNT  && i<chatMessages.size(); i++){
-				    map.put(chatMessages.get(i), UserService.getUserById(chatMessages.get(i).getUserId()).getFirstName());
+				List<ChatMessage> chatMessages = ChatMessageService
+						.getChatMessageByClubId(clubId);
+
+				Map<ChatMessage, String> map = new LinkedHashMap<ChatMessage, String>();
+				if (chatMessages != null) {
+					Collections.sort(chatMessages,
+							new ChatMessageByCreationDate());
+					for (int i = 0; i < ChatController.MESSAGE_COUNT
+							&& i < chatMessages.size(); i++) {
+						map.put(chatMessages.get(i),
+								UserService.getUserById(
+										chatMessages.get(i).getUserId())
+										.getFirstName());
+					}
 				}
-				}
-				request.setAttribute("chatMessages", map);
-				
+
+				String isSigned = "false";
+
+				List<ClubEventMember> clubMembers = ClubEventMemberService
+						.getClubEventMemberByClubId(club.getId());
+				if (clubMembers != null)
+					for (int i = 0; i < clubMembers.size(); i++)
+						if (clubMembers.get(i).getEventId() != null)
+							clubMembers.remove(i);
+
 				User user = UserService.getUserById((Integer) request
 						.getSession().getAttribute("userId"));
-				String name = user.getFirstName() + " " + user.getLastName();
-				System.out.println(mediaMap);
-				System.out.println(imageMap);
-				System.out.println(videoMap);
-				System.out.println(audioMap);
+				if (clubMembers != null && user != null)
+					for (ClubEventMember member : clubMembers) {
+						if (member.getState() == State.ACTIVE
+								&& (member.getUserId() == user.getId()))
+							isSigned = "true";
+						else if ((member.getState() == State.BLOCKED || member
+								.getState() == State.DELETED)
+								&& (member.getUserId() == user.getId()))
+							request.setAttribute("badGuy", true);
+					}
+
+				request.setAttribute("imagePath", getMediaById(club.getAvaId())
+						.getPath().replace("\\", "/"));
+				request.setAttribute("chatMessages", map);
+				request.setAttribute("isSigned", isSigned);
 				request.setAttribute("mediaMap", mediaMap);
 				request.setAttribute("imageMap", imageMap);
 				request.setAttribute("videoMap", videoMap);
@@ -305,7 +328,6 @@ public class ClubController {
 				request.setAttribute("club", club);
 				request.setAttribute("creatorName", creatorRecordMap);
 				request.setAttribute("index", 0);
-
 				request.getRequestDispatcher("pages/club/club.jsp").forward(
 						request, response);
 
@@ -317,6 +339,9 @@ public class ClubController {
 				request.removeAttribute("club");
 				request.removeAttribute("clubId");
 				request.removeAttribute("creatorName");
+				request.removeAttribute("imagePath");
+				request.removeAttribute("badGuy");
+				request.removeAttribute("isSigned");
 			}
 		} catch (NumberFormatException e) {
 			request.setAttribute("message", "No such club!");
@@ -354,7 +379,6 @@ public class ClubController {
 			return;
 		}
 
-		System.out.println("5");
 		String idString = request.getParameter("id");
 
 		if (idString == null) {
@@ -466,5 +490,62 @@ public class ClubController {
 				response);
 		return;
 
+	}
+
+	@Request(url = "memberSignClub", method = "get")
+	public static void memberSignClub(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException,
+			ReflectiveOperationException, SQLException {
+		int userId = Integer.parseInt(request.getSession()
+				.getAttribute("userId").toString());
+		int clubId = 0;
+		try {
+			clubId = Integer.parseInt(request.getParameter("clubId"));
+			Club club = getClubById(clubId);
+			if (club == null)
+				throw new NumberFormatException();
+		} catch (NumberFormatException | IllegalStateException e) {
+			logger.error("no club with such id : "
+					+ request.getParameter("clubId"));
+			response.sendRedirect("index");
+			return;
+		}
+		boolean isMember = false;
+		boolean blockedDeleted = false;
+		List<ClubEventMember> member = getClubEventMemberByUserId(userId);
+		ClubEventMember memberer = new ClubEventMember();
+
+		if (member != null)
+			for (int i = 0; i < member.size(); i++)
+				if (member.get(i).getEventId() != null)
+					member.remove(i);
+		if (member != null)
+			for (ClubEventMember mem : member) {
+				if (mem.getClubId() == clubId && mem.getState() == State.ACTIVE) {
+					isMember = true;
+					memberer = mem;
+				} else if (mem.getClubId() == clubId
+						&& mem.getState() == State.UNSIGNED)
+					memberer = mem;
+				else if (mem.getClubId() == clubId
+						&& (mem.getState() == State.BLOCKED || mem.getState() == State.DELETED))
+					blockedDeleted = true;
+			}
+		System.out.println(memberer.getState());
+		if (isMember) {
+			memberer.setState(State.UNSIGNED);
+			updateClubEventMember(memberer);
+		} else if (!isMember && memberer.getState() != null
+				&& memberer.getState() == State.UNSIGNED) {
+			memberer.setState(State.ACTIVE);
+			updateClubEventMember(memberer);
+		} else if (!blockedDeleted && !isMember) {
+			memberer.setClubId(clubId);
+			memberer.setState(State.ACTIVE);
+			memberer.setType(ClubEventMemberType.MEMBER);
+			memberer.setUserId(userId);
+			saveClubEventMember(memberer);
+		}
+		response.sendRedirect("club?clubId=" + clubId);
 	}
 }

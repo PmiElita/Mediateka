@@ -3,6 +3,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@page import="com.mediateka.model.enums.Role"%>
 
 <fmt:setLocale value="${locale}" />
 <fmt:setBundle basename="menu" />
@@ -37,7 +38,7 @@
 					<a title="Change picture" href="" data-target="modal15"
 						class="modal-trigger waves-effect" style="min-width: 100%">
 						<h3 class="image-cover-t">${club.name}</h3> <img
-						class="my-picture-club" src="images/club/club_default.png"
+						class="my-picture-club" src="${imagePath}"
 						id="ava">
 					</a>
 				</div>
@@ -49,16 +50,19 @@
 		style="height: 24em; margin-bottom: 0; margin-top: -1em">
 		<div style="height: 3em"></div>
 		<div class="sign-event row center">
-
+		
+		<c:choose>
+		<c:when test="${userRole eq Role.USER}">
+		<c:if test="${badGuy==null}">
 			<c:if test="${isSigned eq 'false'}">
 				<div class="col s6">
-					<a class="btn" href="#" style="width: 15em">Sign to event</a>
+					<a class="btn" href="memberSignClub?clubId=${club.id}" style="width: 15em">Sign to club</a>
 				</div>
 			</c:if>
 
 			<c:if test="${isSigned eq 'true'}">
 				<div class="col s6">
-					<a class="btn" href="#" style="width: 15em">Sign out</a>
+					<a class="btn" href="memberSignClub?clubId=${club.id}" style="width: 15em">Sign out</a>
 				</div>
 			</c:if>
 
@@ -67,6 +71,15 @@
 			<div class="col s6">
 				<a class="btn" href="#" style="width: 15em">Look participants</a>
 			</div>
+			</c:if>
+		<c:if test="${badGuy!=null}">
+		<h5><text align="center"><c:out value="Your membership in this event is blocked or deleted!"/></text></h5>
+		</c:if>
+		</c:when>
+		<c:otherwise><text align="center">
+		<h4><c:out value="Log in, if you want to see more!"/></h4></text>
+		</c:otherwise>
+	</c:choose>
 		</div>
 
 		<div class="row" style="margin-left: -5em">
