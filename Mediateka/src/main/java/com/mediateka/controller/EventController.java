@@ -1,13 +1,9 @@
 package com.mediateka.controller;
 
-import static com.mediateka.service.ClubEventMemberService.saveClubEventMember;
-import static com.mediateka.service.EventService.callSaveEvent;
-import static com.mediateka.service.EventService.getEventById;
-import static com.mediateka.service.EventService.updateEventById;
-import static com.mediateka.service.MediaService.callSaveMedia;
-import static com.mediateka.service.MediaService.getMediaById;
-import static com.mediateka.util.DateConverter.convertIntoTimestamp;
-import static com.mediateka.util.DateConverter.timeValid;
+import static com.mediateka.service.ClubEventMemberService.*;
+import static com.mediateka.service.EventService.*;
+import static com.mediateka.service.MediaService.*;
+import static com.mediateka.util.DateConverter.*;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -159,9 +155,20 @@ public class EventController {
 				List<ClubEventMember> eventMembers = ClubEventMemberService
 						.getClubEventMemberByEventId(event.getId());
 
-				for (ClubEventMember member : eventMembers)
-					if (member.getUserId().equals(user.getId()))
-						isSigned = "true";
+				if (eventMembers != null && user != null)
+					for (ClubEventMember member : eventMembers) {
+						if (member.getState() == State.ACTIVE
+								&& (member.getUserId() == user.getId()))
+							isSigned = "true";
+						else if ((member.getState() == State.BLOCKED || member
+								.getState() == State.DELETED)
+								&& (member.getUserId() == user.getId()))
+							request.setAttribute("badGuy", true);
+					}
+				request.setAttribute(
+						"imagePath",
+						getMediaById(event.getAvaId()).getPath().replace("\\",
+								"/"));
 
 				request.setAttribute("isSigned", isSigned);
 
@@ -177,6 +184,8 @@ public class EventController {
 				request.removeAttribute("eventId");
 				request.removeAttribute("userName");
 				request.removeAttribute("isSigned");
+				request.removeAttribute("imagePath");
+				request.removeAttribute("badGuy");
 			}
 		} catch (NumberFormatException e) {
 			request.setAttribute("message", "No such club!");
@@ -679,4 +688,55 @@ public class EventController {
 		return;
 	}
 
+	@Request(url = "memberSignEvent", method = "get")
+	public static void memberSignEvent(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException,
+			ReflectiveOperationException, SQLException {
+		int userId = Integer.parseInt(request.getSession()
+				.getAttribute("userId").toString());
+		int eventId = 0;
+		try {
+			eventId = Integer.parseInt(request.getParameter("eventId"));
+			Event event = getEventById(eventId);
+			if (event == null)
+				throw new NumberFormatException();
+		} catch (NumberFormatException e) {
+			logger.error("no event with such id : "
+					+ request.getParameter("eventId"));
+			response.sendRedirect("index");
+			return;
+		}
+		boolean isMember = false;
+		boolean blockedDeleted = false;
+		List<ClubEventMember> member = getClubEventMemberByUserId(userId);
+		ClubEventMember memberer = new ClubEventMember();
+		if (member != null)
+			for (ClubEventMember mem : member) {
+				if (mem.getEventId() == eventId
+						&& (mem.getState() == State.ACTIVE)) {
+					isMember = true;
+					memberer = mem;
+				} else if (mem.getEventId() == eventId
+						&& (mem.getState() == State.UNSIGNED))
+					memberer = mem;
+				else if (mem.getEventId() == eventId
+						&& (mem.getState() == State.BLOCKED || mem.getState() == State.DELETED))
+					blockedDeleted = true;
+			}
+		if (isMember) {
+			memberer.setState(State.UNSIGNED);
+			updateClubEventMember(memberer);
+		} else if (!isMember && memberer.getState() != null
+				&& memberer.getState() == State.UNSIGNED) {
+			memberer.setState(State.ACTIVE);
+			updateClubEventMember(memberer);
+		} else if (!blockedDeleted && !isMember) {
+			memberer.setEventId(eventId);
+			memberer.setState(State.ACTIVE);
+			memberer.setType(ClubEventMemberType.MEMBER);
+			memberer.setUserId(userId);
+			saveClubEventMember(memberer);
+		}
+		response.sendRedirect("event?eventId=" + eventId);
+	}
 }
