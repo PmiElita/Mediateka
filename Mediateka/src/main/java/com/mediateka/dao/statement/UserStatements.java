@@ -4,22 +4,23 @@ public class UserStatements {
 	public static final String INSERT_USER = "INSERT INTO user "
 			+ "(form_id, first_name, last_name, middle_name, birth_date,"
 			+ " nationality, education, profession_id, edu_institution,"
-			+ " phone, adress, join_date, email, password, role, state, is_form_active, salt, password_changing_token, social_id)"
-			+ " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ";
+			+ " phone, adress, join_date, email, password, role, state, is_form_active, salt, password_changing_token, social_id , ava_id)"
+			+ " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ";
 	public static final String[] INSERT_USER_ORDER = { "form_id", "first_name",
 			"last_name", "middle_name", "birth_date", "nationality",
 			"education", "profession_id", "edu_institution", "phone", "adress",
 			"join_date", "email", "password", "role", "state",
-			"is_form_active", "salt", "password_changing_token","social_id" };
+			"is_form_active", "salt", "password_changing_token","social_id", "ava_id" };
 
 	public static final String UPDATE_USER_BY_ID = "UPDATE user SET form_id=?, first_name=?, last_name=?, middle_name=?, birth_date=?,"
 			+ " nationality=?, education=?, profession_id=?, edu_institution=?,"
-			+ " phone=?, adress=?, join_date=?, email=?, password=?, role=?, state=?, is_form_active=?,salt=?, password_changing_token=?, social_id=? WHERE id =?";
+			+ " phone=?, adress=?, join_date=?, email=?, password=?, role=?, state=?, is_form_active=?,salt=?, password_changing_token=?,"
+			+ " social_id=?, ava_id=? WHERE id =?";
 	public static final String[] UPDATE_USER_BY_ID_ORDER = { "form_id",
 			"first_name", "last_name", "middle_name", "birth_date",
 			"nationality", "education", "profession_id", "edu_institution",
 			"phone", "adress", "join_date", "email", "password", "role",
-			"state", "is_form_active", "salt", "password_changing_token","social_id", "id" };
+			"state", "is_form_active", "salt", "password_changing_token","social_id","ava_id", "id" };
 
 	public static final String SELECT_USER_BY_ID = "SELECT * FROM user WHERE id =?";
 	public static final String[] SELECT_USER_BY_ID_ORDER = { "id" };

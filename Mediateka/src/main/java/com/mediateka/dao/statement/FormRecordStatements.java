@@ -43,4 +43,15 @@ public class FormRecordStatements {
     public static final String SELECT_FORM_RECORD_COUNT_BY_BOOK_ID="SELECT count(*) FROM form_record  WHERE book_id=?";
     
     public static final String[] SELECT_FORM_RECORD_COUNT_BY_BOOK_ID_ORDER = {"book_id"};
+    
+    public static final String SELECT_FORM_RECORD_GOAL_BY_USER_ID = "SELECT * FROM form_record WHERE goal IS NOT null AND user_id =?";
+    public static final String[] SELECT_FORM_RECORD_GOAL_BY_USER_ID_ORDER = { "user_id"};
+
+    public static final String SELECT_FORM_RECORD_BOOK_BY_USER_ID = "SELECT * FROM form_record WHERE book_id IS NOT null AND user_id=?";
+    public static final String[] SELECT_FORM_RECORD_BOOK_BY_USER_ID_ORDER = {"user_id"};
+    
+    
+    
+    public static final String SELECT_FORM_RECORD_EVENT_BY_USER_ID = "SELECT * FROM form_record WHERE event_id IS NOT null AND user_id=?";
+    public static final String[] SELECT_FORM_RECORD_EVENT_BY_USER_ID_ORDER = {"user_id"};
 }

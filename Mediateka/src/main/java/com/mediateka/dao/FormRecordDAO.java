@@ -1,7 +1,6 @@
 package com.mediateka.dao;
 
 import static com.mediateka.dao.statement.FormRecordStatements.*;
-
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -192,5 +191,51 @@ public class FormRecordDAO {
 
 		}
 		return result;
+	}
+
+	public static List<FormRecord> getFormRecordBookAndUserId(
+			 Integer userId)
+			throws ReflectiveOperationException, SQLException {
+		try (Connection connection = ConnectionManager.getConnection()) {
+			PreparedStatement statement = connection
+					.prepareStatement(SELECT_FORM_RECORD_BOOK_BY_USER_ID);
+			FormRecord formRecord = new FormRecord();
+			formRecord.setUserId(userId);
+			Transformer.valueIntoPreparedStatement(statement, formRecord,
+					SELECT_FORM_RECORD_BOOK_BY_USER_ID_ORDER);
+			ResultSet resultSet = statement.executeQuery();
+			return Transformer.transformResultSetIntoList(resultSet,
+					FormRecord.class);
+		}
+	}
+	
+	public static List<FormRecord> getFormRecordGoalByUserId( Integer userId)
+			throws ReflectiveOperationException, SQLException {
+		try (Connection connection = ConnectionManager.getConnection()) {
+			PreparedStatement statement = connection
+					.prepareStatement(SELECT_FORM_RECORD_GOAL_BY_USER_ID);
+			FormRecord formRecord = new FormRecord();
+			formRecord.setUserId(userId);
+			Transformer.valueIntoPreparedStatement(statement, formRecord,
+					SELECT_FORM_RECORD_GOAL_BY_USER_ID_ORDER);
+			ResultSet resultSet = statement.executeQuery();
+			return Transformer.transformResultSetIntoList(resultSet,
+					FormRecord.class);
+		}
+	}
+
+	public static List<FormRecord> getFormRecordEventAndUserId(Integer userId)
+			throws ReflectiveOperationException, SQLException {
+		try (Connection connection = ConnectionManager.getConnection()) {
+			PreparedStatement statement = connection
+					.prepareStatement(SELECT_FORM_RECORD_EVENT_BY_USER_ID);
+			FormRecord formRecord = new FormRecord();
+			formRecord.setUserId(userId);
+			Transformer.valueIntoPreparedStatement(statement, formRecord,
+					SELECT_FORM_RECORD_EVENT_BY_USER_ID_ORDER);
+			ResultSet resultSet = statement.executeQuery();
+			return Transformer.transformResultSetIntoList(resultSet,
+					FormRecord.class);
+		}
 	}
 }

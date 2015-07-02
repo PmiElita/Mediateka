@@ -5,9 +5,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -23,7 +25,12 @@ import com.mediateka.service.UserService;
 public class ChatController {
 
 	public static final int MESSAGE_COUNT = 10;
-
+	@Request(url="getChat", method="get")
+	public static void getChat(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, ReflectiveOperationException{
+		
+		request.getRequestDispatcher("pages/fedunets12.06/chat.jsp").forward(request, response);
+	}
+	
 	@Request(url ="getUserData", method="get")
 	public static void getUserData(HttpServletRequest request, HttpServletResponse response) throws ReflectiveOperationException, SQLException, IOException{
 		Integer userId = Integer.parseInt(request.getParameter("userId"));

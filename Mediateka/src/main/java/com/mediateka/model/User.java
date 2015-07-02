@@ -71,6 +71,9 @@ public class User {
 	@Column(name="social_id")
 	private String socialId;
 	
+	@Column(name="ava_id")
+	private Integer avaId;
+	
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", formId=" + formId + ", firstName="
@@ -251,6 +254,14 @@ public class User {
 
 	public void setSocialId(String socialId) {
 		this.socialId = socialId;
+	}
+
+	public Integer getAvaId() {
+		return avaId;
+	}
+
+	public void setAvaId(Integer avaId) {
+		this.avaId = avaId;
 	}
 
 }

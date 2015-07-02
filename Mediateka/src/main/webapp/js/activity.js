@@ -1,7 +1,8 @@
-function reloadActivity(select){
+function reloadActivity(){
 	
-	var period = getSelectedOption(select).value;
-	$('#formRecordsRow').load("reloadActivity?period="+period +  ' #formRecords');
+	var period = getSelectedOption(document.getElementById("period")).value;
+	var type = getSelectedOption(document.getElementById("recordType")).value
+	$('#formRecordsRow').load("reloadActivity?period="+period+"&type="+type +  ' #formRecords');
 }
 
 function getSelectedOption (oListbox)

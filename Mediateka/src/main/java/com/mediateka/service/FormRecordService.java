@@ -75,4 +75,19 @@ public class FormRecordService {
 			throws SQLException, ReflectiveOperationException {
 		return FormRecordDAO.getFormRecordCountByBookId(bookId);
 	}
+
+	public static List<FormRecord> getFormRecordGoalByUserId(Integer userId)
+			throws ReflectiveOperationException, SQLException {
+		return FormRecordDAO.getFormRecordGoalByUserId(userId);
+	}
+
+	public static List<FormRecord> getFormRecordBookAndUserId(Integer userId)
+			throws ReflectiveOperationException, SQLException {
+		return FormRecordDAO.getFormRecordBookAndUserId(userId);
+	}
+
+	public static List<FormRecord> getFormRecordEventAndUserId(Integer userId)
+			throws ReflectiveOperationException, SQLException {
+		return FormRecordDAO.getFormRecordEventAndUserId(userId);
+	}
 }

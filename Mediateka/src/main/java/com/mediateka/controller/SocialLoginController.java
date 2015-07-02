@@ -47,7 +47,7 @@ public class SocialLoginController {
 		if (code != null) {
 			VKLoginService vKLoginService = new VKLoginService();
 			vKLoginService.getAccessToken(code);
-
+             
 			if (!vKLoginService.isRegistrated()) {
 				User user = vKLoginService.getUserFromSocNet();
 				request.setAttribute("professions",
