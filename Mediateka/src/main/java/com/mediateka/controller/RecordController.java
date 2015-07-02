@@ -32,6 +32,11 @@ public class RecordController {
 		CreateContent.loadContent(request, response);
 	}
 	
+	@Request(url="deleteRecord", method="get")
+	public static void deleteRecordGet(HttpServletRequest request, HttpServletResponse response){
+		
+	}
+	
 	
 
 }

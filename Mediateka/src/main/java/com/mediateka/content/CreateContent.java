@@ -163,6 +163,24 @@ public class CreateContent {
 			eventId = contentGroup.getEventId();			
 		}
 
+		setContent(request, response, records);
+		
+		if (clubId != 0) {
+			request.setAttribute("clubId", clubId);
+		}
+		if (eventId != 0) {
+			request.setAttribute("eventId", eventId);
+		}
+		request.setAttribute("index", request.getParameter("index"));
+		
+
+		request.getRequestDispatcher("pages/club/record_central.jsp").forward(request,
+				response);
+		
+	}
+	
+	
+	public static void setContent(HttpServletRequest request, HttpServletResponse response, List<ContentGroup> records) throws ReflectiveOperationException, SQLException{
 		Map<Integer, List<Media>> mediaMap = new HashMap<Integer, List<Media>>();
 		Map<Integer, List<Media>> imageMap = new HashMap<Integer, List<Media>>();
 		Map<Integer, List<Media>> videoMap = new HashMap<Integer, List<Media>>();
@@ -171,7 +189,7 @@ public class CreateContent {
 		if (records != null) {
 			Collections.sort(records, new ContentGroupByDate());
 			for (ContentGroup record : records) {
-				User creator = UserService.getUserById(contentGroup
+				User creator = UserService.getUserById(record
 						.getCreatorId());
 				String cratorName = creator.getFirstName() + " "
 						+ creator.getLastName();
@@ -226,25 +244,13 @@ public class CreateContent {
 		System.out.println(mediaMap);
 		System.out.println(imageMap);
 		System.out.println(videoMap);
-		System.out.println(audioMap);
-		request.setAttribute("index", request.getParameter("index"));
+		System.out.println(audioMap);		
 		request.setAttribute("mediaMap", mediaMap);
 		request.setAttribute("imageMap", imageMap);
 		request.setAttribute("videoMap", videoMap);
 		request.setAttribute("audioMap", audioMap);
 		request.setAttribute("records", records);
-		if (clubId != 0) {
-			request.setAttribute("clubId", clubId);
-		}
-		if (eventId != 0) {
-			request.setAttribute("eventId", eventId);
-		}
-
 		request.setAttribute("creatorName", creatorRecordMap);
-
-		request.getRequestDispatcher("pages/club/record_central.jsp").forward(request,
-				response);
-		
 	}
 
 }

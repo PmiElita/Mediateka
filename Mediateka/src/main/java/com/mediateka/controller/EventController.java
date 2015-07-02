@@ -25,6 +25,7 @@ import org.apache.log4j.Logger;
 import com.mediateka.annotation.Controller;
 import com.mediateka.annotation.Request;
 import com.mediateka.comparator.ContentGroupByDate;
+import com.mediateka.content.CreateContent;
 import com.mediateka.exception.WrongInputException;
 import com.mediateka.form.ExhibitionRegistrationForm;
 import com.mediateka.form.MeetingRegistrationForm;
@@ -75,80 +76,14 @@ public class EventController {
 				List<ContentGroup> records = ContentGroupService
 						.getContentGroupByEventId(eventId);
 
-				Map<Integer, List<Media>> mediaMap = new HashMap<Integer, List<Media>>();
-				Map<Integer, List<Media>> imageMap = new HashMap<Integer, List<Media>>();
-				Map<Integer, List<Media>> videoMap = new HashMap<Integer, List<Media>>();
-				Map<Integer, List<Media>> audioMap = new HashMap<Integer, List<Media>>();
-				Map<Integer, String> creatorRecordMap = new HashMap<Integer, String>();
-				if (records != null) {
-					Collections.sort(records, new ContentGroupByDate());
-					for (ContentGroup contentGroup : records) {
-						User creator = UserService.getUserById(contentGroup
-								.getCreatorId());
-						String cratorName = creator.getFirstName() + " "
-								+ creator.getLastName();
-						creatorRecordMap.put(contentGroup.getId(), cratorName);
-						List<Media> images = new ArrayList<Media>();
-						List<Media> videos = new ArrayList<Media>();
-						List<Media> audios = new ArrayList<Media>();
-						mediaMap.put(contentGroup.getId(), MediaService
-								.getMediaContentGroupId(contentGroup.getId()));
-						List<Media> medias = MediaService
-								.getMediaContentGroupId(contentGroup.getId());
-						System.out.println(medias);
-						if (medias != null) {
-							for (Media media : medias) {
-								System.out.println(media);
-								if (media.getType().equals(MediaType.IMAGE)) {
-									images.add(media);
-								}
-								if (media.getType().equals(MediaType.VIDEO)) {
-									videos.add(media);
-								}
-								if (media.getType().equals(MediaType.AUDIO)) {
-									audios.add(media);
-								}
-							}
-							if (images != null) {
-								if (images.size() > 0) {
-									imageMap.put(contentGroup.getId(), images);
-								}
-
-							}
-							if (videos != null) {
-								if (videos.size() > 0) {
-									videoMap.put(contentGroup.getId(), videos);
-								}
-
-							}
-							if (audios != null) {
-								if (audios.size() > 0) {
-									audioMap.put(contentGroup.getId(), audios);
-								}
-
-							}
-
-						} else {
-							images = videos = audios = null;
-						}
-
-					}
-				}
-
+				CreateContent.setContent(request, response, records);
+				
+				
 				User user = UserService.getUserById((Integer) request
 						.getSession().getAttribute("userId"));
-				System.out.println(mediaMap);
-				System.out.println(imageMap);
-				System.out.println(videoMap);
-				System.out.println(audioMap);
-				request.setAttribute("mediaMap", mediaMap);
-				request.setAttribute("imageMap", imageMap);
-				request.setAttribute("videoMap", videoMap);
-				request.setAttribute("audioMap", audioMap);
-				request.setAttribute("records", records);
+				
 				request.setAttribute("eventId", event.getId());
 				request.setAttribute("event", event);
-				request.setAttribute("userName", creatorRecordMap);
 
 				String isSigned = "false";
 
