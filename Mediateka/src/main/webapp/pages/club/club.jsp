@@ -20,7 +20,7 @@
 
 </head>
 
-<body>
+<body onload="connect();" onunload="disconnect();">
 
 	<jsp:include page="../general/nav.jsp" />
 	<div class="main">
@@ -48,7 +48,10 @@
 				</ul>
 			</div>
 		</div>
+	            <input type="text" hidden value="${userId}" id ="userId"/>
+           
 	</div>
+	<jsp:include page="chat_side_nav.jsp"/>
 	<jsp:include page="../general/footer.jsp" />
 
 </body>

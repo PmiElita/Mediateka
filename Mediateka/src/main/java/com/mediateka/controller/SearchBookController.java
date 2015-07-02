@@ -187,7 +187,7 @@ public class SearchBookController {
 			languageId = BookLanguageService.getBookLanguageById(
 					Integer.parseInt(searchBookForm.getLanguage())).getId();
 		}
-		
+		if (temp!=null){
 		for (Book book : temp) {
 
 			if (typeId != null && book.getTypeId() != typeId) {
@@ -200,6 +200,7 @@ public class SearchBookController {
 				continue;
 			}
 			books.add(book);
+		}
 		}
 		Collections.sort(books, new BookByFormRecordCount());
 		boolean haveMoreResults = false;

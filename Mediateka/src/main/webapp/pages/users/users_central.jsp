@@ -41,16 +41,16 @@
 		<fmt:message bundle="${msg}" key="searchUser" />
 	</h4>
 	<div class="row section white">
-		<form id="searchUsers" class="col s12" onsubmit="return reloadUsers()">
+		<form id="searchUsers" class="col s12" onsubmit="return reloadUsers();">
 			<p id="message"></p>
 			<div class="input-field">
 				<input id="query" name="query" type="text" required
-					autocomplete="off" onkeyup="return reloadUsers()" value="${query}">
+					autocomplete="off" onkeyup="return reloadUsers();" value="${query}">
 				<label for="search"><i class="mdi-action-search"></i></label>
 			</div>
 		</form>
 		<button class="col s2 offset-s10 waves-effect waves-green btn-flat"
-			onclick="reloadUsers()">
+			onclick="reloadUsers();">
 			<fmt:message bundle="${msg}" key="confirm" />
 		</button>
 	</div>

@@ -34,8 +34,8 @@ public class GoogleLoginDAO {
 		user.setEmail(((JSONObject) ((JSONArray) jObject.get("emails")).get(0))
 				.get("value").toString());
 		JSONObject jsonName = (JSONObject) jObject.get("name");
-		user.setFirstName(jsonName.get("familyName").toString());
-		user.setLastName(jsonName.get("givenName").toString());
+		user.setLastName(jsonName.get("familyName").toString());
+		user.setFirstName(jsonName.get("givenName").toString());
 		return user;
 	}
 }

@@ -393,7 +393,7 @@ public class UserController {
 						+ searchUserForm.getQuery());
 			}
 
-			request.setAttribute("qeury", searchUserForm.getQuery());
+			request.setAttribute("query", searchUserForm.getQuery());
 			Collections.sort(users, new UsersByFullname());
 			request.setAttribute("users", users);
 			request.getRequestDispatcher("pages/users/users_central.jsp")
@@ -425,7 +425,7 @@ public class UserController {
 				throw new WrongInputException("No such user "
 						+ searchUserForm.getQuery());
 			}
-			request.setAttribute("qeury", searchUserForm.getQuery());
+			request.setAttribute("query", searchUserForm.getQuery());
 			Collections.sort(users, new UsersByFullname());
 			request.setAttribute("users", users);
 			request.getRequestDispatcher("pages/users/users.jsp").forward(

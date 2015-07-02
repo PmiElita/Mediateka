@@ -48,4 +48,11 @@ public class ClubEventMemberService {
 			throws SQLException, ReflectiveOperationException {
 		return ClubEventMemberDAO.getClubEventMemberAll();
 	}
+
+	public static ClubEventMember getClubEventMemberByUserIdAndClubId(
+			Integer userId, Integer clubId)
+			throws ReflectiveOperationException, SQLException {
+		return ClubEventMemberDAO.getClubEventMemberByUserIdAndClubId(userId,
+				clubId);
+	}
 }

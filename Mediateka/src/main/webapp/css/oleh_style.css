@@ -71,3 +71,62 @@ div.user:hover{
 .book-scroll:hover{
 	background-color: #d6d6d6;
 }
+
+.side-nav{
+	
+	background-color: #263238;
+}
+
+.chat { 
+   margin-left:1.0em;
+	color:black;
+	width:25.0em;
+}
+
+.chat h3{
+	color: white;
+} 
+
+.chat button {
+	color: white;
+} 
+
+.chat textarea{
+	color:white;
+	 line-height: normal;
+}
+
+.message-area{
+		border:solid 1px black;
+		border-radius:8px;
+height:350px;
+	overflow-y: scroll; 
+	background-color: white;
+}
+
+.chat-item {
+	background-color:#EDF1F5;
+	border-radius:10px;
+	margin-left:1.5em;
+	margin-right:1.5em;
+	line-height: 1.0em;
+}
+
+.message-text{
+	padding-top:1.0em;
+	padding-left:1.0em;
+	padding-bottom:1.0em;
+	padding-right:1.0em;
+}
+.button-collapse {
+	position: fixed;
+	margin-top: 3.9em;
+}
+
+.user_name{
+	color: #039be5;
+}
+
+.chat-side-button{
+	top:2.7em; left:0.2em; position:fixed; font-size:37px; color:#0288d1;
+}

@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,10 +19,12 @@ import org.apache.log4j.Logger;
 
 import com.mediateka.annotation.Controller;
 import com.mediateka.annotation.Request;
+import com.mediateka.comparator.ChatMessageByCreationDate;
 import com.mediateka.comparator.ContentGroupByDate;
 import com.mediateka.content.CreateContent;
 import com.mediateka.exception.WrongInputException;
 import com.mediateka.form.ClubRegistrationForm;
+import com.mediateka.model.ChatMessage;
 import com.mediateka.model.Club;
 import com.mediateka.model.ClubEventMember;
 import com.mediateka.model.ContentGroup;
@@ -32,6 +35,7 @@ import com.mediateka.model.enums.ContentGroupType;
 import com.mediateka.model.enums.MediaType;
 import com.mediateka.model.enums.Role;
 import com.mediateka.model.enums.State;
+import com.mediateka.service.ChatMessageService;
 import com.mediateka.service.ClubEventMemberService;
 import com.mediateka.service.ClubService;
 import com.mediateka.service.ContentGroupService;
@@ -274,6 +278,20 @@ public class ClubController {
 					}
 				}
 
+				List<ChatMessage> chatMessages = ChatMessageService.getChatMessageByClubId(clubId);
+				
+				Map<ChatMessage,String> map = new LinkedHashMap<ChatMessage, String>();
+				if (chatMessages!=null){
+					Collections.sort(chatMessages, new ChatMessageByCreationDate());
+				for (int i =0; i<ChatController.MESSAGE_COUNT  && i<chatMessages.size(); i++){
+				    map.put(chatMessages.get(i), UserService.getUserById(chatMessages.get(i).getUserId()).getFirstName());
+				}
+				}
+				request.setAttribute("chatMessages", map);
+				
+				User user = UserService.getUserById((Integer) request
+						.getSession().getAttribute("userId"));
+				String name = user.getFirstName() + " " + user.getLastName();
 				System.out.println(mediaMap);
 				System.out.println(imageMap);
 				System.out.println(videoMap);

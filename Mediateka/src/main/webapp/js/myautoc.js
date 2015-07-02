@@ -12,7 +12,18 @@ $('#userQuery').autocomplete({
 });
 });
 
-
+$(function () {
+	$('#query').autocomplete({
+	    serviceUrl: 'get_users_by_regexp', // Страница для обработки запросов автозаполнения
+	    minChars: 1,
+	    maxHeight: 400,
+	    width: 300,
+	    onSelect: function(suggestion){ 
+	    	
+	    	 } // Callback функция, срабатывающая на выбор одного из предложенных вариантов,
+	 
+	});
+	});
 
 function clearMessage(){
 	if (event.keyCode != 13){
