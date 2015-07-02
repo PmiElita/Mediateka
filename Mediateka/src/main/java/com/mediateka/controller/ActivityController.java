@@ -75,7 +75,9 @@ public class ActivityController {
 					userId, new Timestamp(currentDate.getTime() - WEEK_MILIS),
 					currentDate);
 		}
+		if (result!=null){
 		Collections.sort(result, new FormRecordsByDateFrom());
+		}
 		request.setAttribute("formRecords", result);
 		request.getRequestDispatcher("pages/activity/activity_central.jsp")
 				.forward(request, response);

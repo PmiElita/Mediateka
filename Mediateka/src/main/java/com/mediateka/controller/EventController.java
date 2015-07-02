@@ -154,7 +154,7 @@ public class EventController {
 
 				List<ClubEventMember> eventMembers = ClubEventMemberService
 						.getClubEventMemberByEventId(event.getId());
-
+                if (eventMembers!=null){
 				if (eventMembers != null && user != null)
 					for (ClubEventMember member : eventMembers) {
 						if (member.getState() == State.ACTIVE
@@ -169,7 +169,7 @@ public class EventController {
 						"imagePath",
 						getMediaById(event.getAvaId()).getPath().replace("\\",
 								"/"));
-
+                }
 				request.setAttribute("isSigned", isSigned);
 
 				request.getRequestDispatcher("pages/event/event.jsp").forward(

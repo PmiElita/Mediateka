@@ -69,7 +69,7 @@ public class ShowActivity extends SimpleTagSupport {
 					} else if (formRecord.getEventId() != null) {
 						Event event = EventService.getEventById(formRecord
 								.getEventId());
-						out.write("<td><a style=\"color:#000;\" href=\"event?id="
+						out.write("<td><a style=\"color:#000;\" href=\"event?eventId="
 								+ event.getId()
 								+ "\">"
 								+ event.getName()
