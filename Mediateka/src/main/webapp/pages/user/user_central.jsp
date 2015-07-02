@@ -21,13 +21,12 @@
 
 	<jsp:include page="user_side_nav.jsp" />
 
-	<div class="container white section">
+	<div class="container white section" style="width:80%">
+		<div class="row section" style="margin-top: 3em">
+			<div class="main-activity col s5" style="min-height: 20em">
+				<div class="row select-activityr">
 
-		<div class="row section" style="margin-top: 2em">
-			<div class="main-activity col s3" style="height: 20em">
-				<div class="row select-activity">
-
-					<select class="browser-default col s12 " id="period"
+					<select class="browser-default col s6 center" id="period"
 						onchange="reloadActivity(this)">
 						<option value="week" selected>
 							<fmt:message bundle="${msg1}" key="week" />
@@ -48,31 +47,30 @@
 				</div>
 			</div>
 
-			<div class="user-info col s9">
+			<div class="user-info col s7">
 				<div class="row">
 					<div>
 						<a  title="Change avatar" href="" data-target="modal21"
 							class="modal-trigger waves-effect col s4"><img
 							src="images/user.png" id="avatar" style="border-radius:50%;" class="col s12"/></a>
-					</div>
+					</div> 
 					<div class="col s8">
-						<h5>${firstName}${middleName}${lastName}</h5>
+						<h5 class="left">${firstName} ${middleName} ${lastName}</h5>
 					</div>
-					<div class="row" style="font-size: 1.25em">
-						<div class="col s6">Birth ${birthDate}</div>
-						<div class="col s6">${nationality}</div>
+					<div class="row" style="font-size: 1.15em;">
+						<div class="col s3 center" style="margin-top:1em"><p style="color:grey; font-size:0.9em">Birth</p><p>${birthDate}</p></div>
+						<div class="col s4 center" style="margin-top:1em"><p style="color:grey; font-size:0.9em">Nationality</p><p>${nationality}</p></div>
 					</div>
-					<div class="row" style="font-size: 1.25em">
-						<div class="col s4">${profession}</div>
-						<div class="col s4">${education}</div>
-						<div class="col s4">${eduInstitution}</div>
+					<div class="row" style="font-size: 1.1em; margin-top:3em">
+						<div class="col s4"><p style="color:grey; font-size:0.9em">Profession</p><p>${profession}</p></div>
+						<div class="col s4"><p style="color:grey; font-size:0.9em">Education</p><p>${education}</p></div>
+						<div class="col s4"><p style="color:grey; font-size:0.9em">Institution</p><p>${eduInstitution}</p></div>
 					</div>
-					<div class="row" style="font-size: 1.25em">
-						<div class="col s6">${address}</div>
-						<div class="col s6">${phone}</div>
+					<div class="row" style="font-size: 1.15em; margin-top:3em">
+						<div class="col s8"><p style="color:grey; font-size:0.9em">Address</p><p>${address}</p></div>
+						<div class="col s4"><p style="color:grey; font-size:0.9em">Phone</p><p>${phone}</p></div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 </div>

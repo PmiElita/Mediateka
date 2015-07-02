@@ -12,7 +12,7 @@
 			<input type="hidden" name="eventId" id="eventId" value="${eventId }">
 		</c:if>
 
-		<div class="section white main-info container z-depth-1"
+		<div class="section main-info container z-depth-1"
 			style="width: 100%">
 			<div class="row">
 				<div class="row">

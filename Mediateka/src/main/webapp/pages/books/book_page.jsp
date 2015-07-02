@@ -55,7 +55,7 @@
 				<jsp:include page="../user/user_side_nav.jsp" />
 			</c:if>
 
-			<div class="container center">
+			<div class="container white center" style="min-height:33em; margin-bottom:0">
 				<div class="row">
 					<div class="col s4 offset-s3">
 						<h2 class="book-cover-t right">Book title</h2>
@@ -86,10 +86,10 @@
 				<img alt="Book name" src="images/book_title.jpg" width="45%"
 					style="margin-top: -7em">
 
-				<div class="container section white">
+				<div class="section" style="margin-bottom:0">
 					<h5>Info</h5>
 					<p>It is a wonderful story of adventurous life by J. C.
-						Kalloun.</p>
+						Kalloun. SFDASFASGFASDFSSSSSSSSSSSSSSSSSSSSSSSSSSSSSss</p>
 
 				</div>
 			</div>

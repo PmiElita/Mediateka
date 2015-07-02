@@ -19,7 +19,7 @@
 <label id="index" hidden="true">${index}</label>
 <div id="uploaded">
 	<c:forEach var="record" items="${records}">
-		<div class="card-panel grey lighten-5 z-depth-1">
+		<div class="grey lighten-5 z-depth-1">
 			<div class="row  valign-wrappert">
 				<div class="card-title card-panel grey lighten-5 z-depth-1 row">
 					<div align="left" class="col">

@@ -61,7 +61,7 @@ public class ShowActivity extends SimpleTagSupport {
 					} else if (formRecord.getBookId() != null) {
 						Book book = BookService.getBookById(formRecord
 								.getBookId());
-						out.write("<td><a style=\"color:#000;\" href=\"book?id="
+						out.write("<td><a style=\"color:#000;\" href=\"bookPage?id="
 								+ book.getId()
 								+ "\">\""
 								+ book.getName()
