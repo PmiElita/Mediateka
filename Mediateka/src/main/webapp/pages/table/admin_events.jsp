@@ -40,7 +40,7 @@
 				<c:choose>
 				<c:when test="${!(requestedEvents==null)}">
 					<ul class="collapsible" data-collapsible="accordion">
-						<c:forEach items="${requestedEvents}" var="current">
+						<c:forEach items="${requestedEvents}" var="current" varStatus="status">
 							<li id="eventNo${current.id}">
 								<div class="collapsible-header"><a class="button" href="event?eventId=${current.id}">
 									<c:out value="${current.name}" /></a>
@@ -51,13 +51,8 @@
 									</p>
 
 									<p>
-										<fmt:message bundle='${msg}' key='from' />
-										: ${current.dateFrom}"
-									</p>
-
-									<p>
-										<fmt:message bundle='${msg}' key='till' />
-										: ${current.dateTill}"
+										<fmt:message bundle='${msg}' key='time' />
+										: <c:out value="${datesRequested[status.index]}"/>
 									</p>
 
 									<p>
@@ -98,7 +93,7 @@
 				<c:choose>
 				<c:when test="${!(allEvents==null)}">
 					<ul class="collapsible" data-collapsible="accordion">
-						<c:forEach items="${allEvents}" var="current">
+						<c:forEach items="${allEvents}" var="current" varStatus="status">
 							<li id="eventNo${current.id}">
 								<div class="collapsible-header"><a class="button" href="event?eventId=${current.id}">
 									<c:out value="${current.name}"/></a>
@@ -109,13 +104,8 @@
 									</p>
 
 									<p>
-										<fmt:message bundle='${msg}' key='from' />
-										: ${current.dateFrom}"
-									</p>
-
-									<p>
-										<fmt:message bundle='${msg}' key='till' />
-										: ${current.dateTill}"
+										<fmt:message bundle='${msg}' key='time' />
+										: <c:out value="${datesAll[status.index]}"/>
 									</p>
 
 									<p>

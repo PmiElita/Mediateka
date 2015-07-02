@@ -44,11 +44,11 @@
 										<a href="event?eventId=${item.id}"><div align="center">
 												<c:out value="${item.name}" />
 											</div></a>
-									</div> <i class="mdi-navigation-close right"></i></span> <br>
+									</div> <i class="mdi-navigation-close right"></i></span><br><br>
 								<p>
 								<div style="color: green;">Event time:</div>
 								<c:out value="${dates[status.index]}" />
-								</p>
+								</p><br>
 								<p>
 								<div style="color: green;">Description:</div>
 								<c:out value="${item.description}" />

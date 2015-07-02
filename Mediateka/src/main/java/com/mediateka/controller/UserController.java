@@ -30,6 +30,7 @@ import com.mediateka.model.ClubEventMember;
 import com.mediateka.model.Event;
 import com.mediateka.model.FormRecord;
 import com.mediateka.model.User;
+import com.mediateka.model.enums.EventType;
 import com.mediateka.model.enums.Role;
 import com.mediateka.model.enums.State;
 import com.mediateka.search.UserSearch;
@@ -85,12 +86,50 @@ public class UserController {
 
 			List<Event> requestedEvents = getEventByState(State.REQUESTED);
 
+			List<String> datesRequested = new ArrayList<>();
+			List<String> datesAll = new ArrayList<>();
+			Timestamp dateFrom;
+			Timestamp dateTill;
+			String date = "It goes right now!";
+			SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd");
+			SimpleDateFormat formatMeeting = new SimpleDateFormat("hh:mm");
+			if (requestedEvents != null)
+				for (Event event : requestedEvents) {
+					dateFrom = event.getDateFrom();
+					dateTill = event.getDateTill();
+					if (event.getType() == EventType.MEETING)
+						date = format.format(dateFrom) + "    "
+								+ formatMeeting.format(dateFrom) + "  -  "
+								+ formatMeeting.format(dateTill);
+					else if (event.getType() == EventType.EXHIBITION)
+						date = format.format(dateFrom) + "  -  "
+								+ format.format(dateTill);
+					datesRequested.add(date);
+				}
+			if (allEvents != null)
+				for (Event event : allEvents) {
+					dateFrom = event.getDateFrom();
+					dateTill = event.getDateTill();
+					if (event.getType() == EventType.MEETING)
+						date = format.format(dateFrom) + "    "
+								+ formatMeeting.format(dateFrom) + "  -  "
+								+ formatMeeting.format(dateTill);
+					else if (event.getType() == EventType.EXHIBITION)
+						date = format.format(dateFrom) + "  -  "
+								+ format.format(dateTill);
+					datesAll.add(date);
+				}
+
+			request.setAttribute("datesRequested", datesRequested);
+			request.setAttribute("datesAll", datesAll);
 			request.setAttribute("requestedEvents", requestedEvents);
 			request.setAttribute("allEvents", allEvents);
 			request.getRequestDispatcher("pages/table/admin_events.jsp")
 					.forward(request, response);
 			request.removeAttribute("requestedEvents");
 			request.removeAttribute("allEvents");
+			request.removeAttribute("datesRequested");
+			request.removeAttribute("datesAll");
 			break;
 
 		case USER:
