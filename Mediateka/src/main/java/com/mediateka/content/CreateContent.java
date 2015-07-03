@@ -2,6 +2,7 @@ package com.mediateka.content;
 
 import static com.mediateka.service.ClubService.getClubById;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -16,12 +17,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.http.HttpResponse;
+import org.bytedeco.javacv.FFmpegFrameGrabber;
+import org.bytedeco.javacv.FrameGrabber.Exception;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.transform.JDOMResult;
@@ -107,64 +111,65 @@ public class CreateContent {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		 List<Media> images = new ArrayList<Media>();
-		 List<Media> videos = new ArrayList<Media>();
-		 List<Media> audios = new ArrayList<Media>();
-		
-		 for (Media media : mediaList) {
-		 if (media.getType().equals(MediaType.IMAGE)) {
-		 images.add(media);
-		 }
-		 if (media.getType().equals(MediaType.VIDEO)) {
-		 videos.add(media);
-		 }
-		 if (media.getType().equals(MediaType.AUDIO)) {
-		 audios.add(media);
-		 }
-		 }
-		 User user = UserService.getUserById(contentGroup.getCreatorId());
-		
-		 Map<String, Object> recordMap = new HashMap<String, Object>();
-		 recordMap.put("contentGroup", contentGroup);
-		 recordMap.put("userFirstName", user.getFirstName());
-		 recordMap.put("userLastName", user.getLastName());
-		 if(images != null){
-		 recordMap.put("imageList", images);
-		 }
-		 if(videos != null){
-		 recordMap.put("videoList", videos);
-		 }
-		 if(audios != null){
-		 recordMap.put("audioList", audios);
-		 }
-		
+		List<Media> images = new ArrayList<Media>();
+		List<Media> videos = new ArrayList<Media>();
+		List<Media> audios = new ArrayList<Media>();
 
-		 response.setContentType("application/json");
-		 response.setCharacterEncoding("UTF-8");
-		 System.out.println(new Gson().toJson(contentGroup).toString());
-		 response.getWriter().write(new Gson().toJson(recordMap));	
+		for (Media media : mediaList) {
+			if (media.getType().equals(MediaType.IMAGE)) {
+				images.add(media);
+			}
+			if (media.getType().equals(MediaType.VIDEO)) {
+				videos.add(media);
+			}
+			if (media.getType().equals(MediaType.AUDIO)) {
+				audios.add(media);
+			}
+		}
+		User user = UserService.getUserById(contentGroup.getCreatorId());
+
+		Map<String, Object> recordMap = new HashMap<String, Object>();
+		recordMap.put("contentGroup", contentGroup);
+		recordMap.put("userFirstName", user.getFirstName());
+		recordMap.put("userLastName", user.getLastName());
+		if (images != null) {
+			recordMap.put("imageList", images);
+		}
+		if (videos != null) {
+			recordMap.put("videoList", videos);
+		}
+		if (audios != null) {
+			recordMap.put("audioList", audios);
+		}
+
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		System.out.println(new Gson().toJson(contentGroup).toString());
+		response.getWriter().write(new Gson().toJson(recordMap));
 
 	}
-	
-	
-	public static void loadContent(HttpServletRequest request, HttpServletResponse response) throws ReflectiveOperationException, SQLException, ServletException, IOException{
-		
+
+	public static void loadContent(HttpServletRequest request,
+			HttpServletResponse response) throws ReflectiveOperationException,
+			SQLException, ServletException, IOException {
+
 		System.out.println("createContent");
 		int clubId = 0;
 		int eventId = 0;
 		System.out.println(request.getParameter("recordId"));
 		Integer recordId = Integer.parseInt(request.getParameter("recordId"));
-		ContentGroup contentGroup = ContentGroupService.getContentGroupById(recordId);
+		ContentGroup contentGroup = ContentGroupService
+				.getContentGroupById(recordId);
 		List<ContentGroup> records = new ArrayList<ContentGroup>();
 		records.add(contentGroup);
 		if (contentGroup.getClubId() != null) {
-			clubId = contentGroup.getClubId();			
+			clubId = contentGroup.getClubId();
 		} else if (contentGroup.getEventId() != null) {
-			eventId = contentGroup.getEventId();			
+			eventId = contentGroup.getEventId();
 		}
 
 		setContent(request, response, records);
-		
+
 		if (clubId != 0) {
 			request.setAttribute("clubId", clubId);
 		}
@@ -172,25 +177,25 @@ public class CreateContent {
 			request.setAttribute("eventId", eventId);
 		}
 		request.setAttribute("index", request.getParameter("index"));
-		
 
-		request.getRequestDispatcher("pages/club/record_central.jsp").forward(request,
-				response);
-		
+		request.getRequestDispatcher("pages/club/record_central.jsp").forward(
+				request, response);
+
 	}
-	
-	
-	public static void setContent(HttpServletRequest request, HttpServletResponse response, List<ContentGroup> records) throws ReflectiveOperationException, SQLException{
+
+	public static void setContent(HttpServletRequest request,
+			HttpServletResponse response, List<ContentGroup> records)
+			throws ReflectiveOperationException, SQLException {
 		Map<Integer, List<Media>> mediaMap = new HashMap<Integer, List<Media>>();
 		Map<Integer, List<Media>> imageMap = new HashMap<Integer, List<Media>>();
 		Map<Integer, List<Media>> videoMap = new HashMap<Integer, List<Media>>();
 		Map<Integer, List<Media>> audioMap = new HashMap<Integer, List<Media>>();
+		Map<Integer, Media> posterMap = new HashMap<Integer, Media>();
 		Map<Integer, String> creatorRecordMap = new HashMap<Integer, String>();
 		if (records != null) {
 			Collections.sort(records, new ContentGroupByDate());
 			for (ContentGroup record : records) {
-				User creator = UserService.getUserById(record
-						.getCreatorId());
+				User creator = UserService.getUserById(record.getCreatorId());
 				String cratorName = creator.getFirstName() + " "
 						+ creator.getLastName();
 				creatorRecordMap.put(record.getId(), cratorName);
@@ -210,6 +215,29 @@ public class CreateContent {
 						}
 						if (media.getType().equals(MediaType.VIDEO)) {
 							videos.add(media);
+							List<Media> posters = MediaService
+									.getMediaByPathRegex(media.getPath()
+											.substring(
+													media.getPath()
+															.lastIndexOf('\\') + 1,
+													media.getPath()
+															.lastIndexOf('.'))
+											+ ".png");
+							System.out.println(media.getPath().substring(
+									media.getPath().lastIndexOf('\\') + 1,
+									media.getPath().lastIndexOf('.'))
+									+ ".png");
+							System.out.println("postersList: " + posters);
+							if (posters != null) {
+								if (posters.size() > 1) {
+									System.out.println("owww fuck!");
+								}
+								Media poster = posters.get(0);
+								if (poster != null) {
+									System.out.println("postersObj: " + poster);
+									posterMap.put(media.getId(), poster);
+								}
+							}
 						}
 						if (media.getType().equals(MediaType.AUDIO)) {
 							audios.add(media);
@@ -240,11 +268,7 @@ public class CreateContent {
 
 			}
 		}
-		
-		System.out.println(mediaMap);
-		System.out.println(imageMap);
-		System.out.println(videoMap);
-		System.out.println(audioMap);		
+		request.setAttribute("posterMap", posterMap);
 		request.setAttribute("mediaMap", mediaMap);
 		request.setAttribute("imageMap", imageMap);
 		request.setAttribute("videoMap", videoMap);

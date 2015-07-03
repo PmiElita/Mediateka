@@ -150,7 +150,7 @@ public class MediaDAO {
 			PreparedStatement statement = connection
 					.prepareStatement(SELECT_MEDIA_BY_PATH_REGEX);
 			Media media = new Media();
-			media.setName(path);
+			media.setPath(path);
 			Transformer.valueIntoPreparedStatement(statement, media,
 					SELECT_MEDIA_BY_PATH_REGEX_ORDER);
 			ResultSet resultSet = statement.executeQuery();

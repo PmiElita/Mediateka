@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
@@ -21,10 +22,13 @@ import org.apache.commons.io.FileUtils;
 import org.apache.tika.metadata.Metadata;
 import org.apache.tika.parser.AutoDetectParser;
 import org.apache.tika.sax.BodyContentHandler;
+import org.bytedeco.javacv.FFmpegFrameGrabber;
 import org.xml.sax.ContentHandler;
 
 import com.mediateka.exception.WrongInputException;
+import com.mediateka.model.Media;
 import com.mediateka.model.enums.MediaType;
+import com.mediateka.service.MediaService;
 
 public class FileLoader {
 
@@ -61,7 +65,7 @@ public class FileLoader {
 		String destFolder = request.getServletContext().getRealPath("")
 				+ "media\\" + type;
 		System.out.println(destFolder);
-		File dest = new File(destFolder);
+		File dest;
 		for (int i = 0; i < filePaths.size(); i++) {
 			System.out.println(filePaths.get(i));
 			filePaths.set(i, filePaths.get(i).replace("temp", type));
@@ -73,8 +77,51 @@ public class FileLoader {
 				File[] fileList = new File(uploadFolder + "\\" + typeAray[i])
 						.listFiles();
 				for (File file : fileList) {
-					FileUtils.moveFileToDirectory(file, new File(destFolder
-							+ "\\" + typeAray[i]), false);
+					dest = new File(destFolder
+							+ "\\" + typeAray[i]);
+					if (typeAray[i] == "videos") {
+					File copyFile = new File(dest.getAbsolutePath() + "\\" + file.getName());
+					FileUtils.copyFile(file, copyFile);
+					System.out.println(dest.getAbsolutePath()
+							+ file.getName());
+
+					FFmpegFrameGrabber g = new FFmpegFrameGrabber(copyFile);
+					try {
+						g.start();
+						System.out.println(copyFile.getPath() + " "
+								+ copyFile.getCanonicalPath());
+						g.setFrameNumber(g.getLengthInFrames() / 2);
+						try {
+							File posterFile = new File(copyFile
+									.getAbsolutePath().substring(
+											0,
+											copyFile.getAbsolutePath()
+													.lastIndexOf('.'))
+									+ ".png");
+							ImageIO.write(g.grab().getBufferedImage(),
+									"png", posterFile);
+							System.out.println("ok");
+							Media posterMedia = new Media();
+							posterMedia.setType(MediaType.POSTER);
+							System.out.println("posterFile "
+									+ posterFile.getAbsolutePath());
+							posterMedia.setPath(posterFile
+									.getAbsolutePath().substring(
+											posterFile.getAbsolutePath()
+													.indexOf("media\\")));
+							MediaService.saveMedia(posterMedia);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						g.stop();
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					copyFile.delete();
+				}
+					FileUtils.moveFileToDirectory(file, dest, false);
 				}
 			}
 		} catch (IOException e) {
