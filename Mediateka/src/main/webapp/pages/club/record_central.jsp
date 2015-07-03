@@ -28,8 +28,35 @@ audio {
 <label id="index" hidden="true">${index}</label>
 <div id="uploaded">
 	<c:forEach var="record" items="${records}">
-		<a id="restore${record.id }" onclick="restoreRecord(${record.id })" hidden="true" class="waves-effect waves-light btn">Restore</a>
-		<div id = "recordId${record.id}" class="grey lighten-5 z-depth-1" style="margin-top: 5%;">
+		<div class="grey lighten-5 z-depth-1" style="margin-top: 5%;"
+			id="restore${record.id }" hidden="true">
+			<div class="valign-wrappert">
+				<div class="col s12">
+					<div class="card-title card-panel grey lighten-5 z-depth-1 row"
+						style="padding: 0px;">
+						<div class="valign-wrapper">
+							<div class="col s1">
+								<img
+									src="http://cs620219.vk.me/v620219213/17bc9/dNN2ANduYDg.jpg"
+									alt="" class="circle" style="height: 45px;">
+							</div>
+							<div align="left" class="col s3">
+								<c:out value="${creatorName[record.id]}"></c:out>
+							</div>
+							<a onclick="restoreRecord(${record.id }); Materialize.toast('Restored', 4000)"
+								class="waves-effect waves-light btn">Restore</a>
+							<div class="col s7" align="right">
+								<fmt:formatDate value="${record.creationDate}"
+									pattern="HH:mm dd.MM.yyyy" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+		<div id="recordId${record.id}" class="grey lighten-5 z-depth-1"
+			style="margin-top: 5%;">
 			<div class="valign-wrappert">
 				<div class="col s12">
 					<div class="card-title card-panel grey lighten-5 z-depth-1 row"
@@ -49,7 +76,7 @@ audio {
 							</div>
 							<c:if test="${userId eq record.creatorId}">
 								<div class="col s1 ">
-									<span onclick="deleteRecord(${record.id});"
+									<span onclick="deleteRecord(${record.id}); Materialize.toast('Deleted', 4000);"
 										onmouseover="this.style.color = 'red';"
 										onmouseleave="this.style.color = 'black';"
 										class="waves-effect waves-circle waves-red">X</span>
@@ -71,14 +98,6 @@ audio {
 							data-thumb='<c:out value="${image.path}"></c:out>'> <img
 							src='<c:out value="${image.path}"></c:out>' data-fit="scaledown">
 						</a>
-					</c:forEach>
-					<c:forEach var="video" items="${videoMap.get(record.id) }">
-						<video poster="${posterMap.get(video.id).path }"
-							onclick="this.play();" controls="controls"
-							title='<c:out value="${video.name}"></c:out>'>
-							<source src='<c:out value="${video.path}"></c:out>'
-								type="video/mp4">
-						</video>
 					</c:forEach>
 				</div>
 				<div class="fotorama " data-width="700" data-maxwidth="100%"
