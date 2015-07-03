@@ -57,141 +57,172 @@ public class UserController {
 			HttpServletResponse response) throws ServletException, IOException,
 			SQLException, ReflectiveOperationException {
 
-		Integer userId = (Integer) request.getSession().getAttribute("userId");
+		if (request.getParameter("clubId") == null) {
+			Integer userId = (Integer) request.getSession().getAttribute(
+					"userId");
 
-		List<Event> allEvents = getEventByState(State.ACTIVE);
-		if (allEvents != null)
-			Collections.sort(allEvents, new EventsByDate());
-
-		// all events avas
-		List<String> allEventsAvas = new ArrayList<>();
-		if (allEvents != null)
-			for (Event event : allEvents)
-				allEventsAvas.add(getMediaById(event.getAvaId()).getPath()
-						.replace("\\", "/"));
-
-		User user = new User();
-		user.setRole(Role.UNKNOWN);
-		if (userId != null) {
-			user = UserService.getUserById(userId);
-			if (user == null) {
-				logger.error("no user with such id : " + userId);
-				response.sendRedirect("index");
-				return;
-			}
-		}
-		switch (user.getRole()) {
-		case ADMIN:
-		case MODERATOR:
-
-			List<Event> requestedEvents = getEventByState(State.REQUESTED);
-
-			List<String> datesRequested = new ArrayList<>();
-			List<String> datesAll = new ArrayList<>();
-			Timestamp dateFrom;
-			Timestamp dateTill;
-			String date = "It goes right now!";
-			SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd");
-			SimpleDateFormat formatMeeting = new SimpleDateFormat("hh:mm");
-			if (requestedEvents != null)
-				for (Event event : requestedEvents) {
-					dateFrom = event.getDateFrom();
-					dateTill = event.getDateTill();
-					if (event.getType() == EventType.MEETING)
-						date = format.format(dateFrom) + "    "
-								+ formatMeeting.format(dateFrom) + "  -  "
-								+ formatMeeting.format(dateTill);
-					else if (event.getType() == EventType.EXHIBITION)
-						date = format.format(dateFrom) + "  -  "
-								+ format.format(dateTill);
-					datesRequested.add(date);
-				}
-			if (allEvents != null)
-				for (Event event : allEvents) {
-					dateFrom = event.getDateFrom();
-					dateTill = event.getDateTill();
-					if (event.getType() == EventType.MEETING)
-						date = format.format(dateFrom) + "    "
-								+ formatMeeting.format(dateFrom) + "  -  "
-								+ formatMeeting.format(dateTill);
-					else if (event.getType() == EventType.EXHIBITION)
-						date = format.format(dateFrom) + "  -  "
-								+ format.format(dateTill);
-					datesAll.add(date);
-				}
-
-			request.setAttribute("datesRequested", datesRequested);
-			request.setAttribute("datesAll", datesAll);
-			request.setAttribute("requestedEvents", requestedEvents);
-			request.setAttribute("allEvents", allEvents);
-			request.getRequestDispatcher("pages/table/admin_events.jsp")
-					.forward(request, response);
-			request.removeAttribute("requestedEvents");
-			request.removeAttribute("allEvents");
-			request.removeAttribute("datesRequested");
-			request.removeAttribute("datesAll");
-			break;
-
-		case USER:
-			// my events
-			List<ClubEventMember> iMemberOfEvents = getClubEventMemberByUserId(userId);
-			List<Event> myEvents = new ArrayList<>();
-			if (iMemberOfEvents != null)
-				for (ClubEventMember member : iMemberOfEvents)
-					if (member.getEventId() != null
-							&& member.getState() == State.ACTIVE
-							&& getEventById(member.getEventId()) != null)
-						myEvents.add(getEventById(member.getEventId()));
-			Collections.sort(myEvents, new EventsByDate());
-			List<Event> myActiveEvents = new ArrayList<>();
-			List<Event> myBlockedEvents = new ArrayList<>();
-			for (Event event : myEvents) {
-				if (event.getState() == State.ACTIVE)
-					myActiveEvents.add(event);
-				else if (event.getState() == State.BLOCKED)
-					myBlockedEvents.add(event);
-			}
-
-			// all events
+			List<Event> allEvents = getEventByState(State.ACTIVE);
 			if (allEvents != null)
 				Collections.sort(allEvents, new EventsByDate());
 
-			// my events avas
-			List<String> myActiveEventsAvas = new ArrayList<>();
-			List<String> myBlockedEventsAvas = new ArrayList<>();
-			for (Event event : myActiveEvents)
-				myActiveEventsAvas.add(getMediaById(event.getAvaId()).getPath()
-						.replace("\\", "/"));
-			for (Event event : myBlockedEvents)
-				myBlockedEventsAvas.add(getMediaById(event.getAvaId())
-						.getPath().replace("\\", "/"));
+			// all events avas
+			List<String> allEventsAvas = new ArrayList<>();
+			if (allEvents != null)
+				for (Event event : allEvents)
+					allEventsAvas.add(getMediaById(event.getAvaId()).getPath()
+							.replace("\\", "/"));
 
-			request.setAttribute("myActiveEvents", myActiveEvents);
-			request.setAttribute("myBlockedEvents", myBlockedEvents);
-			request.setAttribute("myActiveEventsAvas", myActiveEventsAvas);
-			request.setAttribute("myBlockedEventsAvas", myBlockedEventsAvas);
-			request.setAttribute("allEvents", allEvents);
-			request.setAttribute("allEventsAvas", allEventsAvas);
-			request.getRequestDispatcher("pages/events/events.jsp").forward(
-					request, response);
-			request.removeAttribute("myActiveEvents");
-			request.removeAttribute("myBlockedEvents");
-			request.removeAttribute("myActiveEventsAvas");
-			request.removeAttribute("myBlockedEventsAvas");
-			request.removeAttribute("allEvents");
-			request.removeAttribute("allEventsAvas");
-			break;
+			User user = new User();
+			user.setRole(Role.UNKNOWN);
+			if (userId != null) {
+				user = UserService.getUserById(userId);
+				if (user == null) {
+					logger.error("no user with such id : " + userId);
+					response.sendRedirect("index");
+					return;
+				}
+			}
+			switch (user.getRole()) {
+			case ADMIN:
+			case MODERATOR:
 
-		default:
-			request.setAttribute("allEvents", allEvents);
-			request.setAttribute("allEventsAvas", allEventsAvas);
-			request.getRequestDispatcher("pages/events/events.jsp").forward(
-					request, response);
+				List<Event> requestedEvents = getEventByState(State.REQUESTED);
+
+				List<String> datesRequested = new ArrayList<>();
+				List<String> datesAll = new ArrayList<>();
+				Timestamp dateFrom;
+				Timestamp dateTill;
+				String date = "It goes right now!";
+				SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd");
+				SimpleDateFormat formatMeeting = new SimpleDateFormat("hh:mm");
+				if (requestedEvents != null)
+					for (Event event : requestedEvents) {
+						dateFrom = event.getDateFrom();
+						dateTill = event.getDateTill();
+						if (event.getType() == EventType.MEETING)
+							date = format.format(dateFrom) + "    "
+									+ formatMeeting.format(dateFrom) + "  -  "
+									+ formatMeeting.format(dateTill);
+						else if (event.getType() == EventType.EXHIBITION)
+							date = format.format(dateFrom) + "  -  "
+									+ format.format(dateTill);
+						datesRequested.add(date);
+					}
+				if (allEvents != null)
+					for (Event event : allEvents) {
+						dateFrom = event.getDateFrom();
+						dateTill = event.getDateTill();
+						if (event.getType() == EventType.MEETING)
+							date = format.format(dateFrom) + "    "
+									+ formatMeeting.format(dateFrom) + "  -  "
+									+ formatMeeting.format(dateTill);
+						else if (event.getType() == EventType.EXHIBITION)
+							date = format.format(dateFrom) + "  -  "
+									+ format.format(dateTill);
+						datesAll.add(date);
+					}
+
+				request.setAttribute("datesRequested", datesRequested);
+				request.setAttribute("datesAll", datesAll);
+				request.setAttribute("requestedEvents", requestedEvents);
+				request.setAttribute("allEvents", allEvents);
+				request.getRequestDispatcher("pages/table/admin_events.jsp")
+						.forward(request, response);
+				request.removeAttribute("requestedEvents");
+				request.removeAttribute("allEvents");
+				request.removeAttribute("datesRequested");
+				request.removeAttribute("datesAll");
+				break;
+
+			case USER:
+				// my events
+				List<ClubEventMember> iMemberOfEvents = getClubEventMemberByUserId(userId);
+				List<Event> myEvents = new ArrayList<>();
+				if (iMemberOfEvents != null)
+					for (ClubEventMember member : iMemberOfEvents)
+						if (member.getEventId() != null
+								&& member.getState() == State.ACTIVE
+								&& getEventById(member.getEventId()) != null)
+							myEvents.add(getEventById(member.getEventId()));
+				Collections.sort(myEvents, new EventsByDate());
+				List<Event> myActiveEvents = new ArrayList<>();
+				List<Event> myBlockedEvents = new ArrayList<>();
+				for (Event event : myEvents) {
+					if (event.getState() == State.ACTIVE)
+						myActiveEvents.add(event);
+					else if (event.getState() == State.BLOCKED)
+						myBlockedEvents.add(event);
+				}
+
+				// all events
+				if (allEvents != null)
+					Collections.sort(allEvents, new EventsByDate());
+
+				// my events avas
+				List<String> myActiveEventsAvas = new ArrayList<>();
+				List<String> myBlockedEventsAvas = new ArrayList<>();
+				for (Event event : myActiveEvents)
+					myActiveEventsAvas.add(getMediaById(event.getAvaId())
+							.getPath().replace("\\", "/"));
+				for (Event event : myBlockedEvents)
+					myBlockedEventsAvas.add(getMediaById(event.getAvaId())
+							.getPath().replace("\\", "/"));
+
+				request.setAttribute("myActiveEvents", myActiveEvents);
+				request.setAttribute("myBlockedEvents", myBlockedEvents);
+				request.setAttribute("myActiveEventsAvas", myActiveEventsAvas);
+				request.setAttribute("myBlockedEventsAvas", myBlockedEventsAvas);
+				request.setAttribute("allEvents", allEvents);
+				request.setAttribute("allEventsAvas", allEventsAvas);
+				request.getRequestDispatcher("pages/events/events.jsp")
+						.forward(request, response);
+				request.removeAttribute("myActiveEvents");
+				request.removeAttribute("myBlockedEvents");
+				request.removeAttribute("myActiveEventsAvas");
+				request.removeAttribute("myBlockedEventsAvas");
+				request.removeAttribute("allEvents");
+				request.removeAttribute("allEventsAvas");
+				break;
+
+			default:
+				request.setAttribute("allEvents", allEvents);
+				request.setAttribute("allEventsAvas", allEventsAvas);
+				request.getRequestDispatcher("pages/events/events.jsp")
+						.forward(request, response);
+				request.removeAttribute("allEvents");
+				request.removeAttribute("allEventsAvas");
+				break;
+			}
+		} else if (request.getParameter("clubId") != null) {
+			int clubId = 0;
+			try {
+				clubId = Integer.parseInt(request.getParameter("clubId"));
+				Club club = getClubById(clubId);
+				if (club == null)
+					throw new NumberFormatException();
+			} catch (NumberFormatException e) {
+				logger.error("no club has such id : "
+						+ request.getParameter("clubId"));
+				response.sendRedirect("index");
+				return;
+			}
+			List<Event> events = getEventByClubId(clubId);
+			List<String> avas = new ArrayList<>();
+			if (events != null) {
+				for (int i = 0; i < events.size(); i++)
+					if (events.get(i).getState() != State.ACTIVE)
+						events.remove(i);
+				Collections.sort(events, new EventsByDate());
+				for (Event event : events)
+					avas.add(getMediaById(event.getAvaId()).getPath().replace(
+							"\\", "/"));
+			}
+			request.setAttribute("allEvents", events);
+			request.setAttribute("allEventsAvas", avas);
+			request.getRequestDispatcher("pages/events/events.jsp");
 			request.removeAttribute("allEvents");
-			request.removeAttribute("allEventsAvas");
-			break;
+			request.removeAttribute("all|EventsAvas");
 		}
-
 	}
 
 	@Request(url = "clubs", method = "get")
