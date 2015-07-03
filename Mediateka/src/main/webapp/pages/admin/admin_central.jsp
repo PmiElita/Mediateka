@@ -48,7 +48,12 @@
 											<img src="images/admin/clubs.png" alt=""
 												class="circle responsive-img">
 										</div>
-										<div class="my-badge">3</div>
+										<div class="my-badge">
+											<c:if test="${requestedClubCount > 0}">
+													+<c:out value="${requestedClubCount}" />
+												<p>
+											</c:if>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -69,7 +74,12 @@
 											<img style="margin-top: 0em" src="images/admin/events.png"
 												alt="" class="circle responsive-img">
 										</div>
-										<div class="my-badge" style="margin-left: 0.75em">2</div>
+										<div class="my-badge" style="margin-left: 0.75em">
+											<c:if test="${requestedEventCount > 0}">
+													+<c:out value="${requestedEventCount}" />
+												<p>
+											</c:if>
+										</div>
 									</div>
 								</div>
 							</div>

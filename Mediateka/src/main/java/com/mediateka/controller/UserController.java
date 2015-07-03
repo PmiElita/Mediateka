@@ -23,6 +23,7 @@ import com.mediateka.comparator.ClubsByMembersNumber;
 import com.mediateka.comparator.EventsByDate;
 import com.mediateka.comparator.FormRecordsByDateFrom;
 import com.mediateka.comparator.UsersByFullname;
+import com.mediateka.dao.ClubDAO;
 import com.mediateka.exception.WrongInputException;
 import com.mediateka.form.SearchUserForm;
 import com.mediateka.model.Club;
@@ -34,6 +35,8 @@ import com.mediateka.model.enums.EventType;
 import com.mediateka.model.enums.Role;
 import com.mediateka.model.enums.State;
 import com.mediateka.search.UserSearch;
+import com.mediateka.service.ClubService;
+import com.mediateka.service.EventService;
 import com.mediateka.service.FormRecordService;
 import com.mediateka.service.ProfessionService;
 import com.mediateka.service.UserService;
@@ -354,6 +357,10 @@ public class UserController {
 		case MODERATOR:
 			request.setAttribute("professions",
 					ProfessionService.getProfessionAll());
+			request.setAttribute("requestedClubCount", 
+					ClubService.getNumberOfRequestedClubs());
+			request.setAttribute("requestedEventCount", 
+					EventService.getNumberOfRequestedEvents());
 
 			request.getRequestDispatcher("pages/admin/admin.jsp").forward(
 					request, response);

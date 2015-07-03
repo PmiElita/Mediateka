@@ -40,4 +40,7 @@ public class EventStatements {
 	public static final String[] CALL_INSERT_EVENT_ORDER = { "type", "name",
 			"date_from", "date_till", "club_id", "state", "description",
 			"ava_id" };
+
+	public static final String SELECT_COUNT_OF_REQUESTED_EVENTS = "SELECT count(*) FROM event WHERE state = 'REQUESTED'";
+
 }

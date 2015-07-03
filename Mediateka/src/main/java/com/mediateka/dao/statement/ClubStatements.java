@@ -31,4 +31,6 @@ public class ClubStatements {
 	public static final String[] SELECT_CLUB_BY_NAME_REGEX_ORDER = { "name" };
 
 	public static final String SELECT_CLUB_ALL = "SELECT * FROM club";
+	
+	public static final String SELECT_COUNT_OF_REQUESTED_CLUBS = "SELECT count(*) FROM club WHERE state = 'REQUESTED'";
 }

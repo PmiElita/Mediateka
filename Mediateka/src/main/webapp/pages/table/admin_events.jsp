@@ -29,107 +29,114 @@
 					<div class="col s12">
 						<ul class="tabs">
 							<li class="tab col s3"><a href="#requested_events"
-								style="margin-left: 5em">Requested events</a></li>
-							<li class="tab col s3"><a href="#all_events">All events</a></li>
+								style="margin-left: 5em"><fmt:message bundle="${msg}"
+										key="requested_events" /></a></li>
+							<li class="tab col s3"><a href="#all_events"><fmt:message
+										bundle="${msg}" key="all_events" /></a></li>
 						</ul>
 					</div>
-						<jsp:include page="../admin/admin_side_nav.jsp" />
+					<jsp:include page="../admin/admin_side_nav.jsp" />
 				</div>
-				
+
 				<div id="requested_events">
-				<c:choose>
-				<c:when test="${!(requestedEvents==null)}">
-					<ul class="collapsible" data-collapsible="accordion">
-						<c:forEach items="${requestedEvents}" var="current" varStatus="status">
-							<li id="eventNo${current.id}">
-								<div class="collapsible-header"><a class="button" href="event?eventId=${current.id}">
-									<c:out value="${current.name}" /></a>
-								</div>
-								<div class="collapsible-body">
-									<p>
-										<c:out value="${current.description}" />
-									</p>
+					<c:choose>
+						<c:when test="${!(requestedEvents==null)}">
+							<ul class="collapsible" data-collapsible="accordion">
+								<c:forEach items="${requestedEvents}" var="current"
+									varStatus="status">
+									<li id="eventNo${current.id}">
+										<div class="collapsible-header">
+											<a class="button" href="event?eventId=${current.id}"> <c:out
+													value="${current.name}" /></a>
+										</div>
+										<div class="collapsible-body">
+											<p>
+												<c:out value="${current.description}" />
+											</p>
 
-									<p>
-										<fmt:message bundle='${msg}' key='time' />
-										: <c:out value="${datesRequested[status.index]}"/>
-									</p>
+											<p>
+												<fmt:message bundle='${msg}' key='time' />
+												:
+												<c:out value="${datesRequested[status.index]}" />
+											</p>
 
-									<p>
-										<fmt:message bundle='${msg}' key='type' />
-										:
-										<fmt:message bundle='${msg}' key='${current.type}' />
-									</p>
+											<p>
+												<fmt:message bundle='${msg}' key='type' />
+												:
+												<fmt:message bundle='${msg}' key='${current.type}' />
+											</p>
 
-									<p>
-										<button class="btn waves-effect green titler" type="submit"
-											name="action" style="margin-bottom: 3.5em"
-											onclick="activate(${current.id});">
-											<fmt:message bundle="${msg}" key="activate_button" />
-											<i class="mdi-content-send right"></i>
-										</button>
+											<p>
+												<button class="btn waves-effect green titler" type="submit"
+													name="action" style="margin-bottom: 3.5em"
+													onclick="activate(${current.id});">
+													<fmt:message bundle="${msg}" key="activate_button" />
+													<i class="mdi-content-send right"></i>
+												</button>
 
-										<button class="btn waves-effect red titler" type="submit"
-											name="action" style="margin-bottom: 3.5em"
-											onclick="dismiss(${current.id} );">
-											<fmt:message bundle="${msg}" key="dismiss_button" />
-											<i class="mdi-content-send right"></i>
-										</button>
-									</p>
-								</div>
-							</li>
-						</c:forEach>
-					</ul>
-					</c:when>
-					<c:otherwise>
-					<h2 align="center">No such events!</h2>
-					</c:otherwise>
+												<button class="btn waves-effect red titler" type="submit"
+													name="action" style="margin-bottom: 3.5em"
+													onclick="dismiss(${current.id} );">
+													<fmt:message bundle="${msg}" key="dismiss_button" />
+													<i class="mdi-content-send right"></i>
+												</button>
+											</p>
+										</div>
+									</li>
+								</c:forEach>
+							</ul>
+						</c:when>
+						<c:otherwise>
+							<h2 align="center"><fmt:message bundle="${msg}" key="no_events" /></h2>
+						</c:otherwise>
 					</c:choose>
 				</div>
 
 
 
 				<div id="all_events">
-				<c:choose>
-				<c:when test="${!(allEvents==null)}">
-					<ul class="collapsible" data-collapsible="accordion">
-						<c:forEach items="${allEvents}" var="current" varStatus="status">
-							<li id="eventNo${current.id}">
-								<div class="collapsible-header"><a class="button" href="event?eventId=${current.id}">
-									<c:out value="${current.name}"/></a>
-								</div>
-								<div class="collapsible-body">
-									<p>
-										<c:out value="${current.description}" />
-									</p>
+					<c:choose>
+						<c:when test="${!(allEvents==null)}">
+							<ul class="collapsible" data-collapsible="accordion">
+								<c:forEach items="${allEvents}" var="current" varStatus="status">
+									<li id="eventNo${current.id}">
+										<div class="collapsible-header">
+											<a class="button" href="event?eventId=${current.id}"> <c:out
+													value="${current.name}" /></a>
+										</div>
+										<div class="collapsible-body">
+											<p>
+												<c:out value="${current.description}" />
+											</p>
 
-									<p>
-										<fmt:message bundle='${msg}' key='time' />
-										: <c:out value="${datesAll[status.index]}"/>
-									</p>
+											<p>
+												<fmt:message bundle='${msg}' key='time' />
+												:
+												<c:out value="${datesAll[status.index]}" />
+											</p>
 
-									<p>
-										<fmt:message bundle='${msg}' key='type' />
-										:
-										<fmt:message bundle='${msg}' key='${current.type}' />
-									</p>
+											<p>
+												<fmt:message bundle='${msg}' key='type' />
+												:
+												<fmt:message bundle='${msg}' key='${current.type}' />
+											</p>
 
-									<p>
-										<button class="btn waves-effect red titler" type="submit"
-											name="action" style="margin-bottom: 3.5em"
-											onclick="dismiss(${current.id} );">
-											<fmt:message bundle="${msg}" key="delete_button" />
-											<i class="mdi-content-send right"></i>
-										</button>
-									</p>
-								</div>
-							</li>
-						</c:forEach>
-					</ul>
-					</c:when>
-					<c:otherwise>
-					<h2 align="center">No such events!</h2>
-					</c:otherwise>
+											<p>
+												<button class="btn waves-effect red titler" type="submit"
+													name="action" style="margin-bottom: 3.5em"
+													onclick="dismiss(${current.id} );">
+													<fmt:message bundle="${msg}" key="delete_button" />
+													<i class="mdi-content-send right"></i>
+												</button>
+											</p>
+										</div>
+									</li>
+								</c:forEach>
+							</ul>
+						</c:when>
+						<c:otherwise>
+							<h2 align="center"><fmt:message bundle="${msg}" key="no_events" /></h2>
+						</c:otherwise>
 					</c:choose>
 				</div>
 			</div>

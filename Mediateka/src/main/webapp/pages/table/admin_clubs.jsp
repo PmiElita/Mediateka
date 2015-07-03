@@ -24,86 +24,95 @@
 				<img src="images/parallax1.jpg">
 			</div>
 			<div class="container section white">
-			
-			<div class="row" style="margin-top: -1em">
+
+				<div class="row" style="margin-top: -1em">
 					<div class="col s12">
 						<ul class="tabs">
 							<li class="tab col s3"><a href="#requested_clubs"
-								style="margin-left: 5em">Requested clubs</a></li>
-							<li class="tab col s3"><a href="#all_clubs">All clubs</a></li>
+								style="margin-left: 5em"><fmt:message bundle="${msg}"
+										key="requested_clubs" /></a></li>
+							<li class="tab col s3"><a href="#all_clubs"><fmt:message
+										bundle="${msg}" key="all_clubs" /></a></li>
 						</ul>
 					</div>
-						<jsp:include page="../admin/admin_side_nav.jsp" />
-					</div>
-					
-					<div id="requested_clubs">
-					<c:choose><c:when test="${!(requestedClubs==null)}">
-				<ul class="collapsible" data-collapsible="accordion">
-					<c:forEach items="${requestedClubs}" var="current">
-						<li id="clubNo${current.id}">
-							<div class="collapsible-header"><a class="button" href="club?clubId=${current.id}">
-								<c:out value="${current.name}" /></a>
-							</div>
-							<div class="collapsible-body">
-								<p>
-									<c:out value="${current.description}" />
-								</p>
-								<p>
-									<button class="btn waves-effect green titler" type="submit"
-										name="action" style="margin-bottom: 3.5em"
-										onclick="activate(${current.id});">
-										<fmt:message bundle="${msg}" key="activate_button" />
-										<i class="mdi-content-send right"></i>
-									</button>
-
-									<button class="btn waves-effect red titler" type="submit"
-										name="action" style="margin-bottom: 3.5em"
-										onclick="dismiss(${current.id} );">
-										<fmt:message bundle="${msg}" key="dismiss_button" />
-										<i class="mdi-content-send right"></i>
-									</button>
-								</p>
-							</div>
-						</li>
-					</c:forEach>
-				</ul>
-				</c:when>
-				<c:otherwise>
-				<h2 align="center">No such clubs!</h2>
-				</c:otherwise>
-				</c:choose>
+					<jsp:include page="../admin/admin_side_nav.jsp" />
 				</div>
-				
+
+				<div id="requested_clubs">
+					<c:choose>
+						<c:when test="${!(requestedClubs==null)}">
+							<ul class="collapsible" data-collapsible="accordion">
+								<c:forEach items="${requestedClubs}" var="current">
+									<li id="clubNo${current.id}">
+										<div class="collapsible-header">
+											<a class="button" href="club?clubId=${current.id}"> <c:out
+													value="${current.name}" /></a>
+										</div>
+										<div class="collapsible-body">
+											<p>
+												<c:out value="${current.description}" />
+											</p>
+											<p>
+												<button class="btn waves-effect green titler" type="submit"
+													name="action" style="margin-bottom: 3.5em"
+													onclick="activate(${current.id});">
+													<fmt:message bundle="${msg}" key="activate_button" />
+													<i class="mdi-content-send right"></i>
+												</button>
+
+												<button class="btn waves-effect red titler" type="submit"
+													name="action" style="margin-bottom: 3.5em"
+													onclick="dismiss(${current.id} );">
+													<fmt:message bundle="${msg}" key="dismiss_button" />
+													<i class="mdi-content-send right"></i>
+												</button>
+											</p>
+										</div>
+									</li>
+								</c:forEach>
+							</ul>
+						</c:when>
+						<c:otherwise>
+							<h2 align="center">
+								<fmt:message bundle="${msg}" key="no_clubs" />
+							</h2>
+						</c:otherwise>
+					</c:choose>
+				</div>
+
 				<div id="all_clubs">
-				<c:choose>
-				<c:when test="${!(allClubs==null)}">
-				<ul class="collapsible" data-collapsible="accordion">
-					<c:forEach items="${allClubs}" var="current">
-						<li id="clubNo${current.id}">
-							<div class="collapsible-header"><a class="button" href="club?clubId=${current.id}">
-								<c:out value="${current.name}" /></a>
-							</div>
-							<div class="collapsible-body">
-								<p>
-									<c:out value="${current.description}" />
-								</p>
-								<p>
-									<button class="btn waves-effect red titler" type="submit"
-										name="action" style="margin-bottom: 3.5em"
-										onclick="dismiss(${current.id} );">
-										<fmt:message bundle="${msg}" key="delete_button" />
-										<i class="mdi-content-send right"></i>
-									</button>
-								</p>
-							</div>
-						</li>
-					</c:forEach>
-				</ul>
-				</c:when>
-				<c:otherwise>
-				<h2 align="center">No such clubs!</h2>
-				</c:otherwise>
-				</c:choose>
+					<c:choose>
+						<c:when test="${!(allClubs==null)}">
+							<ul class="collapsible" data-collapsible="accordion">
+								<c:forEach items="${allClubs}" var="current">
+									<li id="clubNo${current.id}">
+										<div class="collapsible-header">
+											<a class="button" href="club?clubId=${current.id}"> <c:out
+													value="${current.name}" /></a>
+										</div>
+										<div class="collapsible-body">
+											<p>
+												<c:out value="${current.description}" />
+											</p>
+											<p>
+												<button class="btn waves-effect red titler" type="submit"
+													name="action" style="margin-bottom: 3.5em"
+													onclick="dismiss(${current.id} );">
+													<fmt:message bundle="${msg}" key="delete_button" />
+													<i class="mdi-content-send right"></i>
+												</button>
+											</p>
+										</div>
+									</li>
+								</c:forEach>
+							</ul>
+						</c:when>
+						<c:otherwise>
+							<h2 align="center">
+								<fmt:message bundle="${msg}" key="no_clubs" />
+							</h2>
+						</c:otherwise>
+					</c:choose>
 				</div>
 			</div>
 		</div>

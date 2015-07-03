@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.List;
 
+import com.mediateka.dao.ClubDAO;
 import com.mediateka.dao.EventDAO;
 import com.mediateka.model.Event;
 import com.mediateka.model.enums.EventType;
@@ -60,4 +61,9 @@ public class EventService {
 			ReflectiveOperationException {
 		return EventDAO.callSaveEvent(event);
 	}
+	
+	public static Integer getNumberOfRequestedEvents() throws SQLException {
+		return EventDAO.getNumberOfRequestedEvents();
+	}
+
 }

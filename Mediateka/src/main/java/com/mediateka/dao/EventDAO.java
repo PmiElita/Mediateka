@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.List;
 
+import com.mediateka.dao.statement.ClubStatements;
 import com.mediateka.model.Event;
 import com.mediateka.model.enums.EventType;
 import com.mediateka.model.enums.State;
@@ -150,4 +151,18 @@ public class EventDAO {
 					Event.class);
 		}
 	}
+	
+	public static Integer getNumberOfRequestedEvents() throws SQLException{
+		try (Connection connection = ConnectionManager.getConnection()) {
+
+			PreparedStatement statement = connection
+					.prepareStatement(SELECT_COUNT_OF_REQUESTED_EVENTS);
+
+			ResultSet rs = statement.executeQuery();
+			rs.next();
+			return rs.getInt(1);
+		}
+		
+	}
+
 }

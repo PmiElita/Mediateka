@@ -134,4 +134,18 @@ public class ClubDAO {
 
 		}
 	}
+	
+	
+	public static Integer getNumberOfRequestedClubs() throws SQLException{
+		try (Connection connection = ConnectionManager.getConnection()) {
+
+			PreparedStatement statement = connection
+					.prepareStatement(ClubStatements.SELECT_COUNT_OF_REQUESTED_CLUBS);
+
+			ResultSet rs = statement.executeQuery();
+			rs.next();
+			return rs.getInt(1);
+		}
+		
+	}
 }
