@@ -24,17 +24,17 @@
 			</div>
 
 			<div style="margin-top: 10em; margin-right: 0em"
-				class=" section white coll s12">
+				class=" section white col s12 center">
 				<div class="row offset-s4">
 					<h1 class="col8 ">Thanks!</h1>
 				</div>
 				<div class="row">
-					<p style="font-size: 1.5em" class="col8">Check out your e-mail
+					<p style="font-size: 1.5em" class="col s12 center">Check out your e-mail
 						to confirm your registration.</p>
 				</div>
 
 				<div class="row">
-					<a style="font-size: 1.5em" class="col8" href="index">Back to main page.</a>
+					<a style="font-size: 1.5em" class="col s12 center" href="index">Back to main page.</a>
 				</div>
 			</div>
 		</div>

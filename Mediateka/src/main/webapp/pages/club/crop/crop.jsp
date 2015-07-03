@@ -8,12 +8,6 @@
 .crop-container {
 	position: absolute;
 }
-
-.action {
-	width: 425px;
-	height: 30px;
-	margin: 10px 0;
-}
 </style>
 
 </head>
@@ -21,22 +15,40 @@
 
 	<script src="pages/event/crop/crop.js"></script>
 
-	<div id="modal15" class="modal" style="width: 80%; background:transparent">
+	<div id="modal15" class="modal"
+		style="width: 75%; background: black">
 		<div class="modal-content">
-			<div style="height: 30em;">
-				<div class="crop-container">
+			<div style="height: 33em;">
+				<div class="crop-container" style="margin-top: 1em; margin-left: 0.5em">
 
 
 					<div class="imageBox">
 						<div class="thumbBox"></div>
 						<div class="spinner" style="display: none">Loading...</div>
 					</div>
-					<div class="action">
-						<input type="file" id="file" style="float: left; width: 250px;" class="image-cover-t">
-						<input type="button" id="btnCrop" value="Confirm"
-							style="float: right; margin-top:1em; margin-left:3em"> <input type="button" id="btnZoomIn"
-							value="+" style="float: right; margin-top:1em"> <input type="button"
-							id="btnZoomOut" value="-" style="float: right; margin-top:1em">
+					<div class="action" style="margin-top: -0.8em">
+
+						<div class="row">
+							<div class="file-field input-field col s3 offset-s3">
+								<input class="file-path validate" type="hidden" />
+								<div class="btn" style="width: 100%">
+									<span>Choose image</span> <input type="file" id="file"
+										name="image" onchange="readURL(this);" accept="image/*" />
+								</div>
+							</div>
+
+							<button class="btn col s1 offset-s1" id="btnZoomIn"
+								style="margin-top: 1.5em; border-radius: 50%">
+								<i>+</i>
+							</button>
+							<button class="btn col s1" id="btnZoomOut"
+								style="margin-top: 1.5em; border-radius: 50%">
+								<i>-</i>
+							</button>
+						</div>
+						<div class="row" style="margin-top: -1em">
+							<button class="btn col s12" id="btnCrop">Confirm</button>
+						</div>
 					</div>
 				</div>
 			</div>

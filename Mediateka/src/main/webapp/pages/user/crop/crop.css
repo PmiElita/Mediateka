@@ -1,6 +1,6 @@
 .imageBox
 {
-
+	
     position: relative;
     height: 25em;
     width: 25em;
@@ -22,7 +22,7 @@
     margin-left: -100px;
     border: 1px solid rgb(102, 102, 102);
     box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.5);
-    background: none repeat scroll 0% 0% transparent;
+    background: none repeat scroll 0% 0%;
     border-radius:50%;
 }
 
