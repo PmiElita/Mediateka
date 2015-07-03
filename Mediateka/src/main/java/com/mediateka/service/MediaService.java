@@ -49,6 +49,11 @@ public class MediaService {
 			throws SQLException, ReflectiveOperationException {
 		return MediaDAO.getMediaByNameRegex(name);
 	}
+	
+	public static List<Media> getMediaByPathRegex(String path)
+			throws SQLException, ReflectiveOperationException {
+		return MediaDAO.getMediaByPathRegex(path);
+	}
 
 	public static List<Media> getMediaAll() throws SQLException,
 			ReflectiveOperationException {

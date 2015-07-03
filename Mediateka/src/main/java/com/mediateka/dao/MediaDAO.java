@@ -136,7 +136,23 @@ public class MediaDAO {
 			Media media = new Media();
 			media.setName(name);
 			Transformer.valueIntoPreparedStatement(statement, media,
-					SELECT_MEDIA_BY_STATE_ORDER);
+					SELECT_MEDIA_BY_NAME_REGEX_ORDER);
+			ResultSet resultSet = statement.executeQuery();
+			return Transformer.transformResultSetIntoList(resultSet,
+					Media.class);
+		}
+	}
+	
+	
+	public static List<Media> getMediaByPathRegex(String path)
+			throws SQLException, ReflectiveOperationException {
+		try (Connection connection = ConnectionManager.getConnection()) {
+			PreparedStatement statement = connection
+					.prepareStatement(SELECT_MEDIA_BY_PATH_REGEX);
+			Media media = new Media();
+			media.setName(path);
+			Transformer.valueIntoPreparedStatement(statement, media,
+					SELECT_MEDIA_BY_PATH_REGEX_ORDER);
 			ResultSet resultSet = statement.executeQuery();
 			return Transformer.transformResultSetIntoList(resultSet,
 					Media.class);

@@ -26,6 +26,9 @@ public class LikeRecordController {
 		System.out.println(likeState);
 		HttpSession session = request.getSession();
 		Integer userId = (Integer) session.getAttribute("userId");
+		if(userId == null){
+			return;
+		}
 		Integer contentGroupId = Integer.parseInt(request.getParameter("contentGroupId"));
 		LikeRecord likeRecord = LikeRecordService
 				.getLikeRecordByUserIdAndContentGroupId(userId, contentGroupId);

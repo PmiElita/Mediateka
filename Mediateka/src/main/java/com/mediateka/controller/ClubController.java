@@ -219,63 +219,7 @@ public class ClubController {
 				List<ContentGroup> records = ContentGroupService
 						.getContentGroupByClubId(clubId);
 
-				Map<Integer, List<Media>> mediaMap = new HashMap<Integer, List<Media>>();
-				Map<Integer, List<Media>> imageMap = new HashMap<Integer, List<Media>>();
-				Map<Integer, List<Media>> videoMap = new HashMap<Integer, List<Media>>();
-				Map<Integer, List<Media>> audioMap = new HashMap<Integer, List<Media>>();
-				Map<Integer, String> creatorRecordMap = new HashMap<Integer, String>();
-				if (records != null) {
-					Collections.sort(records, new ContentGroupByDate());
-					for (ContentGroup contentGroup : records) {
-						User creator = UserService.getUserById(contentGroup
-								.getCreatorId());
-						String cratorName = creator.getFirstName() + " "
-								+ creator.getLastName();
-						creatorRecordMap.put(contentGroup.getId(), cratorName);
-						List<Media> images = new ArrayList<Media>();
-						List<Media> videos = new ArrayList<Media>();
-						List<Media> audios = new ArrayList<Media>();
-						mediaMap.put(contentGroup.getId(), MediaService
-								.getMediaContentGroupId(contentGroup.getId()));
-						List<Media> medias = MediaService
-								.getMediaContentGroupId(contentGroup.getId());
-						if (medias != null) {
-							for (Media media : medias) {
-								if (media.getType().equals(MediaType.IMAGE)) {
-									images.add(media);
-								}
-								if (media.getType().equals(MediaType.VIDEO)) {
-									videos.add(media);
-								}
-								if (media.getType().equals(MediaType.AUDIO)) {
-									audios.add(media);
-								}
-							}
-							if (images != null) {
-								if (images.size() > 0) {
-									imageMap.put(contentGroup.getId(), images);
-								}
-
-							}
-							if (videos != null) {
-								if (videos.size() > 0) {
-									videoMap.put(contentGroup.getId(), videos);
-								}
-
-							}
-							if (audios != null) {
-								if (audios.size() > 0) {
-									audioMap.put(contentGroup.getId(), audios);
-								}
-
-							}
-
-						} else {
-							images = videos = audios = null;
-						}
-
-					}
-				}
+				CreateContent.setContent(request, response, records);
 
 				List<ChatMessage> chatMessages = ChatMessageService
 						.getChatMessageByClubId(clubId);
@@ -318,15 +262,9 @@ public class ClubController {
 				request.setAttribute("imagePath", getMediaById(club.getAvaId())
 						.getPath().replace("\\", "/"));
 				request.setAttribute("chatMessages", map);
-				request.setAttribute("isSigned", isSigned);
-				request.setAttribute("mediaMap", mediaMap);
-				request.setAttribute("imageMap", imageMap);
-				request.setAttribute("videoMap", videoMap);
-				request.setAttribute("audioMap", audioMap);
-				request.setAttribute("records", records);
+				request.setAttribute("isSigned", isSigned);								
 				request.setAttribute("clubId", club.getId());
-				request.setAttribute("club", club);
-				request.setAttribute("creatorName", creatorRecordMap);
+				request.setAttribute("club", club);				
 				request.setAttribute("index", 0);
 				request.getRequestDispatcher("pages/club/club.jsp").forward(
 						request, response);

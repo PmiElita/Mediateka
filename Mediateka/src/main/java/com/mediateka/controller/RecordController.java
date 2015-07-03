@@ -10,7 +10,10 @@ import javax.servlet.http.HttpServletResponse;
 import com.mediateka.annotation.Controller;
 import com.mediateka.annotation.Request;
 import com.mediateka.content.CreateContent;
+import com.mediateka.model.ContentGroup;
 import com.mediateka.model.enums.ContentGroupType;
+import com.mediateka.model.enums.State;
+import com.mediateka.service.ContentGroupService;
 
 
 @Controller
@@ -33,8 +36,10 @@ public class RecordController {
 	}
 	
 	@Request(url="deleteRecord", method="get")
-	public static void deleteRecordGet(HttpServletRequest request, HttpServletResponse response){
-		
+	public static void deleteRecordGet(HttpServletRequest request, HttpServletResponse response) throws NumberFormatException, ReflectiveOperationException, SQLException{
+		ContentGroup contentGroup = ContentGroupService.getContentGroupById(Integer.parseInt(request.getParameter("recordId")));
+		contentGroup.setState(State.DELETED);
+		ContentGroupService.updateContentGroup(contentGroup);
 	}
 	
 	
