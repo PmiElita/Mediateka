@@ -44,12 +44,21 @@ public class ContentGroupStatements {
 
 	public static final String SELECT_CONTENT_GROUP_ALL = "SELECT * FROM content_group";
 
+	public static final String SELECT_CONTENT_GROUP_BY_EVENT_ID_AND_STATE = "SELECT * FROM content_group WHERE event_id=? "
+			+ " AND state = ?";
+	public static final String[] SELECT_CONTENT_GROUP_BY_EVENT_ID_AND_STATE_ORDER = { "event_id", "state" };
+
+	public static final String SELECT_CONTENT_GROUP_BY_CLUB_ID_AND_STATE = "SELECT * FROM content_group WHERE club_id=? "
+			+ " AND state = ?";
+	public static final String[] SELECT_CONTENT_GROUP_BY_CLUB_ID_AND_STATE_ORDER = { "club_id" , "state" };
+	
+	
 	// update
 	public static final String UPDATE_CONTENT_GROUP = "UPDATE content_group SET "
-			+ " name=?, creator_id=?, creator_date=?, text=?,"
-			+ " event_id=?, club_id=?, state=?, like=?,"
+			+"type=?, name=?, creator_id=?, creation_date=?, text=?,"
+			+ " event_id=?, club_id=?, state=?, content_group.like=?,"
 			+ " dislike=?, parent_id=?" + " WHERE id=?";
 	public static final String[] UPDATE_CONTENT_GROUP_ORDER = { "type", "name",
-			"creator_id", "creator_date", "text", "event_id", "club_id",
+			"creator_id", "creation_date", "text", "event_id", "club_id",
 			"state", "like", "dislike", "parent_id", "id" };
 }

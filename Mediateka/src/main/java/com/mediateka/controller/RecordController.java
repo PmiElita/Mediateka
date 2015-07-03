@@ -36,12 +36,20 @@ public class RecordController {
 	}
 	
 	@Request(url="deleteRecord", method="get")
-	public static void deleteRecordGet(HttpServletRequest request, HttpServletResponse response) throws NumberFormatException, ReflectiveOperationException, SQLException{
+	public static void deleteRecordGet(HttpServletRequest request, HttpServletResponse response) throws NumberFormatException, ReflectiveOperationException, SQLException, ServletException, IOException{
 		ContentGroup contentGroup = ContentGroupService.getContentGroupById(Integer.parseInt(request.getParameter("recordId")));
 		contentGroup.setState(State.DELETED);
-		ContentGroupService.updateContentGroup(contentGroup);
+		ContentGroupService.updateContentGroup(contentGroup);		
 	}
 	
+	@Request(url = "restoreRecord", method="get")
+	public static void restoreRecordGet(HttpServletRequest request, HttpServletResponse response) throws NumberFormatException, ReflectiveOperationException, SQLException, ServletException, IOException{
+		ContentGroup contentGroup = ContentGroupService.getContentGroupById(Integer.parseInt(request.getParameter("recordId")));
+		
+		contentGroup.setState(State.ACTIVE);
+		ContentGroupService.updateContentGroup(contentGroup);	
+		
+	}
 	
 
 }

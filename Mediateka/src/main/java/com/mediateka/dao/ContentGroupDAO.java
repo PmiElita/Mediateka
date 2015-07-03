@@ -177,6 +177,38 @@ public class ContentGroupDAO {
 					ContentGroup.class);
 		}
 	}
+	
+	public static List<ContentGroup> getContentGroupByClubIdAndState(Integer clubId, State state) throws SQLException, ReflectiveOperationException{
+		try (Connection connection = ConnectionManager.getConnection()) {
+			PreparedStatement statement = connection
+					.prepareStatement(SELECT_CONTENT_GROUP_BY_CLUB_ID_AND_STATE);
+			ContentGroup contentGroup = new ContentGroup();
+			contentGroup.setClubId(clubId);
+			contentGroup.setState(state);
+			Transformer.valueIntoPreparedStatement(statement, contentGroup,
+					SELECT_CONTENT_GROUP_BY_CLUB_ID_AND_STATE_ORDER);
+			ResultSet resultSet = statement.executeQuery();
+			return Transformer.transformResultSetIntoList(resultSet,
+					ContentGroup.class);
+		}
+	}
+	
+	public static List<ContentGroup> getContentGroupByEventIdAndState(Integer eventId, State state) throws SQLException, ReflectiveOperationException{
+		try (Connection connection = ConnectionManager.getConnection()) {
+			PreparedStatement statement = connection
+					.prepareStatement(SELECT_CONTENT_GROUP_BY_EVENT_ID_AND_STATE);
+			ContentGroup contentGroup = new ContentGroup();
+			contentGroup.setEventId(eventId);
+			contentGroup.setState(state);
+			Transformer.valueIntoPreparedStatement(statement, contentGroup,
+					SELECT_CONTENT_GROUP_BY_EVENT_ID_AND_STATE_ORDER);
+			ResultSet resultSet = statement.executeQuery();
+			return Transformer.transformResultSetIntoList(resultSet,
+					ContentGroup.class);
+		}
+	}
+	
+	
 
 	// update
 	public static void updateContentGroup(ContentGroup contentGroup)

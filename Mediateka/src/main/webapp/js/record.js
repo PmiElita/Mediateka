@@ -4,6 +4,40 @@ var storedVideos = [];
 var storedAudios = [];
 var num;
 
+function deleteRecord(recordId) {
+	alert(recordId);
+	$.ajax({
+		type : 'get',
+		url : 'deleteRecord',
+		dataType : 'JSON',
+		data : {
+			'recordId' : recordId
+		},
+		complete : function(data) {
+			//document.getElementById('recordId' + recordId).innerHTML = "";
+			document.getElementById('recordId' + recordId).hidden = true;
+			document.getElementById('restore' + recordId).hidden = false;
+		}
+	});
+}
+
+function restoreRecord(recordId){
+	alert(recordId);
+	$.ajax({
+		type : 'get',
+		url : 'restoreRecord',
+		dataType : 'JSON',
+		data : {
+			'recordId' : recordId
+		},
+		complete : function(data) {
+			//document.getElementById('recordId' + recordId).innerHTML = "";
+			document.getElementById('recordId' + recordId).hidden = false;
+			document.getElementById('restore' + recordId).hidden = true;
+		}
+	});
+}
+
 function like(value, id) {
 	alert(value);
 	$
@@ -100,7 +134,7 @@ function handleForm(e) {
 
 	e.preventDefault();
 	var data = new FormData();
-	data.append('index', $('#index').text());	
+	data.append('index', $('#index').text());
 	data.append('text', document.getElementById('text').value);
 	if (document.getElementById('clubId') != null) {
 		data.append('clubId', document.getElementById('clubId').innerHTML
@@ -138,17 +172,17 @@ function handleForm(e) {
 			document.getElementById("selectedVideos").innerHTML = "";
 			document.getElementById("selectedAudios").innerHTML = "";
 			alert(JSON.stringify(e.currentTarget));
-			var responseJSON = JSON.parse(e.currentTarget.responseText);			
-			
-			loadIndex = document.getElementById('index').textContent;						
+			var responseJSON = JSON.parse(e.currentTarget.responseText);
+
+			loadIndex = document.getElementById('index').textContent;
 			var loadEl = document.getElementById("load");
-			loadIndex++;			
+			loadIndex++;
 			$("#index").text(loadIndex);
-			loadEl.id = loadEl.id + loadIndex;			
-			$('#' + loadEl.id)
-					.load(
-							"viewNewRecord?recordId="
-									+ responseJSON["contentGroup"].id + "&index=" + document.getElementById("index").textContent);
+			loadEl.id = loadEl.id + loadIndex;
+			$('#' + loadEl.id).load(
+					"viewNewRecord?recordId=" + responseJSON["contentGroup"].id
+							+ "&index="
+							+ document.getElementById("index").textContent);
 
 			alert(' items uploaded.');
 		}

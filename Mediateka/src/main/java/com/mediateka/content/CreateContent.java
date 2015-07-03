@@ -195,77 +195,84 @@ public class CreateContent {
 		if (records != null) {
 			Collections.sort(records, new ContentGroupByDate());
 			for (ContentGroup record : records) {
-				User creator = UserService.getUserById(record.getCreatorId());
-				String cratorName = creator.getFirstName() + " "
-						+ creator.getLastName();
-				creatorRecordMap.put(record.getId(), cratorName);
-				List<Media> images = new ArrayList<Media>();
-				List<Media> videos = new ArrayList<Media>();
-				List<Media> audios = new ArrayList<Media>();
-				mediaMap.put(record.getId(),
-						MediaService.getMediaContentGroupId(record.getId()));
-				List<Media> medias = MediaService.getMediaContentGroupId(record
-						.getId());
-				System.out.println(medias);
-				if (medias != null) {
-					for (Media media : medias) {
-						System.out.println(media);
-						if (media.getType().equals(MediaType.IMAGE)) {
-							images.add(media);
-						}
-						if (media.getType().equals(MediaType.VIDEO)) {
-							videos.add(media);
-							List<Media> posters = MediaService
-									.getMediaByPathRegex(media.getPath()
-											.substring(
-													media.getPath()
-															.lastIndexOf('\\') + 1,
-													media.getPath()
-															.lastIndexOf('.'))
-											+ ".png");
-							System.out.println(media.getPath().substring(
-									media.getPath().lastIndexOf('\\') + 1,
-									media.getPath().lastIndexOf('.'))
-									+ ".png");
-							System.out.println("postersList: " + posters);
-							if (posters != null) {
-								if (posters.size() > 1) {
-									System.out.println("owww fuck!");
-								}
-								Media poster = posters.get(0);
-								if (poster != null) {
-									System.out.println("postersObj: " + poster);
-									posterMap.put(media.getId(), poster);
+				if (record.getState() == State.ACTIVE) {
+					User creator = UserService.getUserById(record
+							.getCreatorId());
+					String cratorName = creator.getFirstName() + " "
+							+ creator.getLastName();
+					creatorRecordMap.put(record.getId(), cratorName);
+					List<Media> images = new ArrayList<Media>();
+					List<Media> videos = new ArrayList<Media>();
+					List<Media> audios = new ArrayList<Media>();
+					mediaMap.put(record.getId(),
+							MediaService.getMediaContentGroupId(record.getId()));
+					List<Media> medias = MediaService
+							.getMediaContentGroupId(record.getId());
+					System.out.println(medias);
+					if (medias != null) {
+						for (Media media : medias) {
+							System.out.println(media);
+							if (media.getType().equals(MediaType.IMAGE)) {
+								images.add(media);
+							}
+							if (media.getType().equals(MediaType.VIDEO)) {
+								videos.add(media);
+								List<Media> posters = MediaService
+										.getMediaByPathRegex(media
+												.getPath()
+												.substring(
+														media.getPath()
+																.lastIndexOf(
+																		'\\') + 1,
+														media.getPath()
+																.lastIndexOf(
+																		'.'))
+												+ ".png");
+								System.out.println(media.getPath().substring(
+										media.getPath().lastIndexOf('\\') + 1,
+										media.getPath().lastIndexOf('.'))
+										+ ".png");
+								System.out.println("postersList: " + posters);
+								if (posters != null) {
+									if (posters.size() > 1) {
+										System.out.println("owww fuck!");
+									}
+									Media poster = posters.get(0);
+									if (poster != null) {
+										System.out.println("postersObj: "
+												+ poster);
+										posterMap.put(media.getId(), poster);
+									}
 								}
 							}
+							if (media.getType().equals(MediaType.AUDIO)) {
+								audios.add(media);
+							}
 						}
-						if (media.getType().equals(MediaType.AUDIO)) {
-							audios.add(media);
+						if (images != null) {
+							if (images.size() > 0) {
+								imageMap.put(record.getId(), images);
+							}
+
 						}
+						if (videos != null) {
+							if (videos.size() > 0) {
+								videoMap.put(record.getId(), videos);
+							}
+
+						}
+						if (audios != null) {
+							if (audios.size() > 0) {
+								audioMap.put(record.getId(), audios);
+							}
+
+						}
+
+					} else {
+						images = videos = audios = null;
 					}
-					if (images != null) {
-						if (images.size() > 0) {
-							imageMap.put(record.getId(), images);
-						}
 
-					}
-					if (videos != null) {
-						if (videos.size() > 0) {
-							videoMap.put(record.getId(), videos);
-						}
-
-					}
-					if (audios != null) {
-						if (audios.size() > 0) {
-							audioMap.put(record.getId(), audios);
-						}
-
-					}
-
-				} else {
-					images = videos = audios = null;
-				}
-
+				} 
 			}
 		}
 		request.setAttribute("posterMap", posterMap);

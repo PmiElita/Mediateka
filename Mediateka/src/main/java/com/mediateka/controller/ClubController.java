@@ -217,7 +217,7 @@ public class ClubController {
 						.toString());
 				Club club = getClubById(clubId);
 				List<ContentGroup> records = ContentGroupService
-						.getContentGroupByClubId(clubId);
+						.getContentGroupByClubIdAndState(clubId, State.ACTIVE);
 
 				CreateContent.setContent(request, response, records);
 

@@ -58,6 +58,14 @@ public class ContentGroupService {
 			String nameRegex) throws ReflectiveOperationException, SQLException {
 		return ContentGroupDAO.getContentGroupByNameRegexId(nameRegex);
 	}
+	
+	public static List<ContentGroup> getContentGroupByClubIdAndState(Integer clubId, State state) throws SQLException, ReflectiveOperationException{
+		return ContentGroupDAO.getContentGroupByClubIdAndState(clubId, state);
+	}
+	
+	public static List<ContentGroup> getContentGroupByEventIdAndState(Integer eventId, State state) throws SQLException, ReflectiveOperationException{
+		return ContentGroupDAO.getContentGroupByEventIdAndState(eventId, state);
+	}
 
 	public static List<ContentGroup> getContentGroupAll()
 			throws ReflectiveOperationException, SQLException {

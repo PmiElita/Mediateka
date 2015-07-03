@@ -15,20 +15,47 @@
 <link href="http://vjs.zencdn.net/4.12/video-js.css" rel="stylesheet">
 <script src="http://vjs.zencdn.net/4.12/video.js"></script>
 
+<script src="../js/record.js"></script>
+<style>
+audio {
+	width: 100%;
+}
+</style>
+
+
+
 <div id="load"></div>
 <label id="index" hidden="true">${index}</label>
 <div id="uploaded">
 	<c:forEach var="record" items="${records}">
-		<div class="grey lighten-5 z-depth-1">
-			<div class="row  valign-wrappert">
-				<div class="card-title card-panel grey lighten-5 z-depth-1 row">
-					<div align="left" class="col">
-						<c:out value="${creatorName[\"${ record.id}\"] }"></c:out>
-					</div>
-					<div class="col s2 offset-s8">
-
-						<fmt:formatDate value="${record.creationDate}"
-							pattern="dd.MM.yyyy HH:mm" />
+		<a id="restore${record.id }" onclick="restoreRecord(${record.id })" hidden="true" class="waves-effect waves-light btn">Restore</a>
+		<div id = "recordId${record.id}" class="grey lighten-5 z-depth-1" style="margin-top: 5%;">
+			<div class="valign-wrappert">
+				<div class="col s12">
+					<div class="card-title card-panel grey lighten-5 z-depth-1 row"
+						style="padding: 0px;">
+						<div class="valign-wrapper">
+							<div class="col s1">
+								<img
+									src="http://cs620219.vk.me/v620219213/17bc9/dNN2ANduYDg.jpg"
+									alt="" class="circle" style="height: 45px;">
+							</div>
+							<div align="left" class="col s3">
+								<c:out value="${creatorName[record.id]}"></c:out>
+							</div>
+							<div class="col s7" align="right">
+								<fmt:formatDate value="${record.creationDate}"
+									pattern="HH:mm dd.MM.yyyy" />
+							</div>
+							<c:if test="${userId eq record.creatorId}">
+								<div class="col s1 ">
+									<span onclick="deleteRecord(${record.id});"
+										onmouseover="this.style.color = 'red';"
+										onmouseleave="this.style.color = 'black';"
+										class="waves-effect waves-circle waves-red">X</span>
+								</div>
+							</c:if>
+						</div>
 					</div>
 				</div>
 				<div align="left">
@@ -41,31 +68,45 @@
 					<c:forEach var="image" items="${imageMap.get(record.id) }">
 
 						<a href='<c:out value="${image.path}"></c:out>'
-							data-thumb='<c:out value="${image.path}"></c:out>'>
-							<img
+							data-thumb='<c:out value="${image.path}"></c:out>'> <img
 							src='<c:out value="${image.path}"></c:out>' data-fit="scaledown">
-							</a>
+						</a>
+					</c:forEach>
+					<c:forEach var="video" items="${videoMap.get(record.id) }">
+						<video poster="${posterMap.get(video.id).path }"
+							onclick="this.play();" controls="controls"
+							title='<c:out value="${video.name}"></c:out>'>
+							<source src='<c:out value="${video.path}"></c:out>'
+								type="video/mp4">
+						</video>
 					</c:forEach>
 				</div>
 				<div class="fotorama " data-width="700" data-maxwidth="100%"
 					data-ratio="16/9" align="center" data-video="true"
-					data-click="false">
+					data-click="false" data-swipe="false">
 					<c:forEach var="video" items="${videoMap.get(record.id) }">
-						<video controls>
-							<source src='<c:out value="${video.path}"></c:out>'>
-						</video>
-						<video id="MY_VIDEO_1" class="video-js vjs-default-skin" controls
-							preload="auto">
-							<source src='<c:out value="${video.path}"></c:out>'>
 
+						<video poster="${posterMap.get(video.id).path }"
+							onclick="this.play();" controls="controls"
+							title='<c:out value="${video.name}"></c:out>'>
+							<source src='<c:out value="${video.path}"></c:out>'
+								type="video/mp4">
 						</video>
 					</c:forEach>
 				</div>
 				<div align="left">
 					<c:forEach var="audio" items="${audioMap.get(record.id) }">
-						<audio controls>
-							<source src='<c:out value="${audio.path}"></c:out>'>
-						</audio>
+						<div class="card-title  grey lighten-1 row"
+							style="border-radius: 5px">
+							<div class="col s12" style="padding-left: 4%">
+								<c:out value="${audio.name}"></c:out>
+							</div>
+							<audio title="<c:out value="${audio.name}"></c:out>" controls>
+								<source src='<c:out value="${audio.path}"></c:out>'>
+							</audio>
+
+						</div>
+
 					</c:forEach>
 				</div>
 			</div>

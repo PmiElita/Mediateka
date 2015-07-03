@@ -69,7 +69,7 @@ public class EventController {
 						.toString());
 				Event event = getEventById(eventId);
 				List<ContentGroup> records = ContentGroupService
-						.getContentGroupByEventId(eventId);
+						.getContentGroupByEventIdAndState(eventId, State.ACTIVE);
 
 				CreateContent.setContent(request, response, records);
 
