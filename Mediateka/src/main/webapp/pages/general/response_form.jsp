@@ -3,6 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+<fmt:setLocale value="${cookie.lang.value}" />
+<fmt:setBundle basename="translations/response_form" var="msg" scope="session" />
 
 <div id="modal25" class="modal">
 	<div class="modal-content">

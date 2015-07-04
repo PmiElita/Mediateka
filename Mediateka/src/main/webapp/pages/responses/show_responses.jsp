@@ -15,7 +15,7 @@
 		<jsp:include page="../general/nav.jsp" />
 
 		<div id="responses_div"></div>
-		<a href='' onclick="getMoreResponses()">get more responses</a>
+		<a href='#' onclick="getMoreResponses()">get more responses</a>
 	</div>
 
 
@@ -24,7 +24,7 @@
 	<script type="text/javascript">
 		currentResponses = [];
 		currentOffset = 0;
-		limit = 10;
+		limit = 2;
 		noMoreResponses = false;
 		getMoreResponses();
 		
@@ -86,11 +86,17 @@
 
 	      
 		function drawResponse(response) {
+			var newLabel = "";
+			if (response.newFlag){
+				newLabel = "<span class='card-title'>New response</span>";
+			}
 			
 		      var retval = "<div class='row'>\
 		        <div class='col s12 m6'>\
 		          <div class='card blue-grey darken-1'>\
-		            <div class='card-content white-text'><p>" +
+		            <div class='card-content white-text'>" +
+		            newLabel +
+		            "<p>" +
 		            $("<div>").text(response.text).html().replace(/\r?\n/g, "<br />") +
 		              "</p>\
 		              <p>"+
