@@ -11,6 +11,5 @@ public class ChatMessageStatements {
 	
 	public static final String[] UPDATE_CHAT_MESSAGE_BY_ID_ORDER = {"text","user_id","club_id","state","creation_date","id"};
 	
-	public static final String SELECT_CHAT_MESSAGE_BY_CLUB_ID = "SELECT * FROM chat_message WHERE club_id=?";
-	public static final String[] SELECT_CHAT_MESSAGE_BY_CLUB_ID_ORDER ={"club_id"};
+	public static final String SELECT_CHAT_MESSAGE_BY_CLUB_ID = "SELECT * FROM chat_message WHERE club_id=? ORDER BY id LIMIT ?,?";
 }

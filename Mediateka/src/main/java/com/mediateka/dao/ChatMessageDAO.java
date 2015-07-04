@@ -1,6 +1,10 @@
 package com.mediateka.dao;
 
-import static com.mediateka.dao.statement.ChatMessageStatements.*;
+import static com.mediateka.dao.statement.ChatMessageStatements.INSERT_CHAT_MESSAGE;
+import static com.mediateka.dao.statement.ChatMessageStatements.INSERT_CHAT_MESSAGE_ORDER;
+import static com.mediateka.dao.statement.ChatMessageStatements.SELECT_CHAT_MESSAGE_BY_CLUB_ID;
+import static com.mediateka.dao.statement.ChatMessageStatements.UPDATE_CHAT_MESSAGE_BY_ID;
+import static com.mediateka.dao.statement.ChatMessageStatements.UPDATE_CHAT_MESSAGE_BY_ID_ORDER;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -37,15 +41,14 @@ public class ChatMessageDAO {
 		}
 	}
 
-	public static List<ChatMessage> getChatMessageByClubId(Integer clubId)
+	public static List<ChatMessage> getChatMessageByClubId(Integer clubId, Integer firstIndex,Integer count)
 			throws SQLException, ReflectiveOperationException {
 		try (Connection connection = ConnectionManager.getConnection()) {
 			PreparedStatement statement = connection
 					.prepareStatement(SELECT_CHAT_MESSAGE_BY_CLUB_ID);
-			ChatMessage chatMessage = new ChatMessage();
-			chatMessage.setClubId(clubId);
-			Transformer.valueIntoPreparedStatement(statement, chatMessage,
-					SELECT_CHAT_MESSAGE_BY_CLUB_ID_ORDER);
+			statement.setInt(1, clubId);
+			statement.setInt(2, firstIndex);
+			statement.setInt(3, count);
 			ResultSet resultSet = statement.executeQuery();
 			return Transformer.transformResultSetIntoList(resultSet,
 					ChatMessage.class);

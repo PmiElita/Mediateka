@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,52 +20,56 @@ import com.mediateka.model.ChatMessage;
 import com.mediateka.model.User;
 import com.mediateka.service.ChatMessageService;
 import com.mediateka.service.UserService;
+
 @Controller
 public class ChatController {
 
 	public static final int MESSAGE_COUNT = 10;
-	@Request(url="getChat", method="get")
-	public static void getChat(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, ReflectiveOperationException{
-		
-		request.getRequestDispatcher("pages/fedunets12.06/chat.jsp").forward(request, response);
-	}
-	
-	@Request(url ="getUserData", method="get")
-	public static void getUserData(HttpServletRequest request, HttpServletResponse response) throws ReflectiveOperationException, SQLException, IOException{
+
+
+	@Request(url = "getUserData", method = "get")
+	public static void getUserData(HttpServletRequest request,
+			HttpServletResponse response) throws ReflectiveOperationException,
+			SQLException, IOException {
 		Integer userId = Integer.parseInt(request.getParameter("userId"));
 		String userName = null;
-		if (userId!=null){
+		if (userId != null) {
 			User user = UserService.getUserById(userId);
-			if (user!=null){
+			if (user != null) {
 				userName = user.getFirstName();
 			}
 		}
-		
-		Map<String,String> map = new HashMap<String, String>();
+
+		Map<String, String> map = new HashMap<String, String>();
 		map.put("userName", userName);
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().write(new Gson().toJson(map));
 	}
-	
-	@Request(url="getMoreMessages", method="get")
+
+	@Request(url = "getMoreMessages", method = "get")
 	public static void getMoreMessages(HttpServletRequest request,
 			HttpServletResponse response) throws SQLException,
 			ReflectiveOperationException, IOException {
 		Integer index = Integer.parseInt(request.getParameter("index"));
 		Integer clubId = Integer.parseInt(request.getParameter("clubId"));
-		if (index!=null&& clubId!=null){
-			List<ChatMessage> chatMessages = ChatMessageService.getChatMessageByClubId(clubId);
-			List<Map<String,String>> result = new ArrayList<Map<String,String>>();
-			
-			if (chatMessages!=null&&chatMessages.size()>=index*MESSAGE_COUNT){
+		if (index != null && clubId != null) {
+			List<ChatMessage> chatMessages = ChatMessageService
+					.getChatMessageByClubId(clubId, index * MESSAGE_COUNT,
+							MESSAGE_COUNT);
+			List<Map<String, String>> result = new ArrayList<Map<String, String>>();
+
+			if (chatMessages != null) {
 				Collections.sort(chatMessages, new ChatMessageByCreationDate());
-			for (int i =index*MESSAGE_COUNT; i<(index+1)*MESSAGE_COUNT && i<chatMessages.size(); i++){
-				Map<String, String> map = new HashMap<String, String>();
-			    map.put("userName", UserService.getUserById(chatMessages.get(i).getUserId()).getFirstName());
-			    map.put("message", chatMessages.get(i).getText());
-			    result.add(map);
-			}
+				for (int i = 0; i < chatMessages.size(); i++) {
+					Map<String, String> map = new HashMap<String, String>();
+					map.put("userName",
+							UserService.getUserById(
+									chatMessages.get(i).getUserId())
+									.getFirstName());
+					map.put("message", chatMessages.get(i).getText());
+					result.add(map);
+				}
 			}
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");

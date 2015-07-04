@@ -1,5 +1,11 @@
 package com.mediateka.controller;
 
+import static com.mediateka.service.ClubEventMemberService.getClubEventMemberByUserIdAndClubId;
+import static com.mediateka.service.ClubEventMemberService.saveClubEventMember;
+import static com.mediateka.service.ClubEventMemberService.updateClubEventMember;
+import static com.mediateka.service.ClubService.getClubById;
+import static com.mediateka.service.MediaService.getMediaById;
+
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -27,6 +33,7 @@ import com.mediateka.model.ClubEventMember;
 import com.mediateka.model.ContentGroup;
 import com.mediateka.model.Media;
 import com.mediateka.model.User;
+import com.mediateka.model.UserCard;
 import com.mediateka.model.enums.ClubEventMemberType;
 import com.mediateka.model.enums.ContentGroupType;
 import com.mediateka.model.enums.MediaType;
@@ -37,14 +44,11 @@ import com.mediateka.service.ClubEventMemberService;
 import com.mediateka.service.ClubService;
 import com.mediateka.service.ContentGroupService;
 import com.mediateka.service.MediaService;
+import com.mediateka.service.UserCardService;
 import com.mediateka.service.UserService;
 import com.mediateka.util.FileLoader;
 import com.mediateka.util.FormValidator;
 import com.mediateka.util.ObjectFiller;
-
-import static com.mediateka.service.ClubEventMemberService.*;
-import static com.mediateka.service.ClubService.*;
-import static com.mediateka.service.MediaService.getMediaById;
 
 @Controller
 public class ClubController {
@@ -219,18 +223,15 @@ public class ClubController {
 				CreateContent.setContent(request, response, records);
 
 				List<ChatMessage> chatMessages = ChatMessageService
-						.getChatMessageByClubId(clubId);
-
-				Map<ChatMessage, String> map = new LinkedHashMap<ChatMessage, String>();
+						.getChatMessageByClubId(clubId,0,ChatController.MESSAGE_COUNT*2);
+				Map<ChatMessage, UserCard> map = new LinkedHashMap<ChatMessage, UserCard>();
 				if (chatMessages != null) {
 					Collections.sort(chatMessages,
 							new ChatMessageByCreationDate());
-					for (int i = 0; i < ChatController.MESSAGE_COUNT
-							&& i < chatMessages.size(); i++) {
+					for (int i = 0;  i < chatMessages.size(); i++) {
 						map.put(chatMessages.get(i),
-								UserService.getUserById(
-										chatMessages.get(i).getUserId())
-										.getFirstName());
+								UserCardService.getUserCardByUserId(
+										chatMessages.get(i).getUserId()));
 					}
 				}
 

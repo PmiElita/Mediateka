@@ -35,7 +35,7 @@
 
 								<div class="col s10">
 									<span class="user_name"> <c:out
-											value="${chatMessage.value }"></c:out> :
+											value="${chatMessage.value.firstName }"></c:out> :
 									</span> <span class="black-text"> <c:out
 											value="${chatMessage.key.text}"></c:out>
 									</span>

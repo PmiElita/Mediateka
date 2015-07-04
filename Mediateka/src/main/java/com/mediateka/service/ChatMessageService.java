@@ -11,14 +11,15 @@ public class ChatMessageService {
 			throws ReflectiveOperationException, SQLException {
 		ChatMessageDAO.saveChatMessage(chatMessage);
 	}
-	
+
 	public static void updateChatMessage(ChatMessage chatMessage)
 			throws ReflectiveOperationException, SQLException {
 		ChatMessageDAO.updateChatMessage(chatMessage);
 	}
-	
-	public static List<ChatMessage> getChatMessageByClubId(Integer clubId)
-			throws SQLException, ReflectiveOperationException {
-		return ChatMessageDAO.getChatMessageByClubId(clubId);
+
+	public static List<ChatMessage> getChatMessageByClubId(Integer clubId,
+			Integer firstIndex, Integer count) throws SQLException,
+			ReflectiveOperationException {
+		return ChatMessageDAO.getChatMessageByClubId(clubId, firstIndex, count);
 	}
 }
