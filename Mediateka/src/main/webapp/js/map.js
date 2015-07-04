@@ -82,16 +82,16 @@ function addEvent() {
 
 							onFirstPosition(position);
 							var content = '<div id="iw-container">'
-									+ '<div class="iw-title">'
+									+ '<div class="iw-title" id="title'+markers.length+'">'
 									+ event_name
 									+ '</div>'
 									+ '<div class="iw-content">'
-									+ '<div class="iw-subTitle" style="margin-top:-0.5em">Description</div>'
-									+ '<p>'
+									+ '<div class="iw-subTitle"  style="margin-top:-0.5em">Description</div>'
+									+ '<p id="description'+markers.length+'">'
 									+ event_description
 									+ '</p>'
 									+ '<div class="iw-subTitle">Adress</div>'
-									+ '<p>'
+									+ '<p id="adress'+markers.length+'">'
 									+ event_adress
 									+ '</p>'
 									
@@ -262,6 +262,15 @@ function addEvent() {
 function removeEvent(index) {
 	markers[index].setMap(null);
 	events[index].state = "DELETED";
+	   var button =document.getElementById("map_button");
+	   if ( button.value!=-1&&button.value!=""){
+	 document.getElementById("event_name").value = "";
+	 document.getElementById("event_descr").value = "";
+   document.getElementById("event_adress").value= "";
+
+   button.innerHTML = "Add new event";
+   button.value=-1;
+	   }
 }
 
 function loadElements() {
@@ -468,13 +477,15 @@ function editEvent(index){
       button.value=-1;
 }
 
-function butt_click(button){
+function butt_click(){
+	var button =document.getElementById("map_button");
 	if (button.value!=null&&button.value>=0&&button.value!=""){
 		submitEvent(button.value);
 		
 	} else {
 		addEvent();
 	}
+	return false;
 }
 
 function saveChanges(){

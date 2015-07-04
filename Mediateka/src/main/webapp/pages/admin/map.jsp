@@ -33,10 +33,12 @@
    
 
  <div class="row input-field" >
-     <input placeholder="Type an event's name" ng-model="dummyInputs.inputFieldInput" id="event_name" type="text" maxlength="101">
-        <input placeholder="Type an event's description" id="event_descr" type="text" maxlength="101">
-        <input placeholder="Type an event's adress" id="event_adress" type="text" maxlength="101">
-    <button onclick="butt_click(this);" class="btn" id="map_button">Add new event</button>
+ <form onsubmit="return butt_click();">
+     <input placeholder="Type an event's name" ng-model="dummyInputs.inputFieldInput" id="event_name" type="text" maxlength="101" required>
+        <input placeholder="Type an event's description" id="event_descr" type="text" maxlength="125" required>
+        <input placeholder="Type an event's adress" id="event_adress" type="text" maxlength="101" required>
+    <button class="btn" id="map_button">Add new event</button>
+    </form>
 	</div>
 </div>
 
@@ -52,16 +54,7 @@
 <!-- <script type="text/javascript" src="javascript/html-sanitizer-minified.js"></script> -->
 <!-- <script src="javascript/main.js"></script> -->
 <script src="js/map.js"></script>
-<script src="js/messages_map.js"></script>
-<script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-    ga('create', 'UA-63921484-1', 'auto');
-    ga('send', 'pageview');
-</script>
 
 </body>
 </html>
