@@ -40,14 +40,15 @@ style>.image-cover-t {
 					<div class="action" style="margin-top: -0.8em">
 
 						<div class="row">
-							<div class="file-field input-field col s3 offset-s3">
-								<input class="file-path validate" type="hidden" />
-								<div class="btn" style="width: 100%">
-									<span>Choose image</span> <input type="file" id="file"
-										name="image" onchange="readURL(this);" accept="image/*" />
+							<form id="eventAvaForm" enctype="multipart/form-data">
+								<div class="file-field input-field col s3 offset-s3">
+									<input class="file-path validate" type="hidden" />
+									<div class="btn" style="width: 100%">
+										<span>Choose image</span> <input type="file" id="file"
+											name="image" onchange="readURL(this);" accept="image/*" />
+									</div>
 								</div>
-							</div>
-
+							</form>
 							<button class="btn col s1 offset-s1" id="btnZoomIn"
 								style="margin-top: 1.5em; border-radius: 50%">
 								<i>+</i>
@@ -58,7 +59,8 @@ style>.image-cover-t {
 							</button>
 						</div>
 						<div class="row" style="margin-top: -1em">
-							<button class="btn col s12" id="btnCrop">Confirm</button>
+							<button class="btn col s12" id="btnCrop" type="submit"
+								form="eventAvaForm" name="action">Confirm</button>
 						</div>
 					</div>
 				</div>
@@ -66,41 +68,61 @@ style>.image-cover-t {
 		</div>
 	</div>
 
-	<script type="text/javascript">
-		$(window).load(
-				function() {
-					var options = {
-						thumbBox : '.thumbBox',
-						spinner : '.spinner',
-						imgSrc : 'avatar.png'
-					}
-					var cropper;
-					$('#file').on('change', function() {
-						var reader = new FileReader();
-						reader.onload = function(e) {
-							options.imgSrc = e.target.result;
-							cropper = $('.imageBox').cropbox(options);
-						}
-						reader.readAsDataURL(this.files[0]);
-						this.files = [];
-					})
-					$('#btnCrop').on(
-							'click',
-							function() {
+<script type="text/javascript">
+		$(document).ready(function() {
+			$("#eventAvaForm").on("submit", loadEventAva);
 
-								document.getElementById("ava").setAttribute(
-										'style', 'margin-left: 0em;');
-								var img = cropper.getDataURL()
-								document.getElementById("ava").src = img;
-								$('#modal16').closeModal();
-							})
-					$('#btnZoomIn').on('click', function() {
-						cropper.zoomIn();
-					})
-					$('#btnZoomOut').on('click', function() {
-						cropper.zoomOut();
-					})
-				});
+		});
+		var cropper;
+		var storedImages = [];
+		function loadEventAva(e) {
+
+			document.getElementById("ava").setAttribute('style',
+					'margin-left: 0em;');			
+			var img = cropper.getDataURL();
+			storedImages.push(cropper.getBlob());
+			document.getElementById("ava").src = img;			
+			$('#modal16').closeModal();
+			
+			e.preventDefault();
+			var data = new FormData();
+			if (document.getElementById('eventId') != null) {
+				data.append('eventId',
+						document.getElementById('eventId').innerHTML.toString());
+			}
+			for (var i = 0, len = storedImages.length; i < len; i++) {
+				data.append('image', storedImages[i]);
+			}
+			var xhr = new XMLHttpRequest();
+			xhr.open('POST', 'loadEventAva', true);
+			xhr.send(data);
+
+		}
+
+		$(window).load(function() {
+			var options = {
+				thumbBox : '.thumbBox',
+				spinner : '.spinner',
+				imgSrc : 'avatar.png'
+			}
+			
+			$('#file').on('change', function() {
+				var reader = new FileReader();
+				reader.onload = function(e) {
+					options.imgSrc = e.target.result;
+					cropper = $('.imageBox').cropbox(options);
+				}										
+														
+				reader.readAsDataURL(this.files[0]);
+				this.files = [];
+			})
+			$('#btnZoomIn').on('click', function() {
+				cropper.zoomIn();
+			})
+			$('#btnZoomOut').on('click', function() {
+				cropper.zoomOut();
+			})
+		});
 	</script>
 </body>
 </html>

@@ -70,7 +70,7 @@
 					<div>
 						<a  title="Change avatar" href="" data-target="modal21"
 							class="modal-trigger waves-effect col s4"><img
-							src="images/user.png" id="avatar" style="border-radius:50%;" class="col s12"/></a>
+							src="${imagePath }" id="avatar" style="border-radius:50%;" class="col s12"/></a>
 					</div> 
 					<div class="col s8">
 						<h5 class="left">${firstName} ${middleName} ${lastName}</h5>

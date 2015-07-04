@@ -30,6 +30,7 @@ import com.mediateka.model.Club;
 import com.mediateka.model.ClubEventMember;
 import com.mediateka.model.Event;
 import com.mediateka.model.FormRecord;
+import com.mediateka.model.Media;
 import com.mediateka.model.User;
 import com.mediateka.model.enums.EventType;
 import com.mediateka.model.enums.Role;
@@ -38,8 +39,10 @@ import com.mediateka.search.UserSearch;
 import com.mediateka.service.ClubService;
 import com.mediateka.service.EventService;
 import com.mediateka.service.FormRecordService;
+import com.mediateka.service.MediaService;
 import com.mediateka.service.ProfessionService;
 import com.mediateka.service.UserService;
+import com.mediateka.util.FileLoader;
 import com.mediateka.util.FormValidator;
 import com.mediateka.util.ObjectFiller;
 import com.mediateka.util.Translator;
@@ -357,9 +360,9 @@ public class UserController {
 		case MODERATOR:
 			request.setAttribute("professions",
 					ProfessionService.getProfessionAll());
-			request.setAttribute("requestedClubCount", 
+			request.setAttribute("requestedClubCount",
 					ClubService.getNumberOfRequestedClubs());
-			request.setAttribute("requestedEventCount", 
+			request.setAttribute("requestedEventCount",
 					EventService.getNumberOfRequestedEvents());
 
 			request.getRequestDispatcher("pages/admin/admin.jsp").forward(
@@ -381,7 +384,9 @@ public class UserController {
 				Collections.sort(formRecords, new FormRecordsByDateFrom());
 			}
 			request.setAttribute("formRecords", formRecords);
-
+			request.setAttribute("imagePath",
+					MediaService.getMediaById(user.getAvaId()).getPath()
+							.replace("\\", "/"));
 			request.setAttribute("firstName", user.getFirstName());
 			request.setAttribute("lastName", user.getLastName());
 			request.setAttribute("middleName", user.getMiddleName());
@@ -604,4 +609,25 @@ public class UserController {
 			response.getWriter().write(new Gson().toJson(map));
 		}
 	}
+	@Request(url = "userEventAva", method = "post")
+	public static void loadClubAvaPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException,
+			ReflectiveOperationException, SQLException, WrongInputException {
+		System.out.println("loadAva");
+		FileLoader fileLoader = new FileLoader();
+		fileLoader.loadFile(request);
+		User user = UserService.getUserById((Integer)request.getSession().getAttribute("userId"));		
+		Media media = new Media();
+		System.out.println(fileLoader.getFilePath());
+		media.setType(fileLoader.getMediaType());
+		media.setState(State.ACTIVE);
+		media.setPath(fileLoader.getRelativePath());
+		media.setName(fileLoader.getDefaultFileName());
+		media = MediaService.callSaveMedia(media);
+		user.setAvaId(media.getId());
+		UserService.updateUser(user);
+	}
+
 }
+
+

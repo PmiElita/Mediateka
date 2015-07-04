@@ -97,11 +97,11 @@ public class EventController {
 									&& (member.getUserId() == user.getId()))
 								request.setAttribute("badGuy", true);
 						}
-					request.setAttribute(
-							"imagePath",
-							getMediaById(event.getAvaId()).getPath().replace(
-									"\\", "/"));
 				}
+				request.setAttribute(
+						"imagePath",
+						getMediaById(event.getAvaId()).getPath().replace("\\",
+								"/"));
 				request.setAttribute("isSigned", isSigned);
 
 				request.getRequestDispatcher("pages/event/event.jsp").forward(
@@ -681,6 +681,8 @@ public class EventController {
 			ReflectiveOperationException, SQLException, WrongInputException {
 		FileLoader fileLoader = new FileLoader();
 		fileLoader.loadFile(request);
+		System.out.println(Integer.parseInt(fileLoader.getParameterMap().get(
+				"eventId")));
 		Event event = EventService.getEventById(Integer.parseInt(fileLoader
 				.getParameterMap().get("eventId")));
 		Media media = new Media();

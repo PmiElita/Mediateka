@@ -37,6 +37,7 @@
 				</c:if>
 
 				<jsp:include page="event_central.jsp" />
+				<label id="eventId" hidden="true"><c:out value="${event.id}" /></label>
 			</div>
 	</div>
 	<jsp:include page="../general/footer.jsp" />

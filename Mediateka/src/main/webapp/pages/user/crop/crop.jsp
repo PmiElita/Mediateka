@@ -35,26 +35,30 @@
 						<div class="spinner" style="display: none">Loading...</div>
 					</div>
 
-					<div class="action" style="margin-top:-0.8em">
+					<div class="action" style="margin-top: -0.8em">
 
 						<div class="row">
-							<div class="file-field input-field col s6">
-								<input class="file-path validate" type="hidden" />
-								<div class="btn" style="width: 100%">
-									<span>Choose imagege</span> <input type="file" id="file"
-										name="image" onchange="readURL(this);" accept="image/*" />
+							<form id="userAvaForm" enctype="multipart/form-data">
+								<div class="file-field input-field col s6">
+									<input class="file-path validate" type="hidden" />
+									<div class="btn" style="width: 100%">
+										<span>Choose imagege</span> <input type="file" id="file"
+											name="image" onchange="readURL(this);" accept="image/*" />
+									</div>
 								</div>
-							</div>
-
-							<button class="btn col s3" id="btnZoomIn" style="margin-top: 1.5em; border-radius:50%">
+							</form>
+							<button class="btn col s3" id="btnZoomIn"
+								style="margin-top: 1.5em; border-radius: 50%">
 								<i>+</i>
 							</button>
-							<button class="btn col s3" id="btnZoomOut" style="margin-top: 1.5em; border-radius:50%">
+							<button class="btn col s3" id="btnZoomOut"
+								style="margin-top: 1.5em; border-radius: 50%">
 								<i>-</i>
 							</button>
 						</div>
-						<div class="row" style="margin-top:-1em">
-							<button class="btn col s12" id="btnCrop">Confirm</button>
+						<div class="row" style="margin-top: -1em">
+							<button class="btn col s12" id="btnCrop" type="submit"
+								form="userAvaForm" name="action">Confirm</button>
 						</div>
 					</div>
 				</div>
@@ -63,26 +67,48 @@
 	</div>
 
 	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#userAvaForm").on("submit", loadEventAva);
+
+		});
+		var cropper;
+		var storedImages = [];
+		function loadEventAva(e) {
+
+			document.getElementById("avatar").setAttribute('style',
+					'margin-left: 0em;');			
+			var img = cropper.getDataURL();
+			storedImages.push(cropper.getBlob());
+			document.getElementById("avatar").src = img;			
+			$('#modal21').closeModal();
+			
+			e.preventDefault();
+			var data = new FormData();			
+			for (var i = 0, len = storedImages.length; i < len; i++) {
+				data.append('image', storedImages[i]);
+			}
+			var xhr = new XMLHttpRequest();
+			xhr.open('POST', 'userEventAva', true);
+			xhr.send(data);
+
+		}
+
 		$(window).load(function() {
 			var options = {
 				thumbBox : '.thumbBox',
 				spinner : '.spinner',
 				imgSrc : 'avatar.png'
 			}
-			var cropper;
+			
 			$('#file').on('change', function() {
 				var reader = new FileReader();
 				reader.onload = function(e) {
 					options.imgSrc = e.target.result;
 					cropper = $('.imageBox').cropbox(options);
-				}
+				}										
+														
 				reader.readAsDataURL(this.files[0]);
 				this.files = [];
-			})
-			$('#btnCrop').on('click', function() {
-				var img = cropper.getDataURL()
-				document.getElementById("avatar").src = img;
-				$('#modal21').closeModal();
 			})
 			$('#btnZoomIn').on('click', function() {
 				cropper.zoomIn();

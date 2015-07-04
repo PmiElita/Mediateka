@@ -71,7 +71,6 @@
 		var cropper;
 		var storedImages = [];
 		function loadClubAva(e) {
-			alert('submit');
 
 			document.getElementById("ava").setAttribute('style',
 					'margin-left: 0em;');			
@@ -79,7 +78,6 @@
 			storedImages.push(cropper.getBlob());
 			document.getElementById("ava").src = img;			
 			$('#modal15').closeModal();
-			alert("myPart");
 			
 			e.preventDefault();
 			var data = new FormData();
@@ -90,12 +88,9 @@
 			for (var i = 0, len = storedImages.length; i < len; i++) {
 				data.append('image', storedImages[i]);
 			}
-			alert(123);
-			alert(data.responseText);
 			var xhr = new XMLHttpRequest();
 			xhr.open('POST', 'loadClubAva', true);
 			xhr.send(data);
-			alert(12321312);
 
 		}
 
