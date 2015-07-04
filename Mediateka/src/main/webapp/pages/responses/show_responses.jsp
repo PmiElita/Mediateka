@@ -6,6 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <jsp:include page="../general/head.jsp" />
+<jsp:include page="report_response_submition_form_modal.jsp" />
 
 </head>
 <body>
@@ -94,7 +95,7 @@
 		            </div>\
 		            <div class='card-action'>\
 		              <a href='#' onclick='deleteResponse("+response.id+")'>Delete</a>\
-		              <a href='#'>Answer</a>\
+		              <a href="" data-target="moda26" class="btn modal-trigger waves-effect">Answer</a>\
 		            </div>\
 		          </div>\
 		        </div>\

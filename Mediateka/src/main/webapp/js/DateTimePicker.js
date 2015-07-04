@@ -70,9 +70,9 @@
 		titleContentTime: "",
 		titleContentDateTime: "",
 	
-		buttonsToDisplay: ["HeaderCloseButton", "SetButton"],
+		buttonsToDisplay: ["SetButton", "ClearButton"],
 		setButtonContent: "OK",
-		clearButtonContent: "Clear",
+		clearButtonContent: "X",
 		setValueInTextboxOnEveryClick: true,
 	
 		animationDuration: 400,

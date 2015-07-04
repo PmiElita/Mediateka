@@ -29,7 +29,7 @@
 <div id="scroll">
 	<c:if test="${haveMoreResults }">
 		<div class="row main-books">
-			<button class="  waves-effect waves-green btn-flat book-scroll"
+			<button class="  waves-effect btn book-scroll"
 				onclick="doScroll()">
 				<fmt:message bundle="${msg}" key="show_more_results" />
 			</button>

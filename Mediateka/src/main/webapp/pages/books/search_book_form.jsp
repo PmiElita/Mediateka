@@ -29,7 +29,7 @@
 	</div>
 
 	<div class="row">
-		<button class=" waves-effect waves-green btn-flat"
+		<button class=" waves-effect waves-white btn"
 			style="float: right;" onclick="submitBookForm();">
 			<fmt:message bundle="${msg}" key="confirm" />
 		</button>

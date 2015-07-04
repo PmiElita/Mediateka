@@ -19,4 +19,7 @@
 	media="screen,projection" />
 	
 <link rel="stylesheet" type="text/css" href="css/DateTimePicker.css" />
+
+<link rel="shortcut icon" type="image/png" href="images/fav_icon.png"/>
+
 <jsp:include page="../general/script.jsp" />

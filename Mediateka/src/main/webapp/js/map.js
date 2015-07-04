@@ -86,7 +86,7 @@ function addEvent() {
 									+ event_name
 									+ '</div>'
 									+ '<div class="iw-content">'
-									+ '<div class="iw-subTitle">Description</div>'
+									+ '<div class="iw-subTitle" style="margin-top:-0.5em">Description</div>'
 									+ '<p>'
 									+ event_description
 									+ '</p>'
@@ -95,9 +95,9 @@ function addEvent() {
 									+ event_adress
 									+ '</p>'
 									
-									+ '<button class="btn-flat" onclick="editEvent('
+									+ '<button class="btn" onclick="editEvent('
 									+ markers.length + ')">Edit</button>'
-									+ '<button class="btn-flat" onclick="removeEvent('
+									+ '<button class="btn right" onclick="removeEvent('
 									+ markers.length + ')">Remove</button></div>' 
 									+ '<div class="iw-bottom-gradient"></div>'
 									+ '</div>';
@@ -282,7 +282,7 @@ function loadElements() {
 								+ data.responseJSON[i].name
 								+ '</div>'
 								+ '<div class="iw-content">'
-								+ '<div class="iw-subTitle" >Description</div>'
+								+ '<div class="iw-subTitle" style="margin-top:-0.5em">Description</div>'
 								+ '<p id="description'+i+'">'
 								+ data.responseJSON[i].description
 								+ '</p>'
@@ -290,9 +290,9 @@ function loadElements() {
 								+ '<p id="adress'+i+'">'
 								+ data.responseJSON[i].adress
 								+ '</p>'
-								+ '<button class="btn-flat" onclick="editEvent('
+								+ '<button class="btn" onclick="editEvent('
 								+ i + ')">Edit</button>'
-								+ '<button class="btn-flat" onclick="removeEvent('
+								+ '<button class="btn right" onclick="removeEvent('
 								+ i + ')">Remove</button></div>' 
 								+ '<div class="iw-bottom-gradient"></div>'
 								+ '</div>';

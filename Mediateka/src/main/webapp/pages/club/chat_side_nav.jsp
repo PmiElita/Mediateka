@@ -51,7 +51,7 @@
 				<textarea id="messageInput" class="materialize-textarea"
 					placeholder="<fmt:message bundle="${msg}" key="message" />"></textarea>
 
-				<button class=" col s4 offset-s9 btn-flat" onclick="sendMessage();"><fmt:message bundle="${msg}" key="send" /></button>
+				<button class=" col s4 offset-s9 btn" onclick="sendMessage();"><fmt:message bundle="${msg}" key="send" /></button>
 
 			</div>
 

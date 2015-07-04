@@ -24,7 +24,7 @@
 
 <div class=" container white">
 <div class = "row">
-<button class="btn-flat" onclick="saveChanges();">Save changes</button>
+<button class="btn" onclick="saveChanges();">Save changes</button>
 </div>
 <div class="row mapchat">
 <div id="map-canvas"></div>
@@ -36,7 +36,7 @@
      <input placeholder="Type an event's name" ng-model="dummyInputs.inputFieldInput" id="event_name" type="text" maxlength="101">
         <input placeholder="Type an event's description" id="event_descr" type="text" maxlength="101">
         <input placeholder="Type an event's adress" id="event_adress" type="text" maxlength="101">
-    <button onclick="butt_click(this);" class="btn-flat" id="map_button">Add new event</button>
+    <button onclick="butt_click(this);" class="btn" id="map_button">Add new event</button>
 	</div>
 </div>
 
