@@ -33,7 +33,8 @@ public class ClubEventMemberStatements {
 	public static final String[] SELECT_CLUB_EVENT_MEMBER_BY_STATE_ORDER = { "state" };
 
 	public static final String SELECT_CLUB_EVENT_MEMBER_ALL = "SELECT * FROM club_event_member";
-	
-	public static final String SELECT_CLUB_EVENT_MEMBER_BY_USER_ID_AND_CLUB_ID = "SELECT * FROM club_event_member WHERE user_id=? AND club_id=?";
-	public static final String[] SELECT_CLUB_EVENT_MEMBER_BY_USER_ID_AND_CLUB_ID_ORDER = {"user_id","club_id"};
+
+	public static final String SELECT_CLUB_EVENT_MEMBER_BY_USER_ID_AND_CLUB_ID = "SELECT * FROM club_event_member WHERE user_id=? AND club_id=? AND event_id IS NULL";
+	public static final String[] SELECT_CLUB_EVENT_MEMBER_BY_USER_ID_AND_CLUB_ID_ORDER = {
+			"user_id", "club_id" };
 }

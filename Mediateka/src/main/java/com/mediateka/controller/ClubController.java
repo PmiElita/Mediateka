@@ -3,9 +3,7 @@ package com.mediateka.controller;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,7 +18,6 @@ import org.apache.log4j.Logger;
 import com.mediateka.annotation.Controller;
 import com.mediateka.annotation.Request;
 import com.mediateka.comparator.ChatMessageByCreationDate;
-import com.mediateka.comparator.ContentGroupByDate;
 import com.mediateka.content.CreateContent;
 import com.mediateka.exception.WrongInputException;
 import com.mediateka.form.ClubRegistrationForm;
@@ -262,9 +259,9 @@ public class ClubController {
 				request.setAttribute("imagePath", getMediaById(club.getAvaId())
 						.getPath().replace("\\", "/"));
 				request.setAttribute("chatMessages", map);
-				request.setAttribute("isSigned", isSigned);								
+				request.setAttribute("isSigned", isSigned);
 				request.setAttribute("clubId", club.getId());
-				request.setAttribute("club", club);				
+				request.setAttribute("club", club);
 				request.setAttribute("index", 0);
 				request.getRequestDispatcher("pages/club/club.jsp").forward(
 						request, response);
@@ -448,41 +445,25 @@ public class ClubController {
 			response.sendRedirect("index");
 			return;
 		}
-		boolean isMember = false;
-		boolean blockedDeleted = false;
-		List<ClubEventMember> member = getClubEventMemberByUserId(userId);
-		ClubEventMember memberer = new ClubEventMember();
 
-		if (member != null)
-			for (int i = 0; i < member.size(); i++)
-				if (member.get(i).getEventId() != null)
-					member.remove(i);
-		if (member != null)
-			for (ClubEventMember mem : member) {
-				if (mem.getClubId() == clubId && mem.getState() == State.ACTIVE) {
-					isMember = true;
-					memberer = mem;
-				} else if (mem.getClubId() == clubId
-						&& mem.getState() == State.UNSIGNED)
-					memberer = mem;
-				else if (mem.getClubId() == clubId
-						&& (mem.getState() == State.BLOCKED || mem.getState() == State.DELETED))
-					blockedDeleted = true;
+		ClubEventMember member = getClubEventMemberByUserIdAndClubId(userId,
+				clubId);
+
+		if (member != null) {
+			if (member.getState() == State.UNSIGNED) {
+				member.setState(State.ACTIVE);
+				updateClubEventMember(member);
+			} else if (member.getState() == State.ACTIVE) {
+				member.setState(State.UNSIGNED);
+				updateClubEventMember(member);
 			}
-		System.out.println(memberer.getState());
-		if (isMember) {
-			memberer.setState(State.UNSIGNED);
-			updateClubEventMember(memberer);
-		} else if (!isMember && memberer.getState() != null
-				&& memberer.getState() == State.UNSIGNED) {
-			memberer.setState(State.ACTIVE);
-			updateClubEventMember(memberer);
-		} else if (!blockedDeleted && !isMember) {
-			memberer.setClubId(clubId);
-			memberer.setState(State.ACTIVE);
-			memberer.setType(ClubEventMemberType.MEMBER);
-			memberer.setUserId(userId);
-			saveClubEventMember(memberer);
+		} else if (member == null) {
+			member = new ClubEventMember();
+			member.setClubId(clubId);
+			member.setState(State.ACTIVE);
+			member.setType(ClubEventMemberType.MEMBER);
+			member.setUserId(userId);
+			saveClubEventMember(member);
 		}
 		response.sendRedirect("club?clubId=" + clubId);
 	}
