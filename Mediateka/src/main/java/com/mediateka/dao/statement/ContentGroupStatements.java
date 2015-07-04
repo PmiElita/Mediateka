@@ -61,4 +61,6 @@ public class ContentGroupStatements {
 	public static final String[] UPDATE_CONTENT_GROUP_ORDER = { "type", "name",
 			"creator_id", "creation_date", "text", "event_id", "club_id",
 			"state", "like", "dislike", "parent_id", "id" };
+	
+	
 }

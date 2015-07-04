@@ -6,7 +6,7 @@
 	media="screen,projection" />
 
 <fmt:setLocale value="${locale}" />
-<fmt:setBundle basename="translations/club_chat" var="msg" scope="session" />
+<fmt:setBundle basename="translations/club_chat" var="msg" />
 <fmt:requestEncoding value="utf-8" />
 
 <nav>

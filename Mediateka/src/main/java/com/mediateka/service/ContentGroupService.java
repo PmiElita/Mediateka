@@ -76,4 +76,5 @@ public class ContentGroupService {
 			throws ReflectiveOperationException, SQLException {
 		ContentGroupDAO.updateContentGroup(contentGroup);
 	}
+	
 }
