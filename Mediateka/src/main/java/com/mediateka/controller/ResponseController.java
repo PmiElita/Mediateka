@@ -220,4 +220,11 @@ public class ResponseController {
 		return;
 	}
 
+	
+	@Request(url = "sendResponseToReport", method = "get")
+	public static void sendResponseToReport(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException,
+			SQLException, ReflectiveOperationException {
+
+	}	
 }

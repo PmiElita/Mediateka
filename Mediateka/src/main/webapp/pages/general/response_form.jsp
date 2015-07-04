@@ -23,14 +23,14 @@
 				<div id="field1-container" class="field f_100">
 					<label for="field1"> <fmt:message bundle="${msg}"
 							key="nameField" />
-					</label> <input type="text" name="name" id="field1" required="required">
+					</label> <input type="text" name="nameField" id="field1" required="required">
 				</div>
 
 
 				<div id="field3-container" class="field f_100">
 					<label for="field3"> <fmt:message bundle="${msg}"
 							key="emailField" />
-					</label> <input type="text" name="email" id="field3" required="required">
+					</label> <input type="text" name="emailField" id="field3" required="required">
 				</div>
 
 
@@ -38,7 +38,7 @@
 					<label for="field4"> <fmt:message bundle="${msg}"
 							key="bodyField" />
 					</label>
-					<textarea rows="5" cols="20" name="response" id="field4"
+					<textarea rows="5" cols="20" name="responseField" id="field4"
 						required="required"></textarea>
 				</div>
 
@@ -60,9 +60,9 @@
 		Materialize.toast("sending response", 4000);
 
 		request = {
-			'name' : document.getElementsByName("name")[0].value,
-			'email' : document.getElementsByName("email")[0].value,
-			'response' : document.getElementsByName("response")[0].value,
+			'name' : document.getElementsByName("nameField")[0].value,
+			'email' : document.getElementsByName("emailField")[0].value,
+			'response' : document.getElementsByName("responseField")[0].value,
 		};
 
 		Materialize.toast("request: " + JSON.stringify(request), 10000);

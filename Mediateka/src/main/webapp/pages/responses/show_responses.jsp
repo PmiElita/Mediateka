@@ -15,7 +15,7 @@
 		<jsp:include page="../general/nav.jsp" />
 
 		<div id="responses_div"></div>
-		<a href="#" onclick="getMoreResponses()">get more responses</a>
+		<a href='' onclick="getMoreResponses()">get more responses</a>
 	</div>
 
 
@@ -27,6 +27,7 @@
 		limit = 10;
 		noMoreResponses = false;
 		getMoreResponses();
+		
 		function getMoreResponses() {
 			if (noMoreResponses){
 				return;
@@ -86,20 +87,32 @@
 	      
 		function drawResponse(response) {
 			
-		      return "<div class='row'>\
+		      var retval = "<div class='row'>\
 		        <div class='col s12 m6'>\
 		          <div class='card blue-grey darken-1'>\
 		            <div class='card-content white-text'><p>" +
 		            $("<div>").text(response.text).html().replace(/\r?\n/g, "<br />") +
 		              "</p>\
+		              <p>"+
+		              $("<div>").text(response.name).html() + 
+		              "</p>\
+		              <p>"+
+		              $("<div>").text(response.email).html() +
+		              "</p>\
+		              <p>"+
+		              $("<div>").text(response.timestamp).html() +  
+		              "</p>\
 		            </div>\
 		            <div class='card-action'>\
 		              <a href='#' onclick='deleteResponse("+response.id+")'>Delete</a>\
-		              <a href="" data-target="moda26" class="btn modal-trigger waves-effect">Answer</a>\
+		              <a href data-target='modal26' class='btn modal-trigger waves-effect'>Answer</a>\
 		            </div>\
 		          </div>\
 		        </div>\
 		      </div>";
+		      
+		      console.log(retval);
+		      return retval;
 		}
 		
 		
