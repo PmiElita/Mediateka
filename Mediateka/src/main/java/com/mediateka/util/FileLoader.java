@@ -58,6 +58,8 @@ public class FileLoader {
 			type = "club" + parameterMap.get("clubId");
 		} else if (parameterMap.get("eventId") != null) {
 			type = "event" + parameterMap.get("eventId");
+		} else if (request.getSession().getAttribute("userId") != null) {
+			type = "userAva" + request.getSession().getAttribute("userId");
 		}
 		System.out.println(type);
 		System.out.println(type.replaceAll("[0-9]", "") + "\\" + type);
@@ -77,50 +79,53 @@ public class FileLoader {
 				File[] fileList = new File(uploadFolder + "\\" + typeAray[i])
 						.listFiles();
 				for (File file : fileList) {
-					dest = new File(destFolder
-							+ "\\" + typeAray[i]);
+					dest = new File(destFolder + "\\" + typeAray[i]);
+					if (dest.exists() == false) {
+						dest.mkdirs();
+					}
 					if (typeAray[i] == "videos") {
-					File copyFile = new File(dest.getAbsolutePath() + "\\" + file.getName());
-					FileUtils.copyFile(file, copyFile);
-					System.out.println(dest.getAbsolutePath()
-							+ file.getName());
+						File copyFile = new File(dest.getAbsolutePath() + "\\"
+								+ file.getName());
+						FileUtils.copyFile(file, copyFile);
+						System.out.println(dest.getAbsolutePath()
+								+ file.getName());
 
-					FFmpegFrameGrabber g = new FFmpegFrameGrabber(copyFile);
-					try {
-						g.start();
-						System.out.println(copyFile.getPath() + " "
-								+ copyFile.getCanonicalPath());
-						g.setFrameNumber(g.getLengthInFrames() / 2);
+						FFmpegFrameGrabber g = new FFmpegFrameGrabber(copyFile);
 						try {
-							File posterFile = new File(copyFile
-									.getAbsolutePath().substring(
-											0,
-											copyFile.getAbsolutePath()
-													.lastIndexOf('.'))
-									+ ".png");
-							ImageIO.write(g.grab().getBufferedImage(),
-									"png", posterFile);
-							System.out.println("ok");
-							Media posterMedia = new Media();
-							posterMedia.setType(MediaType.POSTER);
-							System.out.println("posterFile "
-									+ posterFile.getAbsolutePath());
-							posterMedia.setPath(posterFile
-									.getAbsolutePath().substring(
-											posterFile.getAbsolutePath()
-													.indexOf("media\\")));
-							MediaService.saveMedia(posterMedia);
-						} catch (IOException e) {
+							g.start();
+							System.out.println(copyFile.getPath() + " "
+									+ copyFile.getCanonicalPath());
+							g.setFrameNumber(g.getLengthInFrames() / 2);
+							try {
+								File posterFile = new File(copyFile
+										.getAbsolutePath().substring(
+												0,
+												copyFile.getAbsolutePath()
+														.lastIndexOf('.'))
+										+ ".png");
+								ImageIO.write(g.grab().getBufferedImage(),
+										"png", posterFile);
+								System.out.println("ok");
+								Media posterMedia = new Media();
+								posterMedia.setType(MediaType.POSTER);
+								System.out.println("posterFile "
+										+ posterFile.getAbsolutePath());
+								posterMedia.setPath(posterFile
+										.getAbsolutePath().substring(
+												posterFile.getAbsolutePath()
+														.indexOf("media\\")));
+								MediaService.saveMedia(posterMedia);
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							g.stop();
+						} catch (Exception e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-						g.stop();
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						copyFile.delete();
 					}
-					copyFile.delete();
-				}
 					FileUtils.moveFileToDirectory(file, dest, false);
 				}
 			}
@@ -205,6 +210,9 @@ public class FileLoader {
 						extention = defaultFileNames.get(i).substring(
 								defaultFileNames.get(i).indexOf('.'));
 					}
+					if(extention == ""){
+						extention = ".png";
+					}
 					String filePath = uploadFolder + "\\"
 							+ item.getFieldName().toLowerCase() + "s"
 							+ File.separator + fileName + extention;
@@ -223,8 +231,13 @@ public class FileLoader {
 								uploadedFile.getName());
 						parser.parse(fileInputStream, contenthandler, metadata);
 					}
-					if (Files.probeContentType(Paths.get(filePath)).equals(
-							metadata.get(Metadata.CONTENT_TYPE)) == false) {
+					String contentType = item.getContentType();
+					String realContentType = metadata
+							.get(Metadata.CONTENT_TYPE);
+
+					if (contentType.substring(contentType.indexOf('/')).equals(
+							realContentType.substring(realContentType
+									.indexOf('/'))) == false) {
 						System.out.println(Files.probeContentType(Paths
 								.get(filePath))
 								+ " "

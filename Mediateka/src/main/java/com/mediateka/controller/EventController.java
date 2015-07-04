@@ -25,6 +25,7 @@ import com.mediateka.content.CreateContent;
 import com.mediateka.exception.WrongInputException;
 import com.mediateka.form.ExhibitionRegistrationForm;
 import com.mediateka.form.MeetingRegistrationForm;
+import com.mediateka.model.Club;
 import com.mediateka.model.ClubEventMember;
 import com.mediateka.model.ContentGroup;
 import com.mediateka.model.Event;
@@ -36,8 +37,10 @@ import com.mediateka.model.enums.MediaType;
 import com.mediateka.model.enums.Role;
 import com.mediateka.model.enums.State;
 import com.mediateka.service.ClubEventMemberService;
+import com.mediateka.service.ClubService;
 import com.mediateka.service.ContentGroupService;
 import com.mediateka.service.EventService;
+import com.mediateka.service.MediaService;
 import com.mediateka.service.UserService;
 import com.mediateka.util.DateConverter;
 import com.mediateka.util.FileLoader;
@@ -670,5 +673,24 @@ public class EventController {
 			saveClubEventMember(memberer);
 		}
 		response.sendRedirect("event?eventId=" + eventId);
+	}
+
+	@Request(url = "loadEventAva", method = "post")
+	public static void loadClubAvaPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException,
+			ReflectiveOperationException, SQLException, WrongInputException {
+		FileLoader fileLoader = new FileLoader();
+		fileLoader.loadFile(request);
+		Event event = EventService.getEventById(Integer.parseInt(fileLoader
+				.getParameterMap().get("eventId")));
+		Media media = new Media();
+		System.out.println(fileLoader.getFilePath());
+		media.setType(fileLoader.getMediaType());
+		media.setState(State.ACTIVE);
+		media.setPath(fileLoader.getRelativePath());
+		media.setName(fileLoader.getDefaultFileName());
+		media = MediaService.callSaveMedia(media);
+		event.setAvaId(media.getId());
+		EventService.updateEventById(event);
 	}
 }

@@ -178,26 +178,6 @@ public class ClubController {
 
 	}
 
-	@Request(url = "record", method = "get")
-	public static void createRecordGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		session.setAttribute("clubId", 1);
-		session.setAttribute("userId", 2);
-		request.getRequestDispatcher("pages/club/record.jsp").forward(request,
-				response);
-
-	}
-
-	@Request(url = "record", method = "post")
-	public static void createRecordPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException,
-			SQLException, ReflectiveOperationException {
-
-		request.getRequestDispatcher("pages/club/club.jsp").forward(request,
-				response);
-	}
-
 	@Request(url = "club", method = "get")
 	public static void clubGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
@@ -223,15 +203,16 @@ public class ClubController {
 				CreateContent.setContent(request, response, records);
 
 				List<ChatMessage> chatMessages = ChatMessageService
-						.getChatMessageByClubId(clubId,0,ChatController.MESSAGE_COUNT*2);
+						.getChatMessageByClubId(clubId, 0,
+								ChatController.MESSAGE_COUNT * 2);
 				Map<ChatMessage, UserCard> map = new LinkedHashMap<ChatMessage, UserCard>();
 				if (chatMessages != null) {
 					Collections.sort(chatMessages,
 							new ChatMessageByCreationDate());
-					for (int i = 0;  i < chatMessages.size(); i++) {
-						map.put(chatMessages.get(i),
-								UserCardService.getUserCardByUserId(
-										chatMessages.get(i).getUserId()));
+					for (int i = 0; i < chatMessages.size(); i++) {
+						map.put(chatMessages.get(i), UserCardService
+								.getUserCardByUserId(chatMessages.get(i)
+										.getUserId()));
 					}
 				}
 
@@ -468,4 +449,25 @@ public class ClubController {
 		}
 		response.sendRedirect("club?clubId=" + clubId);
 	}
+
+	@Request(url = "loadClubAva", method = "post")
+	public static void loadClubAvaPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException,
+			ReflectiveOperationException, SQLException, WrongInputException {
+		System.out.println("loadAva");
+		FileLoader fileLoader = new FileLoader();
+		fileLoader.loadFile(request);
+		Club club = ClubService.getClubById(Integer.parseInt(fileLoader
+				.getParameterMap().get("clubId")));
+		Media media = new Media();
+		System.out.println(fileLoader.getFilePath());
+		media.setType(fileLoader.getMediaType());
+		media.setState(State.ACTIVE);
+		media.setPath(fileLoader.getRelativePath());
+		media.setName(fileLoader.getDefaultFileName());
+		media = MediaService.callSaveMedia(media);
+		club.setAvaId(media.getId());
+		ClubService.updateClub(club);
+	}
+
 }

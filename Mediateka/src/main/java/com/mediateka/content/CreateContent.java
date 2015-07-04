@@ -31,6 +31,7 @@ import org.jdom.Element;
 import org.jdom.transform.JDOMResult;
 
 import com.google.gson.Gson;
+import com.mediateka.annotation.Request;
 import com.mediateka.comparator.ContentGroupByDate;
 import com.mediateka.exception.WrongInputException;
 import com.mediateka.model.Club;
@@ -56,15 +57,6 @@ public class CreateContent {
 		HttpSession session = request.getSession();
 		FileLoader fileLoader = new FileLoader();
 		String type = null;
-		// if (request.getAttribute("clubId") != null) {
-		// type = "club" + request.getAttribute("clubId");
-		// } else if (request.getAttribute("eventId") != null) {
-		// type = "event" + request.getAttribute("eventId");
-		// }
-		// System.out.println(type);
-		// System.out.println(type.replaceAll("[0-9]", "") + "\\" + type);
-		// fileLoader
-		// .loadFile(request, type.replaceAll("[0-9]", "") + "\\" + type);
 		fileLoader.loadFile(request);
 		ContentGroup contentGroup = new ContentGroup();
 		contentGroup.setDislike(0);
@@ -148,6 +140,10 @@ public class CreateContent {
 		response.getWriter().write(new Gson().toJson(recordMap));
 
 	}
+	
+	
+	
+	
 
 	public static void loadContent(HttpServletRequest request,
 			HttpServletResponse response) throws ReflectiveOperationException,
@@ -283,5 +279,11 @@ public class CreateContent {
 		request.setAttribute("records", records);
 		request.setAttribute("creatorName", creatorRecordMap);
 	}
+	
+	
+	
 
 }
+
+
+

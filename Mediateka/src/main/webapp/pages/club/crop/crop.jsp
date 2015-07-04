@@ -15,11 +15,12 @@
 
 	<script src="pages/event/crop/crop.js"></script>
 
-	<div id="modal15" class="modal"
-		style="width: 75%; background: black">
+	<div id="modal15" class="modal" style="width: 75%; background: black">
 		<div class="modal-content">
+
 			<div style="height: 33em;">
-				<div class="crop-container" style="margin-top: 1em; margin-left: 0.5em">
+				<div class="crop-container"
+					style="margin-top: 1em; margin-left: 0.5em">
 
 
 					<div class="imageBox">
@@ -29,13 +30,15 @@
 					<div class="action" style="margin-top: -0.8em">
 
 						<div class="row">
-							<div class="file-field input-field col s3 offset-s3">
-								<input class="file-path validate" type="hidden" />
-								<div class="btn" style="width: 100%">
-									<span>Choose image</span> <input type="file" id="file"
-										name="image" onchange="readURL(this);" accept="image/*" />
+							<form id="clubAvaForm" enctype="multipart/form-data">
+								<div class="file-field input-field col s3 offset-s3">
+									<input class="file-path validate" type="hidden" />
+									<div class="btn" style="width: 100%">
+										<span>Choose image</span> <input type="file" id="file"
+											name="image" onchange="readURL(this);" accept="image/*" />
+									</div>
 								</div>
-							</div>
+							</form>
 
 							<button class="btn col s1 offset-s1" id="btnZoomIn"
 								style="margin-top: 1.5em; border-radius: 50%">
@@ -47,49 +50,79 @@
 							</button>
 						</div>
 						<div class="row" style="margin-top: -1em">
-							<button class="btn col s12" id="btnCrop">Confirm</button>
+							<button class="btn col s12" id="btnCrop" type="submit"
+								form="clubAvaForm" name="action">Confirm</button>
 						</div>
 					</div>
 				</div>
 			</div>
+
 		</div>
 	</div>
 
-	<script type="text/javascript">
-		$(window).load(
-				function() {
-					var options = {
-						thumbBox : '.thumbBox',
-						spinner : '.spinner',
-						imgSrc : 'avatar.png'
-					}
-					var cropper;
-					$('#file').on('change', function() {
-						var reader = new FileReader();
-						reader.onload = function(e) {
-							options.imgSrc = e.target.result;
-							cropper = $('.imageBox').cropbox(options);
-						}
-						reader.readAsDataURL(this.files[0]);
-						this.files = [];
-					})
-					$('#btnCrop').on(
-							'click',
-							function() {
 
-								document.getElementById("ava").setAttribute(
-										'style', 'margin-left: 0em;');
-								var img = cropper.getDataURL()
-								document.getElementById("ava").src = img;
-								$('#modal15').closeModal();
-							})
-					$('#btnZoomIn').on('click', function() {
-						cropper.zoomIn();
-					})
-					$('#btnZoomOut').on('click', function() {
-						cropper.zoomOut();
-					})
-				});
+
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#clubAvaForm").on("submit", loadClubAva);
+
+		});
+		var cropper;
+		var storedImages = [];
+		function loadClubAva(e) {
+			alert('submit');
+
+			document.getElementById("ava").setAttribute('style',
+					'margin-left: 0em;');			
+			var img = cropper.getDataURL();
+			storedImages.push(cropper.getBlob());
+			document.getElementById("ava").src = img;			
+			$('#modal15').closeModal();
+			alert("myPart");
+			
+			e.preventDefault();
+			var data = new FormData();
+			if (document.getElementById('clubId') != null) {
+				data.append('clubId',
+						document.getElementById('clubId').innerHTML.toString());
+			}
+			for (var i = 0, len = storedImages.length; i < len; i++) {
+				data.append('image', storedImages[i]);
+			}
+			alert(123);
+			alert(data.responseText);
+			var xhr = new XMLHttpRequest();
+			xhr.open('POST', 'loadClubAva', true);
+			xhr.send(data);
+			alert(12321312);
+
+		}
+
+		$(window).load(function() {
+			var options = {
+				thumbBox : '.thumbBox',
+				spinner : '.spinner',
+				imgSrc : 'avatar.png'
+			}
+			
+			$('#file').on('change', function() {
+				var reader = new FileReader();
+				reader.onload = function(e) {
+					options.imgSrc = e.target.result;
+					cropper = $('.imageBox').cropbox(options);
+				}										
+														
+				reader.readAsDataURL(this.files[0]);
+				this.files = [];
+			})
+			$('#btnZoomIn').on('click', function() {
+				cropper.zoomIn();
+			})
+			$('#btnZoomOut').on('click', function() {
+				cropper.zoomOut();
+			})
+		});
 	</script>
 </body>
 </html>
