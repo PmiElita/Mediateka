@@ -69,7 +69,7 @@
 
 
 			<div class="col s6">
-				<a class="btn" href="#" style="width: 15em">Look participants</a>
+				<a class="btn" href="ClubUsers?clubId=${club.id}" style="width: 15em">Look participants</a>
 			</div>
 			</c:if>
 		<c:if test="${badGuy!=null}">
@@ -141,7 +141,7 @@
 		</div>
 
 		<div class="col s3">
-			<a href="events">
+			<a href="events?clubId=${club.id}">
 				<div class="col s12 m8 offset-m2 l6 offset-l3 my-card my-small-card">
 					<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
 						<div style="margin-top: -2em">
