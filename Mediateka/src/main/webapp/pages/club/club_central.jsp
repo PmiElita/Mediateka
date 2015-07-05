@@ -54,13 +54,13 @@
 		<c:choose>
 		<c:when test="${userRole eq Role.USER}">
 		<c:if test="${badGuy==null}">
-			<c:if test="${isSigned eq 'false'}">
+			<c:if test="${isSigned == false}">
 				<div class="col s6">
 					<a class="btn" href="memberSignClub?clubId=${club.id}" style="width: 15em">Sign to club</a>
 				</div>
 			</c:if>
 
-			<c:if test="${isSigned eq 'true'}">
+			<c:if test="${isSigned == true}">
 				<div class="col s6">
 					<a class="btn" href="memberSignClub?clubId=${club.id}" style="width: 15em">Sign out</a>
 				</div>
