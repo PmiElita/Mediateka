@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@page import="com.mediateka.model.enums.Role"%>
+<%@page import="java.util.List"%>
 
 <fmt:setLocale value="${cookie.lang.value}" />
 <fmt:setBundle basename="translations/club_users" var="msg" />
@@ -45,7 +46,7 @@
 
 				<div id="active_users">
 					<c:choose>
-						<c:when test="${!activeUsers.isEmpty}">
+						<c:when test="${activeUsers.size() eq 0}">
 							<ul class="collapsible" data-collapsible="accordion">
 								<c:forEach items="${activeUsers}" var="current"
 									varStatus="status">
@@ -89,7 +90,7 @@
 
 				<div id="blocked_users">
 					<c:choose>
-						<c:when test="${!blockedUsers.isEmpty}">
+						<c:when test="${blockedUsers.size() eq 0}">
 							<ul class="collapsible" data-collapsible="accordion">
 								<c:forEach items="${blockedUsers}" var="current" varStatus="status">
 									<li id="userNo${current.id}">
