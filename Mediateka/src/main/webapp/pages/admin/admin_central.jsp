@@ -18,10 +18,10 @@
 					<a href="" data-target="modal7" class="modal-trigger">
 						<div class="col s12 m8 offset-m2 l6 offset-l3 my-card">
 							<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
-								<div style="margin-top: -2em">
-									<h3 style="color: black">
+								<div style="margin-top: -1em">
+									<h4 style="color: black" class="center">
 										<fmt:message bundle="${msg}" key="users" />
-									</h3>
+									</h4>
 									<div class="row valign-wrapper">
 										<div class="col s10">
 											<img src="images/admin/users.png" alt=""
@@ -39,10 +39,10 @@
 					<a href="clubs">
 						<div class="col s12 m8 offset-m2 l6 offset-l3 my-card">
 							<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
-								<div style="margin-top: -2em">
-									<h3 style="color: black">
+								<div style="margin-top: -1em">
+									<h4 style="color: black" class="center">
 										<fmt:message bundle="${msg}" key="clubs" />
-									</h3>
+									</h4>
 									<div class="row valign-wrapper">
 										<div class="col s10">
 											<img src="images/admin/clubs.png" alt=""
@@ -65,10 +65,10 @@
 					<a href="events">
 						<div class="col s12 m8 offset-m2 l6 offset-l3 my-card">
 							<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
-								<div style="margin-top: -2em">
-									<h3 style="color: black">
+								<div style="margin-top: -1em">
+									<h4 style="color: black" class="center">
 										<fmt:message bundle="${msg}" key="events" />
-									</h3>
+									</h4>
 									<div class="row valign-wrapper">
 										<div class="col s8">
 											<img style="margin-top: 0em" src="images/admin/events.png"
@@ -93,10 +93,10 @@
 					<a href="info">
 						<div class="col s12 m8 offset-m2 l6 offset-l3 my-card">
 							<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
-								<div style="margin-top: -2em">
-									<h3 style="color: black">
+								<div style="margin-top: -1em">
+									<h4 style="color: black" class="center">
 										<fmt:message bundle="${msg}" key="info" />
-									</h3>
+									</h4>
 									<div class="row valign-wrapper">
 										<div class="col s9">
 											<img src="images/admin/info.png" alt=""
@@ -114,10 +114,10 @@
 					<a href="books">
 						<div class="col s12 m8 offset-m2 l6 offset-l3 my-card">
 							<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
-								<div style="margin-top: -2em">
-									<h3 style="color: black">
+								<div style="margin-top: -1em">
+									<h4 style="color: black" class="center">
 										<fmt:message bundle="${msg}" key="books" />
-									</h3>
+									</h4>
 									<div class="row valign-wrapper">
 										<div class="col s9">
 											<img src="images/admin/books.png" alt=""
@@ -135,10 +135,10 @@
 					<a href="showResponsesPage?offset=0&limit=5">
 						<div class="col s12 m8 offset-m2 l6 offset-l3 my-card">
 							<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
-								<div style="margin-top: -2em">
-									<h3 style="color: black">
+								<div style="margin-top: -1em">
+									<h4 style="color: black" class="center">
 										<fmt:message bundle="${msg}" key="reports" />
-									</h3>
+									</h4>
 									<div class="row valign-wrapper">
 										<div class="col s8">
 											<img style="margin-top: 0em" src="images/admin/reports.png"

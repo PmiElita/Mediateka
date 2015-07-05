@@ -20,9 +20,12 @@
 
 <jsp:include page="../general/nav.jsp" />
 		
+		<div class="parallax-container my-parallax">
+			<div class="parallax">
+				<img src="images/parallax1.jpg">
+			</div>
 
-
-<div class=" container white">
+<div class=" container section white">
 <div class = "row">
 <button class="btn" onclick="saveChanges();">Save changes</button>
 </div>
@@ -42,7 +45,9 @@
 	</div>
 </div>
 
+</div>
 
+	<jsp:include page="../general/footer.jsp" />
 <!--Import jQuery before materialize.js-->
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/js/materialize.min.js"></script>

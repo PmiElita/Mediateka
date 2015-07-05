@@ -32,6 +32,18 @@ import static com.mediateka.service.UserService.*;
 @Controller
 public class FormRecordController {
 
+	
+	@Request(url = "goToCreateFormRecord", method = "get")
+	public static void goRoFormRecordCreateGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException,
+			SQLException, ReflectiveOperationException {
+		
+		request.getRequestDispatcher(
+				"pages/form/create_form_record.jsp").forward(request,
+				response);
+	}
+	
+	
 	@Request(url = "CreateFormRecord", method = "get")
 	public static void formRecordCreateGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
@@ -50,7 +62,7 @@ public class FormRecordController {
 		request.setAttribute("books", books);
 		request.setAttribute("events", activeEvents);
 		request.getRequestDispatcher(
-				"pages/fedunets12.06/create_form_record.jsp").forward(request,
+				"pages/form/create_form_record.jsp").forward(request,
 				response);
 		request.removeAttribute("books");
 		request.removeAttribute("events");
@@ -224,7 +236,7 @@ public class FormRecordController {
 		request.getSession().removeAttribute("userId");
 
 		request.getRequestDispatcher(
-				"pages/fedunets12.06/create_form_record.jsp").forward(request,
+				"pages/form/create_form_record.jsp").forward(request,
 				response);
 
 		request.removeAttribute("books");

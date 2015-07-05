@@ -19,6 +19,10 @@
 			<li><a href="" data-target="modal4"
 				class="modal-trigger waves-effect"><fmt:message bundle="${msg}"
 						key="admin.register_new_user" /></a></li>
+						
+			<li><a href="goToCreateFormRecord"
+				class="waves-effect">Create form record</a></li>	
+								
 			<li><a href="cabinet"><fmt:message bundle="${msg}"
 						key="admin.cabinet" /></a></li>
 			<li><a href="index"><fmt:message bundle="${msg}"

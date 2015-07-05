@@ -85,7 +85,7 @@
 				<div class="col s12 m8 offset-m2 l6 offset-l3 my-card my-small-card">
 					<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
 						<div style="margin-top: -2em">
-							<h3 style="color: black">Music</h3>
+							<h3 class="center" style="color: black">Music</h3>
 							<div class="row valign-wrapper">
 								<div class="col s9">
 									<img src="images/club/music.png" alt=""
@@ -104,7 +104,7 @@
 				<div class="col s12 m8 offset-m2 l6 offset-l3 my-card my-small-card">
 					<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
 						<div style="margin-top: -2em">
-							<h3 style="color: black">Video</h3>
+							<h3 class="center" style="color: black">Video</h3>
 							<div class="row valign-wrapper">
 								<div class="col s9">
 									<img src="images/club/video.jpg" alt=""
@@ -123,7 +123,7 @@
 				<div class="col s12 m8 offset-m2 l6 offset-l3 my-card my-small-card">
 					<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
 						<div style="margin-top: -2em">
-							<h3 style="color: black">Photo</h3>
+							<h3 class="center" style="color: black">Photo</h3>
 							<div class="row valign-wrapper">
 								<div class="col s9">
 									<img src="images/club/photo.png" alt=""
