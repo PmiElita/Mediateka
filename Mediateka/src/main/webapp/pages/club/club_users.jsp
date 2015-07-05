@@ -5,13 +5,13 @@
 <%@page import="com.mediateka.model.enums.Role"%>
 
 <fmt:setLocale value="${cookie.lang.value}" />
-<fmt:setBundle basename="translations/admin_events" var="msg" />
+<fmt:setBundle basename="translations/club_users" var="msg" />
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Event users</title>
+<title><fmt:message bundle="${msg}"	key="title" /></title>
 <jsp:include page="../general/head.jsp" />
 </head>
 <body>
@@ -29,11 +29,9 @@
 					<div class="col s12">
 						<ul class="tabs">
 							<li class="tab col s3"><a href="#active_users"
-								style="margin-left: 5em"><fmt:message bundle="${msg}"
-										key="requested_events" /></a></li>
+								style="margin-left: 5em"><fmt:message bundle="${msg}" key="active_users"/></a></li>
 							<c:if test="${!(creator==null)}">
-							<li class="tab col s3"><a href="#blocked_users"><fmt:message
-										bundle="${msg}" key="all_events" /></a></li>
+							<li class="tab col s3"><a href="#blocked_users"><fmt:message bundle="${msg}" key="blocked_users"/></a></li>
 							</c:if>
 						</ul>
 					</div>
@@ -63,14 +61,14 @@
 												<button class="btn waves-effect green titler" type="submit"
 													name="action" style="margin-bottom: 3.5em"
 													onclick="block(${current.id},${clubId});">
-													<fmt:message bundle="${msg}" key="activate_button" />
+													<fmt:message bundle="${msg}" key="block"/>
 													<i class="mdi-content-send right"></i>
 												</button>
 
 												<button class="btn waves-effect red titler" type="submit"
 													name="action" style="margin-bottom: 3.5em"
 													onclick="deleted(${current.id}${clubId});">
-													<fmt:message bundle="${msg}" key="dismiss_button" />
+													<fmt:message bundle="${msg}" key="delete"/>
 													<i class="mdi-content-send right"></i>
 												</button>
 												
@@ -82,7 +80,7 @@
 							</ul>
 						</c:when>
 						<c:otherwise>
-							<h2 align="center"><fmt:message bundle="${msg}" key="no_events" /></h2>
+							<h2 align="center"><fmt:message bundle="${msg}" key="no_users"/></h2>
 						</c:otherwise>
 					</c:choose>
 				</div>
@@ -106,7 +104,7 @@
 												<button class="btn waves-effect red titler" type="submit"
 													name="action" style="margin-bottom: 3.5em"
 													onclick="activate(${current.id},${clubId});">
-													<fmt:message bundle="${msg}" key="delete_button" />
+													<fmt:message bundle="${msg}" key="activate"/>
 													<i class="mdi-content-send right"></i>
 												</button>
 												
@@ -118,7 +116,7 @@
 							</ul>
 						</c:when>
 						<c:otherwise>
-							<h2 align="center"><fmt:message bundle="${msg}" key="no_events" /></h2>
+							<h2 align="center"><fmt:message bundle="${msg}" key="no_users"/></h2>
 						</c:otherwise>
 					</c:choose>
 				</div>

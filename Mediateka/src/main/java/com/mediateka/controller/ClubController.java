@@ -182,114 +182,87 @@ public class ClubController {
 
 	}
 
-	@Request(url = "record", method = "get")
-	public static void createRecordGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		session.setAttribute("clubId", 1);
-		session.setAttribute("userId", 2);
-		request.getRequestDispatcher("pages/club/record.jsp").forward(request,
-				response);
-
-	}
-
-	@Request(url = "record", method = "post")
-	public static void createRecordPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException,
-			SQLException, ReflectiveOperationException {
-
-		request.getRequestDispatcher("pages/club/club.jsp").forward(request,
-				response);
-	}
-
 	@Request(url = "club", method = "get")
-	 public static void clubGet(HttpServletRequest request,
-	   HttpServletResponse response) throws ServletException, IOException,
-	   ReflectiveOperationException, SQLException {
+	public static void clubGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException,
+			ReflectiveOperationException, SQLException {
 
-	  try {
-	   int clubId = 0;
-	   if (request.getParameter("clubId") == null
-	     || request.getParameter("clubId") == ""
-	     || getClubById(Integer.parseInt(request.getParameter(
-	       "clubId").toString())) == null) {
-	    request.setAttribute("message", "No such club!");
-	    request.getRequestDispatcher("error404.jsp").forward(request,
-	      response);
-	    request.removeAttribute("message");
-	   } else {
-	    clubId = Integer.parseInt(request.getParameter("clubId")
-	      .toString());
-	    Club club = getClubById(clubId);
-	    List<ContentGroup> records = ContentGroupService
-	      .getContentGroupByClubIdAndState(clubId, State.ACTIVE);
+		try {
+			int clubId = 0;
+			if (request.getParameter("clubId") == null
+					|| request.getParameter("clubId") == ""
+					|| getClubById(Integer.parseInt(request.getParameter(
+							"clubId").toString())) == null) {
+				request.setAttribute("message", "No such club!");
+				request.getRequestDispatcher("error404.jsp").forward(request,
+						response);
+				request.removeAttribute("message");
+			} else {
+				clubId = Integer.parseInt(request.getParameter("clubId")
+						.toString());
+				Club club = getClubById(clubId);
+				List<ContentGroup> records = ContentGroupService
+						.getContentGroupByClubIdAndState(clubId, State.ACTIVE);
 
-	    CreateContent.setContent(request, response, records);
+				CreateContent.setContent(request, response, records);
 
-	    List<ChatMessage> chatMessages = ChatMessageService
-	      .getChatMessageByClubId(clubId,0,ChatController.MESSAGE_COUNT*2);
-	    Map<ChatMessage, UserCard> map = new LinkedHashMap<ChatMessage, UserCard>();
-	    if (chatMessages != null) {
-	     Collections.sort(chatMessages,
-	       new ChatMessageByCreationDate());
-	     for (int i = 0;  i < chatMessages.size(); i++) {
-	      map.put(chatMessages.get(i),
-	        UserCardService.getUserCardByUserId(
-	          chatMessages.get(i).getUserId()));
-	     }
-	    }
+				List<ChatMessage> chatMessages = ChatMessageService
+						.getChatMessageByClubId(clubId, 0,
+								ChatController.MESSAGE_COUNT * 2);
+				Map<ChatMessage, UserCard> map = new LinkedHashMap<ChatMessage, UserCard>();
+				if (chatMessages != null) {
+					Collections.sort(chatMessages,
+							new ChatMessageByCreationDate());
+					for (int i = 0; i < chatMessages.size(); i++) {
+						map.put(chatMessages.get(i), UserCardService
+								.getUserCardByUserId(chatMessages.get(i)
+										.getUserId()));
+					}
+				}
 
-	    String isSigned = "false";
+				String isSigned = "false";
+				ClubEventMember member = null;
+				if (request.getSession().getAttribute("userId") != null)
+					member = getClubEventMemberByUserIdAndClubId(
+							(Integer) request.getSession().getAttribute(
+									"userId"), clubId);
 
-	    List<ClubEventMember> clubMembers = ClubEventMemberService
-	      .getClubEventMemberByClubId(club.getId());
-	    if (clubMembers != null)
-	     for (int i = 0; i < clubMembers.size(); i++)
-	      if (clubMembers.get(i).getEventId() != null)
-	       clubMembers.remove(i);
+				if (member != null)
+					if (member.getState() == State.ACTIVE)
+						isSigned = "true";
+					else if (member.getState() == State.BLOCKED
+							|| member.getState() == State.DELETED)
+						request.setAttribute("badGuy", true);
 
-	    User user = UserService.getUserById((Integer) request
-	      .getSession().getAttribute("userId"));
-	    if (clubMembers != null && user != null)
-	     for (ClubEventMember member : clubMembers) {
-	      if (member.getState() == State.ACTIVE
-	        && (member.getUserId() == user.getId()))
-	       isSigned = "true";
-	      else if ((member.getState() == State.BLOCKED || member
-	        .getState() == State.DELETED)
-	        && (member.getUserId() == user.getId()))
-	       request.setAttribute("badGuy", true);
-	     }
+				request.setAttribute("imagePath", getMediaById(club.getAvaId())
+						.getPath().replace("\\", "/"));
+				request.setAttribute("chatMessages", map);
+				request.setAttribute("isSigned", isSigned);
+				request.setAttribute("clubId", club.getId());
+				request.setAttribute("club", club);
+				request.setAttribute("index", 0);
+				request.getRequestDispatcher("pages/club/club.jsp").forward(
+						request, response);
 
-	    request.setAttribute("imagePath", getMediaById(club.getAvaId())
-	      .getPath().replace("\\", "/"));
-	    request.setAttribute("chatMessages", map);
-	    request.setAttribute("isSigned", isSigned);
-	    request.setAttribute("clubId", club.getId());
-	    request.setAttribute("club", club);
-	    request.setAttribute("index", 0);
-	    request.getRequestDispatcher("pages/club/club.jsp").forward(
-	      request, response);
-
-	    request.removeAttribute("mediaMap");
-	    request.removeAttribute("imageMap");
-	    request.removeAttribute("videoMap");
-	    request.removeAttribute("audioMap");
-	    request.removeAttribute("records");
-	    request.removeAttribute("club");
-	    request.removeAttribute("clubId");
-	    request.removeAttribute("creatorName");
-	    request.removeAttribute("imagePath");
-	    request.removeAttribute("badGuy");
-	    request.removeAttribute("isSigned");
-	   }
-	  } catch (NumberFormatException e) {
-	   request.setAttribute("message", "No such club!");
-	   request.getRequestDispatcher("error404.jsp").forward(request,
-	     response);
-	   request.removeAttribute("message");
-	  }
-	 }
+				request.removeAttribute("mediaMap");
+				request.removeAttribute("imageMap");
+				request.removeAttribute("videoMap");
+				request.removeAttribute("audioMap");
+				request.removeAttribute("records");
+				request.removeAttribute("club");
+				request.removeAttribute("clubId");
+				request.removeAttribute("creatorName");
+				request.removeAttribute("imagePath");
+				request.removeAttribute("badGuy");
+				request.removeAttribute("isSigned");
+			}
+		} catch (NumberFormatException e) {
+			request.setAttribute("message", "No such club!");
+			request.getRequestDispatcher("error404.jsp").forward(request,
+					response);
+			request.removeAttribute("message");
+		}
+	}
 
 	@Request(url = "club_videos", method = "get")
 	public static void videosGet(HttpServletRequest request,

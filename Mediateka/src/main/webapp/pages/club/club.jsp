@@ -50,7 +50,7 @@
 	            <input type="text" hidden value="${userId}" id ="userId"/>
            
 	</div>
-	<c:if test="${!(userRole==null)}">
+	<c:if test="${!(isSigned==null)}">
 	<jsp:include page="chat_side_nav.jsp"/>
 	</c:if>
 	<jsp:include page="../general/footer.jsp" />
