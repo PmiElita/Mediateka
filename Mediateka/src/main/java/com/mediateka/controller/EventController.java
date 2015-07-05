@@ -3,6 +3,7 @@ package com.mediateka.controller;
 import static com.mediateka.service.ClubEventMemberService.*;
 import static com.mediateka.service.EventService.*;
 import static com.mediateka.service.MediaService.*;
+import static com.mediateka.service.UserService.getUserById;
 import static com.mediateka.util.DateConverter.*;
 
 import java.io.IOException;
@@ -10,6 +11,8 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -21,11 +24,11 @@ import org.apache.log4j.Logger;
 
 import com.mediateka.annotation.Controller;
 import com.mediateka.annotation.Request;
+import com.mediateka.comparator.UsersByName;
 import com.mediateka.content.CreateContent;
 import com.mediateka.exception.WrongInputException;
 import com.mediateka.form.ExhibitionRegistrationForm;
 import com.mediateka.form.MeetingRegistrationForm;
-import com.mediateka.model.Club;
 import com.mediateka.model.ClubEventMember;
 import com.mediateka.model.ContentGroup;
 import com.mediateka.model.Event;
@@ -37,7 +40,6 @@ import com.mediateka.model.enums.MediaType;
 import com.mediateka.model.enums.Role;
 import com.mediateka.model.enums.State;
 import com.mediateka.service.ClubEventMemberService;
-import com.mediateka.service.ClubService;
 import com.mediateka.service.ContentGroupService;
 import com.mediateka.service.EventService;
 import com.mediateka.service.MediaService;
@@ -694,5 +696,165 @@ public class EventController {
 		media = MediaService.callSaveMedia(media);
 		event.setAvaId(media.getId());
 		EventService.updateEventById(event);
+	}
+
+	@Request(url = "EventUsers", method = "get")
+	public static void showEventUsers(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException,
+			ReflectiveOperationException, SQLException {
+		try {
+			// watching who is user
+			if (request.getSession().getAttribute("userId") == null)
+				throw new NumberFormatException(
+						"There is no userId in session. ");
+			ClubEventMember user = getClubEventMemberByUserIdAndEventId(
+					Integer.parseInt(request.getSession()
+							.getAttribute("userId").toString()),
+					Integer.parseInt(request.getParameter("eventId")));
+			if (user.getType() == ClubEventMemberType.CREATOR)
+				request.setAttribute("creator", true);
+			// setting response of users
+			if (request.getParameter("eventId") == null)
+				throw new NumberFormatException();
+			List<ClubEventMember> members = getClubEventMemberByEventId(Integer
+					.parseInt(request.getParameter("eventId")));
+			List<ClubEventMember> eventActiveMembers = new ArrayList<>();
+			List<ClubEventMember> eventBlockedMembers = new ArrayList<>();
+			if (members != null)
+				for (ClubEventMember member : members) {
+					if (member.getState() == State.ACTIVE)
+						eventActiveMembers.add(member);
+					else if (member.getState() == State.BLOCKED)
+						eventBlockedMembers.add(member);
+				}
+			List<User> activeUsers = new ArrayList<>();
+			List<User> blockedUsers = new ArrayList<>();
+			if (!eventActiveMembers.isEmpty()) {
+				for (ClubEventMember member : eventActiveMembers)
+					activeUsers.add(getUserById(member.getUserId()));
+				Collections.sort(activeUsers, new UsersByName());
+			}
+			if (!eventBlockedMembers.isEmpty())
+				for (ClubEventMember member : eventBlockedMembers) {
+					blockedUsers.add(getUserById(member.getUserId()));
+					Collections.sort(blockedUsers, new UsersByName());
+				}
+			request.setAttribute("eventId", request.getParameter("eventId"));
+			request.setAttribute("activeUsers", activeUsers);
+			request.setAttribute("blockedUsers", blockedUsers);
+			request.getRequestDispatcher("pages/event/event_users.jsp")
+					.forward(request, response);
+			request.removeAttribute("activeUsers");
+			request.removeAttribute("blockedUsers");
+			request.removeAttribute("creator");
+			request.removeAttribute("clubId");
+		} catch (NumberFormatException e) {
+			logger.error("no event with such id : "
+					+ request.getParameter("event") + " " + e.getMessage());
+			request.getRequestDispatcher("error404.jsp").forward(request,
+					response);
+		}
+	}
+
+	@Request(url = "activateEventUser", method = "get")
+	public static void activateEventUser(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException,
+			ReflectiveOperationException, SQLException {
+		try {
+			if (request.getSession().getAttribute("userId") == null)
+				throw new NumberFormatException();
+			int userId = Integer.parseInt(request.getSession()
+					.getAttribute("userId").toString());
+			if (request.getParameter("id") == null
+					|| request.getParameter("eid") == null)
+				throw new WrongInputException("There is no id or cid. ");
+			userId = Integer.parseInt(request.getParameter("id"));
+			int eventId = Integer.parseInt(request.getParameter("eid"));
+			if (getUserById(userId) == null || getEventById(eventId) == null)
+				throw new WrongInputException(
+						"Ther is no club or user with such id. ");
+			ClubEventMember member = getClubEventMemberByUserIdAndEventId(
+					userId, eventId);
+			member.setState(State.ACTIVE);
+			updateClubEventMember(member);
+			return;
+		} catch (NumberFormatException e) {
+			logger.error("no user id, or no SUCH user id : "
+					+ request.getParameter("userId") + " " + e.getMessage());
+			request.getRequestDispatcher("error404.jsp").forward(request,
+					response);
+		} catch (WrongInputException e) {
+			logger.error(e.getMessage());
+			request.getRequestDispatcher("error404.jsp").forward(request,
+					response);
+		}
+	}
+
+	@Request(url = "deleteEventUser", method = "get")
+	public static void deleteEventUser(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException,
+			ReflectiveOperationException, SQLException {
+		try {
+			if (request.getSession().getAttribute("userId") == null)
+				throw new NumberFormatException();
+			int userId = Integer.parseInt(request.getSession()
+					.getAttribute("userId").toString());
+			if (request.getParameter("id") == null
+					|| request.getParameter("eid") == null)
+				throw new WrongInputException("There is no id or cid. ");
+			userId = Integer.parseInt(request.getParameter("id"));
+			int eventId = Integer.parseInt(request.getParameter("eid"));
+			if (getUserById(userId) == null || getEventById(eventId) == null)
+				throw new WrongInputException(
+						"Ther is no club or user with such id. ");
+			ClubEventMember member = getClubEventMemberByUserIdAndEventId(
+					userId, eventId);
+			member.setState(State.DELETED);
+			updateClubEventMember(member);
+			return;
+		} catch (NumberFormatException e) {
+			logger.error("no user id, or no SUCH user id : "
+					+ request.getParameter("userId") + " " + e.getMessage());
+			request.getRequestDispatcher("error404.jsp").forward(request,
+					response);
+		} catch (WrongInputException e) {
+			logger.error(e.getMessage());
+			request.getRequestDispatcher("error404.jsp").forward(request,
+					response);
+		}
+	}
+
+	@Request(url = "blockEventUser", method = "get")
+	public static void blockEventUser(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException,
+			ReflectiveOperationException, SQLException {
+		try {
+			if (request.getSession().getAttribute("userId") == null)
+				throw new NumberFormatException();
+			int userId = Integer.parseInt(request.getSession()
+					.getAttribute("userId").toString());
+			if (request.getParameter("id") == null
+					|| request.getParameter("eid") == null)
+				throw new WrongInputException("There is no id or cid. ");
+			userId = Integer.parseInt(request.getParameter("id"));
+			int eventId = Integer.parseInt(request.getParameter("eid"));
+			if (getUserById(userId) == null || getEventById(eventId) == null)
+				throw new WrongInputException(
+						"Ther is no club or user with such id. ");
+			ClubEventMember member = getClubEventMemberByUserIdAndEventId(
+					userId, eventId);
+			member.setState(State.BLOCKED);
+			updateClubEventMember(member);
+			return;
+		} catch (NumberFormatException e) {
+			logger.error("no user id, or no SUCH user id : "
+					+ request.getParameter("userId") + " " + e.getMessage());
+			request.getRequestDispatcher("error404.jsp").forward(request,
+					response);
+		} catch (WrongInputException e) {
+			logger.error(e.getMessage());
+			request.getRequestDispatcher("error404.jsp").forward(request,
+					response);
+		}
 	}
 }

@@ -140,4 +140,22 @@ public class ClubEventMemberDAO {
 					ClubEventMember.class);
 		}
 	}
+
+	public static ClubEventMember getClubEventMemberByUserIdAndEventId(
+			Integer userId, Integer eventId)
+			throws ReflectiveOperationException, SQLException {
+		try (Connection connection = ConnectionManager.getConnection()) {
+			PreparedStatement statement = connection
+					.prepareStatement(SELECT_CLUB_EVENT_MEMBER_BY_USER_ID_AND_EVENT_ID);
+			ClubEventMember clubEventMember = new ClubEventMember();
+			clubEventMember.setUserId(userId);
+			clubEventMember.setEventId(eventId);
+			Transformer.valueIntoPreparedStatement(statement, clubEventMember,
+					SELECT_CLUB_EVENT_MEMBER_BY_USER_ID_AND_EVENT_ID_ORDER);
+			;
+			ResultSet resultSet = statement.executeQuery();
+			return Transformer.transformResultSetIntoObject(resultSet,
+					ClubEventMember.class);
+		}
+	}
 }
