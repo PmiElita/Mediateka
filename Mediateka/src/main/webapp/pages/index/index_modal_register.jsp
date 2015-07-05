@@ -3,6 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+<%@page import="com.mediateka.model.enums.State"%>
+
 
 <jsp:useBean id="consts" class="com.mediateka.util.RegExps"
 	scope="session" />

@@ -132,22 +132,24 @@
 				</div>
 
 				<div class="col s4">
-					<div class="col s12 m8 offset-m2 l6 offset-l3 my-card">
-						<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
-							<div style="margin-top: -2em">
-								<h3 style="color: black">
-									<fmt:message bundle="${msg}" key="reports" />
-								</h3>
-								<div class="row valign-wrapper">
-									<div class="col s8">
-										<img style="margin-top: 0em" src="images/admin/reports.png"
-											alt="" class="circle responsive-img">
+					<a href="showResponsesPage?offset=0&limit=5">
+						<div class="col s12 m8 offset-m2 l6 offset-l3 my-card">
+							<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
+								<div style="margin-top: -2em">
+									<h3 style="color: black">
+										<fmt:message bundle="${msg}" key="reports" />
+									</h3>
+									<div class="row valign-wrapper">
+										<div class="col s8">
+											<img style="margin-top: 0em" src="images/admin/reports.png"
+												alt="" class="circle responsive-img">
+										</div>
+										<div class="my-badge" style="margin-left: 0.75em">9</div>
 									</div>
-									<div class="my-badge" style="margin-left: 0.75em">9</div>
 								</div>
 							</div>
 						</div>
-					</div>
+					</a>
 				</div>
 			</div>
 		</div>

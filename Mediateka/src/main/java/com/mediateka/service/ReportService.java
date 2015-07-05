@@ -1,18 +1,13 @@
 package com.mediateka.service;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+
 import java.sql.SQLException;
-import java.util.ArrayList;
+
 import java.util.List;
 
 import com.mediateka.dao.ReportDAO;
-import com.mediateka.dao.statement.ReportStatements;
+
 import com.mediateka.model.Report;
-import com.mediateka.model.enums.State;
-import com.mediateka.util.ConnectionManager;
-import com.mediateka.util.Transformer;
 
 public class ReportService {
 
@@ -44,4 +39,11 @@ public class ReportService {
 		return ReportDAO.getNumberOfNewReports();
 
 	}
+	
+	public static Integer getNumberOfAllReports() throws SQLException {
+		return ReportDAO.getNumberOfAllReports();
+
+	}
+	
+	
 }

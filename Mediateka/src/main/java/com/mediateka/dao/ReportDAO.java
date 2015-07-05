@@ -93,14 +93,25 @@ public class ReportDAO {
 			PreparedStatement statement = connection
 					.prepareStatement("SELECT count(*) FROM report WHERE  state = 'ACTIVE' ");
 
+			ResultSet rs = statement.executeQuery();
+
+			rs.next();
+			return rs.getInt(1);
+		}		
+	}
+
+	
+	public static Integer getNumberOfAllReports() throws SQLException {
+
+		try (Connection connection = ConnectionManager.getConnection()) {
+			PreparedStatement statement = connection
+					.prepareStatement("SELECT count(*) FROM report WHERE  state <> 'DELETED' ");
 
 			ResultSet rs = statement.executeQuery();
 
 			rs.next();
 			return rs.getInt(1);
-		}
-
-		
+		}		
 	}
 
 }
