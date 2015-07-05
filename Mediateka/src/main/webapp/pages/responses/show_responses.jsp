@@ -6,11 +6,13 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@page import="com.mediateka.model.enums.State"%>
 
+<fmt:setLocale value="${cookie.lang.value}" />
+<fmt:setBundle basename="translations/responses_page" var="msg" />
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+
 <jsp:include page="../general/head.jsp" />
 
 </head>
@@ -29,7 +31,8 @@
 							<div class='card-content white-text'>
 								<c:choose>
 									<c:when test="${response.state eq State.ACTIVE}">
-										<span class='card-title'>New response</span>
+										<span class='card-title'><fmt:message bundle="${msg}"
+												key="newResponse" /></span>
 									</c:when>
 								</c:choose>
 								<p id="responseTextNo${response.id }">${response.text }</p>
@@ -38,10 +41,11 @@
 								<p>${response.date }</p>
 							</div>
 							<div class='card-action'>
-								<a href='#' onclick='deleteResponse(${response.id})'>Delete</a>
-								<a href data-target='modal26'
+								<a href='#' onclick='deleteResponse(${response.id})'><fmt:message
+										bundle="${msg}" key="delete" /></a> <a href data-target='modal26'
 									class='btn modal-trigger waves-effect'
-									onclick="markResponse(${response.id}, '${response.name }', '${response.email }')">Answer</a>
+									onclick="markResponse(${response.id}, '${response.name }', '${response.email }')"><fmt:message
+										bundle="${msg}" key="answer" /></a>
 							</div>
 						</div>
 					</div>
@@ -89,13 +93,8 @@ function deleteResponse(responseId){
 
 function markResponse(responseId, name, email){
 	
-	console.log('making response');
-	console.log(responseId);
-	console.log(name);
-	console.log(email);
-	console.log("responseTextNo" + responseId);
+
 	var text = document.getElementById("responseTextNo" + responseId).innerHTML;
-	console.log(text);
 	
 	
 	document.getElementById("responseIdField").value = responseId;
@@ -121,11 +120,11 @@ function sendResponseToReport( ){
 					}, 
 				success : 
 					function(data){
-						Materialize.toast("Done", 4000);
+						Materialize.toast("<fmt:message bundle="${msg}" key="done" />", 4000);
 					},
 				error: 
 					function (error) {
-						Materialize.toast("Can't send email", 4000);
+						Materialize.toast("<fmt:message bundle="${msg}" key="cant_send_email" />", 4000);
 	              	}
 			} 
 		);
