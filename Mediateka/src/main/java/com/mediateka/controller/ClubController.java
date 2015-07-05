@@ -510,8 +510,10 @@ public class ClubController {
 					Collections.sort(blockedUsers, new UsersByName());
 				}
 			request.setAttribute("clubId", request.getParameter("clubId"));
-			request.setAttribute("activeUsers", activeUsers);
-			request.setAttribute("blockedUsers", blockedUsers);
+			if (activeUsers.size() > 0)
+				request.setAttribute("activeUsers", activeUsers);
+			if (blockedUsers.size() > 0)
+				request.setAttribute("blockedUsers", blockedUsers);
 			request.getRequestDispatcher("pages/club/club_users.jsp").forward(
 					request, response);
 			request.removeAttribute("activeUsers");

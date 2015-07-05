@@ -740,8 +740,10 @@ public class EventController {
 					Collections.sort(blockedUsers, new UsersByName());
 				}
 			request.setAttribute("eventId", request.getParameter("eventId"));
-			request.setAttribute("activeUsers", activeUsers);
-			request.setAttribute("blockedUsers", blockedUsers);
+			if (activeUsers.size() > 0)
+				request.setAttribute("activeUsers", activeUsers);
+			if (blockedUsers.size() > 0)
+				request.setAttribute("blockedUsers", blockedUsers);
 			request.getRequestDispatcher("pages/event/event_users.jsp")
 					.forward(request, response);
 			request.removeAttribute("activeUsers");
