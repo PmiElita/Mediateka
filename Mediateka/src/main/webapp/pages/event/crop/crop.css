@@ -3,7 +3,7 @@
 
     position: relative;
     height: 25em;
-    width: 65em;
+    width: 68em;
     border:1px solid #aaa;
     background: #fff;
     overflow: hidden;
@@ -15,8 +15,8 @@
 {
     position: absolute;
     top: 60%;
-    left: 14%;
-    width: 60em;
+    left: 12.5%;
+    width: 63em;
     height: 10em;
     margin-top: -100px;
     margin-left: -100px;

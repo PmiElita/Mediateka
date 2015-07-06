@@ -26,7 +26,7 @@ style>.image-cover-t {
 
 	<script src="pages/event/crop/crop.js"></script>
 
-	<div id="modal16" class="modal" style="width: 75%; background: black">
+	<div id="modal16" class="modal" style="width: 78%; background: black">
 		<div class="modal-content">
 			<div style="height: 33em">
 				<div class="crop-container"

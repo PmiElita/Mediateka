@@ -79,7 +79,9 @@
 					'margin-left: 0em;');			
 			var img = cropper.getDataURL();
 			storedImages.push(cropper.getBlob());
-			document.getElementById("avatar").src = img;			
+			document.getElementById("avatar").src = img;
+			document.getElementById("avatar").setAttribute('style',
+			'border-radius: 50%;');	
 			$('#modal21').closeModal();
 			
 			e.preventDefault();

@@ -8,7 +8,7 @@
 
 <fmt:setLocale value="${cookie.lang.value}" />
 <fmt:setBundle basename="translations/responses_page" var="msg" />
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -22,38 +22,79 @@
 
 	<div class="main">
 		<jsp:include page="../general/nav.jsp" />
+		<jsp:include page="../admin/admin_side_nav.jsp" />
 
-		<div id="responses_div">
-			<c:forEach var="response" items="${responses }">
-				<div class='row' id='responseNo${response.id }'>
-					<div class='col s12 m6'>
-						<div class='card blue-grey darken-1'>
-							<div class='card-content white-text'>
-								<c:choose>
-									<c:when test="${response.state eq State.ACTIVE}">
-										<span class='card-title'><fmt:message bundle="${msg}"
-												key="newResponse" /></span>
-									</c:when>
-								</c:choose>
-								<p id="responseTextNo${response.id }">${response.text }</p>
-								<p>${response.name }</p>
-								<p>${response.email }</p>
-								<p>${response.date }</p>
-							</div>
-							<div class='card-action'>
-								<a href='#' onclick='deleteResponse(${response.id})'><fmt:message
-										bundle="${msg}" key="delete" /></a> <a href="" 
-									class="btn modal-trigger waves-effect" data-target="modal26"
-									onclick="markResponse(${response.id}, '${response.name }', '${response.email }')"><fmt:message
-										bundle="${msg}" key="answer" /></a>
+
+		<div class="parallax-container my-parallax" style="max-height: 100%;">
+			<div class="parallax" style="max-height: 100%">
+				<img src="images/parallax1.jpg">
+			</div>
+
+			<div class="container section white" style="width: 60%">
+
+				<h3 class="center">Responses</h3>
+
+				<div id="responses_div">
+					<c:forEach var="response" items="${responses }">
+						<div class='row' id='responseNo${response.id }'>
+							<div class='col s12'>
+								<div class='card blue-grey darken-1'>
+									<div class='card-content white-text'>
+										<c:choose>
+											<c:when test="${response.state eq State.ACTIVE}">
+												<span class='card-title'><fmt:message bundle="${msg}"
+														key="newResponse" /></span>
+											</c:when>
+										</c:choose>
+										<div class="row">
+											<div class="col s12">
+												<p style="color: black">Text:</p>
+
+											</div>
+										</div>
+										<div class="row">
+											<div class="col s12">
+												<p id="responseTextNo${response.id }">${response.text }</p>
+											</div>
+										</div>
+										<div class="row"></div>
+										<div class="row">
+											<div class="col s6">
+												<p>
+													<span style="color: black">Description:</span>
+													${response.name }
+												</p>
+											</div>
+											<div class="col s6">
+												<p>
+													<span style="color: black">Email:</span> ${response.email }
+												</p>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col s12">
+												<p>
+													<span style="color: black">Date:</span> ${response.date }
+												</p>
+											</div>
+										</div>
+									</div>
+									<div class='card-action' style="padding-top: 0">
+										<a href='#' onclick='deleteResponse(${response.id})'><fmt:message
+												bundle="${msg}" key="delete" /></a> <a href=""
+											class="btn modal-trigger waves-effect" data-target="modal26"
+											onclick="markResponse(${response.id}, '${response.name }', '${response.email }')"><fmt:message
+												bundle="${msg}" key="answer" /></a>
+									</div>
+								</div>
 							</div>
 						</div>
-					</div>
+					</c:forEach>
 				</div>
-			</c:forEach>
-
+			</div>
 		</div>
 	</div>
+	<jsp:include page="../general/footer.jsp" />
 
 
 
@@ -132,9 +173,5 @@ function sendResponseToReport( ){
 }
 
 </script>
-
-
-
-
 </body>
 </html>

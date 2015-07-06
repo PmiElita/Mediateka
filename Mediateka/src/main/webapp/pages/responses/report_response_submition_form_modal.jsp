@@ -7,14 +7,11 @@
 
 
 <div id="modal26" class="modal">
-	<div class="modal-content">
-		<div class="container white">
-
-
-
-
-
-
+	<div class="modal-content white">
+		<div class="container">
+			
+			<h3 class="center">Answer</h3>
+			
 			<div class="row">
 				<form class="col s12" onsubmit="return false;">
 
@@ -58,11 +55,6 @@
 					</button>
 				</form>
 			</div>
-
-
-
-
-
 		</div>
 	</div>
 </div>
