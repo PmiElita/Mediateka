@@ -63,7 +63,10 @@ public class EventController {
 			if (request.getParameter("eventId") == null
 					|| request.getParameter("eventId") == ""
 					|| getEventById(Integer.parseInt(request.getParameter(
-							"eventId").toString())) == null) {
+							"eventId").toString())) == null
+					|| getEventById(
+							Integer.parseInt(request.getParameter("eventId")
+									.toString())).getState() == State.DELETED) {
 				request.setAttribute("message", "No such event!");
 				request.getRequestDispatcher("error404.jsp").forward(request,
 						response);
@@ -562,9 +565,8 @@ public class EventController {
 		if (idString == null) {
 			return;
 		}
-		
-		Integer eventId = Integer.parseInt(idString);
 
+		Integer eventId = Integer.parseInt(idString);
 
 		Event event = EventService.getEventById(eventId);
 
@@ -603,7 +605,6 @@ public class EventController {
 		}
 
 		Integer eventId = Integer.parseInt(idString);
-
 
 		Event event = EventService.getEventById(eventId);
 
@@ -921,6 +922,9 @@ public class EventController {
 
 		event.setState(state);
 		updateEvent(event);
-		response.sendRedirect("event?eventId=" + eventId);
+		if (state != State.DELETED)
+			response.sendRedirect("event?eventId=" + eventId);
+		else if (state == State.DELETED)
+			response.sendRedirect("events");
 	}
 }

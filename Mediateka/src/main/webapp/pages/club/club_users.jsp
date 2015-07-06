@@ -62,7 +62,7 @@
 											<div class="collapsible-body">
 												<p>
 
-													<button class="btn waves-effect green titler" type="submit"
+													<button class="btn waves-effect orange titler" type="submit"
 														name="action" style="margin-bottom: 3.5em"
 														onclick="block(${current.id},${clubId});">
 														<fmt:message bundle="${msg}" key="block" />
@@ -108,7 +108,7 @@
 												<div class="collapsible-body">
 													<p>
 
-														<button class="btn waves-effect red titler" type="submit"
+														<button class="btn waves-effect green titler" type="submit"
 															name="action" style="margin-bottom: 3.5em"
 															onclick="activate(${current.id},${clubId});">
 															<fmt:message bundle="${msg}" key="activate" />

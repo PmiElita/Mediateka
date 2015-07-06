@@ -232,7 +232,10 @@ public class ClubController {
 			if (request.getParameter("clubId") == null
 					|| request.getParameter("clubId") == ""
 					|| getClubById(Integer.parseInt(request.getParameter(
-							"clubId").toString())) == null) {
+							"clubId").toString())) == null
+					|| getClubById(
+							Integer.parseInt(request.getParameter("clubId")
+									.toString())).getState() == State.DELETED) {
 				request.setAttribute("message", "No such club!");
 				request.getRequestDispatcher("error404.jsp").forward(request,
 						response);
@@ -383,9 +386,8 @@ public class ClubController {
 			response.getWriter().write("");
 			return;
 		}
-		
-		Integer clubId = Integer.parseInt(request.getParameter("id"));
 
+		Integer clubId = Integer.parseInt(request.getParameter("id"));
 
 		Club club = ClubService.getClubById(clubId);
 
@@ -739,6 +741,9 @@ public class ClubController {
 
 		club.setState(state);
 		updateClub(club);
-		response.sendRedirect("club?clubId=" + clubId);
+		if (state != State.DELETED)
+			response.sendRedirect("club?clubId=" + clubId);
+		else if (state == State.DELETED)
+			response.sendRedirect("clubs");
 	}
 }
