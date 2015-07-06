@@ -71,8 +71,8 @@ public class StatisticsDAO {
 
 			while (rs.next()) {
 
-				String groupName = rs.getString("group");
-				String name = rs.getString("column_name");
+				String groupName = rs.getString("category");
+				String name = rs.getString("subcategory");
 
 				Map<String, Integer> group = returnValue.get(groupName);
 				if (group == null) {
@@ -80,7 +80,7 @@ public class StatisticsDAO {
 					group = returnValue.get(groupName);
 
 				}
-				group.put(name, rs.getInt("counter"));
+				group.put(name, rs.getInt("amount"));
 			}
 
 			return returnValue;
