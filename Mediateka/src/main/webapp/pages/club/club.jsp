@@ -47,7 +47,7 @@
 				</ul>
 			</div>
 		</div>
-	            <input type="text" hidden value="${userId}" id ="userId"/>
+	            <input type="text" hidden="true" value="${userId}" id ="userId"/>
            
 	</div>
 	<c:if test="${!(isSigned==null)}">

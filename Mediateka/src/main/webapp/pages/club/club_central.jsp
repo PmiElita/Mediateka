@@ -76,8 +76,7 @@
 					</c:if>
 					<c:if test="${badGuy!=null}">
 						<h5>
-							<text align="center">
-							<c:out
+							<text align="center"> <c:out
 								value="Your membership in this event is blocked or deleted!" /></text>
 						</h5>
 					</c:if>
@@ -111,66 +110,70 @@
 					</div>
 				</a>
 			</div>
-		</div>
 
-		<div class="col s3">
-			<a href="club_videos">
-				<div class="col s12 m8 offset-m2 l6 offset-l3 my-card my-small-card">
-					<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
-						<div style="margin-top: -2em">
-							<h3 class="center" style="color: black">Video</h3>
-							<div class="row valign-wrapper">
-								<div class="col s9">
-									<img src="images/club/video.jpg" alt=""
-										class="circle responsive-img">
+
+			<div class="col s3">
+				<a href="club_videos">
+					<div
+						class="col s12 m8 offset-m2 l6 offset-l3 my-card my-small-card">
+						<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
+							<div style="margin-top: -2em">
+								<h3 class="center" style="color: black">Video</h3>
+								<div class="row valign-wrapper">
+									<div class="col s9">
+										<img src="images/club/video.jpg" alt=""
+											class="circle responsive-img">
+									</div>
+									<div class="club-badge" style="margin-left: 0.4em">3</div>
 								</div>
-								<div class="club-badge" style="margin-left: 0.4em">3</div>
 							</div>
 						</div>
 					</div>
-				</div>
-			</a>
-		</div>
+				</a>
+			</div>
 
-		<div class="col s3">
-			<a href="clubAlbums?clubId=${clubId}">
-
+			<div class="col s3">
+				<a href="clubAlbums?clubId=${clubId}">
 
 
-				<div class="col s12 m8 offset-m2 l6 offset-l3 my-card my-small-card">
-					<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
-						<div style="margin-top: -2em">
-							<h3 class="center" style="color: black">Photo</h3>
-							<div class="row valign-wrapper">
-								<div class="col s9">
-									<img src="images/club/photo.png" alt=""
-										class="circle responsive-img">
+
+					<div
+						class="col s12 m8 offset-m2 l6 offset-l3 my-card my-small-card">
+						<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
+							<div style="margin-top: -2em">
+								<h3 class="center" style="color: black">Photo</h3>
+								<div class="row valign-wrapper">
+									<div class="col s9">
+										<img src="images/club/photo.png" alt=""
+											class="circle responsive-img">
+									</div>
+									<div class="club-badge" style="margin-left: 0.4em">1</div>
 								</div>
-								<div class="club-badge" style="margin-left: 0.4em">1</div>
 							</div>
 						</div>
 					</div>
-				</div>
-			</a>
-		</div>
+				</a>
+			</div>
 
-		<div class="col s3">
-			<a href="events?clubId=${club.id}">
-				<div class="col s12 m8 offset-m2 l6 offset-l3 my-card my-small-card">
-					<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
-						<div style="margin-top: -2em">
-							<h3 class="center" style="color: black">Events</h3>
-							<div class="row valign-wrapper">
-								<div class="col s8">
-									<img style="margin-top: 0em" src="images/club/events.png"
-										alt="" class="circle responsive-img">
+			<div class="col s3">
+				<a href="events?clubId=${club.id}">
+					<div
+						class="col s12 m8 offset-m2 l6 offset-l3 my-card my-small-card">
+						<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
+							<div style="margin-top: -2em">
+								<h3 class="center" style="color: black">Events</h3>
+								<div class="row valign-wrapper">
+									<div class="col s8">
+										<img style="margin-top: 0em" src="images/club/events.png"
+											alt="" class="circle responsive-img">
+									</div>
+									<div class="my-badge" style="margin-left: 0.75em">2</div>
 								</div>
-								<div class="my-badge" style="margin-left: 0.75em">2</div>
 							</div>
 						</div>
 					</div>
-				</div>
-			</a>
+				</a>
+			</div>
 		</div>
 	</div>
 	<div class="container">
