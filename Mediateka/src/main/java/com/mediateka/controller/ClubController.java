@@ -346,10 +346,6 @@ public class ClubController {
 
 		Integer clubId = Integer.parseInt(idString);
 
-		if (clubId == null) {
-			return;
-		}
-
 		Club club = ClubService.getClubById(clubId);
 
 		club.setState(State.ACTIVE);
@@ -382,12 +378,13 @@ public class ClubController {
 			return;
 		}
 
-		Integer clubId = Integer.parseInt(request.getParameter("id"));
-
-		if (clubId == null) {
+		if (request.getParameter("id") == null) {
 			response.getWriter().write("");
 			return;
 		}
+		
+		Integer clubId = Integer.parseInt(request.getParameter("id"));
+
 
 		Club club = ClubService.getClubById(clubId);
 
@@ -409,10 +406,6 @@ public class ClubController {
 		}
 
 		Integer clubId = Integer.parseInt(clubIdString);
-		if (clubId == null) {
-			response.sendRedirect("index");
-			return;
-		}
 
 		// check if you are the creator of the club
 

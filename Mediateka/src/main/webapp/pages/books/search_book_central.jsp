@@ -33,7 +33,7 @@
 				onclick="doScroll()">
 				<fmt:message bundle="${msg}" key="show_more_results" />
 			</button>
-			<p id="index" hidden>${index }</p>
+			<p id="index" hidden="true">${index }</p>
 		</div>
 	</c:if>
 </div>

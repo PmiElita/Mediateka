@@ -1,6 +1,24 @@
 package com.mediateka.dao;
 
-import static com.mediateka.dao.statement.EventStatements.*;
+import static com.mediateka.dao.statement.EventStatements.CALL_GET_EVENTS_BY_DATE;
+import static com.mediateka.dao.statement.EventStatements.CALL_INSERT_EVENT;
+import static com.mediateka.dao.statement.EventStatements.CALL_INSERT_EVENT_ORDER;
+import static com.mediateka.dao.statement.EventStatements.INSERT_EVENT;
+import static com.mediateka.dao.statement.EventStatements.INSERT_EVENT_ORDER;
+import static com.mediateka.dao.statement.EventStatements.SELECT_COUNT_OF_REQUESTED_EVENTS;
+import static com.mediateka.dao.statement.EventStatements.SELECT_EVENT_ALL;
+import static com.mediateka.dao.statement.EventStatements.SELECT_EVENT_BY_CLUB_ID;
+import static com.mediateka.dao.statement.EventStatements.SELECT_EVENT_BY_CLUB_ID_ORDER;
+import static com.mediateka.dao.statement.EventStatements.SELECT_EVENT_BY_ID;
+import static com.mediateka.dao.statement.EventStatements.SELECT_EVENT_BY_ID_ORDER;
+import static com.mediateka.dao.statement.EventStatements.SELECT_EVENT_BY_NAME_REGEX;
+import static com.mediateka.dao.statement.EventStatements.SELECT_EVENT_BY_NAME_REGEX_ORDER;
+import static com.mediateka.dao.statement.EventStatements.SELECT_EVENT_BY_STATE;
+import static com.mediateka.dao.statement.EventStatements.SELECT_EVENT_BY_STATE_ORDER;
+import static com.mediateka.dao.statement.EventStatements.SELECT_EVENT_BY_TYPE;
+import static com.mediateka.dao.statement.EventStatements.SELECT_EVENT_BY_TYPE_ORDER;
+import static com.mediateka.dao.statement.EventStatements.UPDATE_EVENT_BY_ID;
+import static com.mediateka.dao.statement.EventStatements.UPDATE_EVENT_BY_ID_ORDER;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -10,7 +28,6 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.List;
 
-import com.mediateka.dao.statement.ClubStatements;
 import com.mediateka.model.Event;
 import com.mediateka.model.enums.EventType;
 import com.mediateka.model.enums.State;

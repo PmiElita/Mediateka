@@ -565,12 +565,9 @@ public class EventController {
 		if (idString == null) {
 			return;
 		}
-
+		
 		Integer eventId = Integer.parseInt(idString);
 
-		if (eventId == null) {
-			return;
-		}
 
 		Event event = EventService.getEventById(eventId);
 
@@ -610,9 +607,6 @@ public class EventController {
 
 		Integer eventId = Integer.parseInt(idString);
 
-		if (eventId == null) {
-			return;
-		}
 
 		Event event = EventService.getEventById(eventId);
 

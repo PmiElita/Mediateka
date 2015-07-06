@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -9,7 +9,7 @@
 </head>
 <body>
 <form id="form" action="googleLogin" method="post">
-<input id="token" name="token" type="text" value="" hidden>
+<input id="token" hidden="true" name="token" type="text" value="">
 </form>
 <script type="text/javascript">
 

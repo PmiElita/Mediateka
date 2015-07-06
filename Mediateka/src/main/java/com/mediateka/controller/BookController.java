@@ -32,17 +32,11 @@ import com.mediateka.annotation.Controller;
 import com.mediateka.annotation.Request;
 import com.mediateka.exception.WrongInputException;
 import com.mediateka.model.Book;
-import com.mediateka.model.BookMeaning;
 import com.mediateka.model.Media;
-import com.mediateka.model.User;
 import com.mediateka.model.enums.MediaType;
-import com.mediateka.model.enums.Role;
 import com.mediateka.model.enums.State;
-import com.mediateka.service.BookMeaningService;
 import com.mediateka.service.BookService;
-import com.mediateka.service.UserService;
 import com.mediateka.util.FileLoader;
-import com.mediateka.util.RegExps;
 
 @Controller
 public class BookController {

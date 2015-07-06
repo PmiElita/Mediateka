@@ -1,7 +1,6 @@
 package com.mediateka.model;
 
 import java.sql.Timestamp;
-import java.util.Comparator;
 
 import com.mediateka.annotation.Column;
 import com.mediateka.model.enums.ContentGroupType;

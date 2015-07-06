@@ -18,7 +18,7 @@
 			<div class="row">
 				<form class="col s12" onsubmit="return false;">
 
-					<input hidden id="responseIdField" type="text" class="validate">
+					<input hidden="true" id="responseIdField" type="text" class="validate">
 
 					<div class="row">
 						<div class="input-field col s6">

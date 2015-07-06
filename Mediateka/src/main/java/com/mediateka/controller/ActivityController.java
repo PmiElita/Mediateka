@@ -24,6 +24,7 @@ import com.mediateka.service.FormRecordService;
 
 @Controller
 public class ActivityController {
+	@SuppressWarnings("unused")
 	private static Logger logger = Logger.getLogger(ActivityController.class);
 	private static final long WEEK_MILIS = 604800000;
 	private static final long MONTH_MILIS = 2592000000l;

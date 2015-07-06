@@ -51,7 +51,7 @@
 						<input type="radio" name="other" value="INTERNET">Internet<br>
 					</fieldset>
 					Comment:
-					<textarea type="textarea" name="comment" placeholder="comment..."
+					<textarea name="comment"
 						pattern=".{0,100}"></textarea>
 					<br> <input type="submit" value="Create form record">
 				</fieldset>

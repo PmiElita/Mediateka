@@ -1,10 +1,8 @@
 package com.mediateka.controller;
 
 import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.text.DateFormat;
 import java.util.List;
 
 import javax.mail.MessagingException;
@@ -13,24 +11,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 
 import com.mediateka.annotation.Controller;
 import com.mediateka.annotation.Request;
-import com.mediateka.dao.statement.ReportStatements;
-import com.mediateka.model.ContentGroup;
 import com.mediateka.model.Report;
-import com.mediateka.model.enums.ContentGroupType;
 import com.mediateka.model.enums.Role;
 import com.mediateka.model.enums.State;
-import com.mediateka.service.ContentGroupService;
 import com.mediateka.service.ReportService;
 import com.mediateka.util.EmailSender;
 
 @Controller
 public class ResponseController {
 
+	@SuppressWarnings("unused")
 	private static Logger logger = Logger.getLogger(LogInController.class);
 
 	@Request(url = "responseForm", method = "get")

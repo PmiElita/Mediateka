@@ -42,8 +42,8 @@
 							</div>
 							<div class='card-action'>
 								<a href='#' onclick='deleteResponse(${response.id})'><fmt:message
-										bundle="${msg}" key="delete" /></a> <a href data-target='modal26'
-									class='btn modal-trigger waves-effect'
+										bundle="${msg}" key="delete" /></a> <a href="" 
+									class="btn modal-trigger waves-effect" data-target="modal26"
 									onclick="markResponse(${response.id}, '${response.name }', '${response.email }')"><fmt:message
 										bundle="${msg}" key="answer" /></a>
 							</div>

@@ -26,7 +26,7 @@
 		<p id="wrongDate"></p>
 		Event date from:<input type="date" name="dateFrom" id="dateFrom" required onchange="dateChange()"><br>
 		Event date till:<input type="date" name="dateTill" id="dateTill" required onchange="dateChange()"><br>
-		Event description:<textarea type="textarea" name="description" placeholder="event description..." pattern=".{1,255}"></textarea><br>
+		Event description:<textarea name="description" pattern=".{1,255}"></textarea><br>
 		<input type="submit" id="submit" value="Create event">
 	</form>	
 </body>

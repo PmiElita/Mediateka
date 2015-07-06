@@ -20,7 +20,7 @@
 			<li><a href="" data-target="modal18"
 				class="modal-trigger waves-effect"><fmt:message bundle="${msg}"
 						key="user.create_event" /></a></li>
-			<li><a href="" data-target="modal20" class="modal-trigger class="waves-effect"><fmt:message bundle="${msg}"
+			<li><a href="" data-target="modal20" class="modal-trigger waves-effect"><fmt:message bundle="${msg}"
 						key="user.create_club" /></a></li>
 			<li><a href="activity"><fmt:message bundle="${msg}"
 						key="user.activity" /></a></li>
