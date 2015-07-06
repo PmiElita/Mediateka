@@ -1,6 +1,7 @@
 package com.mediateka.model;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 
 import com.mediateka.annotation.Column;
 import com.mediateka.model.enums.State;
@@ -72,6 +73,10 @@ public class ChatMessage {
 		this.creationDate = creationDate;
 	}
 
+	public String getFormatedDate(){
+		return new SimpleDateFormat("dd.MM.yyyy HH:mm").format(creationDate.getTime());
+	}
+	
 	@Override
 	public String toString() {
 		return "ChatMessage [id=" + id + ", text=" + text + ", userId="

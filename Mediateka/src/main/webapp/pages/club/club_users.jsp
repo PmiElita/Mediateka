@@ -70,7 +70,7 @@
 
 													<button class="btn waves-effect red titler" type="submit"
 														name="action" style="margin-bottom: 3.5em"
-														onclick="deleted(${current.id}${clubId});">
+														onclick="deleted(${current.id},${clubId});">
 														<fmt:message bundle="${msg}" key="delete" />
 														<i class="mdi-content-send right"></i>
 													</button>

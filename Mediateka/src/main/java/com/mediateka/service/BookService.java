@@ -59,13 +59,21 @@ public class BookService {
 		return BookDAO.getBookAll();
 	}
 
-	public static List<Book> getBooksByRegexp(String regexp)
-			throws SQLException, ReflectiveOperationException {
-		return BookDAO.getBooksByRegexp(regexp);
+	public static List<Book> getBooksByParameters(String regexp,
+			Integer typeId, Integer meaningId, Integer languageId,
+			String order, Integer offset, Integer limit) throws SQLException,
+			ReflectiveOperationException {
+		return BookDAO.getBooksByParameters(regexp, typeId, meaningId,
+				languageId, order, offset, limit);
 	}
 
 	public static List<Book> getBooksByNameAndAuthor(String name, String author)
 			throws SQLException, ReflectiveOperationException {
 		return BookDAO.getBooksByNameAndAuthor(name, author);
+	}
+
+	public static List<Book> getBooksByRegexp(String regexp) {
+	
+		return BookDAO.getBooksByRegexp(regexp);
 	}
 }

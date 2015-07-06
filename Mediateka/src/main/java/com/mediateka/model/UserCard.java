@@ -6,15 +6,26 @@ public class UserCard {
 
 	@Column(name = "first_name")
 	private String firstName;
-	
+
 	@Column(name = "last_name")
 	private String lastName;
-	
+
 	@Column(name = "middle_name")
 	private String middleName;
-	
+
 	@Column(name = "email")
 	private String email;
+
+	@Column(name = "path")
+	private String path;
+
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path.replace('\\', '/');
+	}
 
 	public String getFirstName() {
 		return firstName;

@@ -12,6 +12,7 @@ import javax.servlet.jsp.tagext.SimpleTagSupport;
 
 import com.mediateka.model.User;
 import com.mediateka.model.enums.State;
+import com.mediateka.service.MediaService;
 
 public class ShowUsers extends SimpleTagSupport {
 
@@ -45,6 +46,11 @@ public class ShowUsers extends SimpleTagSupport {
 			try {
 				for (User u : users) {
 					out.write("<div class=\"user\">");
+					out.write("<div class=\"row user-item\" >");
+					out.write("<div class=\"col s3\">");
+					out.write("<img height=\"120px\" src=\""+MediaService.getMediaById(u.getAvaId()).getPath().replace('\\', '/')+"\">");
+					out.write("</div>");
+					out.write("<div class=\"col s6 \">");					
 					out.write("<div class=\"row\">");
 					out.write("<label class=\"user_label\">" + u.getLastName()
 							+ " " + u.getFirstName() + " " + u.getMiddleName()
@@ -63,6 +69,7 @@ public class ShowUsers extends SimpleTagSupport {
 							+ messages.getString("formularNumber")
 							+ "</label><span>" + u.getFormId() + "</span>");
 					out.write("</div>");
+					out.write("</div>");
 					out.write("<div class=\"row\">");
 					out.write("<button class=\"waves-effect waves-teal btn-flat\" value=\""
 							+ u.getId() + "\" onclick=\"blockUser(this)\">");
@@ -76,6 +83,8 @@ public class ShowUsers extends SimpleTagSupport {
 							+ messages.getString("button.edit") + "</a>");
 					out.write("<a class=\"waves-effect waves-teal btn-flat\" href=\"CreateFormRecord\">"
 							+ messages.getString("button.addRecord") + "</a>");
+					out.write("</div>");
+				
 					out.write("</div>");
 					out.write("</div>");
 				}

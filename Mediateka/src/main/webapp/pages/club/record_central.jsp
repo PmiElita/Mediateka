@@ -137,6 +137,57 @@ audio {
 					id="recordDislike${record.id}"><c:out
 						value="${record.dislike }"></c:out></span>
 			</div>
+			
+		</div>
+		<div class="row">
+			 <ul class="collapsible comments" data-collapsible="accordion">
+		 <li>
+		 <div class="collapsible-header"><i
+	id="collapse-icon" class="mdi-communication-comment"></i>Comments</div>
+		 <div class="collapsible-body  " >
+
+			<div class=" comment-area" id="commentArea">
+				<c:forEach var="chatMessage" items="${chatMessages }">
+					<div class="col s12 comment-item">
+						<div class="card-panel grey lighten-5 z-depth-1"
+							style="padding: 5px;">
+							<div class="row valign-wrapper"
+								style="line-height: 20px; margin-bottom: 5px;">
+								<div class="col s1">
+
+									<img src="${chatMessage.userCard.path }" alt=""
+										class="circle responsive-img">
+									<!-- notice the "circle" class -->
+
+								</div>
+
+
+								<div class="col s10">
+									<span class="comment_user_name"> <c:out
+											value="${chatMessage.userCard.firstName }"></c:out> : </span> 
+											<span class="comment-text"> <c:out
+											value="${chatMessage.chatMessage.text}"></c:out>
+									</span>
+								</div>
+							</div>
+
+						</div>
+					</div>
+
+				</c:forEach>
+			</div>
+			<div class="panel input-area ">
+				<textarea id="commentInput" class="materialize-textarea"
+					placeholder="<fmt:message bundle="${msg}" key="message" />"></textarea>
+
+				<button class=" col s4 offset-s9 btn" onclick="addComment();"><fmt:message bundle="${msg}" key="send" /></button>
+
+			</div>
+
+		
+		 </div>
+		 </li>
+		 </ul>
 		</div>
 	</c:forEach>
 </div>

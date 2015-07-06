@@ -9,7 +9,7 @@ public class ChatMessageByCreationDate implements Comparator<ChatMessage> {
 	@Override
 	public int compare(ChatMessage chatMessage1, ChatMessage chatMessage2) {
 		
-		return chatMessage2.getCreationDate().compareTo(chatMessage1.getCreationDate());
+		return chatMessage1.getCreationDate().compareTo(chatMessage2.getCreationDate());
 	}
 	
 

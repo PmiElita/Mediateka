@@ -66,7 +66,7 @@
 		</c:if>
 
 		<div class="col s6">
-			<a class="btn" href="#" style="width: 15em">Look participants</a>
+			<a class="btn" href="EventUsers?eventId=${event.id }" style="width: 15em">Look participants</a>
 		</div>
 	</c:if>
 	<c:if test="${badGuy!=null}">

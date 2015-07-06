@@ -10,6 +10,15 @@ html, body  {
 .mapchat{
 	height: 500px;
 	}
+	
+	.indexmapchat{
+
+	border:1px solid;
+	border-color:black;
+	border-radius:5px;
+	
+	height:500px;
+	}
 #map-canvas{
 	height: 100%;
 }

@@ -7,6 +7,7 @@ function checkSubmit(){
 	    complete : function(data) {
 	    	if (data.responseJSON.message.toString()!=="success"){
 			document.getElementById("message").innerHTML= data.responseJSON.message.toString();
+			document.getElementById("password_log").value = "";
 	    	} else {
 	    		document.getElementById("loginForm").submit();
 	    	}

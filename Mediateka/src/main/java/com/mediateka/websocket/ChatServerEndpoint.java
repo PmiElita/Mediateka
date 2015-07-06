@@ -2,6 +2,7 @@ package com.mediateka.websocket;
 
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -112,6 +113,7 @@ static{
             	 Map<String,String> map = new HashMap<String, String>();
             	 map.put("userId", userId.toString());
             	 map.put("message", messageText);
+            	 map.put("date",new SimpleDateFormat("dd.MM.yyyy HH:mm").format(new Date()));
             	 saveMessageToDB(messageText, userId, clubId);
 			String responseJson = new Gson().toJson(map);
 			for (Session session : clubChats.get(clubId)){

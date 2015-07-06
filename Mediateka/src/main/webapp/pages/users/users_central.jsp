@@ -36,7 +36,7 @@
 </style>
 	
 	
-<div class="main-activity container white section">
+<div class="main-activity container white section" onscroll="alert(10);">
 	<h4>
 		<fmt:message bundle="${msg}" key="searchUser" />
 	</h4>
@@ -57,7 +57,8 @@
 
 	<div id="users" class="white">
 		<p>${message }</p>
-		<u:showUsers users="${users}" locale="${cookie.lang.value}"/>
+		<jsp:include page="user_list.jsp"/>
+		
 
 	</div>
 </div>

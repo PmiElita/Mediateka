@@ -69,26 +69,32 @@ public class UserService {
 		return UserDAO.getUserAll();
 	}
 
-	public static List<User> getUsersByOneRegexp(String regexp)
-			throws SQLException, ReflectiveOperationException {
-		return UserDAO.getUsersByOneRegexp(regexp);
+	public static List<User> getUsersByOneRegexp(String regexp, int offset,
+			int limit) throws SQLException, ReflectiveOperationException {
+		return UserDAO.getUsersByOneRegexp(regexp, offset, limit);
 	}
 
 	public static List<User> getUsersByTwoRegexp(String firstRegexp,
-			String secondRegexp) throws SQLException,
+			String secondRegexp, int offset, int limit) throws SQLException,
 			ReflectiveOperationException {
-		return UserDAO.getUsersByTwoRegexp(firstRegexp, secondRegexp);
+		return UserDAO.getUsersByTwoRegexp(firstRegexp, secondRegexp, offset,
+				limit);
 	}
 
 	public static List<User> getUsersByThreeRegexp(String firstRegexp,
-			String secondRegexp, String thirdRegexp) throws SQLException,
-			ReflectiveOperationException {
+			String secondRegexp, String thirdRegexp, int offset, int limit)
+			throws SQLException, ReflectiveOperationException {
 		return UserDAO.getUsersByThreeRegexp(firstRegexp, secondRegexp,
-				thirdRegexp);
+				thirdRegexp, offset, limit);
 	}
 
 	public static User getUserBySocialId(String socialId) throws SQLException,
 			ReflectiveOperationException {
 		return UserDAO.getUserBySocialId(socialId);
+	}
+
+	public static List<User> getUsersLimited(int offset, int limit)
+			throws SQLException, ReflectiveOperationException {
+		return UserDAO.getUsersByStateLimited(offset, limit);
 	}
 }

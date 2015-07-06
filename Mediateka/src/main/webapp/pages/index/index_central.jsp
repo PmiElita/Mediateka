@@ -58,8 +58,10 @@
 						</div>
 					</div>
 				</c:forEach>
-
+</div>
+<div class="row">
 				<div class="section">
+				<jsp:include page="map.jsp" />
 					<div class="main-info">
 						<p>Перша львівська медіатека – це проект громадського центру
 							нового типу, діє при Центральній бібліотеці для дорослих ім. Лесі
@@ -80,6 +82,7 @@
 							конференц-зал.</p>
 					</div>
 				</div>
+				
 			</div>
 		</div>
 	</div>

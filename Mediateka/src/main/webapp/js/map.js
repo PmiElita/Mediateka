@@ -5,7 +5,7 @@ var markerImage;
 
 var markers = [];
 
-var minZoom = 1 ;
+var minZoom = 2 ;
 var events = [];
 
 $(document).ready(function initialize() {
@@ -19,6 +19,11 @@ $(document).ready(function initialize() {
 		scaledSize : new google.maps.Size(30, 30)
 	};
 
+	changedMarkerImage ={
+			url : 'images/red_marker.png',
+			scaledSize : new google.maps.Size(30, 30)
+	};
+	
 	var mapOptions = {
 		center : defaultLatLng,
 		zoom : 11, // The initial zoom level when your map loads (0-20)
@@ -230,7 +235,7 @@ function addEvent() {
 								position : userLocation,
 								map : map,
 								draggable : true,
-								icon : markerImage,
+								icon : changedMarkerImage,
 								title : "User "
 							});
 							google.maps.event.addListener(marker, 'click',

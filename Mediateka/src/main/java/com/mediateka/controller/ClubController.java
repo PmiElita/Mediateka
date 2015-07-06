@@ -13,9 +13,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -37,12 +35,12 @@ import com.mediateka.model.ClubEventMember;
 import com.mediateka.model.ContentGroup;
 import com.mediateka.model.Media;
 import com.mediateka.model.User;
-import com.mediateka.model.UserCard;
 import com.mediateka.model.enums.ClubEventMemberType;
 import com.mediateka.model.enums.ContentGroupType;
 import com.mediateka.model.enums.MediaType;
 import com.mediateka.model.enums.Role;
 import com.mediateka.model.enums.State;
+import com.mediateka.pair.ChatMessageUserCardPair;
 import com.mediateka.service.ChatMessageService;
 import com.mediateka.service.ClubEventMemberService;
 import com.mediateka.service.ClubService;
@@ -206,17 +204,16 @@ public class ClubController {
 
 				CreateContent.setContent(request, response, records);
 
-				List<ChatMessage> chatMessages = ChatMessageService
-						.getChatMessageByClubId(clubId, 0,
-								ChatController.MESSAGE_COUNT * 2);
-				Map<ChatMessage, UserCard> map = new LinkedHashMap<ChatMessage, UserCard>();
-				if (chatMessages != null) {
-					Collections.sort(chatMessages,
-							new ChatMessageByCreationDate());
-					for (int i = 0; i < chatMessages.size(); i++) {
-						map.put(chatMessages.get(i), UserCardService
-								.getUserCardByUserId(chatMessages.get(i)
-										.getUserId()));
+				 List<ChatMessage> chatMessages = ChatMessageService
+					      .getChatMessageByClubId(clubId,0,ChatController.MESSAGE_COUNT*2);
+					    List<ChatMessageUserCardPair> chatMessageUserCardList = new ArrayList<ChatMessageUserCardPair>();
+					    
+					    if (chatMessages != null) {
+					     Collections.sort(chatMessages,
+					       new ChatMessageByCreationDate());
+					     for (int i = 0;  i < chatMessages.size(); i++) {
+					    	 chatMessageUserCardList.add(new ChatMessageUserCardPair(chatMessages.get(i),  UserCardService.getUserCardByUserId(
+					          chatMessages.get(i).getUserId())));
 					}
 				}
 
@@ -227,6 +224,7 @@ public class ClubController {
 							(Integer) request.getSession().getAttribute(
 									"userId"), clubId);
 
+	   
 				if (member != null)
 					if (member.getState() == State.ACTIVE)
 						isSigned = "true";
@@ -236,7 +234,7 @@ public class ClubController {
 
 				request.setAttribute("imagePath", getMediaById(club.getAvaId())
 						.getPath().replace("\\", "/"));
-				request.setAttribute("chatMessages", map);
+				request.setAttribute("chatMessages", chatMessageUserCardList);
 				request.setAttribute("isSigned", isSigned);
 				request.setAttribute("clubId", club.getId());
 				request.setAttribute("club", club);

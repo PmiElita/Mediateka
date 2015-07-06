@@ -26,22 +26,22 @@
 								style="line-height: 20px; margin-bottom: 5px;">
 								<div class="col s2">
 
-									<img src="media/book ava/images/dWxrVkt5dbECsuBp.jpg" alt=""
+									<img src="${chatMessage.userCard.path}" alt=""
 										class="circle responsive-img">
-									<!-- notice the "circle" class -->
-
+									
 								</div>
 
 
 								<div class="col s10">
 									<span class="user_name"> <c:out
-											value="${chatMessage.value.firstName }"></c:out> :
+											value="${chatMessage.userCard.firstName }"></c:out> :
 									</span> <span class="black-text"> <c:out
-											value="${chatMessage.key.text}"></c:out>
+											value="${chatMessage.chatMessage.text}"></c:out>
 									</span>
 								</div>
+								
 							</div>
-
+<div class="row message-date">${chatMessage.chatMessage.formatedDate}</div> 
 						</div>
 					</div>
 
@@ -125,8 +125,8 @@
 						},
 						complete : function(data) {
 							if (data.responseJSON.userName != null) {
-								showMessage(data.responseJSON.userName,
-										jsonObj.message);
+								showMessage(data.responseJSON.avaPath,data.responseJSON.userName,
+										jsonObj.message, jsonObj.date);
 							}
 						}
 
@@ -135,7 +135,7 @@
 		};
 	}
 
-	function showMessage(userName, messageText) {
+	function showMessage(avaPath,userName, messageText, date) {
 
 		var chat = document.getElementById("messageArea");
 		if (userName != null) {
@@ -146,15 +146,17 @@
 					+ "<div class=\"card-panel grey lighten-5 z-depth-1\" style=\"padding:5px;\">"
 					+ "<div class=\"row valign-wrapper\" style=\"line-height: 20px; margin-bottom: 5px;\">"
 					+ "<div class=\"col s2\">"
-					+ "<img src=\"media/book ava/images/dWxrVkt5dbECsuBp.jpg\" class=\"circle responsive-img\">"
+					+ "<img src=\""+avaPath+"\" class=\"circle responsive-img\">"
 					+ "</div>" + "<div class=\"col s10\">"
 					+ "<span class=\"user_name\">" + escapeHtml(userName)
 					+ " : </span>" + "<span class=\"black-text\">"
 					+ escapeHtml(messageText)
-					+ "</span></div> </div>  </div> </div>";
+					+ "</span></div>  </div> <div class=\"row message-date\">"+date+"</div> </div> </div>";
 		}
 		var objDiv = document.getElementById("messageArea");
+		if (objDiv.scrollTop != objDiv.scrollHeight){
 		objDiv.scrollTop = objDiv.scrollHeight;
+		}
 	}
 
 	function disconnect() {
@@ -217,7 +219,7 @@
 														+ "<div class=\"card-panel grey lighten-5 z-depth-1\" style=\"padding:5px;\">"
 														+ "<div class=\"row valign-wrapper\" style=\"line-height: 20px; margin-bottom: 5px;\">"
 														+ "<div class=\"col s2\">"
-														+ "<img src=\"media/book ava/images/dWxrVkt5dbECsuBp.jpg\" class=\"circle responsive-img\">"
+														+ "<img src=\""+data.responseJSON[i].avaPath+"\" class=\"circle responsive-img\">"
 														+ "</div>"
 														+ "<div class=\"col s10\">"
 														+ "<span class=\"user_name\">"
@@ -225,7 +227,7 @@
 														+ " : </span>"
 														+ "<span class=\"black-text\">"
 														+ escapeHtml(data.responseJSON[i].message)
-														+ "</span></div> </div>  </div> </div>"
+														+ "</span></div> </div>  <div class=\"row message-date\">"+data.responseJSON[i].date+"</div> </div> </div>"
 														+ chat.innerHTML;
 											}
 											index = index + 1;
@@ -244,6 +246,7 @@
 			this.value = this.value + "\r";
 		} else if (e.keyCode == 13) {
 			sendMessage();
+			e.preventDefault();
 		}
 	});
 </script>
