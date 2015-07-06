@@ -50,9 +50,11 @@
 	            <input type="text" hidden="true" value="${userId}" id ="userId"/>
            
 	</div>
-	<c:if test="${!(isSigned==null)}">
-	<jsp:include page="chat_side_nav.jsp"/>
+	
+	<c:if test="${isSigned eq 'true'}">
+		<jsp:include page="chat_side_nav.jsp"/>
 	</c:if>
+	
 	<jsp:include page="../general/footer.jsp" />
 
 </body>

@@ -139,7 +139,7 @@
 							</p>
 							<input id="birthDate" value="${birthDate }" name="birthDate"
 								type="text" required data-field="date" required="required">
-							<div id="dtBox"></div>
+							<div id="dtBox2"></div>
 						</div>
 
 						<div class="input-field col s4">

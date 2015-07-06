@@ -33,6 +33,8 @@
 		});
 
 		$("#dtBox").DateTimePicker();
+		$("#dtBox1").DateTimePicker();
+		$("#dtBox2").DateTimePicker();
 
 		$('select').material_select();
 

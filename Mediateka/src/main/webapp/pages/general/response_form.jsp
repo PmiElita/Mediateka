@@ -4,52 +4,63 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <fmt:setLocale value="${cookie.lang.value}" />
-<fmt:setBundle basename="translations/response_form" var="msg" scope="session" />
+<fmt:setBundle basename="translations/response_form" var="msg"
+	scope="session" />
 
 <div id="modal25" class="modal">
 	<div class="modal-content">
 
-		<div class="TTWForm-container">
+		<div class="container">
+			<div class="TTWForm-container">
 
 
-			<div id="form-title" class="form-title field">
-				<h2>
-					<fmt:message bundle="${msg}" key="formTitle" />
-				</h2>
+				<div id="form-title" class="form-title field">
+					<h2>
+						<fmt:message bundle="${msg}" key="formTitle" />
+					</h2>
+				</div>
+
+
+				<form onsubmit="return sendResponse()">
+
+
+					<div class="row">
+						<div class="col s6">
+							<div id="field1-container" class="field f_100">
+								<label for="field1"> <fmt:message bundle="${msg}"
+										key="nameField" />
+								</label> <input type="text" name="nameField" id="field1"
+									required="required">
+							</div>
+						</div>
+
+						<div class="col s6">
+							<div id="field3-container" class="field f_100">
+								<label for="field3"> <fmt:message bundle="${msg}"
+										key="emailField" />
+								</label> <input type="text" name="emailField" id="field3"
+									required="required">
+							</div>
+						</div>
+					</div>
+
+					<div id="field4-container" class="field f_100">
+							<label for="field4"> <fmt:message bundle="${msg}"
+									key="bodyField" />
+							</label>
+
+
+							<textarea name="responseField" id="field4" required="required"
+								class="materialize-textarea"></textarea>
+						</div>
+
+
+					<div id="form-submit" class="field f_100 clearfix submit">
+						<input type="submit" class="btn"
+							value="<fmt:message bundle="${msg}" key="button" />">
+					</div>
+				</form>
 			</div>
-
-
-			<form onsubmit="return sendResponse()">
-
-
-				<div id="field1-container" class="field f_100">
-					<label for="field1"> <fmt:message bundle="${msg}"
-							key="nameField" />
-					</label> <input type="text" name="nameField" id="field1" required="required">
-				</div>
-
-
-				<div id="field3-container" class="field f_100">
-					<label for="field3"> <fmt:message bundle="${msg}"
-							key="emailField" />
-					</label> <input type="text" name="emailField" id="field3" required="required">
-				</div>
-
-
-				<div id="field4-container" class="field f_100">
-					<label for="field4"> <fmt:message bundle="${msg}"
-							key="bodyField" />
-					</label>
-					<textarea rows="5" cols="20" name="responseField" id="field4"
-						required="required"></textarea>
-				</div>
-
-
-				<div id="form-submit" class="field f_100 clearfix submit">
-					<input type="submit"
-						value="<fmt:message bundle="${msg}" key="button" />">
-				</div>
-			</form>
 		</div>
 	</div>
 </div>
