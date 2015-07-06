@@ -157,29 +157,30 @@ public class ClubController {
 
 	}
 
-//	@Request(url = "loadAlbum", method = "get")
-//	public static void createAlbumGet(HttpServletRequest request,
-//			HttpServletResponse response) throws ServletException, IOException {
-//		HttpSession session = request.getSession();
-//		session.setAttribute("clubId", 1);
-//		session.setAttribute("userId", 2);
-//		request.getRequestDispatcher("pages/club/loadAlbum.jsp").forward(
-//				request, response);
-//
-//	}
+	// @Request(url = "loadAlbum", method = "get")
+	// public static void createAlbumGet(HttpServletRequest request,
+	// HttpServletResponse response) throws ServletException, IOException {
+	// HttpSession session = request.getSession();
+	// session.setAttribute("clubId", 1);
+	// session.setAttribute("userId", 2);
+	// request.getRequestDispatcher("pages/club/loadAlbum.jsp").forward(
+	// request, response);
+	//
+	// }
 
 	@Request(url = "loadAlbum", method = "post")
 	public static void createAlbumPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			ReflectiveOperationException, SQLException {
 
-		CreateContent.createContent(request, response, ContentGroupType.IMAGE);		
+		CreateContent.createContent(request, response, ContentGroupType.IMAGE);
 
 	}
-	
+
 	@Request(url = "viewNewAlbum", method = "get")
 	public static void viewNewAlbumGet(HttpServletRequest request,
-			HttpServletResponse response) throws ReflectiveOperationException, SQLException, ServletException, IOException{
+			HttpServletResponse response) throws ReflectiveOperationException,
+			SQLException, ServletException, IOException {
 		System.out.println("viewNewAlbum");
 		System.out.println("createContent");
 		int clubId = 0;
@@ -191,13 +192,13 @@ public class ClubController {
 		albums.add(contentGroup);
 		if (contentGroup.getClubId() != null) {
 			clubId = contentGroup.getClubId();
-		} 
+		}
 		CreateContent.setContent(request, response, albums);
 
 		if (clubId != 0) {
 			request.setAttribute("clubId", clubId);
 		}
-		
+
 		request.setAttribute("index", request.getParameter("index"));
 
 		request.getRequestDispatcher("pages/club/albumList.jsp").forward(
@@ -208,7 +209,7 @@ public class ClubController {
 	public static void ClubAlbumsGet(HttpServletRequest request,
 			HttpServletResponse response) throws SQLException,
 			ReflectiveOperationException, ServletException, IOException {
-		Integer clubId = Integer.parseInt(request.getParameter("clubId"));		
+		Integer clubId = Integer.parseInt(request.getParameter("clubId"));
 		List<ContentGroup> contentGroups = ContentGroupService
 				.getContentGroupByClubIdAndStateAndType(clubId, State.ACTIVE,
 						ContentGroupType.IMAGE);
@@ -218,14 +219,11 @@ public class ClubController {
 		request.setAttribute("clubName", club.getName());
 		System.out.println("clubId " + clubId);
 		request.setAttribute("clubId", clubId);
-		request.getRequestDispatcher("pages/club/albums.jsp").forward(request, response);
+		request.getRequestDispatcher("pages/club/albums.jsp").forward(request,
+				response);
 		request.removeAttribute("clubName");
 		request.removeAttribute("clubId");
 	}
-		
-	
-	
-	
 
 	@Request(url = "club", method = "get")
 	public static void clubGet(HttpServletRequest request,
@@ -251,16 +249,20 @@ public class ClubController {
 
 				CreateContent.setContent(request, response, records);
 
-				 List<ChatMessage> chatMessages = ChatMessageService
-					      .getChatMessageByClubId(clubId,0,ChatController.MESSAGE_COUNT*2);
-					    List<ChatMessageUserCardPair> chatMessageUserCardList = new ArrayList<ChatMessageUserCardPair>();
-					    
-					    if (chatMessages != null) {
-					     Collections.sort(chatMessages,
-					       new ChatMessageByCreationDate());
-					     for (int i = 0;  i < chatMessages.size(); i++) {
-					    	 chatMessageUserCardList.add(new ChatMessageUserCardPair(chatMessages.get(i),  UserCardService.getUserCardByUserId(
-					          chatMessages.get(i).getUserId())));
+				List<ChatMessage> chatMessages = ChatMessageService
+						.getChatMessageByClubId(clubId, 0,
+								ChatController.MESSAGE_COUNT * 2);
+				List<ChatMessageUserCardPair> chatMessageUserCardList = new ArrayList<ChatMessageUserCardPair>();
+
+				if (chatMessages != null) {
+					Collections.sort(chatMessages,
+							new ChatMessageByCreationDate());
+					for (int i = 0; i < chatMessages.size(); i++) {
+						chatMessageUserCardList
+								.add(new ChatMessageUserCardPair(chatMessages
+										.get(i), UserCardService
+										.getUserCardByUserId(chatMessages
+												.get(i).getUserId())));
 					}
 				}
 
@@ -271,7 +273,6 @@ public class ClubController {
 							(Integer) request.getSession().getAttribute(
 									"userId"), clubId);
 
-	   
 				if (member != null)
 					if (member.getState() == State.ACTIVE)
 						isSigned = "true";
@@ -554,6 +555,8 @@ public class ClubController {
 					blockedUsers.add(getUserById(member.getUserId()));
 					Collections.sort(blockedUsers, new UsersByName());
 				}
+			request.setAttribute("userId",
+					request.getSession().getAttribute("userId"));
 			request.setAttribute("clubId", request.getParameter("clubId"));
 			if (activeUsers.size() > 0)
 				request.setAttribute("activeUsers", activeUsers);
@@ -565,6 +568,7 @@ public class ClubController {
 			request.removeAttribute("blockedUsers");
 			request.removeAttribute("creator");
 			request.removeAttribute("clubId");
+			request.removeAttribute("userId");
 		} catch (NumberFormatException e) {
 			logger.error("no club with such id : "
 					+ request.getParameter("clubId") + " " + e.getMessage());

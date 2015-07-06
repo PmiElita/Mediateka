@@ -58,6 +58,7 @@
 											<a class="button" href="user?userId=${current.id}"> <c:out
 													value="${current.firstName} ${current.lastName} ${current.middleName}" /></a>
 										</div> <c:if test="${!(creator==null)}">
+										<c:if test="${!(userId==current.id)}">
 											<div class="collapsible-body">
 												<p>
 
@@ -76,7 +77,7 @@
 													</button>
 
 												</p>
-											</div>
+											</div></c:if>
 										</c:if>
 									</li>
 								</c:forEach>

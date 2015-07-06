@@ -739,6 +739,8 @@ public class EventController {
 					blockedUsers.add(getUserById(member.getUserId()));
 					Collections.sort(blockedUsers, new UsersByName());
 				}
+			request.setAttribute("userId",
+					request.getSession().getAttribute("userId"));
 			request.setAttribute("eventId", request.getParameter("eventId"));
 			if (activeUsers.size() > 0)
 				request.setAttribute("activeUsers", activeUsers);
@@ -750,6 +752,7 @@ public class EventController {
 			request.removeAttribute("blockedUsers");
 			request.removeAttribute("creator");
 			request.removeAttribute("clubId");
+			request.removeAttribute("userId");
 		} catch (NumberFormatException e) {
 			logger.error("no event with such id : "
 					+ request.getParameter("event") + " " + e.getMessage());
