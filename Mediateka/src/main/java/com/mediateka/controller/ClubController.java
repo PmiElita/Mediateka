@@ -1,10 +1,7 @@
 package com.mediateka.controller;
 
-import static com.mediateka.service.ClubEventMemberService.getClubEventMemberByClubId;
-import static com.mediateka.service.ClubEventMemberService.getClubEventMemberByUserIdAndClubId;
-import static com.mediateka.service.ClubEventMemberService.saveClubEventMember;
-import static com.mediateka.service.ClubEventMemberService.updateClubEventMember;
-import static com.mediateka.service.ClubService.getClubById;
+import static com.mediateka.service.ClubEventMemberService.*;
+import static com.mediateka.service.ClubService.*;
 import static com.mediateka.service.MediaService.getMediaById;
 import static com.mediateka.service.UserService.getUserById;
 
@@ -268,10 +265,13 @@ public class ClubController {
 
 				String isSigned = "false";
 				ClubEventMember member = null;
-				if (request.getSession().getAttribute("userId") != null)
+				if (request.getSession().getAttribute("userId") != null) {
 					member = getClubEventMemberByUserIdAndClubId(
 							(Integer) request.getSession().getAttribute(
 									"userId"), clubId);
+					if (member.getType() == ClubEventMemberType.CREATOR)
+						request.setAttribute("creator", "true");
+				}
 
 				if (member != null)
 					if (member.getState() == State.ACTIVE)
@@ -301,6 +301,7 @@ public class ClubController {
 				request.removeAttribute("imagePath");
 				request.removeAttribute("badGuy");
 				request.removeAttribute("isSigned");
+				request.removeAttribute("creator");
 			}
 		} catch (NumberFormatException e) {
 			request.setAttribute("message", "No such club!");
@@ -670,5 +671,74 @@ public class ClubController {
 			request.getRequestDispatcher("error404.jsp").forward(request,
 					response);
 		}
+	}
+
+	@Request(url = "creatorBlockClub", method = "get")
+	public static void creatorBlockClub(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException,
+			ReflectiveOperationException, SQLException {
+		creatorChangeClubState(request, response, State.BLOCKED);
+	}
+
+	@Request(url = "creatorUnblockClub", method = "get")
+	public static void creatorUnblockClub(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException,
+			ReflectiveOperationException, SQLException {
+		creatorChangeClubState(request, response, State.ACTIVE);
+	}
+
+	@Request(url = "creatorDeleteClub", method = "get")
+	public static void creatorDeleteClub(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException,
+			ReflectiveOperationException, SQLException {
+		creatorChangeClubState(request, response, State.DELETED);
+	}
+
+	private static void creatorChangeClubState(HttpServletRequest request,
+			HttpServletResponse response, State state) throws ServletException,
+			IOException, ReflectiveOperationException, SQLException {
+		if (request.getSession().getAttribute("userId") == null) {
+			logger.warn("No user id in session");
+			response.sendRedirect("index");
+			return;
+		}
+		if (request.getParameter("clubId") == null) {
+			logger.warn("No club id in session");
+			response.sendRedirect("index");
+			return;
+		}
+		Integer userId = 0;
+		Integer clubId = 0;
+		Club club = null;
+		try {
+			userId = (Integer) request.getSession().getAttribute("userId");
+			clubId = Integer.parseInt(request.getParameter("clubId"));
+			club = getClubById(clubId);
+			if (club == null)
+				throw new NumberFormatException();
+		} catch (NumberFormatException e) {
+			logger.warn("Wrong format of userId or clubId, or no club with such id");
+			response.sendRedirect("index");
+			return;
+		}
+
+		User user = getUserById(userId);
+		ClubEventMember member = getClubEventMemberByUserIdAndClubId(userId,
+				clubId);
+
+		if (user.getRole() != Role.USER) {
+			logger.warn("User role is not user!");
+			response.sendRedirect("index");
+			return;
+		}
+		if (member == null || member.getType() != ClubEventMemberType.CREATOR) {
+			logger.warn("Members dont have such permissions");
+			response.sendRedirect("index");
+			return;
+		}
+
+		club.setState(state);
+		updateClub(club);
+		response.sendRedirect("club?clubId=" + clubId);
 	}
 }

@@ -39,7 +39,6 @@ import com.mediateka.model.enums.EventType;
 import com.mediateka.model.enums.MediaType;
 import com.mediateka.model.enums.Role;
 import com.mediateka.model.enums.State;
-import com.mediateka.service.ClubEventMemberService;
 import com.mediateka.service.ContentGroupService;
 import com.mediateka.service.EventService;
 import com.mediateka.service.MediaService;
@@ -78,28 +77,25 @@ public class EventController {
 
 				CreateContent.setContent(request, response, records);
 
-				User user = UserService.getUserById((Integer) request
-						.getSession().getAttribute("userId"));
-
 				request.setAttribute("eventId", event.getId());
 				request.setAttribute("event", event);
 
 				String isSigned = "false";
-
-				List<ClubEventMember> eventMembers = ClubEventMemberService
-						.getClubEventMemberByEventId(event.getId());
-				if (eventMembers != null) {
-					if (eventMembers != null && user != null)
-						for (ClubEventMember member : eventMembers) {
-							if (member.getState() == State.ACTIVE
-									&& (member.getUserId() == user.getId()))
-								isSigned = "true";
-							else if ((member.getState() == State.BLOCKED || member
-									.getState() == State.DELETED)
-									&& (member.getUserId() == user.getId()))
-								request.setAttribute("badGuy", true);
-						}
+				ClubEventMember member = null;
+				if (request.getSession().getAttribute("userId") != null) {
+					member = getClubEventMemberByUserIdAndEventId(
+							(Integer) request.getSession().getAttribute(
+									"userId"), eventId);
+					if (member.getType() == ClubEventMemberType.CREATOR)
+						request.setAttribute("creator", "true");
 				}
+				if (member != null)
+					if (member.getState() == State.ACTIVE)
+						isSigned = "true";
+					else if (member.getState() == State.BLOCKED
+							|| member.getState() == State.DELETED)
+						request.setAttribute("badGuy", true);
+
 				request.setAttribute(
 						"imagePath",
 						getMediaById(event.getAvaId()).getPath().replace("\\",
@@ -120,6 +116,7 @@ public class EventController {
 				request.removeAttribute("isSigned");
 				request.removeAttribute("imagePath");
 				request.removeAttribute("badGuy");
+				request.removeAttribute("creator");
 			}
 		} catch (NumberFormatException e) {
 			request.setAttribute("message", "No such club!");
@@ -421,7 +418,7 @@ public class EventController {
 			event.setDescription(map.get("description"));
 			event.setState(State.valueOf(map.get("state").toUpperCase()));
 			event.setAvaId(media.getId());
-			updateEventById(event);
+			updateEvent(event);
 			request.getSession().setAttribute("message", "Event updated. ");
 			response.sendRedirect("UpdateEvent");
 		} catch (WrongInputException e) {
@@ -529,7 +526,7 @@ public class EventController {
 			event.setDescription(map.get("description"));
 			event.setState(State.valueOf(map.get("state").toUpperCase()));
 			event.setAvaId(media.getId());
-			updateEventById(event);
+			updateEvent(event);
 			request.getSession().setAttribute("message", "Event updated. ");
 			response.sendRedirect("UpdateEvent");
 		} catch (WrongInputException e) {
@@ -572,7 +569,7 @@ public class EventController {
 		Event event = EventService.getEventById(eventId);
 
 		event.setState(State.ACTIVE);
-		EventService.updateEventById(event);
+		EventService.updateEvent(event);
 
 		return;
 	}
@@ -611,7 +608,7 @@ public class EventController {
 		Event event = EventService.getEventById(eventId);
 
 		event.setState(State.DELETED);
-		EventService.updateEventById(event);
+		EventService.updateEvent(event);
 
 		return;
 	}
@@ -689,7 +686,7 @@ public class EventController {
 		media.setName(fileLoader.getDefaultFileName());
 		media = MediaService.callSaveMedia(media);
 		event.setAvaId(media.getId());
-		EventService.updateEventById(event);
+		EventService.updateEvent(event);
 	}
 
 	@Request(url = "EventUsers", method = "get")
@@ -855,5 +852,75 @@ public class EventController {
 			request.getRequestDispatcher("error404.jsp").forward(request,
 					response);
 		}
+	}
+
+	@Request(url = "creatorBlockEvent", method = "get")
+	public static void creatorBlockEvent(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException,
+			ReflectiveOperationException, SQLException {
+		creatorChangeEventState(request, response, State.BLOCKED);
+	}
+
+	@Request(url = "creatorUnblockEvent", method = "get")
+	public static void creatorUnblockEvent(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException,
+			ReflectiveOperationException, SQLException {
+		creatorChangeEventState(request, response, State.ACTIVE);
+	}
+
+	@Request(url = "creatorDeleteEvent", method = "get")
+	public static void creatorDeleteEvent(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException,
+			ReflectiveOperationException, SQLException {
+		creatorChangeEventState(request, response, State.DELETED);
+	}
+
+	private static void creatorChangeEventState(HttpServletRequest request,
+			HttpServletResponse response, State state) throws ServletException,
+			IOException, ReflectiveOperationException, SQLException {
+
+		if (request.getSession().getAttribute("userId") == null) {
+			logger.warn("No user id in session");
+			response.sendRedirect("index");
+			return;
+		}
+		if (request.getParameter("eventId") == null) {
+			logger.warn("No club id in session");
+			response.sendRedirect("index");
+			return;
+		}
+		Integer userId = 0;
+		Integer eventId = 0;
+		Event event = null;
+		try {
+			userId = (Integer) request.getSession().getAttribute("userId");
+			eventId = Integer.parseInt(request.getParameter("clubId"));
+			event = getEventById(eventId);
+			if (event == null)
+				throw new NumberFormatException();
+		} catch (NumberFormatException e) {
+			logger.warn("Wrong format of userId or eventId, or no event with such id");
+			response.sendRedirect("index");
+			return;
+		}
+
+		User user = getUserById(userId);
+		ClubEventMember member = getClubEventMemberByUserIdAndEventId(userId,
+				eventId);
+
+		if (user.getRole() != Role.USER) {
+			logger.warn("User role is not user!");
+			response.sendRedirect("index");
+			return;
+		}
+		if (member == null || member.getType() != ClubEventMemberType.CREATOR) {
+			logger.warn("Members dont have such permissions");
+			response.sendRedirect("index");
+			return;
+		}
+
+		event.setState(state);
+		updateEvent(event);
+		response.sendRedirect("event?eventId=" + eventId);
 	}
 }

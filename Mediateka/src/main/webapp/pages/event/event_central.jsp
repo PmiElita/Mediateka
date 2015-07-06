@@ -4,6 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@page import="com.mediateka.model.enums.Role"%>
+<%@page import="com.mediateka.model.enums.State"%>
 
 <fmt:setLocale value="${locale}" />
 <fmt:setBundle basename="menu" />
@@ -60,9 +61,31 @@
 		</c:if>
 
 		<c:if test="${isSigned eq 'true'}">
+		<c:choose>
+		<c:when test="${!(creator==null)}">
+		<c:if test="${clubState eq State.ACTIVE}">
+			<div class="col s6">
+				<a class="btn" href="creatorBlockEvent?eventId=${event.id}" style="width: 15em">Block event</a>
+			</div>
+			<div class="col s6">
+				<a class="btn" href="creatorUnblockEvent?eventId=${event.id}" style="width: 15em">Delete event</a>
+			</div>
+		</c:if>
+		<c:if test="${clubState eq State.BLOCKED}">
+			<div class="col s6">
+				<a class="btn" href="creatorUnblockEvent?eventId=${event.id}" style="width: 15em">Unblock event</a>
+			</div>
+			<div class="col s6">
+				<a class="btn" href="creatorDeleteEvent?eventId=${event.id}" style="width: 15em">Delete event</a>
+			</div>
+		</c:if>
+		</c:when>
+		<c:otherwise>
 			<div class="col s6">
 				<a class="btn" href="memberSignEvent?eventId=${event.id}" style="width: 15em">Sign out</a>
 			</div>
+		</c:otherwise>
+		</c:choose>
 		</c:if>
 
 		<div class="col s6">
