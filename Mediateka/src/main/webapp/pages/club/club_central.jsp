@@ -59,24 +59,25 @@
 				<div class="col s6">
 					<a class="btn" href="memberSignClub?clubId=${club.id}" style="width: 15em">Sign to club</a>
 				</div>
-			</c:if>
+				
 
+			</c:if>
 			<c:if test="${isSigned == true}">
 			<c:choose>
 			<c:when test="${!(creator==null)}">
-			<c:if test="${clubState eq State.ACTIVE}">
-				<div class="col s6">
+			<c:if test="${club.state eq State.ACTIVE}">
+				<div class="col s3">
 					<a class="btn" href="creatorBlockClub?clubId=${club.id}" style="width: 15em">Block club</a>
 				</div>
-				<div class="col s6">
+				<div class="col s3">
 					<a class="btn" href="creatorDeleteClub?clubId=${club.id}" style="width: 15em">Delete club</a>
 				</div>
 			</c:if>
-			<c:if test="${clubState eq State.BLOCKED}">
-				<div class="col s6">
+			<c:if test="${club.state eq State.BLOCKED}">
+				<div class="col s3">
 					<a class="btn" href="creatorUnblockClub?clubId=${club.id}" style="width: 15em">Unblock club</a>
 				</div>
-				<div class="col s6">
+				<div class="col s3">
 					<a class="btn" href="creatorDeleteClub?clubId=${club.id}" style="width: 15em">Delete club</a>
 				</div>
 			</c:if>

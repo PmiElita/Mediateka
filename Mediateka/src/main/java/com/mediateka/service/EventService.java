@@ -41,7 +41,7 @@ public class EventService {
 		return EventDAO.getEventByState(state);
 	}
 
-	public static void updateEventById(Event event) throws SQLException,
+	public static void updateEvent(Event event) throws SQLException,
 			ReflectiveOperationException {
 		EventDAO.updateEventById(event);
 	}
