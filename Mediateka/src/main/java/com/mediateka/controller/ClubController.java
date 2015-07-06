@@ -222,6 +222,7 @@ public class ClubController {
 		request.removeAttribute("clubName");
 		request.removeAttribute("clubId");
 	}
+		
 	
 	
 	
