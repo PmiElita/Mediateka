@@ -7,12 +7,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.util.ArrayList;
+
 import java.util.List;
 
-import org.apache.poi.ss.util.DateFormatConverter;
 
 import com.mediateka.dao.statement.ContentGroupStatements;
 import com.mediateka.model.ContentGroup;
@@ -213,6 +210,21 @@ public class ContentGroupDAO {
 		}
 	}
 	
+	public static List<ContentGroup> getContentGroupByClubIdAndStateAndType(Integer clubId, State state, ContentGroupType contentGroupType) throws SQLException, ReflectiveOperationException{
+		try (Connection connection = ConnectionManager.getConnection()) {
+			PreparedStatement statement = connection
+					.prepareStatement(SELECT_CONTENT_GROUP_BY_CLUB_ID_AND_STATE_AND_TYPE);
+			ContentGroup contentGroup = new ContentGroup();
+			contentGroup.setClubId(clubId);
+			contentGroup.setState(state);
+			contentGroup.setType(contentGroupType);
+			Transformer.valueIntoPreparedStatement(statement, contentGroup,
+					SELECT_CONTENT_GROUP_BY_CLUB_ID_AND_STATE_AND_TYPE_ORDER);
+			ResultSet resultSet = statement.executeQuery();
+			return Transformer.transformResultSetIntoList(resultSet,
+					ContentGroup.class);
+		}
+	}
 	
 
 	// update

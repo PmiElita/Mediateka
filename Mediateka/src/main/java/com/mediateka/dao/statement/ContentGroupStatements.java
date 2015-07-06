@@ -52,6 +52,12 @@ public class ContentGroupStatements {
 			+ " AND state = ?";
 	public static final String[] SELECT_CONTENT_GROUP_BY_CLUB_ID_AND_STATE_ORDER = { "club_id" , "state" };
 	
+	public static final String SELECT_CONTENT_GROUP_BY_CLUB_ID_AND_STATE_AND_TYPE = 
+			"SELECT * FROM content_group WHERE club_id=? AND state = ? AND type = ?";
+	
+	public static final String[] SELECT_CONTENT_GROUP_BY_CLUB_ID_AND_STATE_AND_TYPE_ORDER = 
+		{ "club_id" , "state", "type" };
+	
 	
 	// update
 	public static final String UPDATE_CONTENT_GROUP = "UPDATE content_group SET "

@@ -104,7 +104,7 @@ audio {
 					data-click="false" data-swipe="false">
 					<c:forEach var="video" items="${videoMap.get(record.id) }">
 
-						<video poster="${posterMap.get(video.id).path }"
+						<video width="700" poster="${posterMap.get(video.id).path }"
 							onclick="this.play();" controls="controls"
 							title='<c:out value="${video.name}"></c:out>'>
 							<source src='<c:out value="${video.path}"></c:out>'

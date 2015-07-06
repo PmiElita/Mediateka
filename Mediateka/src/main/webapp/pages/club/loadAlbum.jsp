@@ -1,64 +1,111 @@
-<!DOCTYPE html>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<html>
-<head>
-<jsp:include page="../general/head.jsp" />
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
-<script src="js/viewImage.js"></script>
-<title>Load album</title>
+<script src="js/record.js"></script>
+
+<div id="addAlbum" class="modal">
+	<div class="modal-content">
 
 
-</head>
-<body>
-	<div class="main">
+		<form id="loadAlbumForm" action="loadAlbum" method="post"
+			enctype="multipart/form-data">
+			
+			<c:if test="${clubId ne null}">
+				<input type="hidden" name="clubId" id="clubId" value='${clubId }'>
+			</c:if>
+			<c:if test="${eventId ne null}">
+				<input type="hidden" name="eventId" id="eventId" value="${eventId }">
+			</c:if>
 
-		<div class="parallax-container my-parallax">
-			<div class="parallax">
-				<img src="images/parallax1.jpg">
+			<div class="row">
+				Album name:<input type="text" id="name" name="name" required
+					pattern=".{1,45}" form="createClub"><br>
 			</div>
 
-			<jsp:include page="../user/user_side_nav.jsp" />
-
-			<div class="container section white">
-				<form id="myForm" action="loadAlbum" method="post"
-					enctype="multipart/form-data">
-
+			Files:
+			<div class="row">
+				<div class="col s3">
 					<div class="row">
-						Album name:<input type="text" id="name" name="name" required
-							pattern=".{1,45}" form="createClub"><br>
-					</div>
-
-					Files:
-					<div class="row">
-						<div class="col s3">
-							<div class="row">
-								<div class="file-field input-field">
-									<input class="file-path validate" type="hidden" />
-									<div class="btn">
-										<span>Choose files</span> <input type="file" id="image"
-											name="image" onchange="readURL(this);" accept="image/*" />
-									</div>
-									<label id="number" hidden="true">1</label>
-								</div>
+						<div class="file-field input-field">
+							<input class="file-path validate" type="hidden" />
+							<div class="btn">
+								<span>Choose files</span> <input type="file" id="image" multiple
+									name="image" onchange="readURL(this);" accept="image/*" />
 							</div>
-							<div class="row" style="margin-top: 5em">
-								<button class="btn" type="submit">Upload</button>
-							</div>
-						</div>
-						<div class="col s9">
-							<div id="selectedFiles"></div>
+							<label id="number" hidden="true">1</label>
 						</div>
 					</div>
-				</form>
+					<div class="row" style="margin-top: 5em">
+						<button class="btn" type="submit">Upload</button>
+					</div>
+				</div>
+				<div class="col s9">
+					<div id="selectedImages"></div>
+				</div>
 			</div>
-		</div>
+		</form>
 	</div>
-	<jsp:include page="../general/footer.jsp" />
-</body>
+</div>
+<script>
+$(document).ready(function() {
+	$("#loadAlbumForm").on("submit", handleAlbum);
 
-</html>
+});
+
+function handleAlbum(e) {
+	alert(1);
+
+	e.preventDefault();
+	var data = new FormData();
+	data.append('index', $('#index').text());
+	data.append('name', document.getElementById('name').value);
+	if (document.getElementById('clubId') != null) {
+		data.append('clubId', document.getElementById('clubId').value);
+	}
+	if (document.getElementById('eventId') != null) {
+		data.appent('eventId', document.getElementById('clubId').innerHTML
+				.toString());
+	}	
+	for (var i = 0, len = storedImages.length; i < len; i++) {
+		data.append('image', storedImages[i]);
+	}	
+	if ((document.getElementById('name').value == "")
+			&& (storedImages.length == 0)) {
+		return;
+	}
+
+	var xhr = new XMLHttpRequest();
+	xhr.open('POST', 'loadAlbum', true);
+
+	xhr.onload = function(e, data) {
+		if (this.status == 200) {
+			document.getElementById("loadAlbumForm").reset();
+			document.getElementById("name").value = "";
+			document.getElementById("selectedImages").innerHTML = "";
+			storedImages = [];
+			alert(JSON.stringify(e.currentTarget));
+			var responseJSON = JSON.parse(e.currentTarget.responseText);
+
+			loadIndex = document.getElementById('index').textContent;
+			var loadEl = document.getElementById("load");
+			loadIndex++;
+			$("#index").text(loadIndex);
+			loadEl.id = loadEl.id + loadIndex;
+			$('#' + loadEl.id).load(
+					"viewNewAlbum?albumId=" + responseJSON["contentGroup"].id
+							+ "&index="
+							+ document.getElementById("index").textContent);
+
+			$('#addAlbum').closeModal();
+			
+			alert(' items uploaded.');
+		}
+	}
+
+	xhr.send(data);
+
+}
+
+
+</script>

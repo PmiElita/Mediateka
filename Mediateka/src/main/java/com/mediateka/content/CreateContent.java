@@ -1,13 +1,9 @@
 package com.mediateka.content;
 
-import static com.mediateka.service.ClubService.getClubById;
-
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -17,24 +13,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.http.HttpResponse;
-import org.bytedeco.javacv.FFmpegFrameGrabber;
-import org.bytedeco.javacv.FrameGrabber.Exception;
-import org.jdom.Document;
-import org.jdom.Element;
-import org.jdom.transform.JDOMResult;
-
 import com.google.gson.Gson;
-import com.mediateka.annotation.Request;
 import com.mediateka.comparator.ContentGroupByDate;
 import com.mediateka.exception.WrongInputException;
-import com.mediateka.model.Club;
 import com.mediateka.model.ContentGroup;
 import com.mediateka.model.Media;
 import com.mediateka.model.User;
@@ -45,7 +31,6 @@ import com.mediateka.service.ContentGroupService;
 import com.mediateka.service.MediaService;
 import com.mediateka.service.UserService;
 import com.mediateka.util.FileLoader;
-import com.mysql.fabric.Response;
 
 public class CreateContent {
 
@@ -56,7 +41,6 @@ public class CreateContent {
 
 		HttpSession session = request.getSession();
 		FileLoader fileLoader = new FileLoader();
-		String type = null;
 		fileLoader.loadFile(request);
 		ContentGroup contentGroup = new ContentGroup();
 		contentGroup.setDislike(0);
@@ -223,20 +207,13 @@ public class CreateContent {
 														media.getPath()
 																.lastIndexOf(
 																		'.'))
-												+ ".png");
-								System.out.println(media.getPath().substring(
-										media.getPath().lastIndexOf('\\') + 1,
-										media.getPath().lastIndexOf('.'))
-										+ ".png");
-								System.out.println("postersList: " + posters);
+												+ ".png");								
 								if (posters != null) {
 									if (posters.size() > 1) {
 										System.out.println("owww fuck!");
 									}
 									Media poster = posters.get(0);
-									if (poster != null) {
-										System.out.println("postersObj: "
-												+ poster);
+									if (poster != null) {										
 										posterMap.put(media.getId(), poster);
 									}
 								}
@@ -271,6 +248,7 @@ public class CreateContent {
 				} 
 			}
 		}
+		System.out.println(records);
 		request.setAttribute("posterMap", posterMap);
 		request.setAttribute("mediaMap", mediaMap);
 		request.setAttribute("imageMap", imageMap);

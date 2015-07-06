@@ -157,28 +157,74 @@ public class ClubController {
 
 	}
 
-	@Request(url = "loadAlbum", method = "get")
-	public static void createAlbumGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		session.setAttribute("clubId", 1);
-		session.setAttribute("userId", 2);
-		request.getRequestDispatcher("pages/club/loadAlbum.jsp").forward(
-				request, response);
-
-	}
+//	@Request(url = "loadAlbum", method = "get")
+//	public static void createAlbumGet(HttpServletRequest request,
+//			HttpServletResponse response) throws ServletException, IOException {
+//		HttpSession session = request.getSession();
+//		session.setAttribute("clubId", 1);
+//		session.setAttribute("userId", 2);
+//		request.getRequestDispatcher("pages/club/loadAlbum.jsp").forward(
+//				request, response);
+//
+//	}
 
 	@Request(url = "loadAlbum", method = "post")
 	public static void createAlbumPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			ReflectiveOperationException, SQLException {
 
-		request.getAttribute("clubId");
-		CreateContent.createContent(request, response, ContentGroupType.IMAGE);
-		request.getRequestDispatcher("pages/club/club.jsp").forward(request,
-				response);
+		CreateContent.createContent(request, response, ContentGroupType.IMAGE);		
 
 	}
+	
+	@Request(url = "viewNewAlbum", method = "get")
+	public static void viewNewAlbumGet(HttpServletRequest request,
+			HttpServletResponse response) throws ReflectiveOperationException, SQLException, ServletException, IOException{
+		System.out.println("viewNewAlbum");
+		System.out.println("createContent");
+		int clubId = 0;
+		System.out.println(request.getParameter("albumId"));
+		Integer albumId = Integer.parseInt(request.getParameter("albumId"));
+		ContentGroup contentGroup = ContentGroupService
+				.getContentGroupById(albumId);
+		List<ContentGroup> albums = new ArrayList<ContentGroup>();
+		albums.add(contentGroup);
+		if (contentGroup.getClubId() != null) {
+			clubId = contentGroup.getClubId();
+		} 
+		CreateContent.setContent(request, response, albums);
+
+		if (clubId != 0) {
+			request.setAttribute("clubId", clubId);
+		}
+		
+		request.setAttribute("index", request.getParameter("index"));
+
+		request.getRequestDispatcher("pages/club/albumList.jsp").forward(
+				request, response);
+	}
+
+	@Request(url = "clubAlbums", method = "get")
+	public static void ClubAlbumsGet(HttpServletRequest request,
+			HttpServletResponse response) throws SQLException,
+			ReflectiveOperationException, ServletException, IOException {
+		Integer clubId = Integer.parseInt(request.getParameter("clubId"));		
+		List<ContentGroup> contentGroups = ContentGroupService
+				.getContentGroupByClubIdAndStateAndType(clubId, State.ACTIVE,
+						ContentGroupType.IMAGE);
+		System.out.println(contentGroups);
+		CreateContent.setContent(request, response, contentGroups);
+		Club club = ClubService.getClubById(clubId);
+		request.setAttribute("clubName", club.getName());
+		System.out.println("clubId " + clubId);
+		request.setAttribute("clubId", clubId);
+		request.getRequestDispatcher("pages/club/albums.jsp").forward(request, response);
+		request.removeAttribute("clubName");
+		request.removeAttribute("clubId");
+	}
+	
+	
+	
 
 	@Request(url = "club", method = "get")
 	public static void clubGet(HttpServletRequest request,
