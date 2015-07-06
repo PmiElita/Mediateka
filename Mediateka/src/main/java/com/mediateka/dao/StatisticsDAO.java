@@ -17,16 +17,13 @@ public class StatisticsDAO {
 
 		try (Connection connection = ConnectionManager.getConnection()) {
 
-			System.out.println("startTime: " + startTime);
-			System.out.println("endTime: " + endTime);
 			PreparedStatement statement = connection
 					.prepareStatement("CALL getBooksStatistics(?, ? );");
 
-			
-			
-			
-			statement.setTimestamp(1, new java.sql.Timestamp(startTime.getTime()));
-			statement.setTimestamp(2, new java.sql.Timestamp(endTime.getTime()));
+			statement.setTimestamp(1,
+					new java.sql.Timestamp(startTime.getTime()));
+			statement
+					.setTimestamp(2, new java.sql.Timestamp(endTime.getTime()));
 
 			statement.execute();
 			ResultSet rs = statement.getResultSet();
@@ -53,9 +50,6 @@ public class StatisticsDAO {
 
 	}
 
-
-
-
 	public static Map<String, Map<String, Integer>> getUserStatistics(
 			Date startTime, Date endTime) throws SQLException {
 
@@ -66,9 +60,6 @@ public class StatisticsDAO {
 			PreparedStatement statement = connection
 					.prepareStatement("CALL getUserStatistics(?, ? );");
 
-			
-			
-			
 			statement.setDate(1, new java.sql.Date(startTime.getTime()));
 			statement.setDate(2, new java.sql.Date(endTime.getTime()));
 
@@ -96,10 +87,5 @@ public class StatisticsDAO {
 		}
 
 	}
-
-
-
-
-
 
 }

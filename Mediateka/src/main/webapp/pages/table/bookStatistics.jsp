@@ -11,7 +11,6 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Book statistics</title>
 <jsp:include page="../general/head.jsp" />
 </head>
 <body>
@@ -23,57 +22,121 @@
 			<div class="parallax">
 				<img src="images/parallax1.jpg">
 			</div>
+
+			<div class="container section white">
+				<form>
+					<h4>
+						<fmt:message bundle="${msg}" key="year_picker" />
+					</h4>
+					<input type="number" name="year" min="2010" max="${currentYear }"
+						value="${year }">
+
+					<h4>
+						<fmt:message bundle="${msg}" key="month_picker" />
+					</h4>
+					<select name="month">
+						<c:forEach begin="1" end="12" var="i">
+							<option value="${i }"><fmt:message bundle="${msg}"
+									key="monthNo${i}" /></option>
+						</c:forEach>
+					</select> <input type="submit"
+						value="<fmt:message bundle="${msg}" key="update_button" />">
+				</form>
+			</div>
+
+
 			<div class="container section white">
 				<table>
+					<caption>
+						<fmt:message bundle="${msg}" key="start_of_the_month_table" />
+					</caption>
 					<thead>
 
-						<!-- <tr>
-						<c:forEach var="group" items="${statistics}">
-							<td colspan="${group.value.size()}">${group.key}</td>
-						</c:forEach>
-					</tr>  -->
-
 						<tr>
-							<td><fmt:message bundle="${msg}" key="name" /></td>
-							<td><fmt:message bundle="${msg}" key="number" /></td>
+							<c:forEach var="group" items="${yearStatistics}">
+								<td colspan="${group.value.size()}"><fmt:message
+										bundle="${msg}" key="${group.key}" /></td>
+							</c:forEach>
 						</tr>
 
+						<tr>
+							<c:forEach var="group" items="${yearStatistics}">
+								<c:forEach var="name" items="${group.value}">
+									<td><fmt:message bundle="${msg}" key="${name.key}" /></td>
+								</c:forEach>
+							</c:forEach>
+						</tr>
 
 					</thead>
 
 					<tbody>
 
-						<c:forEach var="group" items="${statistics}">
-							<c:forEach var="name" items="${group.value}">
-								<tr>
-									<td><fmt:message bundle="${msg}" key="${name.key}" /></td>
+						<tr>
+							<c:forEach var="group" items="${yearStatistics}">
+								<c:forEach var="name" items="${group.value}">
 									<td>${name.value}</td>
-								</tr>
+								</c:forEach>
 							</c:forEach>
-						</c:forEach>
-
-						<!-- 
-					<tr>
-						<c:forEach var="group" items="${statistics}">
-							<c:forEach var="name" items="${group.value}">
-								<td>${name.key}</td>
-							</c:forEach>
-						</c:forEach>
-					</tr>
-
-
-					<tr>
-						<c:forEach var="group" items="${statistics}">
-							<c:forEach var="name" items="${group.value}">
-								<td>${name.value}</td>
-							</c:forEach>
-						</c:forEach>
-					</tr>
-					 -->
+						</tr>
 
 					</tbody>
 				</table>
 			</div>
+
+
+
+
+
+
+
+
+
+
+			<div class="container section white">
+				<table>
+					<caption>
+						<fmt:message bundle="${msg}" key="each_day_of_the_month_table" />
+					</caption>
+
+					<thead>
+
+						<tr>
+							<td><fmt:message bundle="${msg}" key="day" /></td>
+							<c:forEach var="group" items="${yearStatistics}">
+								<td colspan="${group.value.size()}"><fmt:message
+										bundle="${msg}" key="${group.key}" /></td>
+							</c:forEach>
+						</tr>
+
+						<tr>
+							<td></td>
+							<c:forEach var="group" items="${yearStatistics}">
+								<c:forEach var="name" items="${group.value}">
+									<td><fmt:message bundle="${msg}" key="${name.key}" /></td>
+								</c:forEach>
+							</c:forEach>
+						</tr>
+
+					</thead>
+
+					<tbody>
+
+						<c:forEach begin="1" end="${monthStatistics.size()}" var="day">
+
+							<tr>
+								<td>${day }</td>
+								<c:forEach var="group" items="${monthStatistics[day-1]}">
+									<c:forEach var="name" items="${group.value}">
+										<td>${name.value}</td>
+									</c:forEach>
+								</c:forEach>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+			</div>
+
+
 		</div>
 	</div>
 
