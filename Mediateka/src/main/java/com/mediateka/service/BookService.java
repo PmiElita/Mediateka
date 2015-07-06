@@ -72,7 +72,8 @@ public class BookService {
 		return BookDAO.getBooksByNameAndAuthor(name, author);
 	}
 
-	public static List<Book> getBooksByRegexp(String regexp) {
+	public static List<Book> getBooksByRegexp(String regexp)
+			throws SQLException, ReflectiveOperationException {
 	
 		return BookDAO.getBooksByRegexp(regexp);
 	}

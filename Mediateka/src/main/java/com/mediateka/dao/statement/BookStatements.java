@@ -48,11 +48,17 @@ public class BookStatements {
 			+ "book " + "WHERE state=?";
 	public static final String[] SELECT_BOOK_BY_STATE_ORDER = { "state" };
 
-	public static final String SELECT_BOOK_ALL = "SELECT * FROM book";
+	public static final String SELECT_BOOK_ALL = "SELECT * FROM book WHERE state != 'DELETED'";
+	
+	public static final String CALL_GET_BOOKS_BY_PARAMETERS = "CALL getBooksByParameters(?,?,?,?,?,?,?)";
 	
 	public static final String CALL_GET_BOOKS_BY_REGEXP = "CALL getBooksByRegexp(?)";
 	
 	public static final String SELECT_BOOK_BY_NAME_AND_AUTHOR="SELECT * FROM book WHERE name=? AND author=?";
 
 	public static final String[] SELECT_BOOK_BY_NAME_AND_AUTHOR_ORDER = {"name","author"};
+	
+	public static final String SELECT_ALL_BOOKS_WITH_LIMIT_ORDER_BY_NAME = "SELECT * FROM book ORDER BY name LIMIT ?,?";
+	
+	public static final String SELECT_ALL_BOOKS_WITH_LIMIT_ORDER_BY_AUTHOR = "SELECT * FROM book ORDER BY author LIMIT ?,?";
 }

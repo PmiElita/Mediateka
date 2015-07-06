@@ -199,12 +199,20 @@ public class BookDAO {
 		}
 	}
 
-	public static List<Book> getBooksByRegexp(String regexp)
-			throws SQLException, ReflectiveOperationException {
+	public static List<Book> getBooksByParameters(String regexp,
+			Integer typeId, Integer meaningId, Integer languageId,
+			String order, Integer offset, Integer limit) throws SQLException,
+			ReflectiveOperationException {
 		try (Connection connection = ConnectionManager.getConnection()) {
 			CallableStatement statement = connection
-					.prepareCall(BookStatements.CALL_GET_BOOKS_BY_REGEXP);
+					.prepareCall(BookStatements.CALL_GET_BOOKS_BY_PARAMETERS);
 			statement.setString(1, regexp);
+			statement.setInt(2, typeId);
+			statement.setInt(3, meaningId);
+			statement.setInt(4, languageId);
+			statement.setString(5, order);
+			statement.setInt(6, offset);
+			statement.setInt(7, limit);
 			ResultSet resultSet = statement.executeQuery();
 			return Transformer
 					.transformResultSetIntoList(resultSet, Book.class);
@@ -222,6 +230,18 @@ public class BookDAO {
 			Transformer.valueIntoPreparedStatement(statement, book,
 					BookStatements.SELECT_BOOK_BY_NAME_AND_AUTHOR_ORDER);
 			;
+			ResultSet resultSet = statement.executeQuery();
+			return Transformer
+					.transformResultSetIntoList(resultSet, Book.class);
+		}
+	}
+
+	public static List<Book> getBooksByRegexp(String regexp)
+			throws SQLException, ReflectiveOperationException {
+		try (Connection connection = ConnectionManager.getConnection()) {
+			PreparedStatement statement = connection
+					.prepareStatement(BookStatements.CALL_GET_BOOKS_BY_REGEXP);
+			statement.setString(1, regexp);
 			ResultSet resultSet = statement.executeQuery();
 			return Transformer
 					.transformResultSetIntoList(resultSet, Book.class);
