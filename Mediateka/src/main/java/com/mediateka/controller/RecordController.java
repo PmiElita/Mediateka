@@ -25,7 +25,7 @@ public class RecordController {
 			HttpServletResponse response) throws ServletException, SQLException, ReflectiveOperationException, IOException{
 		System.out.println("laodRecord");			
 		System.out.println(request.getParameterMap());
-		CreateContent.createContent(request,response, ContentGroupType.COMMENT);
+		CreateContent.createContent(request,response, ContentGroupType.RECORD);
 	}
 	
 	@Request(url="viewNewRecord", method="get")

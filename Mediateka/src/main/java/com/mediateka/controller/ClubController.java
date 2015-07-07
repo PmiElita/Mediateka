@@ -57,18 +57,14 @@ public class ClubController {
 
 	private static Logger logger = Logger.getLogger(ClubController.class);
 
-	@Request(url = "createClub", method = "get")
-	public static void createClubGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("pages/club/create_club.jsp").forward(
-				request, response);
-	}
+
 
 	@Request(url = "createClub", method = "post")
 	public static void createClubPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			SQLException, ReflectiveOperationException {
-
+		
+		
 		ClubRegistrationForm form = new ClubRegistrationForm();
 		ObjectFiller.fill(form, request);
 

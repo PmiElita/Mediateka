@@ -10,7 +10,7 @@
 
 			<h3 class="center">Create club</h3>
 			${message}
-			<form id="createClub" action="createClub" method="post"></form>
+			<form id="createClub" action="createClub" method="post">
 			<div>
 				<div class="row">
 					Club name:<input type="text" id="name" name="name" required
@@ -21,10 +21,11 @@
 					Description:
 					<textarea name="description" id="description" pattern=".{0,255}"
 						class="materialize-textarea" form="createClub"></textarea>
-					<input type="submit" id="subbut" name="subbut" value="Create club"
+					<input type="submit" value="Create club"
 						class="btn" form="createClub">
 				</div>
 			</div>
+			</form>
 		</div>
 	</div>
 </div>
