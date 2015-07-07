@@ -167,7 +167,6 @@ public class EventController {
 	public static void exhibitionCreateGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 
-		request.getSession().setAttribute("userId", 1);
 		request.getRequestDispatcher("pages/events/createExhibition.jsp")
 				.forward(request, response);
 
@@ -177,7 +176,6 @@ public class EventController {
 	public static void meetingCreateGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 
-		request.getSession().setAttribute("userId", 1);
 		request.getRequestDispatcher("pages/events/createMeeting.jsp").forward(
 				request, response);
 
@@ -228,7 +226,7 @@ public class EventController {
 
 			ClubEventMember clubEventMember = new ClubEventMember();
 			clubEventMember.setEventId(event.getId());
-			clubEventMember.setState(State.REQUESTED);
+			clubEventMember.setState(State.ACTIVE);
 			clubEventMember.setType(ClubEventMemberType.CREATOR);
 			clubEventMember.setUserId((Integer) request.getSession()
 					.getAttribute("userId"));
@@ -236,14 +234,12 @@ public class EventController {
 			String message = "Exhibition created. ";
 
 			request.setAttribute("message", message);
-			request.getRequestDispatcher("pages/events/createExhibition.jsp")
-					.forward(request, response);
+			response.sendRedirect("events");
 			request.removeAttribute("message");
 		} catch (WrongInputException e) {
 			logger.warn(e);
 			request.setAttribute("message", e.getMessage());
-			request.getRequestDispatcher("pages/events/createExhibition.jsp")
-					.forward(request, response);
+			response.sendRedirect("error404.jsp");
 			request.removeAttribute("message");
 		}
 	}
@@ -308,14 +304,12 @@ public class EventController {
 			String message = "Meeting created. ";
 
 			request.setAttribute("message", message);
-			request.getRequestDispatcher("pages/events/createMeeting.jsp")
-					.forward(request, response);
+			response.sendRedirect("events");
 			request.removeAttribute("message");
 		} catch (WrongInputException e) {
 			logger.warn(e);
 			request.setAttribute("message", e.getMessage());
-			request.getRequestDispatcher("pages/events/createMeeting.jsp")
-					.forward(request, response);
+			response.sendRedirect("error404.jsp");
 			request.removeAttribute("message");
 		}
 	}

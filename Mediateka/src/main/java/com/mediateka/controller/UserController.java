@@ -147,11 +147,14 @@ public class UserController {
 				Collections.sort(myEvents, new EventsByDate());
 				List<Event> myActiveEvents = new ArrayList<>();
 				List<Event> myBlockedEvents = new ArrayList<>();
+				List<Event> myRequestedEvents = new ArrayList<>();
 				for (Event event : myEvents) {
 					if (event.getState() == State.ACTIVE)
 						myActiveEvents.add(event);
 					else if (event.getState() == State.BLOCKED)
 						myBlockedEvents.add(event);
+					else if (event.getState() == State.REQUESTED)
+						myRequestedEvents.add(event);
 				}
 
 				// all events
@@ -161,25 +164,34 @@ public class UserController {
 				// my events avas
 				List<String> myActiveEventsAvas = new ArrayList<>();
 				List<String> myBlockedEventsAvas = new ArrayList<>();
+				List<String> myRequestedEventsAvas = new ArrayList<>();
 				for (Event event : myActiveEvents)
 					myActiveEventsAvas.add(getMediaById(event.getAvaId())
 							.getPath().replace("\\", "/"));
 				for (Event event : myBlockedEvents)
 					myBlockedEventsAvas.add(getMediaById(event.getAvaId())
 							.getPath().replace("\\", "/"));
+				for (Event event : myRequestedEvents)
+					myRequestedEventsAvas.add(getMediaById(event.getAvaId())
+							.getPath().replace("\\", "/"));
 
 				request.setAttribute("myActiveEvents", myActiveEvents);
 				request.setAttribute("myBlockedEvents", myBlockedEvents);
+				request.setAttribute("myRequestedEvents", myRequestedEvents);
 				request.setAttribute("myActiveEventsAvas", myActiveEventsAvas);
 				request.setAttribute("myBlockedEventsAvas", myBlockedEventsAvas);
+				request.setAttribute("myRequestedEventsAvas",
+						myBlockedEventsAvas);
 				request.setAttribute("allEvents", allEvents);
 				request.setAttribute("allEventsAvas", allEventsAvas);
 				request.getRequestDispatcher("pages/events/events.jsp")
 						.forward(request, response);
 				request.removeAttribute("myActiveEvents");
 				request.removeAttribute("myBlockedEvents");
+				request.removeAttribute("myRequestedEvents");
 				request.removeAttribute("myActiveEventsAvas");
 				request.removeAttribute("myBlockedEventsAvas");
+				request.removeAttribute("myRequestedEventsAvas");
 				request.removeAttribute("allEvents");
 				request.removeAttribute("allEventsAvas");
 				break;
@@ -288,35 +300,46 @@ public class UserController {
 			Collections.sort(myClubs, new ClubsByMembersNumber());
 			List<Club> myActiveClubs = new ArrayList<>();
 			List<Club> myBlockedClubs = new ArrayList<>();
+			List<Club> myRequestedClubs = new ArrayList<>();
 			for (Club club : myClubs) {
 				if (club.getState() == State.ACTIVE)
 					myActiveClubs.add(club);
 				else if (club.getState() == State.BLOCKED)
 					myBlockedClubs.add(club);
+				else if (club.getState() == State.REQUESTED)
+					myRequestedClubs.add(club);
 			}
 
 			// my clubs avas
 			List<String> myActiveClubsAvas = new ArrayList<>();
 			List<String> myBlockedClubsAvas = new ArrayList<>();
+			List<String> myRequestedClubsAvas = new ArrayList<>();
 			for (Club club : myActiveClubs)
 				myActiveClubsAvas.add(getMediaById(club.getAvaId()).getPath()
 						.replace("\\", "/"));
 			for (Club club : myBlockedClubs)
 				myBlockedClubsAvas.add(getMediaById(club.getAvaId()).getPath()
 						.replace("\\", "/"));
+			for (Club club : myRequestedClubs)
+				myRequestedClubsAvas.add(getMediaById(club.getAvaId())
+						.getPath().replace("\\", "/"));
 
 			request.setAttribute("allClubs", allClubs);
 			request.setAttribute("allClubsAvas", allClubsAvas);
 			request.setAttribute("myActiveClubsAvas", myActiveClubsAvas);
 			request.setAttribute("myBlockedClubsAvas", myBlockedClubsAvas);
+			request.setAttribute("myRequestedClubsAvas", myRequestedClubsAvas);
 			request.setAttribute("myActiveClubs", myActiveClubs);
 			request.setAttribute("myBlockedClubs", myBlockedClubs);
+			request.setAttribute("myRequestedClubs", myRequestedClubs);
 			request.getRequestDispatcher("pages/clubs/clubs.jsp").forward(
 					request, response);
 			request.removeAttribute("myActiveClubs");
 			request.removeAttribute("myBlockedClubs");
+			request.removeAttribute("myRequestedClubs");
 			request.removeAttribute("myActiveClubsAvas");
-			request.removeAttribute("myBlockedClubsAvas");
+			request.removeAttribute("myRequestededClubsAvas");
+			request.removeAttribute("myActiveClubs");
 			request.removeAttribute("allClubs");
 			request.removeAttribute("allClubsAvas");
 		} else {

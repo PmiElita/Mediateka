@@ -17,7 +17,6 @@ import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
@@ -57,14 +56,11 @@ public class ClubController {
 
 	private static Logger logger = Logger.getLogger(ClubController.class);
 
-
-
 	@Request(url = "createClub", method = "post")
 	public static void createClubPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			SQLException, ReflectiveOperationException {
-		
-		
+
 		ClubRegistrationForm form = new ClubRegistrationForm();
 		ObjectFiller.fill(form, request);
 
@@ -96,17 +92,40 @@ public class ClubController {
 		new File(clubDir.getAbsolutePath() + "\\images").mkdir();
 		new File(clubDir.getAbsolutePath() + "\\videos").mkdir();
 		new File(clubDir.getAbsolutePath() + "\\audios").mkdir();
-
+		response.sendRedirect("clubs");
 	}
 
 	@Request(url = "editClub", method = "get")
 	public static void editClubGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			ReflectiveOperationException, SQLException {
-		HttpSession session = request.getSession();
-		// change set atribute to atribute from sesion
-		Club club = ClubService.getClubById(1);
-		session.setAttribute("clubId", club.getId());
+		int clubId = 0;
+		Club club = null;
+		try {
+			if (request.getParameter("clubId") == null)
+				throw new NumberFormatException("ClubId uis null");
+			clubId = Integer.parseInt(request.getParameter("clubId"));
+			club = ClubService.getClubById(clubId);
+			if (club == null)
+				throw new NumberFormatException("No clubs with such id");
+			if (request.getSession().getAttribute("userId") == null)
+				throw new NumberFormatException("UserId is null");
+			int userId = Integer.parseInt(request.getSession()
+					.getAttribute("userId").toString());
+			ClubEventMember member = ClubEventMemberService
+					.getClubEventMemberByUserIdAndClubId(userId, clubId);
+			if (member == null)
+				throw new NumberFormatException(
+						"This user isnt this clubs member");
+			else if (member.getState() != State.ACTIVE
+					&& member.getType() != ClubEventMemberType.CREATOR)
+				throw new NumberFormatException(
+						"This user isnt this clubs creator");
+		} catch (NumberFormatException e) {
+			logger.error(e.getMessage());
+			response.sendRedirect("error404.jsp");
+			return;
+		}
 		request.setAttribute("club", ClubService.getClubById((Integer) request
 				.getSession().getAttribute("clubId")));
 		request.setAttribute(

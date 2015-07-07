@@ -48,9 +48,9 @@
 						<div class="row" style="margin-top: -1em">
 							<div class="col s12">
 								<ul class="tabs">
-									<li class="tab col s2"><a href="#my_clubs"
+									<li class="tab col s4"><a href="#my_clubs"
 										style="margin-left: 5em;">My clubs</a></li>
-									<li class="tab col s2"><a href="#all_clubs">All clubs</a></li>
+									<li class="tab col s4"><a href="#all_clubs">All clubs</a></li>
 
 								</ul>
 							</div>
