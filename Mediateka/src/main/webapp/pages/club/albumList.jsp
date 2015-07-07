@@ -13,14 +13,10 @@
 
 
 <head>
-<!-- fotorama.css & fotorama.js. -->
-<link
-	href="http://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.css"
-	rel="stylesheet">
-<!-- 3 KB -->
-<script
-	src="http://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.js"></script>
-<!-- 16 KB -->
+
+<script src="js/jssor.js"></script>
+<script src="js/jssor.slider.js"></script>
+
 </head>
 
 
@@ -60,7 +56,63 @@
 			</div>
 		</div>
 	</div>
-	<div id="albumView${album.id}" class="modal">
+
+	<div id="albumView${album.id}" class="modal black">
+		<div class="modal-content">
+
+			<div id="slider1_container"
+				style="position: relative; width: 600px; height: 515px;">
+
+
+				<!-- Slides Container -->
+				<div u="slides"
+					style="cursor: move; position: relative; left: 0px; top: 0px; width: 725px; height: 500px; overflow: hidden; margin-left: 7.5em;">
+
+					<c:forEach var="image" items="${imageMap.get(album.id) }">
+						<div>
+							<img u=image src="<c:out value='${image.path}'></c:out>">
+						</div>
+					</c:forEach>
+				</div>
+				<a style="display: none" href="http://www.jssor.com">Bootstrap
+					Slider</a>
+			</div>
+
+
+		</div>
+	</div>
+
+	<script>
+        jQuery(document).ready(function ($) {
+
+		var _SlideshowTransitions = [
+            //Fade
+            { $Duration: 1200, $Opacity: 2 }
+            ];
+
+            var options = {
+                $SlideDuration: 500,                                //[Optional] Specifies default duration (swipe) for slide in milliseconds, default value is 500
+                $DragOrientation: 3,                                //[Optional] Orientation to drag slide, 0 no drag, 1 horizental, 2 vertical, 3 either, default value is 1 (Note that the $DragOrientation should be the same as $PlayOrientation when $DisplayPieces is greater than 1, or parking position is not 0)
+                $AutoPlay: true,                                    //[Optional] Whether to auto play, to enable slideshow, this option must be set to true, default value is false
+                $AutoPlayInterval: 1500,                            //[Optional] Interval (in milliseconds) to go for next slide since the previous stopped if the slider is auto playing, default value is 3000
+                $SlideshowOptions: {                                //[Optional] Options to specify and enable slideshow or not
+                    $Class: $JssorSlideshowRunner$,                 //[Required] Class to create instance of slideshow
+                    $Transitions: _SlideshowTransitions,            //[Required] An array of slideshow transitions to play slideshow
+                    $TransitionsOrder: 1,                           //[Optional] The way to choose transition to play slide, 1 Sequence, 0 Random
+                    $ShowLink: true                                    //[Optional] Whether to bring slide link on top of the slider when slideshow is running, default value is false
+                }
+            };
+
+            var jssor_slider1 = new $JssorSlider$("slider1_container", options);
+
+        });
+    </script>
+
+
+
+
+
+	<!-- 	<div id="albumView${album.id}" class="modal">
 		<div class="modal-content">
 			<div class="container">
 				<div class="fotorama" id='album${album.id }' data-nav="thumbs"
@@ -77,20 +129,20 @@
 				</div>
 			</div>
 		</div>
-	</div>
-<%-- 		<div class="fotorama" id='album${album.id }' data-nav="thumbs" --%>
-<!-- 			data-width="700" data-maxwidth="100%" data-ratio="16/9" -->
-<!-- 			data-allowfullscreen="true" data-nav="thumbs" data-keyboard="true" -->
-<!-- 			align="center" data-swipe="true" data-caption="one"> -->
-<%-- 			<c:forEach var="image" items="${imageMap.get(album.id) }"> --%>
-<%-- 				<a href="<c:out value='${image.path}'></c:out>" --%>
-<%-- 					data-thumb="<c:out value='${image.path}'></c:out>"> <img --%>
-<%-- 					src="<c:out value='${image.path}'></c:out>" data-fit="scaledown"> --%>
-<!-- 				</a> -->
-<%-- 			</c:forEach> --%>
-<!-- 		</div> -->
+	</div> -->
+	<%-- 		<div class="fotorama" id='album${album.id }' data-nav="thumbs" --%>
+	<!-- 			data-width="700" data-maxwidth="100%" data-ratio="16/9" -->
+	<!-- 			data-allowfullscreen="true" data-nav="thumbs" data-keyboard="true" -->
+	<!-- 			align="center" data-swipe="true" data-caption="one"> -->
+	<%-- 			<c:forEach var="image" items="${imageMap.get(album.id) }"> --%>
+	<%-- 				<a href="<c:out value='${image.path}'></c:out>" --%>
+	<%-- 					data-thumb="<c:out value='${image.path}'></c:out>"> <img --%>
+	<%-- 					src="<c:out value='${image.path}'></c:out>" data-fit="scaledown"> --%>
+	<!-- 				</a> -->
+	<%-- 			</c:forEach> --%>
+	<!-- 		</div> -->
 
-	
+
 </c:forEach>
 
 
