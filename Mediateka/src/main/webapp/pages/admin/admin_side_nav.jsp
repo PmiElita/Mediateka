@@ -31,7 +31,7 @@
 	</div>
 	<div class="main-content">
 		<div class="swipe-area"></div>
-		<a href="#!" data-toggle=".container-side" id="sidebar-toggle"> <span
+		<a href="#!" onclick="return false" data-toggle=".container-side" id="sidebar-toggle"> <span
 			class="bar"></span> <span class="bar"></span> <span class="bar"></span>
 		</a>
 	</div>

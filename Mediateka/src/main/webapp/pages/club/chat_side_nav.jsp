@@ -9,7 +9,7 @@
 <fmt:setBundle basename="translations/club_chat" var="msg" />
 <fmt:requestEncoding value="utf-8" />
 
-<nav>
+<nav style="background:transparent">
 	<div id="sideNav" class="side-nav" style="padding-bottom: 20px;">
 		<div id="chat" class="chat row">
 
@@ -61,7 +61,7 @@
 </nav>
 
 
-<a href="#" class="chat-side-button" data-activates="sideNav" id="but"><i
+<a href="#" onclick="return false" class="chat-side-button" data-activates="sideNav" id="but" style="z-index:10"><i
 	id="collapse-icon" class="mdi-communication-message"></i></a>
 <script>
 	$(document)

@@ -37,24 +37,28 @@
 
 			<jsp:include page="club_central.jsp" />
 			<div class="container white">
-			<div style="height:3em"></div>
+				<div style="height: 3em"></div>
 				<label id="clubId" hidden="true"><c:out value="${club.id}" /></label>
-					<p>Description:
-					<c:out value="${club.description}" /></p>
-					<br>
+				<p>
+					Description:
+					<c:out value="${club.description}" />
+				</p>
+				<br>
 				<ul class="collapsible center" data-collapsible="accordion">
 					<li><jsp:include page="record.jsp" /></li>
 				</ul>
 			</div>
+
+			<c:if test="${isSigned eq 'true'}">
+				<jsp:include page="chat_side_nav.jsp" />
+			</c:if>
+
 		</div>
-	            <input type="text" hidden="true" value="${userId}" id ="userId"/>
-           
+		<input type="text" hidden="true" value="${userId}" id="userId" />
 	</div>
-	
-	<c:if test="${isSigned eq 'true'}">
-		<jsp:include page="chat_side_nav.jsp"/>
-	</c:if>
-	
+
+
+
 	<jsp:include page="../general/footer.jsp" />
 
 </body>
