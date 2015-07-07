@@ -99,7 +99,6 @@
 													name="action" style="margin-bottom: 3.5em"
 													onclick="dismiss(${current.id} );">
 													<fmt:message bundle="${msg}" key="delete_button" />
-													<i class="mdi-content-send right"></i>
 												</button>
 											</p>
 										</div>
