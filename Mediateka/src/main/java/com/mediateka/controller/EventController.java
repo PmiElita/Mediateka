@@ -370,11 +370,29 @@ public class EventController {
 	public static void exhibitionUpdatePost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			SQLException, ReflectiveOperationException {
-
-		int eventId = Integer.parseInt(request.getSession()
-				.getAttribute("eventId").toString());
-
 		try {
+			int eventId = 0;
+			if (request.getParameter("eventId") == null)
+				throw new WrongInputException("eventId is NULL");
+			try {
+				eventId = Integer.parseInt(request.getParameter("eventId"));
+				if (getEventById(eventId) == null)
+					throw new NumberFormatException("No event with such id");
+			} catch (NumberFormatException e) {
+				throw new WrongInputException(e.getMessage());
+			}
+			if (request.getSession().getAttribute("userId") == null)
+				throw new WrongInputException("Not a user, no user id");
+			ClubEventMember member = getClubEventMemberByUserIdAndEventId(
+					Integer.parseInt(request.getSession()
+							.getAttribute("userId").toString()), eventId);
+			if (member == null)
+				throw new WrongInputException(
+						"This user isnt even a member of this club");
+			else if (member.getState() != State.ACTIVE
+					&& member.getType() != ClubEventMemberType.CREATOR)
+				throw new WrongInputException(
+						"This member of event isn't it's active creator");
 			FileLoader fileLoader = new FileLoader();
 			fileLoader.loadFile(request, "event ava");
 			HashMap<String, String> map = fileLoader.getParameterMap();
@@ -453,7 +471,7 @@ public class EventController {
 		} catch (WrongInputException e) {
 			logger.warn(e);
 			request.getSession().setAttribute("message", e.getMessage());
-			response.sendRedirect("UpdateEvent");
+			response.sendRedirect("error404.jsp");
 		}
 	}
 
@@ -462,11 +480,29 @@ public class EventController {
 	public static void meetingUpdatePost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			SQLException, ReflectiveOperationException {
-
-		int eventId = Integer.parseInt(request.getSession()
-				.getAttribute("eventId").toString());
-
 		try {
+			int eventId = 0;
+			if (request.getParameter("eventId") == null)
+				throw new WrongInputException("eventId is NULL");
+			try {
+				eventId = Integer.parseInt(request.getParameter("eventId"));
+				if (getEventById(eventId) == null)
+					throw new NumberFormatException("No event with such id");
+			} catch (NumberFormatException e) {
+				throw new WrongInputException(e.getMessage());
+			}
+			if (request.getSession().getAttribute("userId") == null)
+				throw new WrongInputException("Not a user, no user id");
+			ClubEventMember member = getClubEventMemberByUserIdAndEventId(
+					Integer.parseInt(request.getSession()
+							.getAttribute("userId").toString()), eventId);
+			if (member == null)
+				throw new WrongInputException(
+						"This user isnt even a member of this club");
+			else if (member.getState() != State.ACTIVE
+					&& member.getType() != ClubEventMemberType.CREATOR)
+				throw new WrongInputException(
+						"This member of event isn't it's active creator");
 			FileLoader fileLoader = new FileLoader();
 			fileLoader.loadFile(request, "event ava");
 			HashMap<String, String> map = fileLoader.getParameterMap();
@@ -561,7 +597,7 @@ public class EventController {
 		} catch (WrongInputException e) {
 			logger.warn(e);
 			request.getSession().setAttribute("message", e.getMessage());
-			response.sendRedirect("UpdateEvent");
+			response.sendRedirect("error404.jsp");
 		}
 	}
 
