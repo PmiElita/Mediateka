@@ -1,6 +1,7 @@
 package com.mediateka.controller;
 
 import static com.mediateka.service.ClubEventMemberService.*;
+import static com.mediateka.service.ContentGroupService.*;
 import static com.mediateka.service.EventService.*;
 import static com.mediateka.service.MediaService.*;
 import static com.mediateka.service.UserService.getUserById;
@@ -35,6 +36,7 @@ import com.mediateka.model.Event;
 import com.mediateka.model.Media;
 import com.mediateka.model.User;
 import com.mediateka.model.enums.ClubEventMemberType;
+import com.mediateka.model.enums.ContentGroupType;
 import com.mediateka.model.enums.EventType;
 import com.mediateka.model.enums.MediaType;
 import com.mediateka.model.enums.Role;
@@ -89,15 +91,42 @@ public class EventController {
 					member = getClubEventMemberByUserIdAndEventId(
 							(Integer) request.getSession().getAttribute(
 									"userId"), eventId);
-					if (member.getType() == ClubEventMemberType.CREATOR)
+					if (member != null
+							&& member.getType() == ClubEventMemberType.CREATOR)
 						request.setAttribute("creator", "true");
 				}
-				if (member != null)
+				if (member != null) {
 					if (member.getState() == State.ACTIVE)
 						isSigned = "true";
 					else if (member.getState() == State.BLOCKED
 							|| member.getState() == State.DELETED)
 						request.setAttribute("badGuy", true);
+				}
+
+				List<ContentGroup> albums = getContentGroupByEventId(eventId);
+				if (albums == null) {
+					request.setAttribute("albums", 0);
+					request.setAttribute("videos", 0);
+					request.setAttribute("music", 0);
+				} else if (albums != null) {
+					List<ContentGroup> neededAlbums = new ArrayList<>();
+					List<ContentGroup> neededMusic = new ArrayList<>();
+					List<ContentGroup> neededVideos = new ArrayList<>();
+					for (ContentGroup content : albums) {
+						if (content.getState() == State.ACTIVE
+								&& content.getType() == ContentGroupType.IMAGE)
+							neededAlbums.add(content);
+						else if (content.getState() == State.ACTIVE
+								&& content.getType() == ContentGroupType.VIDEO)
+							neededVideos.add(content);
+						else if (content.getState() == State.ACTIVE
+								&& content.getType() == ContentGroupType.AUDIO)
+							neededVideos.add(content);
+					}
+					request.setAttribute("albums", neededAlbums.size());
+					request.setAttribute("videos", neededVideos.size());
+					request.setAttribute("music", neededMusic.size());
+				}
 
 				request.setAttribute(
 						"imagePath",
@@ -120,6 +149,9 @@ public class EventController {
 				request.removeAttribute("imagePath");
 				request.removeAttribute("badGuy");
 				request.removeAttribute("creator");
+				request.removeAttribute("albums");
+				request.removeAttribute("videos");
+				request.removeAttribute("music");
 			}
 		} catch (NumberFormatException e) {
 			request.setAttribute("message", "No such club!");

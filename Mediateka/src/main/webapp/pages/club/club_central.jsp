@@ -130,7 +130,7 @@
 										<img src="images/club/music.png" alt=""
 											class="circle responsive-img" />
 									</div>
-									<div class="club-badge" style="margin-left: 0.4em">4</div>
+									<div class="club-badge" style="margin-left: 0.4em"><c:out value="${music}"/></div>
 								</div>
 							</div>
 						</div>
@@ -151,7 +151,7 @@
 										<img src="images/club/video.jpg" alt=""
 											class="circle responsive-img">
 									</div>
-									<div class="club-badge" style="margin-left: 0.4em">3</div>
+									<div class="club-badge" style="margin-left: 0.4em"><c:out value="${videos}"/></div>
 								</div>
 							</div>
 						</div>
@@ -174,7 +174,7 @@
 										<img src="images/club/photo.png" alt=""
 											class="circle responsive-img">
 									</div>
-									<div class="club-badge" style="margin-left: 0.4em">1</div>
+									<div class="club-badge" style="margin-left: 0.4em"><c:out value="${albums}"/></div>
 								</div>
 							</div>
 						</div>
@@ -194,7 +194,7 @@
 										<img style="margin-top: 0em" src="images/club/events.png"
 											alt="" class="circle responsive-img">
 									</div>
-									<div class="my-badge" style="margin-left: 0.75em">2</div>
+									<div class="my-badge" style="margin-left: 0.75em"><c:out value="${events}"/></div>
 								</div>
 							</div>
 						</div>
