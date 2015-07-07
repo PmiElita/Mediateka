@@ -125,7 +125,7 @@
 						<div class="row my-picture-row">
 							<div class="col s12">
 									<div
-										class="waves-effect waves-block waves-light my-picture-wrap" style="border:3px solid #008080;background:grey">
+										class="waves-effect waves-block waves-light my-picture-wrap">
 									<div align="center">
 										<h2>There are no such events!</h2>
 									</div>
