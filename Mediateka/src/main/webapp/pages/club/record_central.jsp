@@ -14,7 +14,7 @@
 
 
 
-<script src="../js/record.js"></script>
+<script src="js/record.js"></script>
 <style>
 audio {
 	width: 100%;

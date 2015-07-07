@@ -12,7 +12,7 @@
 <fmt:requestEncoding value="utf-8" />
 
 
-
+<head>
 <!-- fotorama.css & fotorama.js. -->
 <link
 	href="http://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.css"

@@ -153,7 +153,7 @@ public class ClubController {
 			fileLoader.getAllFilePathes();
 			media.setType(MediaType.IMAGE);
 			media.setState(State.ACTIVE);
-			media.setPath(fileLoader.getRelativePath());
+			media.setPath(fileLoader.getRelativePath().replace("\\", "/"));
 			media.setName(fileLoader.getDefaultFileName());
 			media = MediaService.callSaveMedia(media);
 		} catch (WrongInputException e) {
@@ -172,16 +172,6 @@ public class ClubController {
 
 	}
 
-	// @Request(url = "loadAlbum", method = "get")
-	// public static void createAlbumGet(HttpServletRequest request,
-	// HttpServletResponse response) throws ServletException, IOException {
-	// HttpSession session = request.getSession();
-	// session.setAttribute("clubId", 1);
-	// session.setAttribute("userId", 2);
-	// request.getRequestDispatcher("pages/club/loadAlbum.jsp").forward(
-	// request, response);
-	//
-	// }
 
 	@Request(url = "loadAlbum", method = "post")
 	public static void createAlbumPost(HttpServletRequest request,
@@ -221,24 +211,57 @@ public class ClubController {
 	}
 
 	@Request(url = "clubAlbums", method = "get")
-	public static void ClubAlbumsGet(HttpServletRequest request,
+	public static void clubAlbumsGet(HttpServletRequest request,
 			HttpServletResponse response) throws SQLException,
 			ReflectiveOperationException, ServletException, IOException {
 		Integer clubId = Integer.parseInt(request.getParameter("clubId"));
 		List<ContentGroup> contentGroups = ContentGroupService
 				.getContentGroupByClubIdAndStateAndType(clubId, State.ACTIVE,
-						ContentGroupType.IMAGE);
-		System.out.println(contentGroups);
+						ContentGroupType.IMAGE);		
 		CreateContent.setContent(request, response, contentGroups);
 		Club club = ClubService.getClubById(clubId);
 		request.setAttribute("clubName", club.getName());
-		System.out.println("clubId " + clubId);
 		request.setAttribute("clubId", clubId);
 		request.getRequestDispatcher("pages/club/albums.jsp").forward(request,
 				response);
 		request.removeAttribute("clubName");
 		request.removeAttribute("clubId");
 	}
+	
+	
+	@Request(url = "clubVideos", method = "get")
+	public static void clubVideosGet(HttpServletRequest request, HttpServletResponse response) throws SQLException, ReflectiveOperationException, ServletException, IOException{
+		Integer clubId = Integer.parseInt(request.getParameter("clubId"));
+		List<ContentGroup> contentGroups = ContentGroupService
+				.getContentGroupByClubIdAndStateAndType(clubId, State.ACTIVE,
+						ContentGroupType.IMAGE);		
+		CreateContent.setContent(request, response, contentGroups);
+		Club club = ClubService.getClubById(clubId);
+		request.setAttribute("clubName", club.getName());
+		request.setAttribute("clubId", clubId);
+		request.getRequestDispatcher("pages/club/videos.jsp").forward(request,
+				response);
+		request.removeAttribute("clubName");
+		request.removeAttribute("clubId");
+	}
+	
+	@Request(url = "clubAudios", method = "get")
+	public static void clubAudiosGet(HttpServletRequest request, HttpServletResponse response) throws SQLException, ReflectiveOperationException, ServletException, IOException{
+		Integer clubId = Integer.parseInt(request.getParameter("clubId"));
+		List<ContentGroup> contentGroups = ContentGroupService
+				.getContentGroupByClubIdAndStateAndType(clubId, State.ACTIVE,
+						ContentGroupType.IMAGE);		
+		CreateContent.setContent(request, response, contentGroups);
+		Club club = ClubService.getClubById(clubId);
+		request.setAttribute("clubName", club.getName());
+		request.setAttribute("clubId", clubId);
+		request.getRequestDispatcher("pages/club/audios.jsp").forward(request,
+				response);
+		request.removeAttribute("clubName");
+		request.removeAttribute("clubId");
+	}
+	
+	
 
 	@Request(url = "club", method = "get")
 	public static void clubGet(HttpServletRequest request,
@@ -554,7 +577,7 @@ public class ClubController {
 		System.out.println(fileLoader.getFilePath());
 		media.setType(fileLoader.getMediaType());
 		media.setState(State.ACTIVE);
-		media.setPath(fileLoader.getRelativePath());
+		media.setPath(fileLoader.getRelativePath().replace("\\", "/"));
 		media.setName(fileLoader.getDefaultFileName());
 		media = MediaService.callSaveMedia(media);
 		club.setAvaId(media.getId());

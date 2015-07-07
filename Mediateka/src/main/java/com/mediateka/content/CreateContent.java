@@ -69,7 +69,7 @@ public class CreateContent {
 					System.out.println(fileLoader.getFilePath());
 					media.setType(fileLoader.getMediaTypes().get(i));
 					media.setState(State.ACTIVE);
-					media.setPath(fileLoader.getAllRelativePathes().get(i));
+					media.setPath(fileLoader.getAllRelativePathes().get(i).replace("\\", "/"));
 					media.setName(fileLoader.getAllFileDefaultNames().get(i));
 					media.setContentGroupId(contentGroup.getId());
 					Path source = Paths.get(fileLoader.getFilePath());

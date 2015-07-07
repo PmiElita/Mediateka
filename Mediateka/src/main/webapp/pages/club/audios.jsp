@@ -14,20 +14,15 @@
 <html>
 
 <head>
-
+<script src="js/audiojs/audio.js"></script>
 <jsp:include page="../general/head.jsp" />
 <jsp:include page="loadAlbum.jsp" />
 
-<!-- fotorama.css & fotorama.js. -->
-<link
-	href="http://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.css"
-	rel="stylesheet">
-<!-- 3 KB -->
-<script
-	src="http://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.js"></script>
-<!-- 16 KB -->
-</head>
-
+<script>
+  audiojs.events.ready(function() {
+    var as = audiojs.createAll();
+  });
+</script>
 
 <style>
 .image-cover-t {
@@ -41,7 +36,9 @@
 		black 0.0 0.0 3.0px, black 0.0 0.0 3.0px, black 0.0 0.0 3.0px;
 }
 </style>
+<script src="/audiojs/audio.js"></script>
 
+</head>
 <body>
 
 	<div class="main">
@@ -59,31 +56,14 @@
 			<c:if test="${userRole eq Role.USER}">
 				<jsp:include page="../user/user_side_nav.jsp" />
 			</c:if>
-
-			<div class="section">
-				<div class="container">
-					<h3 class="image-cover-t">${clubName}</h3>
-					<div class="row">
-						<h4 class="image-cover-t">Albums</h4>
-						<div class="col s9">
-							<a title="Add Album" href="" data-target="addAlbum"
-								class="modal-trigger"> <span><i
-									class="medium mdi-av-queue"></i></span>
-							</a>
-						</div>
-					</div>
-				</div>
-			</div>
+			
+			<audio src="/mp3/juicy.mp3" preload="none" />
+			<audio src="/mp3/juicy.mp3" preload="none" />
+			<audio src="/mp3/juicy.mp3" preload="none" />
+			<audio src="/mp3/juicy.mp3" preload="none" />
 
 
-			<div class="section">
-				<div class="container">
-					<div class="row" style="margin-left: -5em">
-						<jsp:include page="albumList.jsp" />
-					</div>
-				</div>
 
-			</div>
 		</div>
 		<jsp:include page="../general/footer.jsp" />
 	</div>
