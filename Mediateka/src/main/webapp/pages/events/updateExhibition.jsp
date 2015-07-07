@@ -28,8 +28,6 @@
 			<div class="container">
 
 				<h3>Update exhibition</h3>
-
-				${message}
 				<form name="updateExhibition" id="update_exhibition"
 					action="UpdateExhibition" method="post" enctype="multipart/form-data">
 
@@ -65,6 +63,7 @@
 						<input type="submit" id="submit" value="Update exhibition"
 							class="btn">
 					</div>
+					<input hidden name="eventId" value="${eventId}">
 				</form>
 			</div>
 		</div>

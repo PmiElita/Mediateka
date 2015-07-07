@@ -24,12 +24,10 @@
 <body>
 	<div class="main">
 		<jsp:include page="../general/nav.jsp" />
-
 		<div id="creation_form">
 			<div class="container">
 
 				<h3>Update meeting</h3>
-				${message}
 				<form name="updateMeeting" id="update_meeting"
 					action="UpdateMeeting" method="post" enctype="multipart/form-data">
 
@@ -74,7 +72,7 @@
 						<input type="submit" id="submit" value="Update meeting"
 							class="btn">
 					</div>
-
+					<input hidden name="eventId" value="${eventId}">
 				</form>
 			</div>
 		</div>

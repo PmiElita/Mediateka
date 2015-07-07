@@ -320,9 +320,35 @@ public class EventController {
 	public static void eventUpdateGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			SQLException, ReflectiveOperationException {
-
-		request.setAttribute("message",
-				request.getSession().getAttribute("message"));
+		int eventId = 0;
+		try {
+			if (request.getParameter("eventId") == null)
+				throw new WrongInputException("eventId is NULL");
+			try {
+				eventId = Integer.parseInt(request.getParameter("eventId"));
+				if (getEventById(eventId) == null)
+					throw new NumberFormatException("No event with such id");
+			} catch (NumberFormatException e) {
+				throw new WrongInputException(e.getMessage());
+			}
+			if (request.getSession().getAttribute("userId") == null)
+				throw new WrongInputException("Not a user, no user id");
+			ClubEventMember member = getClubEventMemberByUserIdAndEventId(
+					Integer.parseInt(request.getSession()
+							.getAttribute("userId").toString()), eventId);
+			if (member == null)
+				throw new WrongInputException(
+						"This user isnt even a member of this club");
+			else if (member.getState() != State.ACTIVE
+					&& member.getType() != ClubEventMemberType.CREATOR)
+				throw new WrongInputException(
+						"This member of event isn't it's active creator");
+		} catch (WrongInputException e) {
+			logger.warn(e);
+			request.getSession().setAttribute("message", e.getMessage());
+			response.sendRedirect("error404.jsp");
+			return;
+		}
 
 		Event event = getEventById(Integer.parseInt(request.getSession()
 				.getAttribute("eventId").toString()));
@@ -335,6 +361,7 @@ public class EventController {
 
 		SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
 		String dateFrom = format.format(event.getDateFrom());
+		request.setAttribute("eventId", eventId);
 		if (event.getType() == EventType.EXHIBITION) {
 			String dateTill = format.format(event.getDateTill());
 			request.setAttribute("dateFrom", dateFrom);
@@ -364,6 +391,7 @@ public class EventController {
 		request.removeAttribute("timeFrom");
 		request.removeAttribute("timeTill");
 		request.getSession().removeAttribute("message");
+		request.removeAttribute("eventId");
 	}
 
 	@Request(url = "UpdateExhibition", method = "post")
@@ -376,7 +404,9 @@ public class EventController {
 				throw new WrongInputException("eventId is NULL");
 			try {
 				eventId = Integer.parseInt(request.getParameter("eventId"));
-				if (getEventById(eventId) == null)
+				if (getEventById(eventId) == null
+						|| getEventById(eventId).getState() == State.DELETED
+						|| getEventById(eventId).getType() != EventType.EXHIBITION)
 					throw new NumberFormatException("No event with such id");
 			} catch (NumberFormatException e) {
 				throw new WrongInputException(e.getMessage());
@@ -486,7 +516,9 @@ public class EventController {
 				throw new WrongInputException("eventId is NULL");
 			try {
 				eventId = Integer.parseInt(request.getParameter("eventId"));
-				if (getEventById(eventId) == null)
+				if (getEventById(eventId) == null
+						|| getEventById(eventId).getState() == State.DELETED
+						|| getEventById(eventId).getType() != EventType.MEETING)
 					throw new NumberFormatException("No event with such id");
 			} catch (NumberFormatException e) {
 				throw new WrongInputException(e.getMessage());
