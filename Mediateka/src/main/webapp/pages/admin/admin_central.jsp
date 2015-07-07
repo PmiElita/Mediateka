@@ -144,7 +144,15 @@
 											<img style="margin-top: 0em" src="images/admin/reports.png"
 												alt="" class="circle responsive-img">
 										</div>
-										<div class="my-badge" style="margin-left: 0.75em">9</div>
+										<div class="my-badge" style="margin-left: 0.75em">
+
+											<c:out value="${totalReports }" />
+											<c:if test="${newReports > 0}">
+													<c:out value="(${newReports})" />
+												<p>
+											</c:if>
+
+										</div>
 									</div>
 								</div>
 							</div>

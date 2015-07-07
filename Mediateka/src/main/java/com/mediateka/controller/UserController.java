@@ -42,6 +42,7 @@ import com.mediateka.service.EventService;
 import com.mediateka.service.FormRecordService;
 import com.mediateka.service.MediaService;
 import com.mediateka.service.ProfessionService;
+import com.mediateka.service.ReportService;
 import com.mediateka.service.UserService;
 import com.mediateka.util.FileLoader;
 
@@ -357,6 +358,10 @@ public class UserController {
 					ClubService.getNumberOfRequestedClubs());
 			request.setAttribute("requestedEventCount",
 					EventService.getNumberOfRequestedEvents());
+			request.setAttribute("totalReports",
+					ReportService.getNumberOfAllReports());
+			request.setAttribute("newReports",
+					ReportService.getNumberOfNewReports());
 
 			request.getRequestDispatcher("pages/admin/admin.jsp").forward(
 					request, response);
@@ -419,7 +424,6 @@ public class UserController {
 				.forward(request, response);
 	}
 
-	
 	@Request(url = "userEventAva", method = "post")
 	public static void loadClubAvaPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException,
@@ -427,7 +431,8 @@ public class UserController {
 		System.out.println("loadAva");
 		FileLoader fileLoader = new FileLoader();
 		fileLoader.loadFile(request);
-		User user = UserService.getUserById((Integer)request.getSession().getAttribute("userId"));		
+		User user = UserService.getUserById((Integer) request.getSession()
+				.getAttribute("userId"));
 		Media media = new Media();
 		System.out.println(fileLoader.getFilePath());
 		media.setType(fileLoader.getMediaType());
@@ -440,5 +445,3 @@ public class UserController {
 	}
 
 }
-
-

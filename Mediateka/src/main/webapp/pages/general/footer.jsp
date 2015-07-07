@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <fmt:setLocale value="${cookie.lang.value}" />
-<fmt:setBundle basename="translations/user_modification_form" var="msg" />
+<fmt:setBundle basename="translations/response_form" var="msg" />
 
 <jsp:include page="response_form.jsp"/>
 
@@ -12,7 +12,7 @@
 	<div class="footer-copyright">
 		<div class="container row" style="padding: 0; margin: 0">
 			<div class="col s6 offset-s3">&copy; 2015 Copyright TEAM</div>
-			<a href="" data-target="modal25" class="modal-trigger waves-effect">send response</a>
+			<a href="" data-target="modal25" class="modal-trigger waves-effect"><fmt:message bundle="${msg}" key="send_response" /></a>
 		</div>
 
 	</div>

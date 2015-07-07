@@ -110,6 +110,7 @@ public class LogInController {
 		mySession.setAttribute("userId", user.getId());
 		mySession.setAttribute("userFirstName", user.getFirstName());
 		mySession.setAttribute("userRole", user.getRole());
+		mySession.setAttribute("userEmail", user.getEmail());
 
 		UserCard userCard = UserCardService.getUserCardByUserId(user.getId());
 

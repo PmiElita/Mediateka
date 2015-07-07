@@ -4,8 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <fmt:setLocale value="${cookie.lang.value}" />
-<fmt:setBundle basename="translations/response_form" var="msg"
-	scope="session" />
+<fmt:setBundle basename="translations/response_form" var="msg" />
 
 <div id="modal25" class="modal">
 	<div class="modal-content">
@@ -30,7 +29,7 @@
 								<label for="field1"> <fmt:message bundle="${msg}"
 										key="nameField" />
 								</label> <input type="text" name="nameField" id="field1"
-									required="required">
+									required="required" value="${userFirstName }">
 							</div>
 						</div>
 
@@ -39,20 +38,20 @@
 								<label for="field3"> <fmt:message bundle="${msg}"
 										key="emailField" />
 								</label> <input type="text" name="emailField" id="field3"
-									required="required">
+									required="required" value="${userEmail }">
 							</div>
 						</div>
 					</div>
 
 					<div id="field4-container" class="field f_100">
-							<label for="field4"> <fmt:message bundle="${msg}"
-									key="bodyField" />
-							</label>
+						<label for="field4"> <fmt:message bundle="${msg}"
+								key="bodyField" />
+						</label>
 
 
-							<textarea name="responseField" id="field4" required="required"
-								class="materialize-textarea"></textarea>
-						</div>
+						<textarea name="responseField" id="field4" required="required"
+							class="materialize-textarea"></textarea>
+					</div>
 
 
 					<div id="form-submit" class="field f_100 clearfix submit">
