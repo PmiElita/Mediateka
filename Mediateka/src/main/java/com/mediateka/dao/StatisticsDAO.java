@@ -55,8 +55,6 @@ public class StatisticsDAO {
 
 		try (Connection connection = ConnectionManager.getConnection()) {
 
-			System.out.println("startTime: " + startTime);
-			System.out.println("endTime: " + endTime);
 			PreparedStatement statement = connection
 					.prepareStatement("CALL getUserStatistics(?, ? );");
 

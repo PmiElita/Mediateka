@@ -23,7 +23,7 @@
 				<img src="images/parallax1.jpg">
 			</div>
 
-			<div class="container section white" style="width:25%">
+			<div class="container section white" style="width: 25%">
 				<form>
 					<h4>
 						<fmt:message bundle="${msg}" key="year_picker" />
@@ -36,8 +36,18 @@
 					</h4>
 					<select name="month" class="browser-default">
 						<c:forEach begin="1" end="12" var="i">
-							<option value="${i }"><fmt:message bundle="${msg}"
-									key="monthNo${i}" /></option>
+							<c:if test="${i == month + 1 }">
+								<option value="${i }" selected>
+									<fmt:message bundle="${msg}" key="monthNo${i}" />
+								</option>
+							</c:if>
+
+							<c:if test="${!(i == month + 1) }">
+								<option value="${i }">
+									<fmt:message bundle="${msg}" key="monthNo${i}" />
+								</option>
+							</c:if>
+
 						</c:forEach>
 					</select> <input type="submit"
 						value="<fmt:message bundle="${msg}" key="update_button" />">
@@ -45,14 +55,14 @@
 			</div>
 
 
-			<div class="container section white" style="width:97.5%">
+			<div class="container section white" style="width: 97.5%">
 				<table class="centered striped hoverable responsive-table">
-					<caption style="font-size:1.5em">
+					<caption style="font-size: 1.5em">
 						<fmt:message bundle="${msg}" key="start_of_the_month_table" />
 					</caption>
 					<thead>
 
-						<tr >
+						<tr>
 							<c:forEach var="group" items="${yearStatistics}">
 								<td class="center" colspan="${group.value.size()}"><fmt:message
 										bundle="${msg}" key="${group.key}" /></td>
@@ -62,7 +72,8 @@
 						<tr>
 							<c:forEach var="group" items="${yearStatistics}">
 								<c:forEach var="name" items="${group.value}">
-									<td style="font-size:0.75em" class="center"><fmt:message bundle="${msg}" key="${name.key}" /></td>
+									<td style="font-size: 0.75em" class="center"><fmt:message
+											bundle="${msg}" key="${name.key}" /></td>
 								</c:forEach>
 							</c:forEach>
 						</tr>
@@ -92,9 +103,9 @@
 
 
 
-			<div class="container section white" style="width:97.5%">
+			<div class="container section white" style="width: 97.5%">
 				<table class="centered striped  hoverable responsive-table">
-					<caption style="font-size:1.5em">
+					<caption style="font-size: 1.5em">
 						<fmt:message bundle="${msg}" key="each_day_of_the_month_table" />
 					</caption>
 
@@ -112,7 +123,8 @@
 							<td></td>
 							<c:forEach var="group" items="${yearStatistics}">
 								<c:forEach var="name" items="${group.value}">
-									<td style="font-size:0.75em" class="center"><fmt:message bundle="${msg}" key="${name.key}" /></td>
+									<td style="font-size: 0.75em" class="center"><fmt:message
+											bundle="${msg}" key="${name.key}" /></td>
 								</c:forEach>
 							</c:forEach>
 						</tr>
@@ -127,7 +139,7 @@
 								<td>${day }</td>
 								<c:forEach var="group" items="${monthStatistics[day-1]}">
 									<c:forEach var="name" items="${group.value}">
-										<td >${name.value}</td>
+										<td>${name.value}</td>
 									</c:forEach>
 								</c:forEach>
 							</tr>

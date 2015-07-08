@@ -34,10 +34,20 @@
 					<h4>
 						<fmt:message bundle="${msg}" key="month_picker" />
 					</h4>
-					<select name="month">
+					<select name="month" class="browser-default">
 						<c:forEach begin="1" end="12" var="i">
-							<option value="${i }"><fmt:message bundle="${msg}"
-									key="monthNo${i}" /></option>
+							<c:if test="${i == month + 1 }">
+								<option value="${i }" selected>
+									<fmt:message bundle="${msg}" key="monthNo${i}" />
+								</option>
+							</c:if>
+
+							<c:if test="${!(i == month + 1) }">
+								<option value="${i }">
+									<fmt:message bundle="${msg}" key="monthNo${i}" />
+								</option>
+							</c:if>
+
 						</c:forEach>
 					</select> <input type="submit"
 						value="<fmt:message bundle="${msg}" key="update_button" />">
