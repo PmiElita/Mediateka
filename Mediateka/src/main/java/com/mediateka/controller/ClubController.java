@@ -254,9 +254,10 @@ public class ClubController {
 	@Request(url = "clubAudios", method = "get")
 	public static void clubAudiosGet(HttpServletRequest request, HttpServletResponse response) throws SQLException, ReflectiveOperationException, ServletException, IOException{
 		Integer clubId = Integer.parseInt(request.getParameter("clubId"));
+		System.out.println("clubAudios:"  + clubId);
 		List<ContentGroup> contentGroups = ContentGroupService
 				.getContentGroupByClubIdAndStateAndType(clubId, State.ACTIVE,
-						ContentGroupType.IMAGE);		
+						ContentGroupType.AUDIO);		
 		CreateContent.setContent(request, response, contentGroups);
 		Club club = ClubService.getClubById(clubId);
 		request.setAttribute("clubName", club.getName());
@@ -266,6 +267,45 @@ public class ClubController {
 		request.removeAttribute("clubName");
 		request.removeAttribute("clubId");
 	}
+	
+	@Request(url = "loadAudio", method = "post")
+	public static void createAudioPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException,
+			ReflectiveOperationException, SQLException {
+
+		CreateContent.createContent(request, response, ContentGroupType.AUDIO);
+
+	}
+
+	@Request(url = "viewNewAudio", method = "get")
+	public static void viewNewAudioGet(HttpServletRequest request,
+			HttpServletResponse response) throws ReflectiveOperationException,
+			SQLException, ServletException, IOException {
+		System.out.println("viewNewAudio");
+		System.out.println("createContent");
+		int clubId = 0;
+		System.out.println(request.getParameter("audioId"));
+		Integer audioId = Integer.parseInt(request.getParameter("audioId"));
+		ContentGroup contentGroup = ContentGroupService
+				.getContentGroupById(audioId);
+		List<ContentGroup> audios = new ArrayList<ContentGroup>();
+		audios.add(contentGroup);
+		if (contentGroup.getClubId() != null) {
+			clubId = contentGroup.getClubId();
+		}
+		CreateContent.setContent(request, response, audios);
+
+		if (clubId != 0) {
+			request.setAttribute("clubId", clubId);
+		}
+
+		request.setAttribute("index", request.getParameter("index"));
+
+		request.getRequestDispatcher("pages/club/audioList.jsp").forward(
+				request, response);
+	}
+	
+	
 	
 	
 
@@ -292,7 +332,7 @@ public class ClubController {
 						.toString());
 				Club club = getClubById(clubId);
 				List<ContentGroup> records = ContentGroupService
-						.getContentGroupByClubIdAndState(clubId, State.ACTIVE);
+						.getContentGroupByClubIdAndStateAndType(clubId, State.ACTIVE, ContentGroupType.RECORD);
 
 				CreateContent.setContent(request, response, records);
 

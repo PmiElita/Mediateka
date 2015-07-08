@@ -210,7 +210,7 @@ public class FileLoader {
 						extention = defaultFileNames.get(i).substring(
 								defaultFileNames.get(i).indexOf('.'));
 					}
-					if(extention == ""){
+					if (extention == "") {
 						extention = ".png";
 					}
 					String filePath = uploadFolder + "\\"
@@ -232,12 +232,18 @@ public class FileLoader {
 						parser.parse(fileInputStream, contenthandler, metadata);
 					}
 					String contentType = item.getContentType();
+					String fileContentTypeString = Files.probeContentType(Paths
+							.get(filePath));
 					String realContentType = metadata
 							.get(Metadata.CONTENT_TYPE);
 
-					if (contentType.substring(contentType.indexOf('/')).equals(
-							realContentType.substring(realContentType
-									.indexOf('/'))) == false) {
+					if ((contentType.substring(contentType.indexOf('/'))
+							.equals(realContentType.substring(realContentType
+									.indexOf('/'))) == false)
+							&& (fileContentTypeString.substring(
+									contentType.indexOf('/')).equals(
+									realContentType.substring(realContentType
+											.indexOf('/'))) == false)) {
 						System.out.println(Files.probeContentType(Paths
 								.get(filePath))
 								+ " "

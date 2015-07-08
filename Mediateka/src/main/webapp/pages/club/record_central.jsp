@@ -17,7 +17,6 @@
 
 
 
-<script src="js/record.js"></script>
 <style>
 audio {
 	width: 100%;
@@ -39,7 +38,7 @@ audio {
 						<div class="valign-wrapper">
 							<div class="col s1">
 								<img
-									src="http://cs620219.vk.me/v620219213/17bc9/dNN2ANduYDg.jpg"
+									src="${creatoAva[record.id] }"
 									alt="" class="circle" style="height: 45px;">
 							</div>
 							<div align="left" class="col s3">
@@ -65,8 +64,7 @@ audio {
 						style="padding: 0px;">
 						<div class="valign-wrapper">
 							<div class="col s1">
-								<img
-									src="http://cs620219.vk.me/v620219213/17bc9/dNN2ANduYDg.jpg"
+								<img src="${creatoAva[record.id] }"
 									alt="" class="circle" style="height: 45px;">
 							</div>
 							<div align="left" class="col s3">

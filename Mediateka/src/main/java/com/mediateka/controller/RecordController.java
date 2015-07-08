@@ -22,9 +22,7 @@ public class RecordController {
 	
 	@Request(url="loadRecord", method="post")
 	public static void loadRecordPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, SQLException, ReflectiveOperationException, IOException{
-		System.out.println("laodRecord");			
-		System.out.println(request.getParameterMap());
+			HttpServletResponse response) throws ServletException, SQLException, ReflectiveOperationException, IOException{		
 		CreateContent.createContent(request,response, ContentGroupType.RECORD);
 	}
 	

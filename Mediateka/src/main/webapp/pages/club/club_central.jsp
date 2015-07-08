@@ -127,7 +127,7 @@
 
 		<div class="row" style="margin-left: -5em">
 			<div class="col s3">
-				<a href="" data-target="modal7" class="modal-trigger">
+				<a href="clubAudios?clubId=${clubId}" data-target="modal7" class="modal-trigger">
 					<div class="col s12 m8 offset-m2 l6 offset-l3 my-cardmy-small-card">
 						<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
 							<div style="margin-top: -2em">
@@ -149,7 +149,7 @@
 
 
 			<div class="col s3">
-				<a href="club_videos">
+				<a href="clubVideos?clubId=${clubId}">
 					<div
 						class="col s12 m8 offset-m2 l6 offset-l3 my-card my-small-card">
 						<div class="my-admin-card card-panel grey lighten-5 z-depth-1">

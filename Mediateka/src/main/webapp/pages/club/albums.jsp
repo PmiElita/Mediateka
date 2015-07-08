@@ -58,7 +58,6 @@
 			<c:if test="${userRole eq Role.USER}">
 				<jsp:include page="../user/user_side_nav.jsp" />
 			</c:if>
-
 			<div class="section">
 				<div class="container">
 					<h3 class="image-cover-t">${clubName}</h3>

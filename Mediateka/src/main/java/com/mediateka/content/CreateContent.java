@@ -58,7 +58,6 @@ public class CreateContent {
 		contentGroup.setState(State.ACTIVE);
 		contentGroup.setText(fileLoader.getParameterMap().get("text"));
 		contentGroup.setCreationDate(Timestamp.valueOf(LocalDateTime.now()));
-		System.out.println(contentGroup);
 
 		contentGroup = ContentGroupService.callSaveContentGroup(contentGroup);
 		List<Media> mediaList = new ArrayList<Media>();
@@ -66,19 +65,12 @@ public class CreateContent {
 			if (fileLoader.getAllFilePathes() != null) {
 				for (int i = 0; i < fileLoader.getAllFilePathes().size(); i++) {
 					Media media = new Media();
-					System.out.println(fileLoader.getFilePath());
 					media.setType(fileLoader.getMediaTypes().get(i));
 					media.setState(State.ACTIVE);
-					media.setPath(fileLoader.getAllRelativePathes().get(i).replace("\\", "/"));
+					media.setPath(fileLoader.getAllRelativePathes().get(i)
+							.replace("\\", "/"));
 					media.setName(fileLoader.getAllFileDefaultNames().get(i));
 					media.setContentGroupId(contentGroup.getId());
-					Path source = Paths.get(fileLoader.getFilePath());
-					try {
-						System.out.println(Files.probeContentType(source));
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
 					mediaList.add(media);
 					MediaService.saveMedia(media);
 				}
@@ -120,20 +112,14 @@ public class CreateContent {
 
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
-		System.out.println(new Gson().toJson(contentGroup).toString());
 		response.getWriter().write(new Gson().toJson(recordMap));
 
 	}
-	
-	
-	
-	
 
 	public static void loadContent(HttpServletRequest request,
 			HttpServletResponse response) throws ReflectiveOperationException,
 			SQLException, ServletException, IOException {
 
-		System.out.println("createContent");
 		int clubId = 0;
 		int eventId = 0;
 		System.out.println(request.getParameter("recordId"));
@@ -172,6 +158,7 @@ public class CreateContent {
 		Map<Integer, List<Media>> audioMap = new HashMap<Integer, List<Media>>();
 		Map<Integer, Media> posterMap = new HashMap<Integer, Media>();
 		Map<Integer, String> creatorRecordMap = new HashMap<Integer, String>();
+		Map<Integer, String> creatorAvaRecordMap = new HashMap<Integer, String>();
 		if (records != null) {
 			Collections.sort(records, new ContentGroupByDate());
 			for (ContentGroup record : records) {
@@ -180,7 +167,15 @@ public class CreateContent {
 							.getCreatorId());
 					String cratorName = creator.getFirstName() + " "
 							+ creator.getLastName();
+
+					if (MediaService.getMediaById(creator.getAvaId()) != null) {
+
+						String creatorAvaPath = MediaService.getMediaById(
+								creator.getAvaId()).getPath();
+						creatorAvaRecordMap.put(record.getId(), creatorAvaPath);
+					}
 					creatorRecordMap.put(record.getId(), cratorName);
+
 					List<Media> images = new ArrayList<Media>();
 					List<Media> videos = new ArrayList<Media>();
 					List<Media> audios = new ArrayList<Media>();
@@ -188,7 +183,6 @@ public class CreateContent {
 							MediaService.getMediaContentGroupId(record.getId()));
 					List<Media> medias = MediaService
 							.getMediaContentGroupId(record.getId());
-					System.out.println(medias);
 					if (medias != null) {
 						for (Media media : medias) {
 							System.out.println(media);
@@ -207,13 +201,13 @@ public class CreateContent {
 														media.getPath()
 																.lastIndexOf(
 																		'.'))
-												+ ".png");								
+												+ ".png");
 								if (posters != null) {
 									if (posters.size() > 1) {
 										System.out.println("owww fuck!");
 									}
 									Media poster = posters.get(0);
-									if (poster != null) {										
+									if (poster != null) {
 										posterMap.put(media.getId(), poster);
 									}
 								}
@@ -245,10 +239,12 @@ public class CreateContent {
 						images = videos = audios = null;
 					}
 
-				} 
+				}
 			}
+
 		}
 		System.out.println(records);
+		request.setAttribute("creatorAva", creatorAvaRecordMap);
 		request.setAttribute("posterMap", posterMap);
 		request.setAttribute("mediaMap", mediaMap);
 		request.setAttribute("imageMap", imageMap);
@@ -257,11 +253,5 @@ public class CreateContent {
 		request.setAttribute("records", records);
 		request.setAttribute("creatorName", creatorRecordMap);
 	}
-	
-	
-	
 
 }
-
-
-

@@ -5,7 +5,6 @@ var storedAudios = [];
 var num;
 
 function deleteRecord(recordId) {
-	alert(recordId);
 	$.ajax({
 		type : 'get',
 		url : 'deleteRecord',
@@ -22,7 +21,6 @@ function deleteRecord(recordId) {
 }
 
 function restoreRecord(recordId){
-	alert(recordId);
 	$.ajax({
 		type : 'get',
 		url : 'restoreRecord',
@@ -39,7 +37,6 @@ function restoreRecord(recordId){
 }
 
 function like(value, id) {
-	alert(value);
 	$
 			.ajax({
 				type : 'get',
@@ -51,9 +48,6 @@ function like(value, id) {
 				},
 				complete : function(data) {
 
-					alert(JSON.stringify(data));
-					alert(data.responseJSON);
-					alert(data.responseJSON.id);
 					var id = data.responseJSON.id;
 					document.getElementById("recordLike" + id).innerHTML = data.responseJSON.like;
 					document.getElementById("recordDislike" + id).innerHTML = data.responseJSON.dislike;
@@ -81,7 +75,6 @@ function handleFileSelect(e) {
 				if (f.type.match("image.*")) {
 					storedImages.push(f);
 					selDiv = $("#selectedImages");
-					alert(f);
 
 					var reader = new FileReader();
 					reader.onload = function(e) {
@@ -97,7 +90,6 @@ function handleFileSelect(e) {
 					reader.readAsDataURL(f);
 				} else if (f.type.match("video.*")) {
 					storedVideos.push(f);
-					alert(f);
 					selDiv = $("#selectedVideos");
 
 					var reader = new FileReader();
@@ -110,7 +102,6 @@ function handleFileSelect(e) {
 					reader.readAsDataURL(f);
 				} else if (f.type.match("audio.*")) {
 					storedAudios.push(f);
-					alert(f);
 
 					selDiv = $("#selectedAudios");
 
@@ -130,7 +121,6 @@ function handleFileSelect(e) {
 }
 
 function handleForm(e) {
-	alert(1);
 
 	e.preventDefault();
 	var data = new FormData();
@@ -171,7 +161,6 @@ function handleForm(e) {
 			storedAudios = [];
 			document.getElementById("selectedVideos").innerHTML = "";
 			document.getElementById("selectedAudios").innerHTML = "";
-			alert(JSON.stringify(e.currentTarget));
 			var responseJSON = JSON.parse(e.currentTarget.responseText);
 
 			loadIndex = document.getElementById('index').textContent;
@@ -184,7 +173,7 @@ function handleForm(e) {
 							+ "&index="
 							+ document.getElementById("index").textContent);
 
-			alert(' items uploaded.');
+			Materialize.toast(' files uploaded.');
 		}
 	}
 
