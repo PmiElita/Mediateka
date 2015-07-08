@@ -49,7 +49,7 @@
 							</c:if>
 
 						</c:forEach>
-					</select> <input type="submit"
+					</select> <input type="submit" class="btn"
 						value="<fmt:message bundle="${msg}" key="update_button" />">
 				</form>
 			</div>
