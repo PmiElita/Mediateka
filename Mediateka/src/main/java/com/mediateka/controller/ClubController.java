@@ -1,20 +1,22 @@
 package com.mediateka.controller;
 
-import static com.mediateka.service.ClubEventMemberService.*;
-import static com.mediateka.service.ClubService.*;
-import static com.mediateka.service.EventService.*;
+import static com.mediateka.service.ClubEventMemberService.getClubEventMemberByClubId;
+import static com.mediateka.service.ClubEventMemberService.getClubEventMemberByUserIdAndClubId;
+import static com.mediateka.service.ClubEventMemberService.saveClubEventMember;
+import static com.mediateka.service.ClubEventMemberService.updateClubEventMember;
+import static com.mediateka.service.ClubService.getClubById;
+import static com.mediateka.service.ClubService.updateClub;
+import static com.mediateka.service.ContentGroupService.getContentGroupByClubId;
+import static com.mediateka.service.EventService.getEventByClubId;
 import static com.mediateka.service.MediaService.getMediaById;
 import static com.mediateka.service.UserService.getUserById;
-import static com.mediateka.service.ContentGroupService.*;
 
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.mail.MessagingException;
 import javax.servlet.ServletException;
@@ -38,7 +40,6 @@ import com.mediateka.model.ContentGroup;
 import com.mediateka.model.Event;
 import com.mediateka.model.Media;
 import com.mediateka.model.User;
-import com.mediateka.model.UserCard;
 import com.mediateka.model.enums.ClubEventMemberType;
 import com.mediateka.model.enums.ContentGroupType;
 import com.mediateka.model.enums.MediaType;
@@ -178,7 +179,6 @@ public class ClubController {
 
 	}
 
-
 	@Request(url = "loadAlbum", method = "post")
 	public static void createAlbumPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
@@ -223,7 +223,7 @@ public class ClubController {
 		Integer clubId = Integer.parseInt(request.getParameter("clubId"));
 		List<ContentGroup> contentGroups = ContentGroupService
 				.getContentGroupByClubIdAndStateAndType(clubId, State.ACTIVE,
-						ContentGroupType.IMAGE);		
+						ContentGroupType.IMAGE);
 		CreateContent.setContent(request, response, contentGroups);
 		Club club = ClubService.getClubById(clubId);
 		request.setAttribute("clubName", club.getName());
@@ -233,14 +233,15 @@ public class ClubController {
 		request.removeAttribute("clubName");
 		request.removeAttribute("clubId");
 	}
-	
-	
+
 	@Request(url = "clubVideos", method = "get")
-	public static void clubVideosGet(HttpServletRequest request, HttpServletResponse response) throws SQLException, ReflectiveOperationException, ServletException, IOException{
+	public static void clubVideosGet(HttpServletRequest request,
+			HttpServletResponse response) throws SQLException,
+			ReflectiveOperationException, ServletException, IOException {
 		Integer clubId = Integer.parseInt(request.getParameter("clubId"));
 		List<ContentGroup> contentGroups = ContentGroupService
 				.getContentGroupByClubIdAndStateAndType(clubId, State.ACTIVE,
-						ContentGroupType.IMAGE);		
+						ContentGroupType.IMAGE);
 		CreateContent.setContent(request, response, contentGroups);
 		Club club = ClubService.getClubById(clubId);
 		request.setAttribute("clubName", club.getName());
@@ -250,14 +251,16 @@ public class ClubController {
 		request.removeAttribute("clubName");
 		request.removeAttribute("clubId");
 	}
-	
+
 	@Request(url = "clubAudios", method = "get")
-	public static void clubAudiosGet(HttpServletRequest request, HttpServletResponse response) throws SQLException, ReflectiveOperationException, ServletException, IOException{
+	public static void clubAudiosGet(HttpServletRequest request,
+			HttpServletResponse response) throws SQLException,
+			ReflectiveOperationException, ServletException, IOException {
 		Integer clubId = Integer.parseInt(request.getParameter("clubId"));
-		System.out.println("clubAudios:"  + clubId);
+		System.out.println("clubAudios:" + clubId);
 		List<ContentGroup> contentGroups = ContentGroupService
 				.getContentGroupByClubIdAndStateAndType(clubId, State.ACTIVE,
-						ContentGroupType.AUDIO);		
+						ContentGroupType.AUDIO);
 		CreateContent.setContent(request, response, contentGroups);
 		Club club = ClubService.getClubById(clubId);
 		request.setAttribute("clubName", club.getName());
@@ -267,7 +270,7 @@ public class ClubController {
 		request.removeAttribute("clubName");
 		request.removeAttribute("clubId");
 	}
-	
+
 	@Request(url = "loadAudio", method = "post")
 	public static void createAudioPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
@@ -304,10 +307,6 @@ public class ClubController {
 		request.getRequestDispatcher("pages/club/audioList.jsp").forward(
 				request, response);
 	}
-	
-	
-	
-	
 
 	@Request(url = "club", method = "get")
 	public static void clubGet(HttpServletRequest request,
@@ -332,7 +331,8 @@ public class ClubController {
 						.toString());
 				Club club = getClubById(clubId);
 				List<ContentGroup> records = ContentGroupService
-						.getContentGroupByClubIdAndStateAndType(clubId, State.ACTIVE, ContentGroupType.RECORD);
+						.getContentGroupByClubIdAndStateAndType(clubId,
+								State.ACTIVE, ContentGroupType.RECORD);
 
 				CreateContent.setContent(request, response, records);
 

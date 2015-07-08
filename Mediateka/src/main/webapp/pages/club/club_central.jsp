@@ -59,6 +59,11 @@
 									style="width: 15em"><fmt:message bundle="${msg}"
 										key="sign_to_club" /></a>
 							</div>
+							<div class="col s6">
+								<a class="btn" href="ClubUsers?clubId=${club.id}"
+									style="width: 15em"><fmt:message bundle="${msg}"
+										key="look_participants" /></a>
+							</div>
 
 
 						</c:if>
@@ -76,6 +81,15 @@
 												style="width: 15em"><fmt:message bundle="${msg}"
 													key="delete_club" /></a>
 										</div>
+										<div class="col s3">
+											<a class="btn" href="editClub?clubId=${club.id}"
+												style="width: 15em">Edit club</a>
+										</div>
+										<div class="col s3">
+											<a class="btn" href="ClubUsers?clubId=${club.id}"
+												style="width: 15em"><fmt:message bundle="${msg}"
+													key="look_participants" /></a>
+										</div>
 									</c:if>
 									<c:if test="${club.state eq State.BLOCKED}">
 										<div class="col s3">
@@ -88,6 +102,15 @@
 												style="width: 15em"><fmt:message bundle="${msg}"
 													key="delete_club" /></a>
 										</div>
+										<div class="col s3">
+											<a class="btn" href="editClub?clubId=${club.id}"
+												style="width: 15em">Edit club</a>
+										</div>
+										<div class="col s3">
+											<a class="btn" href="ClubUsers?clubId=${club.id}"
+												style="width: 15em"><fmt:message bundle="${msg}"
+													key="look_participants" /></a>
+										</div>
 									</c:if>
 								</c:when>
 								<c:otherwise>
@@ -96,17 +119,14 @@
 											style="width: 15em"><fmt:message bundle="${msg}"
 												key="sign_out" /></a>
 									</div>
+									<div class="col s6">
+											<a class="btn" href="ClubUsers?clubId=${club.id}"
+												style="width: 15em"><fmt:message bundle="${msg}"
+													key="look_participants" /></a>
+										</div>
 								</c:otherwise>
 							</c:choose>
 						</c:if>
-
-
-
-						<div class="col s6">
-							<a class="btn" href="ClubUsers?clubId=${club.id}"
-								style="width: 15em"><fmt:message bundle="${msg}"
-									key="look_participants" /></a>
-						</div>
 					</c:if>
 					<c:if test="${badGuy!=null}">
 						<h5>

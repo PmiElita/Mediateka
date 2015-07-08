@@ -350,8 +350,7 @@ public class EventController {
 			return;
 		}
 
-		Event event = getEventById(Integer.parseInt(request.getSession()
-				.getAttribute("eventId").toString()));
+		Event event = getEventById(eventId);
 		if (event.getAvaId() != null) {
 			Media media = getMediaById(event.getAvaId());
 			String imagePath = media.getPath().replace("\\", "/");
@@ -497,7 +496,7 @@ public class EventController {
 			event.setAvaId(media.getId());
 			updateEvent(event);
 			request.getSession().setAttribute("message", "Event updated. ");
-			response.sendRedirect("UpdateEvent");
+			response.sendRedirect("event?eventId=" + eventId);
 		} catch (WrongInputException e) {
 			logger.warn(e);
 			request.getSession().setAttribute("message", e.getMessage());
@@ -625,7 +624,7 @@ public class EventController {
 			event.setAvaId(media.getId());
 			updateEvent(event);
 			request.getSession().setAttribute("message", "Event updated. ");
-			response.sendRedirect("UpdateEvent");
+			response.sendRedirect("event?eventId=" + eventId);
 		} catch (WrongInputException e) {
 			logger.warn(e);
 			request.getSession().setAttribute("message", e.getMessage());

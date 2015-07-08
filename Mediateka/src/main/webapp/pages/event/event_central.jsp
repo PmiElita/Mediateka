@@ -57,6 +57,9 @@
 			<div class="col s6">
 				<a class="btn" href="memberSignEvent?eventId=${event.id}" style="width: 15em"><fmt:message bundle="${msg}" key="sign_to_event" /></a>
 			</div>
+			<div class="col s6">
+				<a class="btn" href="EventUsers?eventId=${event.id }" style="width: 15em"><fmt:message bundle="${msg}" key="look_participants" /></a>
+			</div>
 		</c:if>
 
 		<c:if test="${isSigned eq 'true'}">
@@ -69,6 +72,12 @@
 			<div class="col s3">
 				<a class="btn" href="creatorUnblockEvent?eventId=${event.id}" style="width: 15em"><fmt:message bundle="${msg}" key="delete_event" /></a>
 			</div>
+			<div class="col s3">
+				<a class="btn" href="UpdateEvent?eventId=${event.id }" style="width: 15em">Edit Event</a>
+			</div>
+			<div class="col s3">
+				<a class="btn" href="EventUsers?eventId=${event.id }" style="width: 15em"><fmt:message bundle="${msg}" key="look_participants" /></a>
+			</div>
 		</c:if>
 		<c:if test="${club.state eq State.BLOCKED}">
 			<div class="col s3">
@@ -77,19 +86,24 @@
 			<div class="col s3">
 				<a class="btn" href="creatorDeleteEvent?eventId=${event.id}" style="width: 15em"><fmt:message bundle="${msg}" key="delete_event" /></a>
 			</div>
+			<div class="col s3">
+				<a class="btn" href="UpdateEvent?eventId=${event.id }" style="width: 15em">Edit Event</a>
+			</div>
+			<div class="col s3">
+				<a class="btn" href="EventUsers?eventId=${event.id }" style="width: 15em"><fmt:message bundle="${msg}" key="look_participants" /></a>
+			</div>
 		</c:if>
 		</c:when>
 		<c:otherwise>
 			<div class="col s6">
 				<a class="btn" href="memberSignEvent?eventId=${event.id}" style="width: 15em"><fmt:message bundle="${msg}" key="sign_out" /></a>
 			</div>
+			<div class="col s6">
+				<a class="btn" href="EventUsers?eventId=${event.id }" style="width: 15em"><fmt:message bundle="${msg}" key="look_participants" /></a>
+			</div>
 		</c:otherwise>
 		</c:choose>
 		</c:if>
-
-		<div class="col s6">
-			<a class="btn" href="EventUsers?eventId=${event.id }" style="width: 15em"><fmt:message bundle="${msg}" key="look_participants" /></a>
-		</div>
 	</c:if>
 	<c:if test="${badGuy!=null}">
 	<h5><text align="center"><fmt:message bundle="${msg}" key="your_membership_in_this_event_is_blocked_or_deleted" /></text></h5>
