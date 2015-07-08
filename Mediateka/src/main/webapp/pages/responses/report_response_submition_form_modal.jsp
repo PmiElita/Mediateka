@@ -11,7 +11,7 @@
 		<div class="container">
 			
 			<h3 class="center"><fmt:message bundle="${msg}"
-									key="answer" /></h3>
+									key="answer_title" /></h3>
 			
 			<div class="row">
 				<form class="col s12" onsubmit="return false;">
