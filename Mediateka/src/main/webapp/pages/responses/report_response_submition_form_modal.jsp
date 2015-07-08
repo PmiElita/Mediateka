@@ -10,7 +10,8 @@
 	<div class="modal-content white">
 		<div class="container">
 			
-			<h3 class="center">Answer</h3>
+			<h3 class="center"><fmt:message bundle="${msg}"
+									key="answer" /></h3>
 			
 			<div class="row">
 				<form class="col s12" onsubmit="return false;">

@@ -32,7 +32,9 @@
 
 			<div class="container section white" style="width: 60%">
 
-				<h3 class="center">Responses</h3>
+				<h3 class="center">
+					<fmt:message bundle="${msg}" key="responses" />
+				</h3>
 
 				<div id="responses_div">
 					<c:forEach var="response" items="${responses }">
@@ -48,7 +50,9 @@
 										</c:choose>
 										<div class="row">
 											<div class="col s12">
-												<p style="color: black">Text:</p>
+												<p style="color: black">
+													<fmt:message bundle="${msg}" key="text" />
+												</p>
 
 											</div>
 										</div>
@@ -61,20 +65,24 @@
 										<div class="row">
 											<div class="col s6">
 												<p>
-													<span style="color: black">Description:</span>
-													${response.name }
+													<span style="color: black"><fmt:message
+															bundle="${msg}" key="name" /></span> ${response.name }
 												</p>
 											</div>
 											<div class="col s6">
 												<p>
-													<span style="color: black">Email:</span> ${response.email }
+													<span style="color: black"><fmt:message
+															bundle="${msg}" key="email" /></span> ${response.email }
 												</p>
 											</div>
 										</div>
 										<div class="row">
 											<div class="col s12">
 												<p>
-													<span style="color: black">Date:</span> ${response.date }
+													<span style="color: black"><fmt:message
+															bundle="${msg}" key="date" /></span> 
+
+													<fmt:formatDate pattern="dd.MM.yyyy hh:mm" value="${response.date }" />
 												</p>
 											</div>
 										</div>
@@ -91,6 +99,21 @@
 						</div>
 					</c:forEach>
 				</div>
+				<c:forEach begin="${first_page }" end="${last_page }"
+					varStatus="loop">
+
+					<c:choose>
+						<c:when test="${loop.index == current_page }">${loop.index }</c:when>
+						<c:when test="${loop.index != current_page }">
+							<a
+								href="showResponsesPage?offset=${ loop.index * limit }&limit=${limit}">
+								${loop.index } </a>
+						</c:when>
+					</c:choose>
+
+
+				</c:forEach>
+
 			</div>
 		</div>
 	</div>
@@ -98,21 +121,6 @@
 
 
 
-	<c:forEach begin="${first_page }" end="${last_page }" varStatus="loop">
-
-		<c:choose>
-			<c:when test="${loop.index == current_page }">
-				${loop.index }
-			</c:when>
-			<c:when test="${loop.index != current_page }">
-				<a
-					href="showResponsesPage?offset=${ loop.index * limit }&limit=${limit}">
-					${loop.index } </a>
-			</c:when>
-		</c:choose>
-
-
-	</c:forEach>
 
 
 	<script type="text/javascript">
@@ -147,11 +155,11 @@ function markResponse(responseId, name, email){
 
 
 function sendResponseToReport( ){
-	console.log('HERE');
 
 	responseId = document.getElementById("responseIdField").value;
 	responseBody = document.getElementById("responseBody").value;
 
+	document.getElementById("sendAnswerButton").disabled = true;
 	$.ajax(
 			{
 				url:'sendResponseToReport', 
@@ -162,10 +170,12 @@ function sendResponseToReport( ){
 				success : 
 					function(data){
 						Materialize.toast("<fmt:message bundle="${msg}" key="done" />", 4000);
-					},
+						document.getElementById("sendAnswerButton").disabled = false;
+				},
 				error: 
 					function (error) {
 						Materialize.toast("<fmt:message bundle="${msg}" key="cant_send_email" />", 4000);
+						document.getElementById("sendAnswerButton").disabled = false;
 	              	}
 			} 
 		);
