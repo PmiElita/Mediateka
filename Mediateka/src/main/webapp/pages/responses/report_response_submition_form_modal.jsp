@@ -50,7 +50,7 @@
 					</div>
 
 
-					<button class=" waves-effect waves-white btn" style="float: right;"
+					<button id = "sendAnswerButton" class=" waves-effect waves-white btn" style="float: right;"
 						onclick="sendResponseToReport();">
 						<fmt:message bundle="${msg}" key="send" />
 					</button>
