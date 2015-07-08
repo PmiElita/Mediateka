@@ -64,7 +64,7 @@ audio {
 						style="padding: 0px;">
 						<div class="valign-wrapper">
 							<div class="col s1">
-								<img src="${creatoAva[record.id] }"
+								<img src="${creatorAva[record.id] }"
 									alt="" class="circle" style="height: 45px;">
 							</div>
 							<div align="left" class="col s3">

@@ -13,6 +13,13 @@
 <html>
 
 <head>
+
+
+
+
+
+
+
 <jsp:include page="../general/head.jsp" />
 <script src="js/record.js"></script>
 
@@ -34,11 +41,13 @@
 			data.append('clubId', document.getElementById('clubId').value);
 		}
 		if (document.getElementById('eventId') != null) {
-			data.appent('eventId', document.getElementById('clubId').innerHTML
-					.toString());
+			data.appent('eventId', document.getElementById('clubId').value);
 		}
-		for (var i = 0, len = storedImages.length; i < len; i++) {
-			data.append('audio', storedAudio[i]);
+		for (var i = 0, len = storedAudios.length; i < len; i++) {
+			data.append('audio', storedAudios[i]);
+		}
+		if (storedAudios.length == 0) {
+			return;
 		}
 
 		var xhr = new XMLHttpRequest();
@@ -46,12 +55,12 @@
 
 		xhr.onload = function(e, data) {
 			if (this.status == 200) {
-				document.getElementById("loadAudioForm").reset();				
+				document.getElementById("loadAudioForm").reset();
 				document.getElementById("selectedAudios").innerHTML = "";
 				storedImages = [];
 				alert(JSON.stringify(e.currentTarget));
 				var responseJSON = JSON.parse(e.currentTarget.responseText);
-
+				alert(responseJSON);
 				loadIndex = document.getElementById('index').textContent;
 				var loadEl = document.getElementById("load");
 				loadIndex++;
@@ -61,10 +70,11 @@
 						"viewNewAudio?audioId="
 								+ responseJSON["contentGroup"].id + "&index="
 								+ document.getElementById("index").textContent);
-
+				
+				$('#audiojs_wrapper0').remove();
 				$('#addAudio').closeModal();
 
-				alert(' items uploaded.');
+				Materialize.toast(' items uploaded.', 2000);
 			}
 		}
 
@@ -106,17 +116,11 @@
 			</div>
 
 			<div class="section white">
-				<div id="load"></div>
-				<label id="index" hidden="true">${index}</label>
-
 				<div id="wrapper">
-					<audio preload></audio>
-
+					<!-- 					<audio preload></audio> -->
 					<ol>
-
 						<jsp:include page="audioList.jsp" />
 					</ol>
-
 				</div>
 			</div>
 
@@ -129,8 +133,7 @@
 		<div class="modal-content">
 
 
-			<form id="loadAudioForm" method="post"
-				enctype="multipart/form-data">
+			<form id="loadAudioForm" enctype="multipart/form-data">
 
 				<c:if test="${clubId ne null}">
 					<input type="hidden" name="clubId" id="clubId" value='${clubId }'>
@@ -148,8 +151,7 @@
 								<input class="file-path validate" type="hidden" />
 								<div class="btn">
 									<span>Choose files</span> <input type="file" id="audio"
-										multiple name="audio" onchange="readURL(this);"
-										accept="audio/*" />
+										multiple name="audio" accept="audio/*" />
 								</div>
 								<label id="number" hidden="true">1</label>
 							</div>
@@ -166,6 +168,12 @@
 		</div>
 	</div>
 </body>
+<script>
+	var audio;
+	var a;
+</script>
+
+
 </html>
 
 

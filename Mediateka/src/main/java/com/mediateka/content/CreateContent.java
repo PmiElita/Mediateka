@@ -56,11 +56,20 @@ public class CreateContent {
 		contentGroup.setCreatorId((Integer) session.getAttribute("userId"));
 		contentGroup.setType(contentGroupType);
 		contentGroup.setState(State.ACTIVE);
-		contentGroup.setText(fileLoader.getParameterMap().get("text"));
+		if (fileLoader.getParameterMap().get("text") != null) {
+			contentGroup.setText(fileLoader.getParameterMap().get("text"));
+		}
 		contentGroup.setCreationDate(Timestamp.valueOf(LocalDateTime.now()));
 
 		contentGroup = ContentGroupService.callSaveContentGroup(contentGroup);
 		List<Media> mediaList = new ArrayList<Media>();
+		try {
+			System.out.println(fileLoader.getAllFileDefaultNames() + " "
+					+ fileLoader.getAllFilePathes());
+		} catch (WrongInputException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		try {
 			if (fileLoader.getAllFilePathes() != null) {
 				for (int i = 0; i < fileLoader.getAllFilePathes().size(); i++) {

@@ -173,7 +173,7 @@ function handleForm(e) {
 							+ "&index="
 							+ document.getElementById("index").textContent);
 
-			Materialize.toast(' files uploaded.');
+			Materialize.toast(' files uploaded.',2000);
 		}
 	}
 

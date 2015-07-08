@@ -10,24 +10,7 @@
 <fmt:setLocale value="${locale}" />
 <fmt:setBundle basename="menu" />
 <fmt:requestEncoding value="utf-8" />
-<script src="audiojs/audio.min.js"></script>
 
-
-
-
-
-<style>
-.image-cover-t {
-	color: white;
-	position: relative;
-	margin-top: 1em;
-	text-shadow: black 1.0px 0.0px, black 1.0px 1.0px, black 0.0px 1.0px,
-		black -1.0px 1.0px, black -1.0px 0.0px, black -1.0px -1.0px, black
-		0.0px -1.0px, black 1.0px -1.0px, black 0.0 0.0 3.0px, black 0.0 0.0
-		3.0px, black 0.0 0.0 3.0px, black 0.0 0.0 3.0px, black 0.0 0.0 3.0px,
-		black 0.0 0.0 3.0px, black 0.0 0.0 3.0px, black 0.0 0.0 3.0px;
-}
-</style>
 
 
 <style>
@@ -133,19 +116,7 @@ li.playing:before {
 }
 
 #shortcuts em {
-	font-style: normal;
-	background: #d3d3d3;
-	padding: 3px 9px;
 	position: relative;
-	left: -3px;
-	-webkit-border-radius: 4px;
-	-moz-border-radius: 4px;
-	-o-border-radius: 4px;
-	border-radius: 4px;
-	-webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-	-moz-box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-	-o-box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-	box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 @media screen and (max-device-width: 480px) {
@@ -159,56 +130,70 @@ li.playing:before {
 }
 </style>
 
+<script src="audiojs/audio.min.js"></script>
+<script src="./jquery.js"></script>
+<script src="../audiojs/audio.js"></script>
+<script>
+	$(function() {
+
+		a = null;
+
+		// Setup the player to autoplay the next track
+
+		a = audiojs.createAll({
+			trackEnded : function() {
+				var next = $('ol li.playing').next();
+				if (!next.length)
+					next = $('ol li').first();
+				next.addClass('playing').siblings().removeClass('playing');
+				audio.load($('a', next).attr('data-src'));
+				audio.play();
+			}
+		});
+
+		// Load in the first track
+		var audio = a[0];
+		first = $('ol a').attr('data-src');
+		$('ol li').first().addClass('playing');
+		audio.load(first);
+
+		// Load in a track on click
+		$('ol li').click(function(e) {
+			e.preventDefault();
+			$(this).addClass('playing').siblings().removeClass('playing');
+			audio.load($('a', this).attr('data-src'));
+			audio.play();
+		});
+		// Keyboard shortcuts
+		$(document).keydown(function(e) {
+			var unicode = e.charCode ? e.charCode : e.keyCode;
+			// right arrow
+			if (unicode == 39) {
+				var next = $('li.playing').next();
+				if (!next.length)
+					next = $('ol li').first();
+				next.click();
+				// back arrow
+			} else if (unicode == 37) {
+				var prev = $('li.playing').prev();
+				if (!prev.length)
+					prev = $('ol li').last();
+				prev.click();
+				// spacebar
+			} else if (unicode == 32) {
+				audio.playPause();
+			}
+		})
+	});
+</script>
+
+
+<div id="load"></div>
+<label id="index" hidden="true">${index}</label>
+<audio id='audioPlayer'></audio>
 <c:forEach var="audios" items="${records }">
 	<c:forEach var="audio" items="${audioMap.get(audios.id) }">
 		<li><a href="#" data-src="${audio.path }">${audio.name }</a></li>
 	</c:forEach>
 </c:forEach>
-
-    <script>
-      $(function() { 
-        // Setup the player to autoplay the next track
-        var a = audiojs.createAll({
-          trackEnded: function() {
-            var next = $('ol li.playing').next();
-            if (!next.length) next = $('ol li').first();
-            next.addClass('playing').siblings().removeClass('playing');
-            audio.load($('a', next).attr('data-src'));
-            audio.play();
-          }
-        });
-        
-        // Load in the first track
-        var audio = a[0];
-            first = $('ol a').attr('data-src');
-        $('ol li').first().addClass('playing');
-        audio.load(first);
-
-        // Load in a track on click
-        $('ol li').click(function(e) {
-          e.preventDefault();
-          $(this).addClass('playing').siblings().removeClass('playing');
-          audio.load($('a', this).attr('data-src'));
-          audio.play();
-        });
-        // Keyboard shortcuts
-        $(document).keydown(function(e) {
-          var unicode = e.charCode ? e.charCode : e.keyCode;
-             // right arrow
-          if (unicode == 39) {
-            var next = $('li.playing').next();
-            if (!next.length) next = $('ol li').first();
-            next.click();
-            // back arrow
-          } else if (unicode == 37) {
-            var prev = $('li.playing').prev();
-            if (!prev.length) prev = $('ol li').last();
-            prev.click();
-            // spacebar
-          } else if (unicode == 32) {
-            audio.playPause();
-          }
-        })
-      });
-    </script>
 

@@ -265,6 +265,7 @@ public class ClubController {
 		Club club = ClubService.getClubById(clubId);
 		request.setAttribute("clubName", club.getName());
 		request.setAttribute("clubId", clubId);
+		request.setAttribute("index", 0);
 		request.getRequestDispatcher("pages/club/audios.jsp").forward(request,
 				response);
 		request.removeAttribute("clubName");
