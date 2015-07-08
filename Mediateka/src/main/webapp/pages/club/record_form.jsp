@@ -2,6 +2,10 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
+<fmt:setLocale value="${cookie.lang.value}" />
+<fmt:setBundle basename="translations/club_page" var="msg" />
+
 <form id="recordForm" enctype="multipart/form-data">
 
 
@@ -20,7 +24,7 @@
 						<div class="input-field image-cover-t">
 							<i class="mdi-editor-mode-edit prefix"></i>
 							<textarea class="materialize-textarea" name="text" id="text"></textarea>
-							<label for="text" style="font-size: 1.5em" style="color:white">Message</label>
+							<label for="text" style="font-size: 1.5em" style="color:white"><fmt:message bundle="${msg}" key="record_form.message" /></label>
 						</div>
 					</div>
 				</div>

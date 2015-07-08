@@ -3,6 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+<fmt:setLocale value="${cookie.lang.value}" />
+<fmt:setBundle basename="translations/club_page" var="msg" />
+
 <!-- fotorama.css & fotorama.js. -->
 <link
 	href="http://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.css"
@@ -42,8 +45,8 @@ audio {
 							<div align="left" class="col s3">
 								<c:out value="${creatorName[record.id]}"></c:out>
 							</div>
-							<a onclick="restoreRecord(${record.id }); Materialize.toast('Restored', 4000)"
-								class="waves-effect waves-light btn">Restore</a>
+							<a onclick="restoreRecord(${record.id }); Materialize.toast('<fmt:message bundle="${msg}" key="record_central.restored" />', 4000)"
+								class="waves-effect waves-light btn"><fmt:message bundle="${msg}" key="record_central.restore" /></a>
 							<div class="col s7" align="right">
 								<fmt:formatDate value="${record.creationDate}"
 									pattern="HH:mm dd.MM.yyyy" />
@@ -75,7 +78,7 @@ audio {
 							</div>
 							<c:if test="${userId eq record.creatorId}">
 								<div class="col s1 ">
-									<span onclick="deleteRecord(${record.id}); Materialize.toast('Deleted', 4000);"
+									<span onclick="deleteRecord(${record.id}); Materialize.toast('<fmt:message bundle="${msg}" key="record_central.deleted" />', 4000);"
 										onmouseover="this.style.color = 'red';"
 										onmouseleave="this.style.color = 'black';"
 										class="waves-effect waves-circle waves-red">X</span>
@@ -143,7 +146,7 @@ audio {
 			 <ul class="collapsible comments" data-collapsible="accordion">
 		 <li>
 		 <div class="collapsible-header"><i
-	id="collapse-icon" class="mdi-communication-comment"></i>Comments</div>
+	id="collapse-icon" class="mdi-communication-comment"></i><fmt:message bundle="${msg}" key="record_central.comments" /></div>
 		 <div class="collapsible-body  " >
 
 			<div class=" comment-area" id="commentArea">

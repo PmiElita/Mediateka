@@ -7,9 +7,8 @@
 
 <%@page import="com.mediateka.model.enums.Role"%>
 
-<fmt:setLocale value="${locale}" />
-<fmt:setBundle basename="menu" />
-<fmt:requestEncoding value="utf-8" />
+<fmt:setLocale value="${cookie.lang.value}" />
+<fmt:setBundle basename="translations/club_page" var="msg" />
 
 <html>
 
@@ -64,7 +63,7 @@
 				<div class="container">
 					<h3 class="image-cover-t">${clubName}</h3>
 					<div class="row">
-						<h4 class="image-cover-t">Albums</h4>
+						<h4 class="image-cover-t"><fmt:message bundle="${msg}" key="albums" /></h4>
 						<div class="col s9">
 							<a title="Add Album" href="" data-target="addAlbum"
 								class="modal-trigger"> <span><i

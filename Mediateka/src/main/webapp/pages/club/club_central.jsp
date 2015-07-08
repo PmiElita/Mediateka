@@ -6,9 +6,9 @@
 <%@page import="com.mediateka.model.enums.Role"%>
 <%@page import="com.mediateka.model.enums.State"%>
 
-<fmt:setLocale value="${locale}" />
-<fmt:setBundle basename="menu" />
-<fmt:requestEncoding value="utf-8" />
+<fmt:setLocale value="${cookie.lang.value}" />
+<fmt:setBundle basename="translations/club_page" var="msg" />
+
 
 <head>
 <jsp:include page="crop/crop.jsp" />
@@ -56,7 +56,8 @@
 						<c:if test="${isSigned == false}">
 							<div class="col s6">
 								<a class="btn" href="memberSignClub?clubId=${club.id}"
-									style="width: 15em">Sign to club</a>
+									style="width: 15em"><fmt:message bundle="${msg}"
+										key="sign_to_club" /></a>
 							</div>
 
 
@@ -67,28 +68,33 @@
 									<c:if test="${club.state eq State.ACTIVE}">
 										<div class="col s3">
 											<a class="btn" href="creatorBlockClub?clubId=${club.id}"
-												style="width: 15em">Block club</a>
+												style="width: 15em"><fmt:message bundle="${msg}"
+													key="block_club" /></a>
 										</div>
 										<div class="col s3">
 											<a class="btn" href="creatorDeleteClub?clubId=${club.id}"
-												style="width: 15em">Delete club</a>
+												style="width: 15em"><fmt:message bundle="${msg}"
+													key="delete_club" /></a>
 										</div>
 									</c:if>
 									<c:if test="${club.state eq State.BLOCKED}">
 										<div class="col s3">
 											<a class="btn" href="creatorUnblockClub?clubId=${club.id}"
-												style="width: 15em">Unblock club</a>
+												style="width: 15em"><fmt:message bundle="${msg}"
+													key="unblock_club" /></a>
 										</div>
 										<div class="col s3">
 											<a class="btn" href="creatorDeleteClub?clubId=${club.id}"
-												style="width: 15em">Delete club</a>
+												style="width: 15em"><fmt:message bundle="${msg}"
+													key="delete_club" /></a>
 										</div>
 									</c:if>
 								</c:when>
 								<c:otherwise>
 									<div class="col s6">
 										<a class="btn" href="memberSignClub?clubId=${club.id}"
-											style="width: 15em">Sign out</a>
+											style="width: 15em"><fmt:message bundle="${msg}"
+												key="sign_out" /></a>
 									</div>
 								</c:otherwise>
 							</c:choose>
@@ -98,20 +104,21 @@
 
 						<div class="col s6">
 							<a class="btn" href="ClubUsers?clubId=${club.id}"
-								style="width: 15em">Look participants</a>
+								style="width: 15em"><fmt:message bundle="${msg}"
+									key="look_participants" /></a>
 						</div>
 					</c:if>
 					<c:if test="${badGuy!=null}">
 						<h5>
-							<text align="center"> <c:out
-								value="Your membership in this event is blocked or deleted!" /></text>
+							<text align="center"> <fmt:message bundle="${msg}"
+								key="your_membership_in_this_event_is_blocked_or_deleted" /> </text>
 						</h5>
 					</c:if>
 				</c:when>
 				<c:otherwise>
 					<text align="center">
 					<h4>
-						<c:out value="Log in, if you want to see more!" />
+						<fmt:message bundle="${msg}" key="login_to_see_more" />
 					</h4>
 					</text>
 				</c:otherwise>
@@ -124,13 +131,15 @@
 					<div class="col s12 m8 offset-m2 l6 offset-l3 my-cardmy-small-card">
 						<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
 							<div style="margin-top: -2em">
-								<h3 class="center" style="color: black">Music</h3>
+								<h3 class="center" style="color: black"><fmt:message bundle="${msg}" key="music" /></h3>
 								<div class="row valign-wrapper">
 									<div class="col s9">
 										<img src="images/club/music.png" alt=""
 											class="circle responsive-img" />
 									</div>
-									<div class="club-badge" style="margin-left: 0.4em"><c:out value="${music}"/></div>
+									<div class="club-badge" style="margin-left: 0.4em">
+										<c:out value="${music}" />
+									</div>
 								</div>
 							</div>
 						</div>
@@ -145,13 +154,15 @@
 						class="col s12 m8 offset-m2 l6 offset-l3 my-card my-small-card">
 						<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
 							<div style="margin-top: -2em">
-								<h3 class="center" style="color: black">Video</h3>
+								<h3 class="center" style="color: black"><fmt:message bundle="${msg}" key="video" /></h3>
 								<div class="row valign-wrapper">
 									<div class="col s9">
 										<img src="images/club/video.jpg" alt=""
 											class="circle responsive-img">
 									</div>
-									<div class="club-badge" style="margin-left: 0.4em"><c:out value="${videos}"/></div>
+									<div class="club-badge" style="margin-left: 0.4em">
+										<c:out value="${videos}" />
+									</div>
 								</div>
 							</div>
 						</div>
@@ -168,13 +179,15 @@
 						class="col s12 m8 offset-m2 l6 offset-l3 my-card my-small-card">
 						<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
 							<div style="margin-top: -2em">
-								<h3 class="center" style="color: black">Photo</h3>
+								<h3 class="center" style="color: black"><fmt:message bundle="${msg}" key="photo" /></h3>
 								<div class="row valign-wrapper">
 									<div class="col s9">
 										<img src="images/club/photo.png" alt=""
 											class="circle responsive-img">
 									</div>
-									<div class="club-badge" style="margin-left: 0.4em"><c:out value="${albums}"/></div>
+									<div class="club-badge" style="margin-left: 0.4em">
+										<c:out value="${albums}" />
+									</div>
 								</div>
 							</div>
 						</div>
@@ -188,13 +201,15 @@
 						class="col s12 m8 offset-m2 l6 offset-l3 my-card my-small-card">
 						<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
 							<div style="margin-top: -2em">
-								<h3 class="center" style="color: black">Events</h3>
+								<h3 class="center" style="color: black"><fmt:message bundle="${msg}" key="events" /></h3>
 								<div class="row valign-wrapper">
 									<div class="col s8">
 										<img style="margin-top: 0em" src="images/club/events.png"
 											alt="" class="circle responsive-img">
 									</div>
-									<div class="my-badge" style="margin-left: 0.75em"><c:out value="${events}"/></div>
+									<div class="my-badge" style="margin-left: 0.75em">
+										<c:out value="${events}" />
+									</div>
 								</div>
 							</div>
 						</div>

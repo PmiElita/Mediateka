@@ -5,9 +5,9 @@
 <link type="text/css" rel="stylesheet" href="css/oleh_style.css"
 	media="screen,projection" />
 
-<fmt:setLocale value="${locale}" />
+<fmt:setLocale value="${cookie.lang.value}" />
 <fmt:setBundle basename="translations/club_chat" var="msg" />
-<fmt:requestEncoding value="utf-8" />
+
 
 	<div id="sideNav" class="side-nav" style="padding-bottom: 20px;">
 		<div id="chat" class="chat row">

@@ -4,6 +4,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+
+<fmt:setLocale value="${cookie.lang.value}" />
+<fmt:setBundle basename="translations/club_page" var="msg" />
+
+
+
 <html>
 <head>
 <link class="jsbin"
@@ -14,8 +20,7 @@
 <script class="jsbin"
 	src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.0/jquery-ui.min.js"></script>
 <script src="js/viewImage.js"></script>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </head>
 <body>
 
@@ -25,7 +30,7 @@
 	<div>
 		<div class="input-field col s5">
 			<input name="club_name" id="club_name" type="text"
-				value="${club.name}" form="editClub" /> Club name
+				value="${club.name}" form="editClub" /> <fmt:message bundle="${msg}" key="edit_club.club_name" />
 		</div>
 		<div class="input-field col s5">
 			<i class="mdi-action-account-circle prefix"></i>

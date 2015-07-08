@@ -1,6 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
+<fmt:setLocale value="${cookie.lang.value}" />
+<fmt:setBundle basename="translations/event_page" var="msg" />
+
 
 <div class="row" style="margin-top: -1em">
 	<br>
@@ -35,7 +40,7 @@
 						<div class="col s12">
 							<div class="waves-effect waves-block waves-light my-picture-wrap">
 								<div align="center">
-									<h2>There are no such events!</h2>
+									<h2><fmt:message bundle="${msg}" key="there_are_no_such_events" /></h2>
 								</div>
 							</div>
 						</div>

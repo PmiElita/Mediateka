@@ -1,6 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+<fmt:setLocale value="${cookie.lang.value}" />
+<fmt:setBundle basename="translations/club_page" var="msg" />
 
 <script src="js/record.js"></script>
 
@@ -10,7 +12,7 @@
 
 		<form id="loadAlbumForm" action="loadAlbum" method="post"
 			enctype="multipart/form-data">
-			
+
 			<c:if test="${clubId ne null}">
 				<input type="hidden" name="clubId" id="clubId" value='${clubId }'>
 			</c:if>
@@ -19,8 +21,9 @@
 			</c:if>
 
 			<div class="row">
-				Album name:<input type="text" id="name" name="name" required
-					pattern=".{1,45}" form="createClub"><br>
+				<fmt:message bundle="${msg}" key="load_album.album_name" />
+				<input type="text" id="name" name="name" required pattern=".{1,45}"
+					form="createClub"><br>
 			</div>
 
 			Files:
@@ -30,14 +33,17 @@
 						<div class="file-field input-field">
 							<input class="file-path validate" type="hidden" />
 							<div class="btn">
-								<span>Choose files</span> <input type="file" id="image" multiple
-									name="image" onchange="readURL(this);" accept="image/*" />
+								<span><fmt:message bundle="${msg}"
+										key="load_album.choose_files" />
+									<fmt:message bundle="${msg}" key="load_album.album_name" /></span> <input
+									type="file" id="image" multiple name="image"
+									onchange="readURL(this);" accept="image/*" />
 							</div>
 							<label id="number" hidden="true">1</label>
 						</div>
 					</div>
 					<div class="row" style="margin-top: 5em">
-						<button class="btn" type="submit">Upload</button>
+						<button class="btn" type="submit"><fmt:message bundle="${msg}" key="load_album.upload" /></button>
 					</div>
 				</div>
 				<div class="col s9">
@@ -48,64 +54,62 @@
 	</div>
 </div>
 <script>
-$(document).ready(function() {
-	$("#loadAlbumForm").on("submit", handleAlbum);
+	$(document).ready(function() {
+		$("#loadAlbumForm").on("submit", handleAlbum);
 
-});
+	});
 
-function handleAlbum(e) {
-	alert(1);
+	function handleAlbum(e) {
+		alert(1);
 
-	e.preventDefault();
-	var data = new FormData();
-	data.append('index', $('#index').text());
-	data.append('name', document.getElementById('name').value);
-	if (document.getElementById('clubId') != null) {
-		data.append('clubId', document.getElementById('clubId').value);
-	}
-	if (document.getElementById('eventId') != null) {
-		data.appent('eventId', document.getElementById('clubId').innerHTML
-				.toString());
-	}	
-	for (var i = 0, len = storedImages.length; i < len; i++) {
-		data.append('image', storedImages[i]);
-	}	
-	if ((document.getElementById('name').value == "")
-			&& (storedImages.length == 0)) {
-		return;
-	}
-
-	var xhr = new XMLHttpRequest();
-	xhr.open('POST', 'loadAlbum', true);
-
-	xhr.onload = function(e, data) {
-		if (this.status == 200) {
-			document.getElementById("loadAlbumForm").reset();
-			document.getElementById("name").value = "";
-			document.getElementById("selectedImages").innerHTML = "";
-			storedImages = [];
-			alert(JSON.stringify(e.currentTarget));
-			var responseJSON = JSON.parse(e.currentTarget.responseText);
-
-			loadIndex = document.getElementById('index').textContent;
-			var loadEl = document.getElementById("load");
-			loadIndex++;
-			$("#index").text(loadIndex);
-			loadEl.id = loadEl.id + loadIndex;
-			$('#' + loadEl.id).load(
-					"viewNewAlbum?albumId=" + responseJSON["contentGroup"].id
-							+ "&index="
-							+ document.getElementById("index").textContent);
-
-			$('#addAlbum').closeModal();
-			
-			alert(' items uploaded.');
+		e.preventDefault();
+		var data = new FormData();
+		data.append('index', $('#index').text());
+		data.append('name', document.getElementById('name').value);
+		if (document.getElementById('clubId') != null) {
+			data.append('clubId', document.getElementById('clubId').value);
 		}
+		if (document.getElementById('eventId') != null) {
+			data.appent('eventId', document.getElementById('clubId').innerHTML
+					.toString());
+		}
+		for (var i = 0, len = storedImages.length; i < len; i++) {
+			data.append('image', storedImages[i]);
+		}
+		if ((document.getElementById('name').value == "")
+				&& (storedImages.length == 0)) {
+			return;
+		}
+
+		var xhr = new XMLHttpRequest();
+		xhr.open('POST', 'loadAlbum', true);
+
+		xhr.onload = function(e, data) {
+			if (this.status == 200) {
+				document.getElementById("loadAlbumForm").reset();
+				document.getElementById("name").value = "";
+				document.getElementById("selectedImages").innerHTML = "";
+				storedImages = [];
+				alert(JSON.stringify(e.currentTarget));
+				var responseJSON = JSON.parse(e.currentTarget.responseText);
+
+				loadIndex = document.getElementById('index').textContent;
+				var loadEl = document.getElementById("load");
+				loadIndex++;
+				$("#index").text(loadIndex);
+				loadEl.id = loadEl.id + loadIndex;
+				$('#' + loadEl.id).load(
+						"viewNewAlbum?albumId="
+								+ responseJSON["contentGroup"].id + "&index="
+								+ document.getElementById("index").textContent);
+
+				$('#addAlbum').closeModal();
+
+				alert(' items uploaded.');
+			}
+		}
+
+		xhr.send(data);
+
 	}
-
-	xhr.send(data);
-
-}
-
-
 </script>
