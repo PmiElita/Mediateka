@@ -104,7 +104,6 @@ public class RegisterUserController {
 		newUser.setBirthDate(new Date(new SimpleDateFormat("dd.MM.yyyy").parse(
 				form.getBirthDate()).getTime()));
 
-		newUser.setBirthDate(new Date(0));
 		newUser.setNationality(form.getNationality());
 		newUser.setProfessionId(Integer.parseInt(form.getProfession()));
 		newUser.setEducation(form.getEducation());

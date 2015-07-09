@@ -1,7 +1,10 @@
 package com.mediateka.controller;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -20,12 +23,16 @@ import com.mediateka.annotation.Request;
 import com.mediateka.comparator.UsersByFullname;
 import com.mediateka.exception.WrongInputException;
 import com.mediateka.form.SearchUserForm;
+import com.mediateka.form.UserRegistrationForm;
 import com.mediateka.model.User;
+import com.mediateka.model.enums.Role;
 import com.mediateka.model.enums.State;
 import com.mediateka.search.UserSearch;
+import com.mediateka.service.ProfessionService;
 import com.mediateka.service.UserService;
 import com.mediateka.util.FormValidator;
 import com.mediateka.util.ObjectFiller;
+import com.mediateka.util.SecurityStringGenerator;
 import com.mediateka.util.Translator;
 
 @Controller
@@ -275,5 +282,80 @@ public class AdminController {
 			response.setCharacterEncoding("UTF-8");
 			response.getWriter().write(new Gson().toJson(map));
 		}
+	}
+
+
+
+	@Request(url = "editUser", method = "get")
+	public static void editUserGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException,
+			ReflectiveOperationException, SQLException {
+		
+		Integer userId = null;
+		try{
+			userId = Integer.parseInt(request.getParameter("userId"));
+		}catch (Exception e){
+			response.sendRedirect("cabinet");
+			return;
+		}
+		
+		
+		
+		User user = UserService.getUserById(userId);
+		if (user == null){
+			response.sendRedirect("cabinet");
+			return;
+		}
+		
+		
+		request.setAttribute("user", user);
+		request.setAttribute("professions", ProfessionService.getProfessionAll());
+		request.setAttribute("userId", request.getParameter("userId"));
+		
+		request.getRequestDispatcher("pages/form/modify_user_by_admin_form.jsp").forward(request, response);
+		
+	}
+
+	
+	@Request(url = "editUser", method = "post")
+	public static void editUserPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException,
+			ReflectiveOperationException, SQLException, ParseException {
+		
+		UserRegistrationForm form = new UserRegistrationForm();
+		
+		ObjectFiller.fill(form, request);
+		
+		System.out.println(form);
+		Integer userId = Integer.parseInt(request.getParameter("userId"));
+		User user = UserService.getUserById(userId);
+		
+		user.setFirstName(form.getFirstName());
+		user.setMiddleName(form.getMiddleName());
+		user.setLastName(form.getLastName());
+
+		user.setBirthDate(new Date(new SimpleDateFormat("dd.MM.yyyy").parse(
+				form.getBirthDate()).getTime()));
+
+		user.setNationality(form.getNationality());
+		user.setProfessionId(Integer.parseInt(form.getProfession()));
+		user.setEducation(form.getEducation());
+		user.setEduInstitution(form.getInstitution());
+
+		user.setEmail(form.getEmail());
+		user.setPhone(form.getPhone());
+		user.setAdress(form.getAddress());
+
+		if (form.getFormId().equals("")){
+			user.setFormId(null);
+		} else {
+			user.setFormId(Integer.parseInt(form.getFormId()));
+
+		}
+
+		UserService.updateUser(user);
+
+		return;
+		
 	}
 }
