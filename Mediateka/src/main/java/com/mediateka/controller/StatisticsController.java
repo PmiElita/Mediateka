@@ -115,19 +115,19 @@ public class StatisticsController {
 
 		if (userStatistics.get("by_age") == null) {
 			userStatistics.put("by_age", new HashMap<String, Integer>());
-			Map<String, Integer> byAgeColumns = userStatistics.get("by_age");
-			if (byAgeColumns.get("<15") == null) {
-				byAgeColumns.put("<15", 0);
-			}
-			if (byAgeColumns.get("15-17") == null) {
-				byAgeColumns.put("15-17", 0);
-			}
-			if (byAgeColumns.get("18-21") == null) {
-				byAgeColumns.put("18-21", 0);
-			}
-			if (byAgeColumns.get("22+") == null) {
-				byAgeColumns.put("22+", 0);
-			}
+		}
+		Map<String, Integer> byAgeColumns = userStatistics.get("by_age");
+		if (byAgeColumns.get("<15") == null) {
+			byAgeColumns.put("<15", 0);
+		}
+		if (byAgeColumns.get("15-17") == null) {
+			byAgeColumns.put("15-17", 0);
+		}
+		if (byAgeColumns.get("18-21") == null) {
+			byAgeColumns.put("18-21", 0);
+		}
+		if (byAgeColumns.get("22+") == null) {
+			byAgeColumns.put("22+", 0);
 		}
 
 		request.setAttribute("yearStatistics", userStatistics);
@@ -151,19 +151,19 @@ public class StatisticsController {
 
 			if (dayStatistics.get("by_age") == null) {
 				dayStatistics.put("by_age", new HashMap<String, Integer>());
-				Map<String, Integer> byAgeColumns = dayStatistics.get("by_age");
-				if (byAgeColumns.get("<15") == null) {
-					byAgeColumns.put("<15", 0);
-				}
-				if (byAgeColumns.get("15-17") == null) {
-					byAgeColumns.put("15-17", 0);
-				}
-				if (byAgeColumns.get("18-21") == null) {
-					byAgeColumns.put("18-21", 0);
-				}
-				if (byAgeColumns.get("22+") == null) {
-					byAgeColumns.put("22+", 0);
-				}
+			}
+			byAgeColumns = dayStatistics.get("by_age");
+			if (byAgeColumns.get("<15") == null) {
+				byAgeColumns.put("<15", 0);
+			}
+			if (byAgeColumns.get("15-17") == null) {
+				byAgeColumns.put("15-17", 0);
+			}
+			if (byAgeColumns.get("18-21") == null) {
+				byAgeColumns.put("18-21", 0);
+			}
+			if (byAgeColumns.get("22+") == null) {
+				byAgeColumns.put("22+", 0);
 			}
 			listOfUserStatistics.add(dayStatistics);
 		}
