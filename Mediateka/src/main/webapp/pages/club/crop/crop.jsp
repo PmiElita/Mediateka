@@ -73,12 +73,12 @@
 		function loadClubAva(e) {
 
 			document.getElementById("ava").setAttribute('style',
-					'margin-left: 0em;');			
+					'margin-left: 0em;');
 			var img = cropper.getDataURL();
 			storedImages.push(cropper.getBlob());
-			document.getElementById("ava").src = img;			
+			document.getElementById("ava").src = img;
 			$('#modal15').closeModal();
-			
+
 			e.preventDefault();
 			var data = new FormData();
 			if (document.getElementById('clubId') != null) {
@@ -93,6 +93,8 @@
 			xhr.onload = function(e, data) {
 				if (this.status == 200) {
 					document.getElementById("clubAvaForm").reset();
+					document.getElementById("selectedImages").innerHTML = "";
+					storedImages = [];
 				}
 			}
 			xhr.send(data);
@@ -105,14 +107,14 @@
 				spinner : '.spinner',
 				imgSrc : 'avatar.png'
 			}
-			
+
 			$('#file').on('change', function() {
 				var reader = new FileReader();
 				reader.onload = function(e) {
 					options.imgSrc = e.target.result;
 					cropper = $('.imageBox').cropbox(options);
-				}										
-														
+				}
+
 				reader.readAsDataURL(this.files[0]);
 				this.files = [];
 			})

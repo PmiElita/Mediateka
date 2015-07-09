@@ -57,7 +57,7 @@
 			if (this.status == 200) {
 				document.getElementById("loadAudioForm").reset();
 				document.getElementById("selectedAudios").innerHTML = "";
-				storedImages = [];
+				storedAudios = [];
 				alert(JSON.stringify(e.currentTarget));
 				var responseJSON = JSON.parse(e.currentTarget.responseText);
 				alert(responseJSON);

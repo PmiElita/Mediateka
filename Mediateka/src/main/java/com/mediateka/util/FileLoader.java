@@ -102,7 +102,7 @@ public class FileLoader {
 												0,
 												copyFile.getAbsolutePath()
 														.lastIndexOf('.'))
-										+ ".png");
+										+ ".jpg");
 								ImageIO.write(g.grab().getBufferedImage(),
 										"png", posterFile);
 								System.out.println("ok");

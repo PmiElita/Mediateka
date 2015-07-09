@@ -145,7 +145,7 @@
 			if (this.status == 200) {
 				document.getElementById("loadVideoForm").reset();
 				document.getElementById("selectedVideos").innerHTML = "";
-				storedImages = [];
+				storedVideos = [];
 				alert(JSON.stringify(e.currentTarget));
 				var responseJSON = JSON.parse(e.currentTarget.responseText);
 				alert(responseJSON);

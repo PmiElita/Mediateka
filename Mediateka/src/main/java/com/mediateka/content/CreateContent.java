@@ -210,7 +210,7 @@ public class CreateContent {
 														media.getPath()
 																.lastIndexOf(
 																		'.'))
-												+ ".png");
+												+ ".jpg");
 								if (posters != null) {
 									if (posters.size() > 1) {
 										System.out.println("owww fuck!");
