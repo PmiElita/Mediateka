@@ -75,13 +75,18 @@ section {
 }
 
 
-.my-picture-wrap .my-picture-club {
+.my-picture-club {
 	background-size: cover;
 	background-position: center;
 	margin-top:-7em;
 }
 
 .my-picture-wrap .my-picture{
+	background-size: cover;
+	background-position: center;
+}
+
+.my-picture-wrap .my-album-picture{
 	background-size: cover;
 	background-position: center;
 }
@@ -134,7 +139,7 @@ section {
 	text-decoration: none;
 	visibility: hidden;
 	width: 285.0px;
-	min-height: 10.0em;
+	min-height: 7.0em;
 	z-index: 100.0;
 }
 
@@ -159,7 +164,7 @@ section {
 
 .profile-tooltipped #div p {
 	margin-left: 6.0em;
-	margin-bottom: -3.0em;
+	margin-bottom: -2.0em;
 }
 
 div.container-side{

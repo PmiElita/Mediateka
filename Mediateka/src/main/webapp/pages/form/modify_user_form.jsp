@@ -78,7 +78,7 @@
 								class="validate" value="${nationality }">
 						</div>
 
-						<div class="input-field col s3">
+						<div class="input-field col s3" style="margin-top:0.5em">
 							<p>
 								<fmt:message bundle="${msg}" key="profession" />
 							</p>
@@ -93,7 +93,7 @@
 							</select>
 						</div>
 
-						<div class="input-field col s3">
+						<div class="input-field col s3" style="margin-top:0.5em">
 							<p>
 								<fmt:message bundle="${msg}" key="education" />
 							</p>

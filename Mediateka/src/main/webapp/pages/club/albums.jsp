@@ -58,32 +58,33 @@
 			<c:if test="${userRole eq Role.USER}">
 				<jsp:include page="../user/user_side_nav.jsp" />
 			</c:if>
-			<div class="section">
-				<div class="container">
-					<h3 class="image-cover-t">${clubName}</h3>
+
+			<div class="container  white" style="width: 75%;">
+				<div class="section">
+					<h3 class="image-cover-t center" style="margin-top: 0.5em;">${clubName}</h3>
 					<div class="row">
-						<h4 class="image-cover-t"><fmt:message bundle="${msg}" key="albums" /></h4>
-						<div class="col s9">
-							<a title="Add Album" href="" data-target="addAlbum"
-								class="modal-trigger"> <span><i
-									class="medium mdi-av-queue"></i></span>
-							</a>
-						</div>
+						<h4 class="image-cover-t center">
+							<fmt:message bundle="${msg}" key="albums" />
+						</h4>
+					</div>
+					<div class="row" style="margin-top: -5em;">
+						<a title="Add Album" href="" data-target="addAlbum"
+							class="modal-trigger"> <span style="margin-left:5em"><i
+								class="medium mdi-av-queue"></i></span>
+						</a>
 					</div>
 				</div>
-			</div>
 
-
-			<div class="section">
-				<div class="container">
-					<div class="row" style="margin-left: -5em">
+				<div class="section">
+					<div class="row" style="margin-left: -2em">
 						<jsp:include page="albumList.jsp" />
 					</div>
 				</div>
 
 			</div>
 		</div>
-		<jsp:include page="../general/footer.jsp" />
 	</div>
+	<jsp:include page="../general/footer.jsp" />
+
 </body>
 </html>
