@@ -35,7 +35,7 @@
 							<div class="btn">
 								<span><fmt:message bundle="${msg}"
 										key="load_album.choose_files" />
-									<fmt:message bundle="${msg}" key="load_album.album_name" /></span> <input
+									</span> <input
 									type="file" id="image" multiple name="image"
 									onchange="readURL(this);" accept="image/*" />
 							</div>

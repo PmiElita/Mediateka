@@ -2,6 +2,10 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<fmt:setLocale value="${cookie.lang.value}" />
+<fmt:setBundle basename="translations/club_page" var="msg" />
+
 <div class="row" style="margin-top: -1em; width:125%">
 	<br>
 </div>
@@ -36,7 +40,7 @@
 								<div
 									class="waves-effect waves-block waves-light my-picture-wrap">
 									<div align="center">
-										<h2>There are no such clubs!</h2>
+										<h2> <fmt:message bundle="${msg}" key="there_are_no_such_clubs"/> </h2>
 									</div>
 								</div>
 							</div>

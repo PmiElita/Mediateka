@@ -5,9 +5,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@page import="com.mediateka.model.enums.Role"%>
 
-<fmt:setLocale value="${locale}" />
-<fmt:setBundle basename="menu" />
-<fmt:requestEncoding value="utf-8" />
+<fmt:setLocale value="${cookie.lang.value}" />
+<fmt:setBundle basename="translations/club_page" var="msg" />
 
 <html>
 
@@ -49,8 +48,8 @@
 							<div class="col s12">
 								<ul class="tabs">
 									<li class="tab col s4"><a href="#my_clubs"
-										style="margin-left: 5em;">My clubs</a></li>
-									<li class="tab col s4"><a href="#all_clubs">All clubs</a></li>
+										style="margin-left: 5em;"><fmt:message bundle="${msg}" key="my_clubs" /></a></li>
+									<li class="tab col s4"><a href="#all_clubs"><fmt:message bundle="${msg}" key="all_clubs" /></a></li>
 
 								</ul>
 							</div>

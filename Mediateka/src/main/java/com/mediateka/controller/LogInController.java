@@ -6,7 +6,6 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,7 +20,9 @@ import com.mediateka.exception.WrongInputException;
 import com.mediateka.form.LogInForm;
 import com.mediateka.model.User;
 import com.mediateka.model.UserCard;
+import com.mediateka.model.enums.Role;
 import com.mediateka.model.enums.State;
+import com.mediateka.service.ProfessionService;
 import com.mediateka.service.UserCardService;
 import com.mediateka.service.UserService;
 import com.mediateka.util.FormValidator;
@@ -111,6 +112,10 @@ public class LogInController {
 		mySession.setAttribute("userFirstName", user.getFirstName());
 		mySession.setAttribute("userRole", user.getRole());
 		mySession.setAttribute("userEmail", user.getEmail());
+		
+		if (user.getRole() == Role.ADMIN){
+			mySession.setAttribute("professions", ProfessionService.getProfessionAll());
+		}
 
 		UserCard userCard = UserCardService.getUserCardByUserId(user.getId());
 

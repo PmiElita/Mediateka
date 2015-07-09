@@ -16,7 +16,8 @@
 <div class="container-side">
 	<div id="sidebar">
 		<ul>
-			<li><a href="searchBook" class="waves-effect">Find book</a></li>
+			<li><a href="searchBook" class="waves-effect"><fmt:message bundle="${msg}"
+						key="user.find_book" /></a></li>
 			<li><a href="" data-target="modal18"
 				class="modal-trigger waves-effect"><fmt:message bundle="${msg}"
 						key="user.create_event" /></a></li>

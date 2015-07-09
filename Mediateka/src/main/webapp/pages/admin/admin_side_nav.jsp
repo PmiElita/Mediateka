@@ -21,7 +21,8 @@
 						key="admin.register_new_user" /></a></li>
 						
 			<li><a href="goToCreateFormRecord"
-				class="waves-effect">Create form record</a></li>	
+				class="waves-effect"><fmt:message bundle="${msg}"
+						key="admin.create_form_record" /></a></li>	
 								
 			<li><a href="cabinet"><fmt:message bundle="${msg}"
 						key="admin.cabinet" /></a></li>
