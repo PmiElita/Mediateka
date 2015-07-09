@@ -73,7 +73,7 @@ public class MainFilter implements Filter {
 
 
 		
-		if (uri.matches(".*\\..*")||uri.endsWith("chat")) {
+		if (uri.matches(".*\\..*")||uri.endsWith("chat")||uri.endsWith("comment")) {
 			chain.doFilter(request, response);
 		} else {
 			String method = httpRequest.getMethod().toLowerCase();

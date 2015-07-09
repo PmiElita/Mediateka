@@ -1,6 +1,5 @@
 package com.mediateka.dao;
 
-
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -31,16 +30,18 @@ public class ClubDAO {
 
 		}
 	}
-	
-	public static Club callSaveClub(Club club)throws SQLException, ReflectiveOperationException {
+
+	public static Club callSaveClub(Club club) throws SQLException,
+			ReflectiveOperationException {
 		try (Connection connection = ConnectionManager.getConnection()) {
-			CallableStatement statement = connection.prepareCall(ClubStatements.CALL_INSERT_CLUB);
-			
+			CallableStatement statement = connection
+					.prepareCall(ClubStatements.CALL_INSERT_CLUB);
+
 			Transformer.valueIntoPreparedStatement(statement, club,
-					ClubStatements.CALL_INSERT_CLUB_ORDER);	
-			
+					ClubStatements.CALL_INSERT_CLUB_ORDER);
+
 			ResultSet resultSet = statement.executeQuery();
-			
+
 			return Transformer.transformResultSetIntoObject(resultSet,
 					Club.class);
 		}
@@ -134,9 +135,8 @@ public class ClubDAO {
 
 		}
 	}
-	
-	
-	public static Integer getNumberOfRequestedClubs() throws SQLException{
+
+	public static Integer getNumberOfRequestedClubs() throws SQLException {
 		try (Connection connection = ConnectionManager.getConnection()) {
 
 			PreparedStatement statement = connection
@@ -146,6 +146,19 @@ public class ClubDAO {
 			rs.next();
 			return rs.getInt(1);
 		}
-		
+
+	}
+
+	public static List<Club> getAllNotDeletedClubs() throws SQLException,
+			ReflectiveOperationException {
+		try (Connection connection = ConnectionManager.getConnection()) {
+
+			PreparedStatement statement = connection
+					.prepareStatement(ClubStatements.SELECT_ALL_NOT_DELETED_CLUBS);
+
+			ResultSet rs = statement.executeQuery();
+			return Transformer.transformResultSetIntoList(rs, Club.class);
+
+		}
 	}
 }

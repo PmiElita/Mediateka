@@ -3,17 +3,17 @@ package com.mediateka.dao.statement;
 public class BookStatements {
 	public static final String INSERT_BOOK = "INSERT INTO "
 			+ "book "
-			+ "(name, author, state, type_id, meaning_id, language_id, media_id) "
-			+ "VALUES " + "(?, ?, ?, ?, ?, ?, ?) ";
+			+ "(name, author, state, type_id, meaning_id, language_id, media_id, description) "
+			+ "VALUES " + "(?, ?, ?, ?, ?, ?, ?, ?) ";
 	public static final String[] INSERT_BOOK_ORDER = { "name", "author",
-			"state", "type_id", "meaning_id", "language_id", "media_id" };
+			"state", "type_id", "meaning_id", "language_id", "media_id", "description" };
 
 	public static final String UPDATE_BOOK = "UPDATE book " + "SET "
 			+ "name = ?, " + "author = ?, " + "state = ?, " + "type_id = ?, "
-			+ "meaning_id = ?, " + "language_id = ?, " + "media_id = ? "
+			+ "meaning_id = ?, " + "language_id = ?, " + "media_id = ?, description =? "
 			+ "WHERE " + "id = ?";
 	public static final String[] UPDATE_BOOK_ORDER = { "name", "author",
-			"state", "type_id", "meaning_id", "language_id", "media_id", "id" };
+			"state", "type_id", "meaning_id", "language_id", "media_id", "description", "id" };
 
 	public static final String SELECT_BOOK_BY_ID = "SELECT * " + "FROM "
 			+ "book " + "WHERE id = ?";

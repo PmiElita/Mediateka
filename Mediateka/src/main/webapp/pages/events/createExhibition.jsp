@@ -38,7 +38,7 @@
 						<div class="row">
 							<fmt:message bundle="${msg}" key="exhibition.name" />
 							<input type="text" id="name" name="name" required
-								pattern=".{1,45}"><br>
+								pattern=".{1,250}"><br>
 						</div>
 
 						<div class="row">

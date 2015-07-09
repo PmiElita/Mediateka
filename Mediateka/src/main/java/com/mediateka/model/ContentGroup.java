@@ -1,6 +1,8 @@
 package com.mediateka.model;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Comparator;
 
 import com.mediateka.annotation.Column;
 import com.mediateka.model.enums.ContentGroupType;
@@ -138,6 +140,10 @@ public class ContentGroup{
 
 	public void setParentId(Integer parentId) {
 		this.parentId = parentId;
+	}
+	
+	public String getFormatedCreationDate(){
+		return new SimpleDateFormat("dd.MM.yyyy HH:mm").format(creationDate);
 	}
 
 	@Override

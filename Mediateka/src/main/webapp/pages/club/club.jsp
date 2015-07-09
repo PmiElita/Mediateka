@@ -16,7 +16,7 @@
 <jsp:include page="../index/index_modal_login.jsp" />
 <jsp:include page="../index/index_modal_register.jsp" />
 <jsp:include page="../general/head.jsp" />
-
+<script src="js/comment.js"></script>
 </head>
 
 <body onload="connect();" onunload="disconnect();">
@@ -49,7 +49,7 @@
 				</ul>
 			</div>
 
-			<c:if test="${isSigned eq 'true'}">
+			<c:if test="${isSigned eq 'true'|| userRole eq Role.ADMIN}">
 				<jsp:include page="chat_side_nav.jsp" />
 			</c:if>
 

@@ -33,4 +33,6 @@ public class ClubStatements {
 	public static final String SELECT_CLUB_ALL = "SELECT * FROM club";
 	
 	public static final String SELECT_COUNT_OF_REQUESTED_CLUBS = "SELECT count(*) FROM club WHERE state = 'REQUESTED'";
+
+	public static final String SELECT_ALL_NOT_DELETED_CLUBS ="SELECT * FROM club WHERE state<>'DELETED'";
 }

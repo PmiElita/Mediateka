@@ -54,4 +54,8 @@ public class FormRecordStatements {
     
     public static final String SELECT_FORM_RECORD_EVENT_BY_USER_ID = "SELECT * FROM form_record WHERE event_id IS NOT null AND user_id=?";
     public static final String[] SELECT_FORM_RECORD_EVENT_BY_USER_ID_ORDER = {"user_id"};
+    
+    public static final String SELECT_FORM_RECORD_BY_USER_ID_AND_LIMIT = "SELECT * FROM form_record WHERE user_id = ? LIMIT ?,?";
+    
+    public static final String CALL_GET_ACTIVITY = "CALL getActivity(?,?,?)";
 }

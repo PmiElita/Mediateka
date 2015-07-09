@@ -49,7 +49,9 @@ function like(value, id) {
 				complete : function(data) {
 
 					var id = data.responseJSON.id;
+					alert(document.getElementById("recordLike" + id).innerHTML);
 					document.getElementById("recordLike" + id).innerHTML = data.responseJSON.like;
+					alert(document.getElementById("recordLike" + id).innerHTML);
 					document.getElementById("recordDislike" + id).innerHTML = data.responseJSON.dislike;
 				}
 			});
@@ -78,14 +80,16 @@ function handleFileSelect(e) {
 
 					var reader = new FileReader();
 					reader.onload = function(e) {
+					
 						var html = "<img src=\""
 								+ e.target.result
 								+ "\" data-file='"
 								+ f.name
 								+ "'height='100' class='selFile' title='Click to remove'>"
 								+ "<br clear=\"left\"/>";
+			
 						selDiv.append(html);
-
+                        
 					}
 					reader.readAsDataURL(f);
 				} else if (f.type.match("video.*")) {
@@ -93,12 +97,16 @@ function handleFileSelect(e) {
 					selDiv = $("#selectedVideos");
 
 					var reader = new FileReader();
+					
 					reader.onload = function(e) {
-
+					
 						var html = "<div><video width = '400' class='selFile' title='Click to remove' controls><source src=\""
 								+ e.target.result + "\"></video></div>";
+					
 						selDiv.append(html);
 					}
+				
+					
 					reader.readAsDataURL(f);
 				} else if (f.type.match("audio.*")) {
 					storedAudios.push(f);
@@ -113,6 +121,7 @@ function handleFileSelect(e) {
 						selDiv.append(html);
 
 					}
+					
 					reader.readAsDataURL(f);
 				} else {
 					return;

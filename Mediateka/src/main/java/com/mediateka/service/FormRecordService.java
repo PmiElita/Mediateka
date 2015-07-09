@@ -90,4 +90,17 @@ public class FormRecordService {
 			throws ReflectiveOperationException, SQLException {
 		return FormRecordDAO.getFormRecordEventAndUserId(userId);
 	}
+
+	public static List<FormRecord> getFormRecordsByUserIdLimited(
+			Integer userId, int offset, int limit) throws SQLException,
+			ReflectiveOperationException {
+		return FormRecordDAO.getFormRecordsByUserIdLimited(userId, offset,
+				limit);
+	}
+
+	public static List<FormRecord> getUserActivity(Integer userId,
+			String period, String type) throws SQLException,
+			ReflectiveOperationException {
+		return FormRecordDAO.getUserActivity(userId, period, type);
+	}
 }

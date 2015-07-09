@@ -9,7 +9,7 @@ function doScroll(){
 	
 	if(type==null|| language==null||meaning==null||query==null){
 		query=document.getElementById("bookQuery").value;
-	 type=getSelectedOption(document.getElementById("type")).value;
+	 type=getSelectedOption(document.getElementById("bookType")).value;
 	meaning=getSelectedOption(document.getElementById("meaning")).value;
 	 language=getSelectedOption(document.getElementById("language")).value;
 	
@@ -21,7 +21,7 @@ function doScroll(){
 
 function changeIsOpen(){
 	if (isOpen){
-		document.getElementById("type").options[0].selected = true;
+		document.getElementById("bookType").options[0].selected = true;
 		document.getElementById("meaning").options[0].selected = true;
 		document.getElementById("language").options[0].selected = true;
 		document.getElementById("collapse-icon").className="mdi-hardware-keyboard-arrow-down";
@@ -34,7 +34,7 @@ function changeIsOpen(){
 
 function submitBookForm(){
 	query=document.getElementById("bookQuery").value;
-	 type=getSelectedOption(document.getElementById("type")).value;
+	 type=getSelectedOption(document.getElementById("bookType")).value;
 	meaning=getSelectedOption(document.getElementById("meaning")).value;
 	 language=getSelectedOption(document.getElementById("language")).value;
 	 var queryArray =query.split(" ");
@@ -56,3 +56,34 @@ function getSelectedOption (oListbox)
   }
   return -1;
 };
+
+function blockBook(bookId){
+	$.ajax({
+		url: 'blockBook',
+		type:'post',
+		dataType: 'json',
+		data: {"bookId":bookId},
+		complete : function (data){
+			alert(JSON.stringify(data));
+			 document.getElementById("blockBook").innerHTML = data.responseJSON.buttonText.toString();
+			 Materialize.toast(data.responseJSON.toastText.toString(),4000);
+		}
+	});
+}
+
+function deleteBook(bookId){
+	$.ajax({
+		url: 'deleteBook',
+		type:'post',
+		dataType: 'json',
+		data: {"bookId":bookId},
+		complete : function (data){
+			alert(JSON.stringify(data));
+			 document.getElementById("deleteBook").innerHTML = data.responseJSON.buttonText.toString();
+			 document.getElementById("blockBook").innerHTML = data.responseJSON.blockButton.toString();
+			 document.getElementById("blockBook").style.display = data.responseJSON.displayButton.toString();
+			 document.getElementById("updateBook").style.display = data.responseJSON.displayButton.toString();
+			 Materialize.toast(data.responseJSON.toastText.toString(),4000);
+		}
+	});
+}

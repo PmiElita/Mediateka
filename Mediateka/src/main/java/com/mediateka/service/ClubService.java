@@ -13,8 +13,9 @@ public class ClubService {
 			ReflectiveOperationException {
 		ClubDAO.saveClub(club);
 	}
-	
-	public static Club callSaveClub(Club club) throws SQLException, ReflectiveOperationException{
+
+	public static Club callSaveClub(Club club) throws SQLException,
+			ReflectiveOperationException {
 		return ClubDAO.callSaveClub(club);
 	}
 
@@ -42,8 +43,13 @@ public class ClubService {
 			ReflectiveOperationException {
 		return ClubDAO.getClubAll();
 	}
-	
+
 	public static Integer getNumberOfRequestedClubs() throws SQLException {
 		return ClubDAO.getNumberOfRequestedClubs();
+	}
+
+	public static List<Club> getAllNotDeletedClubs() throws SQLException,
+			ReflectiveOperationException {
+		return ClubDAO.getAllNotDeletedClubs();
 	}
 }

@@ -62,9 +62,12 @@
 <a href="#" onclick="return false" class="chat-side-button" data-activates="sideNav" id="but" style="z-index:10"><i
 	id="collapse-icon" class="mdi-communication-message"></i></a>
 <script>
+var isShowMessage;
 	$(document)
 			.ready(
+					
 					function() {
+						isShowMessage = false;
 						document.getElementById("messageArea").style.height = ($(
 								window).height() - 293)
 								+ 'px';
@@ -86,6 +89,7 @@
 
 	var endPointURL = "ws://" + window.location.host + "/Mediateka/chat";
 	var lastMessageTime;
+
 	var chatClient = null;
 	var index;
 	window.setInterval(function() {
@@ -101,6 +105,15 @@
 			}
 		}
 	}, 2000);
+	
+	window.setInterval(function() {
+		
+        if (isShowMessage){
+        	var chat = document.getElementById("messageArea");
+        	chat.scrollTop = chat.scrollHeight;
+        	isShowMessage = false;
+        }
+	}, 200);
 	function connect() {
 		index = 1;
 		var objDiv = document.getElementById("messageArea");
@@ -125,6 +138,9 @@
 							if (data.responseJSON.userName != null) {
 								showMessage(data.responseJSON.avaPath,data.responseJSON.userName,
 										jsonObj.message, jsonObj.date);
+								var chat = document.getElementById("messageArea");
+								chat.scrollTop = chat.scrollHeight;
+								isShowMessage = true;
 							}
 						}
 
@@ -151,10 +167,7 @@
 					+ escapeHtml(messageText)
 					+ "</span></div>  </div> <div class=\"row message-date\">"+date+"</div> </div> </div>";
 		}
-		var objDiv = document.getElementById("messageArea");
-		if (objDiv.scrollTop != objDiv.scrollHeight){
-		objDiv.scrollTop = objDiv.scrollHeight;
-		}
+	
 	}
 
 	function disconnect() {
@@ -198,7 +211,6 @@
 					function() {
 						var chat = document.getElementById("messageArea");
 						var chatHeight = chat.scrollHeight;
-
 						if (chat.scrollTop === 0) {
 							var clubId = document.getElementById("clubId").innerHTML;
 							$

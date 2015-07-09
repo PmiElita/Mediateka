@@ -81,7 +81,7 @@ public class AdminController {
 		} catch (WrongInputException e) {
 			logger.warn("search user wrong input", e);
 			request.setAttribute("message", e.getMessage());
-			request.getRequestDispatcher("pages/users/users.jsp").forward(
+			request.getRequestDispatcher("pages/users/user_list.jsp").forward(
 					request, response);
 
 		}

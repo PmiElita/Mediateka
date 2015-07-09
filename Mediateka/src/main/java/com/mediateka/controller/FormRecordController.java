@@ -32,18 +32,15 @@ import static com.mediateka.service.UserService.*;
 @Controller
 public class FormRecordController {
 
-	
 	@Request(url = "goToCreateFormRecord", method = "get")
 	public static void goRoFormRecordCreateGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			SQLException, ReflectiveOperationException {
-		
-		request.getRequestDispatcher(
-				"pages/form/create_form_record.jsp").forward(request,
-				response);
+
+		request.getRequestDispatcher("pages/form/create_form_record.jsp")
+				.forward(request, response);
 	}
-	
-	
+
 	@Request(url = "CreateFormRecord", method = "get")
 	public static void formRecordCreateGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
@@ -52,18 +49,19 @@ public class FormRecordController {
 		List<Book> books = getBookByState(State.ACTIVE);
 		List<Event> events = getEventsByDate(date);
 		List<Event> activeEvents = new ArrayList<>();
-		for (Event event : events)
-			if (event.getState() == State.ACTIVE)
-				activeEvents.add(event);
+		if (events != null) {
+			for (Event event : events)
+				if (event.getState() == State.ACTIVE)
+					activeEvents.add(event);
+		}
 		if (books != null)
 			Collections.sort(books, new BooksByName());
 		if (events != null)
 			Collections.sort(events, new EventsByName());
 		request.setAttribute("books", books);
 		request.setAttribute("events", activeEvents);
-		request.getRequestDispatcher(
-				"pages/form/create_form_record.jsp").forward(request,
-				response);
+		request.getRequestDispatcher("pages/form/create_form_record.jsp")
+				.forward(request, response);
 		request.removeAttribute("books");
 		request.removeAttribute("events");
 	}
@@ -197,7 +195,6 @@ public class FormRecordController {
 		}
 
 		if (!fail) {
-			request.getSession().setAttribute("userId", 2);
 
 			FormRecord record = new FormRecord();
 			record.setUserId(Integer.parseInt(form.getUserId()));
@@ -222,22 +219,24 @@ public class FormRecordController {
 		List<Book> books = getBookByState(State.ACTIVE);
 		List<Event> events = getEventsByDate(date);
 		List<Event> activeEvents = new ArrayList<>();
-		for (Event event : events)
-			if (event.getState() == State.ACTIVE)
-				activeEvents.add(event);
-		if (books != null)
-			Collections.sort(books, new BooksByName());
-		if (events != null)
+		if (events != null) {
+			for (Event event : events) {
+				if (event.getState() == State.ACTIVE) {
+					activeEvents.add(event);
+				}
+			}
 			Collections.sort(events, new EventsByName());
+		}
+		if (books != null) {
+			Collections.sort(books, new BooksByName());
+		}
+
 		request.setAttribute("books", books);
 		request.setAttribute("events", activeEvents);
 		request.setAttribute("message", message.toString());
 
-		request.getSession().removeAttribute("userId");
-
-		request.getRequestDispatcher(
-				"pages/form/create_form_record.jsp").forward(request,
-				response);
+		request.getRequestDispatcher("pages/form/create_form_record.jsp")
+				.forward(request, response);
 
 		request.removeAttribute("books");
 		request.removeAttribute("events");

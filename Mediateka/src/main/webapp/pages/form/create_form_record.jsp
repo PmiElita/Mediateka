@@ -57,7 +57,7 @@
 
 								<div class="input-field col s6 left">
 									<p>Book ID</p>
-									<input id="bookId" name="bookId" type="text">
+									<input id="bookId" name="book" type="text">
 								</div>
 							</div>
 

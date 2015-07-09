@@ -5,7 +5,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 	
 
-<div id="div" style="background:white"> <img src="images/user.png" style="width: 5em; margin-top:0.5em" />
+<div id="div" style="background:white"> <img src="${userCard.path }" style="width: 5em; margin-top:0.5em; border-radius:50%;" />
 	<div style="margin-top: -1em">
 		<strong>
 			<p> <c:out value="${sessionScope.userCard.getFirstName()}"/>

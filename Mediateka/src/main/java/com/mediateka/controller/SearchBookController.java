@@ -38,21 +38,24 @@ public class SearchBookController {
 			HttpServletResponse response) throws ServletException, IOException,
 			SQLException, ReflectiveOperationException {
 		List<Book> books = BookService.getBookAll();
-		Collections.sort(books, new BookByFormRecordCount());
+		Map<String, Book> bookItems = new LinkedHashMap<String, Book>();
 		boolean haveMoreResults = false;
-		Map<String, String> bookItems = new LinkedHashMap<String, String>();
-		if (books != null) {
+		if (books!=null){
+		Collections.sort(books, new BookByFormRecordCount());
+	
+	
+	
 			for (int i = 0; i < books.size() && i < BOOKS_COUNT_ON_PAGE; i++) {
 				bookItems.put(
 						MediaService.getMediaById(books.get(i).getMediaId())
-								.getPath().replace("\\", "/"), "\""
-								+ books.get(i).getName() + "\" "
-								+ books.get(i).getAuthor());
+								.getPath().replace("\\", "/"),books.get(i));
 			}
-		}
+		
 		if (books.size() > BOOKS_COUNT_ON_PAGE) {
 			haveMoreResults = true;
 		}
+		}
+		
 		request.setAttribute("haveMoreResults", haveMoreResults);
 		request.setAttribute("index", 1);
 		request.setAttribute("bookItems", bookItems);
@@ -132,15 +135,13 @@ public class SearchBookController {
 		Collections.sort(books, new BookByFormRecordCount());
 		boolean haveMoreResults = false;
 
-		Map<String, String> bookItems = new LinkedHashMap<String, String>();
+		Map<String, Book> bookItems = new LinkedHashMap<String, Book>();
 		if (books != null) {
 			for (int i = index * BOOKS_COUNT_ON_PAGE; i < books.size()
 					&& i < (index + 1) * BOOKS_COUNT_ON_PAGE; i++) {
 				bookItems.put(
 						MediaService.getMediaById(books.get(i).getMediaId())
-								.getPath().replace("\\", "/"), "\""
-								+ books.get(i).getName() + "\" "
-								+ books.get(i).getAuthor());
+								.getPath().replace("\\", "/"), books.get(i));
 			}
 		}
 		if (books.size() > (index + 1) * BOOKS_COUNT_ON_PAGE) {
@@ -204,14 +205,12 @@ public class SearchBookController {
 		}
 		Collections.sort(books, new BookByFormRecordCount());
 		boolean haveMoreResults = false;
-		Map<String, String> bookItems = new LinkedHashMap<String, String>();
+		Map<String, Book> bookItems = new LinkedHashMap<String, Book>();
 		if (books != null) {
 			for (int i = 0; i < books.size() && i < BOOKS_COUNT_ON_PAGE; i++) {
 				bookItems.put(
 						MediaService.getMediaById(books.get(i).getMediaId())
-								.getPath().replace("\\", "/"), "\""
-								+ books.get(i).getName() + "\" "
-								+ books.get(i).getAuthor());
+								.getPath().replace("\\", "/"), books.get(i));
 			}
 		}
 		if (books.size() > BOOKS_COUNT_ON_PAGE) {

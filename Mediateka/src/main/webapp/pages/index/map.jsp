@@ -8,6 +8,8 @@
 
 <div class="row indexmapchat">
 <div id="map-canvas"></div>
+<span class="map-span">* на карті синіми кругами зображено цікаві події Львова, для перегляду інформації про подію, натисніть на круг.</span>
+
 </div>
 
 <script src="js/index-map.js"></script>

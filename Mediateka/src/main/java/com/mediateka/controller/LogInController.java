@@ -120,6 +120,7 @@ public class LogInController {
 		UserCard userCard = UserCardService.getUserCardByUserId(user.getId());
 
 		mySession.setAttribute("userCard", userCard);
+		
 
 
 		response.sendRedirect("cabinet");

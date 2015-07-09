@@ -6,7 +6,7 @@ import com.mediateka.util.RegExps;
 
 public class ExhibitionRegistrationForm {
 
-	@Validation(regexp = RegExps.ANY_CHARACTERS, maxLength = 45, minLength = 1)
+	@Validation(regexp = RegExps.ANY_CHARACTERS, maxLength = 250, minLength = 1)
 	private String name;
 
 	@DateField(format = "dd.MM.yyyy")

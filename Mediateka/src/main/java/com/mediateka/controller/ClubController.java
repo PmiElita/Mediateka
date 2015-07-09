@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.mail.MessagingException;
@@ -46,6 +47,7 @@ import com.mediateka.model.enums.MediaType;
 import com.mediateka.model.enums.Role;
 import com.mediateka.model.enums.State;
 import com.mediateka.pair.ChatMessageUserCardPair;
+import com.mediateka.pair.CommentUserCardPair;
 import com.mediateka.service.ChatMessageService;
 import com.mediateka.service.ClubEventMemberService;
 import com.mediateka.service.ClubService;
@@ -85,7 +87,7 @@ public class ClubController {
 		club.setName(form.getName());
 		club.setDescription(form.getDescription());
 		club.setState(State.REQUESTED);
-		club.setAvaId(2);
+		club.setAvaId(1);  // TODO: add default club ava
 		club = ClubService.callSaveClub(club);
 		clubEventMember.setClubId(club.getId());
 		clubEventMember.setUserId(Integer.parseInt(request.getSession()
@@ -429,6 +431,9 @@ public class ClubController {
 							|| member.getState() == State.DELETED)
 						request.setAttribute("badGuy", true);
 
+Map<Integer, List<CommentUserCardPair>> comments = getComments(club
+						.getId());
+				request.setAttribute("comments", comments);
 				List<Event> events = getEventByClubId(clubId);
 				List<ContentGroup> albums = getContentGroupByClubId(clubId);
 				if (albums == null) {
@@ -493,6 +498,30 @@ public class ClubController {
 					response);
 			request.removeAttribute("message");
 		}
+	}
+
+	private static Map<Integer, List<CommentUserCardPair>> getComments(
+			Integer clubId) throws SQLException, ReflectiveOperationException {
+		Map<Integer, List<CommentUserCardPair>> result = new HashMap<Integer, List<CommentUserCardPair>>();
+		List<ContentGroup> records = ContentGroupService
+				.getContentGroupByClubIdAndStateAndType(clubId, State.ACTIVE,
+						ContentGroupType.RECORD);
+		if (records!=null){
+		for (ContentGroup record : records) {
+			List<CommentUserCardPair> commentUserCardPairs = new ArrayList<CommentUserCardPair>();
+		    List<ContentGroup> comments = ContentGroupService
+					.getContentGroupByParentId(record.getId());
+		    if (comments!=null){
+			for (ContentGroup comment : comments) {
+				commentUserCardPairs.add(new CommentUserCardPair(comment,
+						UserCardService.getUserCardByUserId(comment
+								.getCreatorId())));
+			}
+		    }
+			result.put(record.getId(),commentUserCardPairs);
+		}
+		}
+		return result;
 	}
 
 	@Request(url = "club_videos", method = "get")

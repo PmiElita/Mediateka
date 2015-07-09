@@ -28,6 +28,9 @@ public class Book {
 	@Column(name = "media_id")
 	private Integer mediaId;
 
+	@Column(name = "description")
+	private String description;
+
 	public Integer getId() {
 		return id;
 	}
@@ -90,6 +93,14 @@ public class Book {
 
 	public void setMediaId(Integer mediaId) {
 		this.mediaId = mediaId;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	@Override

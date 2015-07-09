@@ -1,6 +1,7 @@
 package com.mediateka.dao;
 
 import static com.mediateka.dao.statement.FormRecordStatements.*;
+
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -193,8 +194,7 @@ public class FormRecordDAO {
 		return result;
 	}
 
-	public static List<FormRecord> getFormRecordBookAndUserId(
-			 Integer userId)
+	public static List<FormRecord> getFormRecordBookAndUserId(Integer userId)
 			throws ReflectiveOperationException, SQLException {
 		try (Connection connection = ConnectionManager.getConnection()) {
 			PreparedStatement statement = connection
@@ -208,8 +208,8 @@ public class FormRecordDAO {
 					FormRecord.class);
 		}
 	}
-	
-	public static List<FormRecord> getFormRecordGoalByUserId( Integer userId)
+
+	public static List<FormRecord> getFormRecordGoalByUserId(Integer userId)
 			throws ReflectiveOperationException, SQLException {
 		try (Connection connection = ConnectionManager.getConnection()) {
 			PreparedStatement statement = connection
@@ -236,6 +236,33 @@ public class FormRecordDAO {
 			ResultSet resultSet = statement.executeQuery();
 			return Transformer.transformResultSetIntoList(resultSet,
 					FormRecord.class);
+		}
+	}
+
+	public static List<FormRecord> getFormRecordsByUserIdLimited(
+			Integer userId, int offset, int limit) throws SQLException,
+			ReflectiveOperationException {
+		try (Connection connection = ConnectionManager.getConnection()) {
+			PreparedStatement statement = connection
+					.prepareStatement(SELECT_FORM_RECORD_BY_USER_ID_AND_LIMIT);
+			statement.setInt(1, userId);
+			statement.setInt(2, offset);
+			statement.setInt(3, limit);
+			ResultSet resultSet = statement.executeQuery();
+			return Transformer.transformResultSetIntoList(resultSet,
+					FormRecord.class);
+		}
+	}
+	
+	public static List<FormRecord> getUserActivity(Integer userId,
+			String period, String type) throws SQLException, ReflectiveOperationException{
+		try(Connection connection = ConnectionManager. getConnection()){
+			PreparedStatement statement = connection.prepareStatement(CALL_GET_ACTIVITY);
+			statement.setInt(1,  userId);
+			statement.setString(2, period);
+			statement.setString(3, type);
+			ResultSet resultSet = statement.executeQuery();
+			return Transformer.transformResultSetIntoList(resultSet, FormRecord.class);
 		}
 	}
 }

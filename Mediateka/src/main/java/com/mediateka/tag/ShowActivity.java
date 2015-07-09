@@ -29,7 +29,6 @@ public class ShowActivity extends SimpleTagSupport {
 	}
 
 	public void doTag() throws JspException, IOException {
-
 		ResourceBundle messages;
 		if (this.locale.equals("uk-UA")) {
 			messages = ResourceBundle.getBundle("translations/activity_uk_UA");
@@ -38,7 +37,6 @@ public class ShowActivity extends SimpleTagSupport {
 		}
 
 		if (formRecords != null) {
-
 			JspWriter out = getJspContext().getOut();
 			try {
 				out.write("<table class=\"bordered\">");
@@ -50,7 +48,9 @@ public class ShowActivity extends SimpleTagSupport {
 				out.write("<th>" + messages.getString("comment") + "</th>");
 
 				out.write("</tr>");
+				System.out.println(2);
 				for (FormRecord formRecord : formRecords) {
+					System.out.println(3);
 					out.write("<tr>");
 					out.write("<td>"
 							+ new SimpleDateFormat("dd.MM.yyyy")

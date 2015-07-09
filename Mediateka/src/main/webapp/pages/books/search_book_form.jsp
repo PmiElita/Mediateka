@@ -51,7 +51,7 @@
 								bundle="${msg}" key="book_language" /></label>
 					</div>
 					<div class="row">
-						<select id="type" class="browser-default col s3 select_margin">
+						<select id="bookType" class="browser-default col s3 select_margin">
 							<option value="" selected><fmt:message bundle="${msg}"
 									key="any_book_type" /></option>
 							<c:forEach var="type" items="${bookTypes }">

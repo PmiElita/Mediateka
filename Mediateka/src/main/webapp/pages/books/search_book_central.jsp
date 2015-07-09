@@ -16,10 +16,10 @@
 <div id="main" class=" row main-books">
 
 	<c:forEach var="item" items="${bookItems }">
-		<a href="bookPage">
+		<a href="bookPage?bookId=${item.value.id}">
 			<div class="col s4 books">
 				<div class="row" style="margin-bottom: 5px;">
-					<label class="user_label ">${item.value}</label>
+					<label class="user_label ">"${item.value.name}" ${item.value.author }</label>
 				</div>
 				<img alt="Book name" src="${item.key}" width="100%">
 			</div>

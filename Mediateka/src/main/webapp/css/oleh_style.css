@@ -110,7 +110,7 @@ height:350px;
 
 .comment-area{
 		
-    height:350px;
+    height:30px;
 	overflow-y: scroll; 
 	background-color: white;
 }
@@ -147,8 +147,10 @@ height:350px;
 	float:left;
 }
 .comment-text{
-	float:left;
+	  float: left;
 	color:black;
+	width:90%;
+	text-align: left;
 }
 
 .chat-side-button{
@@ -167,5 +169,23 @@ height:350px;
 	font-size: 10px;
 	line-height: 15px;
 	margin-left:5px;
+	margin-bottom:5px;
+}
+
+.comment-date{
+	float:left;
+	margin-left:5px;
+}
+.map-span{
+	font-size:10px;
+	margin-bottom:10px;
+}
+
+.stateValue {
+	font-size:20px;
+	
+}
+
+.book-row{
 	margin-bottom:5px;
 }

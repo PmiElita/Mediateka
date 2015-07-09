@@ -12,6 +12,7 @@
 
 <head>
 <jsp:include page="../general/head.jsp" />
+<script type="text/javascript" src="js/search_book.js"></script>
 </head>
 <div class="main">
 	<jsp:include page="../general/nav.jsp" />
@@ -25,13 +26,28 @@
 		<div id="creation_form">
 
 			<div class="container section white">
-				${message}
-
+				
+                <div class = "row">
+                	<button  class="btn waves-effect titler col s3 " id = "updateBook"
+						 onclick ="document.getElementById('update_book').submit();">Update book</button>
+						<button  class="btn waves-effect titler col s3 offset-s2" id="blockBook"
+						 onclick ="blockBook(${book.id})">
+						 <c:choose>
+						 <c:when test="${book.state eq State.ACTIVE }">
+						    Block 
+						 </c:when>
+						 <c:otherwise>
+						 	Unblock
+						 </c:otherwise>
+						 </c:choose>
+						 book</button>
+						 <button  class="btn waves-effect titler col s3 " id="deleteBook"
+						 onclick ="deleteBook(${book.id})">Delete book</button>
+                </div>
 				<form id="update_book" action="UpdateBook" method="post"
 					enctype="multipart/form-data">
-
-					<button type="submit" class="btn waves-effect titler"
-						style="margin-top: 2.5em">Update book</button>
+                    
+				    <input name="id" value="${book.id }" hidden>
 
 					<h6 style="color: blue">${message}</h6>
 
@@ -50,7 +66,10 @@
 										pattern=".{1,45}" required value="${book.getAuthor()}">
 								</div>
 							</div>
-
+                            <div class="row">
+                             <p>Description</p>
+                             <textarea class="materialize-textarea info" name = "description"> <c:out value=" ${book.description }"></c:out></textarea>
+                            </div>
 							<div class="row">
 
 								<div class="input-field col s4">
@@ -115,41 +134,9 @@
 							<input class="btn" type="file" name="image"
 								value="${book.getMediaId()}"
 								placeholder="book cover screenshot..." onchange="readURL(this);"
-								style="width: 45em"> <img id="photo" src="${imagePath}">
+								style="width: 45em"> <img id="photo" src="${imagePath}" style="width:45%;">
 
-							<div title="Book state" style="margin-top: 1em">
-								<div style="display: inline-block; margin-right: 10em">
-									<c:choose>
-										<c:when test="${book.state eq State.ACTIVE}">
-											<input type="radio" name="state" value="ACTIVE" checked>active
-   				   </c:when>
-										<c:otherwise>
-											<input type="radio" name="state" value="ACTIVE">active
-   				   </c:otherwise>
-									</c:choose>
-
-								</div>
-								<div style="display: inline-block; margin-right: 10em">
-									<c:choose>
-										<c:when test="${book.state eq State.BLOCKED}">
-											<input type="radio" name="state" value="BLOCKED" checked>blocked
-   				   </c:when>
-										<c:otherwise>
-											<input type="radio" name="state" value="BLOCKED">blocked
-   				   </c:otherwise>
-									</c:choose>
-								</div>
-								<div style="display: inline-block; margin-right: 10em">
-									<c:choose>
-										<c:when test="${book.state eq State.DELETED}">
-											<input type="radio" name="state" value="DELETED" checked>deleted
-   				   </c:when>
-										<c:otherwise>
-											<input type="radio" name="state" value="DELETED">deleted
-   				   </c:otherwise>
-									</c:choose>
-								</div>
-							</div>
+							
 						</div>
 					</div>
 				</form>

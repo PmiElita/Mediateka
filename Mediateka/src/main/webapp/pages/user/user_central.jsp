@@ -25,38 +25,8 @@
 		<div class="row section" style="margin-top: 3em">
 			<div class="main-activity col s5" style="min-height: 20em">
 				<div class="row select-activityr">
-                   <div class="col s6 center">
-					<select class="browser-default " id="period"
-						onchange="reloadActivity(this)" >
-						<option value="week" selected>
-							<fmt:message bundle="${msg1}" key="week" />
-						</option>
-						<option value="month">
-							<fmt:message bundle="${msg1}" key="month" />
-						</option>
-						<option value="allTime">
-							<fmt:message bundle="${msg1}" key="allTime" />
-						</option>
-					</select>
-					</div>
-					 <div class="col s6 center">
-					<select class="browser-default" id="recordType"
-						onchange="reloadActivity(this)">
-						<option value="anyType" selected>
-							<fmt:message bundle="${msg1}" key="any_type" />
-						</option>
-						<option value="books">
-							<fmt:message bundle="${msg1}" key="books" />
-						</option>
-						<option value="events">
-							<fmt:message bundle="${msg1}" key="events" />
-						</option>
-							<option value="other">
-							<fmt:message bundle="${msg1}" key="other" />
-						</option>
-					</select>
-					</div>
-				</div>
+                 <h5>Формуляр</h5>
+                 </div>
 				<div class="row" id="formRecordsRow">
 					<div class="col s12 " id="formRecords">
 						<u:showUsers formRecords="${formRecords }"

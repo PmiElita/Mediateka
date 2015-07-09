@@ -36,8 +36,12 @@ import com.mediateka.model.Media;
 import com.mediateka.model.enums.MediaType;
 import com.mediateka.model.enums.Role;
 import com.mediateka.model.enums.State;
+import com.mediateka.service.BookLanguageService;
+import com.mediateka.service.BookMeaningService;
 import com.mediateka.service.BookService;
 import com.mediateka.service.UserService;
+import com.mediateka.service.BookTypeService;
+import com.mediateka.service.MediaService;
 import com.mediateka.util.FileLoader;
 
 @Controller
@@ -48,11 +52,27 @@ public class BookController {
 	public static void goToBookPageGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			SQLException, ReflectiveOperationException {
+		Integer bookId = Integer.parseInt(request.getParameter("bookId"));
+		Book book = BookService.getBookById(bookId);
+		if (book == null || book.getState() == State.DELETED) {
+			logger.warn("User " + request.getSession().getAttribute("userId")
+					+ "trying to get unexisted/deleted book");
+			response.sendError(404);
+			return;
+		}
+		String avaPath = MediaService.getMediaById(book.getMediaId()).getPath()
+				.replace('\\', '/');
+		request.setAttribute("book", book);
+		request.setAttribute("bookType",
+				BookTypeService.getBookTypeById(book.getTypeId()).getName());
+		request.setAttribute("bookMeaning", BookMeaningService
+				.getBookMeaningById(book.getMeaningId()).getName());
+		request.setAttribute("bookLanguage", BookLanguageService
+				.getBookLanguageById(book.getLanguageId()).getName());
+		request.setAttribute("avaPath", avaPath);
 		request.getRequestDispatcher("pages/books/book_page.jsp").forward(
 				request, response);
 	}
-
-	// create book
 
 	@Request(url = "books", method = "get")
 	public static void goToBooksPageGet(HttpServletRequest request,
@@ -61,7 +81,7 @@ public class BookController {
 		if (request.getSession().getAttribute("userId") == null
 				|| UserService.getUserById(
 						Integer.parseInt(request.getSession()
-								.getAttribute("userId").toString())).getRole() != Role.USER
+								.getAttribute("userId").toString())).getRole() != Role.ADMIN
 				|| UserService.getUserById(
 						Integer.parseInt(request.getSession()
 								.getAttribute("userId").toString())).getState() != State.ACTIVE)
@@ -71,6 +91,7 @@ public class BookController {
 					request, response);
 	}
 
+	// create book
 	@Request(url = "CreateBook", method = "get")
 	public static void bookCreateGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
@@ -78,12 +99,12 @@ public class BookController {
 		if (request.getSession().getAttribute("userId") == null
 				|| UserService.getUserById(
 						Integer.parseInt(request.getSession()
-								.getAttribute("userId").toString())).getRole() != Role.USER
+								.getAttribute("userId").toString())).getRole() != Role.ADMIN
 				|| UserService.getUserById(
 						Integer.parseInt(request.getSession()
-								.getAttribute("userId").toString())).getState() != State.ACTIVE)
+								.getAttribute("userId").toString())).getState() != State.ACTIVE) {
 			response.sendError(404);
-		else {
+		} else {
 			request.setAttribute("book_type", getBookTypeByState(State.ACTIVE));
 			request.setAttribute("book_meaning",
 					getBookMeaningByState(State.ACTIVE));
@@ -249,19 +270,20 @@ public class BookController {
 		if (request.getSession().getAttribute("userId") == null
 				|| UserService.getUserById(
 						Integer.parseInt(request.getSession()
-								.getAttribute("userId").toString())).getRole() != Role.USER
+								.getAttribute("userId").toString())).getRole() != Role.ADMIN
 				|| UserService.getUserById(
 						Integer.parseInt(request.getSession()
-								.getAttribute("userId").toString())).getState() != State.ACTIVE)
+								.getAttribute("userId").toString())).getState() != State.ACTIVE) {
 			response.sendError(404);
-		else {
-			int bookId = Integer.parseInt(request.getParameter("bookId"));
-			Book book = getBookById(bookId);
+			return;
+		}
 
-			Media media = getMediaById(book.getMediaId());
-			String imagePath = media.getPath().replace("\\", "/");
-			request.setAttribute("imagePath", imagePath);
+		int bookId = Integer
+				.parseInt(request.getParameter("bookId").toString());
+		Book book = getBookById(bookId);
+		String message = request.getParameter("message");
 
+		if (book != null && book.getState() != State.DELETED) {
 			request.setAttribute("book_type", getBookTypeByState(State.ACTIVE));
 			request.setAttribute("book_meaning",
 					getBookMeaningByState(State.ACTIVE));
@@ -271,11 +293,14 @@ public class BookController {
 			request.getRequestDispatcher("pages/books/update_book.jsp")
 					.forward(request, response);
 
+			request.setAttribute("message", message);
 			request.removeAttribute("book");
 			request.removeAttribute("book_type");
 			request.removeAttribute("book_meaning");
 			request.removeAttribute("book_language");
 			request.removeAttribute("imagePath");
+		} else {
+			response.sendError(404);
 		}
 	}
 
@@ -283,11 +308,11 @@ public class BookController {
 	public static void bookUpdatePost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			SQLException, ReflectiveOperationException {
-		try {
-			FileLoader fileLoader = new FileLoader();
-			fileLoader.loadFile(request, "book ava");
-			HashMap<String, String> parameterMap = fileLoader.getParameterMap();
 
+		FileLoader fileLoader = new FileLoader();
+		fileLoader.loadFile(request, "book ava");
+		HashMap<String, String> parameterMap = fileLoader.getParameterMap();
+		try {
 			// book name valid
 			if (parameterMap.get("name") == null
 					|| parameterMap.get("name").equals("")) {
@@ -302,6 +327,10 @@ public class BookController {
 				throw new WrongInputException("Book author is empty. ");
 			} else if (parameterMap.get("author").length() > 45) {
 				throw new WrongInputException("Book author to long. ");
+			}
+
+			if (parameterMap.get("description") == null) {
+				throw new WrongInputException("Book author is empty. ");
 			}
 
 			// book meaning valid
@@ -369,75 +398,43 @@ public class BookController {
 				media.setState(State.ACTIVE);
 				media = callSaveMedia(media);
 			} catch (WrongInputException e) {
-				int bookId = Integer.parseInt(request.getSession()
-						.getAttribute("bookId").toString());
+				Integer bookId = Integer.parseInt(parameterMap.get("id"));
 				Book book = getBookById(bookId);
 				media = getMediaById(book.getMediaId());
 			}
 
 			// logic
-			Book book = new Book();
+			Integer bookId = Integer.parseInt(parameterMap.get("id"));
+			Book book = BookService.getBookById(bookId);
 			book.setName(parameterMap.get("name"));
 			book.setAuthor(parameterMap.get("author"));
-			book.setState(State.valueOf(parameterMap.get("state")));
 			book.setMeaningId(meaningId);
 			book.setTypeId(typeId);
 			book.setLanguageId(languageId);
-
+			book.setDescription(parameterMap.get("description"));
 			book.setMediaId(media.getId());
-			book.setId(Integer.parseInt(request.getSession()
-					.getAttribute("bookId").toString()));
 			updateBook(book);
 			String message = "Book updated. ";
+			String redirectUrl = request.getHeader("referer");
+			int indexEnd = redirectUrl.indexOf('&');
+			if (indexEnd == -1) {
+				indexEnd = redirectUrl.length();
+			}
+			redirectUrl = redirectUrl.substring(0, indexEnd);
 
-			String imagePath = media.getPath().replace("\\", "/");
-			request.setAttribute("imagePath", imagePath);
-			int bookId = Integer.parseInt(request.getSession()
-					.getAttribute("bookId").toString());
-			Book bookNew = getBookById(bookId);
-
-			request.setAttribute("book_type", getBookTypeByState(State.ACTIVE));
-			request.setAttribute("book_meaning",
-					getBookMeaningByState(State.ACTIVE));
-			request.setAttribute("book_language",
-					getBookLanguageByState(State.ACTIVE));
-			request.setAttribute("book", bookNew);
-			request.setAttribute("message", message);
-			request.getRequestDispatcher("pages/books/create_book.jsp")
-					.forward(request, response);
-			request.removeAttribute("message");
-			request.removeAttribute("book");
-			request.removeAttribute("book_type");
-			request.removeAttribute("book_meaning");
-			request.removeAttribute("book_language");
-			request.removeAttribute("imagePath");
+			response.sendRedirect(redirectUrl + "&message=" + message);
 
 		} catch (WrongInputException e) {
-			logger.warn(e);
-			int bookId = Integer.parseInt(request.getSession()
-					.getAttribute("bookId").toString());
-			Book book = getBookById(bookId);
+			logger.warn(e.getMessage(), e);
+			String redirectUrl = request.getHeader("referer");
+			int indexEnd = redirectUrl.indexOf('&');
+			if (indexEnd == -1) {
+				indexEnd = redirectUrl.length();
+			}
+			redirectUrl = redirectUrl.substring(0, indexEnd);
 
-			Media media = getMediaById(book.getMediaId());
-			String imagePath = media.getPath().replace("\\", "/");
-			request.setAttribute("imagePath", imagePath);
+			response.sendRedirect(redirectUrl + "&message=" + e.getMessage());
 
-			request.setAttribute("book_type", getBookTypeByState(State.ACTIVE));
-			request.setAttribute("book_meaning",
-					getBookMeaningByState(State.ACTIVE));
-			request.setAttribute("book_language",
-					getBookLanguageByState(State.ACTIVE));
-			request.setAttribute("book", book);
-			request.setAttribute("message", e.getMessage());
-
-			request.getRequestDispatcher("pages/books/create_book.jsp")
-					.forward(request, response);
-			request.removeAttribute("message");
-			request.removeAttribute("book_type");
-			request.removeAttribute("book_meaning");
-			request.removeAttribute("book_language");
-			request.removeAttribute("book");
-			request.removeAttribute("imagePath");
 		}
 	}
 
@@ -485,5 +482,73 @@ public class BookController {
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().write(new Gson().toJson(map));
 
+	}
+
+	@Request(url = "blockBook", method = "post")
+	public static void blockBook(HttpServletRequest request,
+			HttpServletResponse response) throws IOException,
+			ReflectiveOperationException, SQLException {
+		Integer bookId = Integer.parseInt(request.getParameter("bookId"));
+		Book book = BookService.getBookById(bookId);
+		if (book == null || book.getState() == State.DELETED) {
+			logger.warn("trying to block deleted/unexisted book");
+			response.sendError(404);
+			return;
+		}
+		String buttonText;
+		String toastText;
+		if (book.getState() == State.ACTIVE) {
+			book.setState(State.BLOCKED);
+			buttonText = "Unblock book";
+			toastText = "Book was blocked";
+		} else {
+			book.setState(State.ACTIVE);
+			buttonText = "Block book";
+			toastText = "Book was unblocked";
+		}
+		BookService.updateBook(book);
+		Map<String, String> responseData = new HashMap<String, String>();
+		responseData.put("buttonText", buttonText);
+		responseData.put("toastText", toastText);
+		response.setCharacterEncoding("UTF-8");
+		response.setContentType("application/json");
+		response.getWriter().write(new Gson().toJson(responseData));
+	}
+
+	@Request(url = "deleteBook", method = "post")
+	public static void deleteBook(HttpServletRequest request,
+			HttpServletResponse response) throws IOException,
+			ReflectiveOperationException, SQLException {
+		Integer bookId = Integer.parseInt(request.getParameter("bookId"));
+		Book book = BookService.getBookById(bookId);
+		if (book == null) {
+			logger.warn("trying to delete unexisted book");
+			response.sendError(404);
+			return;
+		}
+		String deleteButton;
+		String toastText;
+		String displayButton;
+		if (book.getState() != State.DELETED) {
+			book.setState(State.DELETED);
+			deleteButton = "Restore book";
+			toastText = "Book was deleted";
+			displayButton = "none";
+		} else {
+			book.setState(State.ACTIVE);
+			deleteButton = "Delete book";
+			toastText = "Book was restored";
+			displayButton = "block";
+		}
+		BookService.updateBook(book);
+
+		Map<String, String> responseData = new HashMap<String, String>();
+		responseData.put("buttonText", deleteButton);
+		responseData.put("blockButton", "Block book");
+		responseData.put("toastText", toastText);
+		responseData.put("displayButton", displayButton);
+		response.setCharacterEncoding("UTF-8");
+		response.setContentType("application/json");
+		response.getWriter().write(new Gson().toJson(responseData));
 	}
 }

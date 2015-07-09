@@ -49,7 +49,6 @@ import com.mediateka.util.FileLoader;
 @Controller
 public class UserController {
 
-	private static final long WEEK_MILIS = 604800000;
 	private static Logger logger = Logger.getLogger(UserController.class);
 
 	@Request(url = "events", method = "get")
@@ -392,14 +391,8 @@ public class UserController {
 
 		case USER:
 
-			Timestamp currentDate = new Timestamp(
-					new java.util.Date().getTime());
-			Timestamp weekAgo = new Timestamp(currentDate.getTime()
-					- WEEK_MILIS);
-
 			List<FormRecord> formRecords = FormRecordService
-					.getFormRecordsByUserIdAndDateRange(userId, weekAgo,
-							currentDate);
+					.getFormRecordsByUserIdLimited(userId, 0, 10);
 			if (formRecords != null) {
 
 				Collections.sort(formRecords, new FormRecordsByDateFrom());

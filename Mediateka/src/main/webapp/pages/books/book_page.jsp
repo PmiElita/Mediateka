@@ -5,7 +5,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <%@page import="com.mediateka.model.enums.Role"%>
-
+<%@page import="com.mediateka.model.enums.State"%>
 <fmt:setLocale value="${locale}" />
 <fmt:setBundle basename="menu" />
 <fmt:requestEncoding value="utf-8" />
@@ -13,9 +13,12 @@
 <html>
 
 <head>
+
 <jsp:include page="../general/head.jsp" />
 <jsp:include page="../index/index_modal_login.jsp" />
 <jsp:include page="../index/index_modal_register.jsp" />
+<link type="text/css" rel="stylesheet" href="css/oleh_style.css"
+	media="screen,projection" />
 </head>
 
 <style>
@@ -26,6 +29,7 @@
 		0.0px -1.0px, black 1.0px -1.0px, black 0.0 0.0 3.0px, black 0.0 0.0
 		3.0px, black 0.0 0.0 3.0px, black 0.0 0.0 3.0px, black 0.0 0.0 3.0px,
 		black 0.0 0.0 3.0px, black 0.0 0.0 3.0px, black 0.0 0.0 3.0px;
+		width : 100%;
 }
 
 .book-cover-href {
@@ -57,39 +61,50 @@
 
 			<div class="container white center" style="min-height:33em; margin-bottom:0">
 				<div class="row">
-					<div class="col s4 offset-s3">
-						<h2 class="book-cover-t right">Book title</h2>
+			  <c:if test="${userRole eq Role.ADMIN}">
+			  <div class = "col s4"><a href ="UpdateBook?bookId=${book.id }"><button class="btn">Edit</button></a> </div>
+			  </c:if>
+					<div class="col s12 ">
+						<h5 class="book-cover-t center">"${book.name}" ${book.author }</h5>
 					</div>
 
-					<div class="col s1 left">
-						<div style="margin-top: 1.75em" class="fixed-action-btn">
-							<a title="Search" href="searchBook"
-								class="btn-floating btn-medium white book-cover-t"><i><img
-									src="images/admin/search_book.png" width="20em" /></i> </a>
-									
-							<c:if test="${userRole eq Role.ADMIN}">
-								<ul style="font-size: 0.75em">
-									<li style="margin-top: 2.5em; margin-left: -1em"><a
-										href="UpdateBook"
-										class="btn-floating btn-large black book-cover-href"
-										style="color: black">Edit</a></li>
-								</ul>
-							</c:if>
-							<c:if test="${userRole ne Role.ADMIN}">
-							<div style="height:7em"></div>
-							</c:if>
-						</div>
-					</div>
+					
 
 				</div>
+            <div class="row book-row">
+				<img alt="Book name" src="${avaPath }" width="45%"
+					>
+            </div>
+            <div class = "row book-row">
+            <span>State: </span>
+            <c:choose>
+            <c:when test="${book.state eq State.ACTIVE }">
+            <span class="stateValue">Free</span>
+            </c:when>
+            <c:otherwise>
+            <span class="stateValue">Not free</span>
+            </c:otherwise>
+            </c:choose>
+            
+            </div>
+            <div class="row">
 
-				<img alt="Book name" src="images/book_title.jpg" width="45%"
-					style="margin-top: -7em">
+								<div class="input-field col s4">
+									<span>Type: ${bookType }</span>
+								</div>
 
+								<div class="input-field col s4">
+									<span>Meaning: ${bookMeaning }</span>
+								</div>
+
+
+								<div class="input-field col s4">
+									<span>Meaning: ${bookLanguage }</span>
+								</div>
+							</div>
 				<div class="section" style="margin-bottom:0">
 					<h5>Info</h5>
-					<p>It is a wonderful story of adventurous life by J. C.
-						Kalloun. SFDASFASGFASDFSSSSSSSSSSSSSSSSSSSSSSSSSSSSSss</p>
+					<p>${book.description}</p>
 
 				</div>
 			</div>

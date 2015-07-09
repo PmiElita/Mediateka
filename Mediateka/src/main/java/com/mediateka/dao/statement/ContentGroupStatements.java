@@ -33,7 +33,7 @@ public class ContentGroupStatements {
 	public static final String SELECT_CONTENT_GROUP_BY_CLUB_ID = "SELECT * FROM content_group WHERE club_id=?";
 	public static final String[] SELECT_CONTENT_GROUP_BY_CLUB_ID_ORDER = { "club_id" };
 
-	public static final String SELECT_CONTENT_GROUP_BY_PARENT_ID = "SELECT * FROM content_group WHERE parent_id=?";
+	public static final String SELECT_CONTENT_GROUP_BY_PARENT_ID = "SELECT * FROM content_group WHERE parent_id=? AND state='ACTIVE'";
 	public static final String[] SELECT_CONTENT_GROUP_BY_PARENT_ID_ORDER = { "parent_id" };
 
 	public static final String SELECT_CONTENT_GROUP_BY_CREATOR_ID = "SELECT * FROM content_group WHERE creator_id=?";

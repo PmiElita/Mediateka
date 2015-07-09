@@ -23,7 +23,7 @@
 					<div class="col s10" style="margin-top: 2em">
 						<div class="input-field image-cover-t">
 							<i class="mdi-editor-mode-edit prefix"></i>
-							<textarea class="materialize-textarea" name="text" id="text"></textarea>
+							<textarea class="materialize-textarea" name="text" id="text" style="color:black;"></textarea>
 							<label for="text" style="font-size: 1.5em" style="color:white"><fmt:message bundle="${msg}" key="record_form.message" /></label>
 						</div>
 					</div>
@@ -37,19 +37,21 @@
 					</div>
 				</div>
 
-				<div id="progress"></div>
+<!-- 				<div class="row" id ="preloader" style ="display:none;"> -->
+<!--       <img alt="" src="images/club/294.GIF"> -->
+<!--   </div> -->
 				<div class="row" style="margin-left: -8em">
 					<div class="file-field input-field col s2 offset-s3">
 						<div class="btn">
 							<span><i class="small mdi-image-camera-alt"></i></span> <input
-								type="file" id="image" name="image" multiple accept="image/*">
+								type="file" id="image" name="image" multiple accept="image/*" >
 
 						</div>
 					</div>
 					<div class="file-field input-field col s2 offset-s1">
 						<div class="btn">
 							<span><i class="small mdi-av-video-collection"></i></span> <input
-								type="file" id="video" name="video" onloadstart="alert(5);"
+								type="file" id="video" name="video" 
 								multiple accept="video/*">
 						</div>
 

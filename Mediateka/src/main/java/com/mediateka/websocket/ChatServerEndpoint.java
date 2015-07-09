@@ -7,7 +7,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -24,35 +23,20 @@ import org.json.simple.parser.ParseException;
 
 import com.google.gson.Gson;
 import com.mediateka.model.ChatMessage;
-import com.mediateka.model.Club;
 import com.mediateka.model.ClubEventMember;
 import com.mediateka.model.User;
 import com.mediateka.model.enums.Role;
 import com.mediateka.model.enums.State;
 import com.mediateka.service.ChatMessageService;
 import com.mediateka.service.ClubEventMemberService;
-import com.mediateka.service.ClubService;
 import com.mediateka.service.UserService;
 
 @ServerEndpoint(value = "/chat")
 public class ChatServerEndpoint {
 	private static Logger logger = Logger.getLogger(ChatServerEndpoint.class);
-	private static Map<Integer,Set<Session>> clubChats; 
-static{
-	try {
-	 clubChats = Collections
-				.synchronizedMap(new HashMap<Integer,Set<Session>>());
-	 List<Club> clubs = ClubService.getClubAll();
-	 for (Club club : clubs){
-		 if (club.getState().equals(State.ACTIVE)){
-			 clubChats.put(club.getId(),Collections
-						.synchronizedSet(new HashSet<Session>()));
-		 }
-	 }
-	}catch (Exception e){
-		logger.warn("exception in clubChats initialization",e);
-	}
-}
+	private static Map<Integer,Set<Session>> clubChats =Collections
+	.synchronizedMap(new HashMap<Integer,Set<Session>>());
+
 	/**
 	 * Callback hook for Connection open events.
 	 * 
@@ -65,6 +49,10 @@ static{
 	@OnOpen
 	public void onOpen(Session userSession) {
 		Integer clubId=Integer.parseInt(userSession.getRequestParameterMap().get("clubId").get(0));
+		if (clubChats.get(clubId)==null){
+			clubChats.put(clubId,Collections
+					.synchronizedSet(new HashSet<Session>()));
+		}
 		clubChats.get(clubId).add(userSession);
 		userSession.getAsyncRemote().sendText("");
 	}

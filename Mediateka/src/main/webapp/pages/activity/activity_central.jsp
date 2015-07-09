@@ -23,7 +23,7 @@
 
 		<div class="row select-activity">
 
-			<select class="browser-default col s3 " id="period"
+			<select class="browser-default col s4 " id="period"
 				onchange="reloadActivity(this)">
 				<option value="week" selected>
 					<fmt:message bundle="${msg}" key="week" />
@@ -35,7 +35,25 @@
 					<fmt:message bundle="${msg}" key="allTime" />
 				</option>
 			</select>
+			
+					<select class="browser-default col s4 offset-s1" id="recordType"
+						onchange="reloadActivity(this)">
+						<option value="anyType" selected>
+							<fmt:message bundle="${msg}" key="any_type" />
+						</option>
+						<option value="books">
+							<fmt:message bundle="${msg}" key="books" />
+						</option>
+						<option value="events">
+							<fmt:message bundle="${msg}" key="events" />
+						</option>
+							<option value="other">
+							<fmt:message bundle="${msg}" key="other" />
+						</option>
+					</select>
+					
 		</div>
+			 
 		<div class="row" id="formRecordsRow">
 			<div class="col s12 " id="formRecords">
 				<u:showUsers formRecords="${formRecords }"

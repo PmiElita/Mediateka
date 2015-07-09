@@ -232,7 +232,7 @@ public class EventController {
 			if (request.getSession().getAttribute("club_id") != null)
 				event.setClubId(Integer.parseInt(request.getSession()
 						.getAttribute("club_id").toString()));
-			event.setAvaId(2);
+			event.setAvaId(1);
 			event = callSaveEvent(event);
 
 			ClubEventMember clubEventMember = new ClubEventMember();
@@ -250,7 +250,7 @@ public class EventController {
 		} catch (WrongInputException e) {
 			logger.warn(e);
 			request.setAttribute("message", e.getMessage());
-			response.sendRedirect("error404.jsp");
+			response.sendError(404);
 			request.removeAttribute("message");
 		}
 	}
@@ -302,7 +302,7 @@ public class EventController {
 			if (request.getSession().getAttribute("club_id") != null)
 				event.setClubId(Integer.parseInt(request.getSession()
 						.getAttribute("club_id").toString()));
-			event.setAvaId(2);
+			event.setAvaId(1);
 			event = callSaveEvent(event);
 
 			ClubEventMember clubEventMember = new ClubEventMember();

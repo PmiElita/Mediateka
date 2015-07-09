@@ -119,7 +119,9 @@ public class RegisterUserController {
 
 		newUser.setFormId(Integer.parseInt(form.getFormId()));
 		newUser.setIsFormActive(true);
-
+        
+		newUser.setAvaId(1);
+		
 		// generate salt
 		String salt = SecurityStringGenerator.generateString(128);
 		newUser.setSalt(salt);
@@ -219,7 +221,7 @@ public class RegisterUserController {
 
 		newUser.setFormId(null);
 		newUser.setIsFormActive(true);
-
+		newUser.setAvaId(1);
 		// generate salt
 		String salt = SecurityStringGenerator.generateString(128);
 		newUser.setSalt(salt);
