@@ -131,8 +131,7 @@
 				</c:if>
 				<c:if test="${badGuy!=null}">
 					<h5>
-						<text align="center">
-						<fmt:message bundle="${msg}"
+						<text align="center"> <fmt:message bundle="${msg}"
 							key="your_membership_in_this_event_is_blocked_or_deleted" /></text>
 					</h5>
 				</c:if>
@@ -149,7 +148,7 @@
 	</div>
 	<div class="row" style="margin-left: -3.5em">
 		<div class="col s4">
-			<a href="" data-target="modal17" class="modal-trigger">
+			<a href="eventAudios?eventId=${event.id}">
 				<div class="col s12 m8 offset-m2 l6 offset-l3 my-card my-small-card">
 					<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
 						<div style="margin-top: -2em">
@@ -168,11 +167,10 @@
 						</div>
 					</div>
 				</div>
-			</a>
 		</div>
 
 		<div class="col s4">
-			<a href="event_videos">
+			<a href="eventVideos?eventId=${event.id}">
 				<div class="col s12 m8 offset-m2 l6 offset-l3 my-card my-small-card">
 					<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
 						<div style="margin-top: -2em">
@@ -195,7 +193,7 @@
 		</div>
 
 		<div class="col s4">
-			<a href="event_photo">
+			<a href="eventAlbums?eventId=${event.id}">
 				<div class="col s12 m8 offset-m2 l6 offset-l3 my-card my-small-card">
 					<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
 						<div style="margin-top: -2em">

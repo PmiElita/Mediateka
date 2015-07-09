@@ -45,7 +45,7 @@
 				</p>
 				<br>
 				<ul class="collapsible center" data-collapsible="accordion">
-					<li><jsp:include page="record.jsp" /></li>
+					<li><jsp:include page="../content/record.jsp" /></li>
 				</ul>
 			</div>
 

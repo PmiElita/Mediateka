@@ -111,9 +111,11 @@ public class FileLoader {
 								System.out.println("posterFile "
 										+ posterFile.getAbsolutePath());
 								posterMedia.setPath(posterFile
-										.getAbsolutePath().substring(
+										.getAbsolutePath()
+										.substring(
 												posterFile.getAbsolutePath()
-														.indexOf("media\\")));
+														.indexOf("media\\"))
+										.replace("\\", "/"));
 								MediaService.saveMedia(posterMedia);
 							} catch (IOException e) {
 								// TODO Auto-generated catch block
@@ -211,7 +213,7 @@ public class FileLoader {
 								defaultFileNames.get(i).indexOf('.'));
 					}
 					if (extention == "") {
-						extention = ".png";
+						extention = ".jpg";
 					}
 					String filePath = uploadFolder + "\\"
 							+ item.getFieldName().toLowerCase() + "s"

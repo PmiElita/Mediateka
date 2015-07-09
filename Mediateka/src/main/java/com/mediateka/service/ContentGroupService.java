@@ -70,6 +70,11 @@ public class ContentGroupService {
 	public static List<ContentGroup> getContentGroupByClubIdAndStateAndType(Integer clubId, State state, ContentGroupType contentGroupType) throws SQLException, ReflectiveOperationException{
 		return ContentGroupDAO.getContentGroupByClubIdAndStateAndType(clubId, state, contentGroupType);
 	}
+	
+	
+	public static List<ContentGroup> getContentGroupByEventIdAndStateAndType(Integer eventId, State state, ContentGroupType contentGroupType) throws SQLException, ReflectiveOperationException{
+		return ContentGroupDAO.getContentGroupByEventIdAndStateAndType(eventId, state, contentGroupType);
+	}
 
 	public static List<ContentGroup> getContentGroupAll()
 			throws ReflectiveOperationException, SQLException {

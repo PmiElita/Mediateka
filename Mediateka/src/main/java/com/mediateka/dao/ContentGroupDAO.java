@@ -226,6 +226,21 @@ public class ContentGroupDAO {
 		}
 	}
 	
+	public static List<ContentGroup> getContentGroupByEventIdAndStateAndType(Integer eventId, State state, ContentGroupType contentGroupType) throws SQLException, ReflectiveOperationException{
+		try (Connection connection = ConnectionManager.getConnection()) {
+			PreparedStatement statement = connection
+					.prepareStatement(SELECT_CONTENT_GROUP_BY_EVENT_ID_AND_STATE_AND_TYPE);
+			ContentGroup contentGroup = new ContentGroup();
+			contentGroup.setEventId(eventId);
+			contentGroup.setState(state);
+			contentGroup.setType(contentGroupType);
+			Transformer.valueIntoPreparedStatement(statement, contentGroup,
+					SELECT_CONTENT_GROUP_BY_EVENT_ID_AND_STATE_AND_TYPE_ORDER);
+			ResultSet resultSet = statement.executeQuery();
+			return Transformer.transformResultSetIntoList(resultSet,
+					ContentGroup.class);
+		}
+	}
 
 	// update
 	public static void updateContentGroup(ContentGroup contentGroup)

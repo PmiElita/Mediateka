@@ -140,7 +140,7 @@ function handleForm(e) {
 				.toString());
 	}
 	if (document.getElementById('eventId') != null) {
-		data.appent('eventId', document.getElementById('clubId').innerHTML
+		data.append('eventId', document.getElementById('eventId').innerHTML
 				.toString());
 	}	
 	for (var i = 0, len = storedImages.length; i < len; i++) {

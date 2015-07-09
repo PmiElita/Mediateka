@@ -21,23 +21,34 @@
 	<div class="main">
 		<jsp:include page="../general/nav.jsp" />
 
-		
 
-			<div class="parallax-container my-parallax">
-				<div class="parallax">
-					<img src="images/parallax1.jpg">
-				</div>
-				<c:if test="${userRole eq Role.ADMIN}">
-					<jsp:include page="../admin/admin_side_nav.jsp" />
-				</c:if>
 
-				<c:if test="${userRole eq Role.USER}">
-					<jsp:include page="../user/user_side_nav.jsp" />
-				</c:if>
-
-				<jsp:include page="event_central.jsp" />
-				<label id="eventId" hidden="true"><c:out value="${event.id}" /></label>
+		<div class="parallax-container my-parallax">
+			<div class="parallax">
+				<img src="images/parallax1.jpg">
 			</div>
+			<c:if test="${userRole eq Role.ADMIN}">
+				<jsp:include page="../admin/admin_side_nav.jsp" />
+			</c:if>
+
+			<c:if test="${userRole eq Role.USER}">
+				<jsp:include page="../user/user_side_nav.jsp" />
+			</c:if>
+
+			<jsp:include page="event_central.jsp" />
+			<label id="eventId" hidden="true"><c:out value="${event.id}" /></label>
+			<div class="container white">
+				<div style="height: 3em"></div>
+				<p>
+					<fmt:message bundle="${msg}" key="description" />
+					<c:out value="${event.description}" />
+				</p>
+				<br>
+				<ul class="collapsible center" data-collapsible="accordion">
+					<li><jsp:include page="../content/record.jsp" /></li>
+				</ul>
+			</div>
+		</div>
 	</div>
 	<jsp:include page="../general/footer.jsp" />
 </body>

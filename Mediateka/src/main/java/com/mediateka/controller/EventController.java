@@ -39,6 +39,7 @@ import com.mediateka.content.CreateContent;
 import com.mediateka.exception.WrongInputException;
 import com.mediateka.form.ExhibitionRegistrationForm;
 import com.mediateka.form.MeetingRegistrationForm;
+import com.mediateka.model.Club;
 import com.mediateka.model.ClubEventMember;
 import com.mediateka.model.ContentGroup;
 import com.mediateka.model.Event;
@@ -50,6 +51,7 @@ import com.mediateka.model.enums.EventType;
 import com.mediateka.model.enums.MediaType;
 import com.mediateka.model.enums.Role;
 import com.mediateka.model.enums.State;
+import com.mediateka.service.ClubService;
 import com.mediateka.service.ContentGroupService;
 import com.mediateka.service.EventService;
 import com.mediateka.service.MediaService;
@@ -1048,4 +1050,62 @@ public class EventController {
 		else if (state == State.DELETED)
 			response.sendRedirect("events");
 	}
+	
+	
+	@Request(url = "eventAlbums", method = "get")
+	public static void eventAlbumsGet(HttpServletRequest request,
+			HttpServletResponse response) throws SQLException,
+			ReflectiveOperationException, ServletException, IOException {
+		Integer eventId = Integer.parseInt(request.getParameter("eventId"));
+		List<ContentGroup> contentGroups = ContentGroupService
+				.getContentGroupByEventIdAndStateAndType(eventId, State.ACTIVE,
+						ContentGroupType.IMAGE);
+		CreateContent.setContent(request, response, contentGroups);
+		Event event = EventService.getEventById(eventId);
+		request.setAttribute("eventName", event.getName());
+		request.setAttribute("eventId", eventId);
+		request.getRequestDispatcher("pages/content/albums.jsp").forward(request,
+				response);
+		request.removeAttribute("eventName");
+		request.removeAttribute("eventId");
+	}
+
+	@Request(url = "eventVideos", method = "get")
+	public static void eventVideosGet(HttpServletRequest request,
+			HttpServletResponse response) throws SQLException,
+			ReflectiveOperationException, ServletException, IOException {
+		Integer eventId = Integer.parseInt(request.getParameter("eventId"));
+		List<ContentGroup> contentGroups = ContentGroupService
+				.getContentGroupByEventIdAndStateAndType(eventId, State.ACTIVE,
+						ContentGroupType.VIDEO);
+		CreateContent.setContent(request, response, contentGroups);
+		Event event = EventService.getEventById(eventId);
+		request.setAttribute("eventName", event.getName());
+		request.setAttribute("eventId", eventId);
+		request.getRequestDispatcher("pages/content/videos.jsp").forward(request,
+				response);
+		request.removeAttribute("eventName");
+		request.removeAttribute("eventId");
+	}
+
+	@Request(url = "eventAudios", method = "get")
+	public static void clubAudiosGet(HttpServletRequest request,
+			HttpServletResponse response) throws SQLException,
+			ReflectiveOperationException, ServletException, IOException {
+		Integer eventId = Integer.parseInt(request.getParameter("eventId"));
+		List<ContentGroup> contentGroups = ContentGroupService
+				.getContentGroupByEventIdAndStateAndType(eventId, State.ACTIVE,
+						ContentGroupType.AUDIO);
+		CreateContent.setContent(request, response, contentGroups);
+		Club club = ClubService.getClubById(eventId);
+		request.setAttribute("eventName", club.getName());
+		request.setAttribute("eventId", eventId);
+		request.setAttribute("index", 0);
+		request.getRequestDispatcher("pages/content/audios.jsp").forward(request,
+				response);
+		request.removeAttribute("eventName");
+		request.removeAttribute("eventId");
+	}
+	
+	
 }

@@ -153,7 +153,7 @@ public class CreateContent {
 		}
 		request.setAttribute("index", request.getParameter("index"));
 
-		request.getRequestDispatcher("pages/club/record_central.jsp").forward(
+		request.getRequestDispatcher("pages/content/record_central.jsp").forward(
 				request, response);
 
 	}

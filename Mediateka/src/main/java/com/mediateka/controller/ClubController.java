@@ -216,10 +216,9 @@ public class ClubController {
 	@Request(url = "viewNewAlbum", method = "get")
 	public static void viewNewAlbumGet(HttpServletRequest request,
 			HttpServletResponse response) throws ReflectiveOperationException,
-			SQLException, ServletException, IOException {
-		System.out.println("viewNewAlbum");
-		System.out.println("createContent");
+			SQLException, ServletException, IOException {	
 		int clubId = 0;
+		int eventId = 0;
 		System.out.println(request.getParameter("albumId"));
 		Integer albumId = Integer.parseInt(request.getParameter("albumId"));
 		ContentGroup contentGroup = ContentGroupService
@@ -229,15 +228,21 @@ public class ClubController {
 		if (contentGroup.getClubId() != null) {
 			clubId = contentGroup.getClubId();
 		}
+		if (contentGroup.getEventId() != null) {
+			eventId = contentGroup.getEventId();
+		}
 		CreateContent.setContent(request, response, albums);
 
 		if (clubId != 0) {
 			request.setAttribute("clubId", clubId);
 		}
+		if (eventId != 0) {
+			request.setAttribute("eventId", eventId);
+		}
 
 		request.setAttribute("index", request.getParameter("index"));
 
-		request.getRequestDispatcher("pages/club/albumList.jsp").forward(
+		request.getRequestDispatcher("pages/content/albumList.jsp").forward(
 				request, response);
 	}
 
@@ -253,7 +258,7 @@ public class ClubController {
 		Club club = ClubService.getClubById(clubId);
 		request.setAttribute("clubName", club.getName());
 		request.setAttribute("clubId", clubId);
-		request.getRequestDispatcher("pages/club/albums.jsp").forward(request,
+		request.getRequestDispatcher("pages/content/albums.jsp").forward(request,
 				response);
 		request.removeAttribute("clubName");
 		request.removeAttribute("clubId");
@@ -271,7 +276,7 @@ public class ClubController {
 		Club club = ClubService.getClubById(clubId);
 		request.setAttribute("clubName", club.getName());
 		request.setAttribute("clubId", clubId);
-		request.getRequestDispatcher("pages/club/videos.jsp").forward(request,
+		request.getRequestDispatcher("pages/content/videos.jsp").forward(request,
 				response);
 		request.removeAttribute("clubName");
 		request.removeAttribute("clubId");
@@ -291,7 +296,7 @@ public class ClubController {
 		request.setAttribute("clubName", club.getName());
 		request.setAttribute("clubId", clubId);
 		request.setAttribute("index", 0);
-		request.getRequestDispatcher("pages/club/audios.jsp").forward(request,
+		request.getRequestDispatcher("pages/content/audios.jsp").forward(request,
 				response);
 		request.removeAttribute("clubName");
 		request.removeAttribute("clubId");
@@ -311,6 +316,7 @@ public class ClubController {
 			HttpServletResponse response) throws ReflectiveOperationException,
 			SQLException, ServletException, IOException {
 		int clubId = 0;
+		int eventId = 0;
 		Integer videoId = Integer.parseInt(request.getParameter("videoId"));
 		ContentGroup contentGroup = ContentGroupService
 				.getContentGroupById(videoId);
@@ -319,15 +325,21 @@ public class ClubController {
 		if (contentGroup.getClubId() != null) {
 			clubId = contentGroup.getClubId();
 		}	
+		if (contentGroup.getEventId() != null) {
+			eventId = contentGroup.getEventId();
+		}
 		CreateContent.setContent(request, response, videos);
 
 		if (clubId != 0) {
 			request.setAttribute("clubId", clubId);
 		}
+		if (eventId != 0) {
+			request.setAttribute("eventId", eventId);
+		}
 
 		request.setAttribute("index", request.getParameter("index"));
 
-		request.getRequestDispatcher("pages/club/videoList.jsp").forward(
+		request.getRequestDispatcher("pages/content/videoList.jsp").forward(
 				request, response);
 	}
 	
@@ -365,7 +377,7 @@ public class ClubController {
 
 		request.setAttribute("index", request.getParameter("index"));
 
-		request.getRequestDispatcher("pages/club/audioList.jsp").forward(
+		request.getRequestDispatcher("pages/content/audioList.jsp").forward(
 				request, response);
 	}
 
