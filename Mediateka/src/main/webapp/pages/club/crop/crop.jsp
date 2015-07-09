@@ -90,6 +90,11 @@
 			}
 			var xhr = new XMLHttpRequest();
 			xhr.open('POST', 'loadClubAva', true);
+			xhr.onload = function(e, data) {
+				if (this.status == 200) {
+					document.getElementById("clubAvaForm").reset();
+				}
+			}
 			xhr.send(data);
 
 		}

@@ -37,15 +37,16 @@ audio {
 						style="padding: 0px;">
 						<div class="valign-wrapper">
 							<div class="col s1">
-								<img
-									src="${creatoAva[record.id] }"
-									alt="" class="circle" style="height: 45px;">
+								<img src="${creatoAva[record.id] }" alt="" class="circle"
+									style="height: 45px;">
 							</div>
 							<div align="left" class="col s3">
 								<c:out value="${creatorName[record.id]}"></c:out>
 							</div>
-							<a onclick="restoreRecord(${record.id }); Materialize.toast('<fmt:message bundle="${msg}" key="record_central.restored" />', 4000)"
-								class="waves-effect waves-light btn"><fmt:message bundle="${msg}" key="record_central.restore" /></a>
+							<a
+								onclick="restoreRecord(${record.id }); Materialize.toast('<fmt:message bundle="${msg}" key="record_central.restored" />', 4000)"
+								class="waves-effect waves-light btn"><fmt:message
+									bundle="${msg}" key="record_central.restore" /></a>
 							<div class="col s7" align="right">
 								<fmt:formatDate value="${record.creationDate}"
 									pattern="HH:mm dd.MM.yyyy" />
@@ -64,8 +65,8 @@ audio {
 						style="padding: 0px;">
 						<div class="valign-wrapper">
 							<div class="col s1">
-								<img src="${creatorAva[record.id] }"
-									alt="" class="circle" style="height: 45px;">
+								<img src="${creatorAva[record.id] }" alt="" class="circle"
+									style="height: 45px;">
 							</div>
 							<div align="left" class="col s3">
 								<c:out value="${creatorName[record.id]}"></c:out>
@@ -76,7 +77,8 @@ audio {
 							</div>
 							<c:if test="${userId eq record.creatorId}">
 								<div class="col s1 ">
-									<span onclick="deleteRecord(${record.id}); Materialize.toast('<fmt:message bundle="${msg}" key="record_central.deleted" />', 4000);"
+									<span
+										onclick="deleteRecord(${record.id}); Materialize.toast('<fmt:message bundle="${msg}" key="record_central.deleted" />', 4000);"
 										onmouseover="this.style.color = 'red';"
 										onmouseleave="this.style.color = 'black';"
 										class="waves-effect waves-circle waves-red">X</span>
@@ -101,15 +103,14 @@ audio {
 					</c:forEach>
 				</div>
 				<div class="fotorama " data-width="700" data-maxwidth="100%"
-					data-ratio="16/9" align="center" data-video="true"
-					data-click="false" data-swipe="false">
+					align="center" data-video="true" data-click="false"
+					data-swipe="false">
 					<c:forEach var="video" items="${videoMap.get(record.id) }">
 
-						<video width="700" poster="${posterMap.get(video.id).path }"
+						<video width="100%" poster="${posterMap.get(video.id).path }"
 							onclick="this.play();" controls="controls"
 							title='<c:out value="${video.name}"></c:out>'>
-							<source src='<c:out value="${video.path}"></c:out>'
-								type="video/mp4">
+							<source src='<c:out value="${video.path}"></c:out>'>
 						</video>
 					</c:forEach>
 				</div>
@@ -138,57 +139,61 @@ audio {
 					id="recordDislike${record.id}"><c:out
 						value="${record.dislike }"></c:out></span>
 			</div>
-			
+
 		</div>
 		<div class="row">
-			 <ul class="collapsible comments" data-collapsible="accordion">
-		 <li>
-		 <div class="collapsible-header"><i
-	id="collapse-icon" class="mdi-communication-comment"></i><fmt:message bundle="${msg}" key="record_central.comments" /></div>
-		 <div class="collapsible-body  " >
+			<ul class="collapsible comments" data-collapsible="accordion">
+				<li>
+					<div class="collapsible-header">
+						<i id="collapse-icon" class="mdi-communication-comment"></i>
+						<fmt:message bundle="${msg}" key="record_central.comments" />
+					</div>
+					<div class="collapsible-body  ">
 
-			<div class=" comment-area" id="commentArea">
-				<c:forEach var="chatMessage" items="${chatMessages }">
-					<div class="col s12 comment-item">
-						<div class="card-panel grey lighten-5 z-depth-1"
-							style="padding: 5px;">
-							<div class="row valign-wrapper"
-								style="line-height: 20px; margin-bottom: 5px;">
-								<div class="col s1">
+						<div class=" comment-area" id="commentArea">
+							<c:forEach var="chatMessage" items="${chatMessages }">
+								<div class="col s12 comment-item">
+									<div class="card-panel grey lighten-5 z-depth-1"
+										style="padding: 5px;">
+										<div class="row valign-wrapper"
+											style="line-height: 20px; margin-bottom: 5px;">
+											<div class="col s1">
 
-									<img src="${chatMessage.userCard.path }" alt=""
-										class="circle responsive-img">
-									<!-- notice the "circle" class -->
+												<img src="${chatMessage.userCard.path }" alt=""
+													class="circle responsive-img">
+												<!-- notice the "circle" class -->
 
+											</div>
+
+
+											<div class="col s10">
+												<span class="comment_user_name"> <c:out
+														value="${chatMessage.userCard.firstName }"></c:out> :
+												</span> <span class="comment-text"> <c:out
+														value="${chatMessage.chatMessage.text}"></c:out>
+												</span>
+											</div>
+										</div>
+
+									</div>
 								</div>
 
+							</c:forEach>
+						</div>
+						<div class="panel input-area ">
+							<textarea id="commentInput" class="materialize-textarea"
+								placeholder="<fmt:message bundle="${msg}" key="message" />"></textarea>
 
-								<div class="col s10">
-									<span class="comment_user_name"> <c:out
-											value="${chatMessage.userCard.firstName }"></c:out> : </span> 
-											<span class="comment-text"> <c:out
-											value="${chatMessage.chatMessage.text}"></c:out>
-									</span>
-								</div>
-							</div>
+							<button class=" col s4 offset-s9 btn" onclick="addComment();">
+								<fmt:message bundle="${msg}" key="send" />
+							</button>
 
 						</div>
+
+
 					</div>
-
-				</c:forEach>
-			</div>
-			<div class="panel input-area ">
-				<textarea id="commentInput" class="materialize-textarea"
-					placeholder="<fmt:message bundle="${msg}" key="message" />"></textarea>
-
-				<button class=" col s4 offset-s9 btn" onclick="addComment();"><fmt:message bundle="${msg}" key="send" /></button>
-
-			</div>
-
-		
-		 </div>
-		 </li>
-		 </ul>
+				</li>
+			</ul>
 		</div>
 	</c:forEach>
 </div>
