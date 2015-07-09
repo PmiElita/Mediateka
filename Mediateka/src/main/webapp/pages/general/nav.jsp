@@ -14,7 +14,7 @@
 		<a href="index" class="brand-logo"><img alt="Logo"
 			src="images/logo.png" style="width: inherit" /></a>
 
-		<ul class="right hide-on-med-and-down">
+		<ul class="right">
 
 			<li><a title="<fmt:message bundle="${msg}" key="events" />" href="events" class="waves-effect"> <i
 					style="width: 1em"><img style="width: 120%; height: 60%; margin-top:0.35em; margin-left:-0.25em"

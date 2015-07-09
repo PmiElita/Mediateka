@@ -89,7 +89,7 @@ audio {
 						</div>
 					</div>
 				</div>
-				<div align="left">
+				<div align="left" style="margin-left:2em">
 					<c:out value="${record.text}" />
 				</div>
 				<div class="fotorama" id='gallery${record.id }' data-nav="thumbs"

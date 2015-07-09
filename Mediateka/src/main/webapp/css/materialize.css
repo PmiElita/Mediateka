@@ -6940,14 +6940,9 @@ nav .brand-logo.center {
 	transform: translateX(-50%);
 }
 
-@media only screen and (max-width : 992px) {
+@media only screen and (max-width : 525px) {
 	nav .brand-logo {
-		left: 50%;
-		-webkit-transform: translateX(-50%);
-		-moz-transform: translateX(-50%);
-		-ms-transform: translateX(-50%);
-		-o-transform: translateX(-50%);
-		transform: translateX(-50%);
+		width:2.25em;
 	}
 }
 

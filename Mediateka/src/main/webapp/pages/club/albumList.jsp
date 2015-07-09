@@ -69,7 +69,7 @@
 
 					<img class="modal-trigger col" 
 						src="<c:out value='${image.path}' ></c:out>" data-target="modal33"
-						style="cursor: pointer; height: 10em; margin-top: 0.5em">
+						style="cursor: pointer; height: 10em; margin-top: 0.5em" onclick="startSlider()">
 				</c:forEach>
 			</div>
 		</div>
@@ -80,7 +80,7 @@
 			<div id="slider1_container"
 				style="position: relative; width: 600px; height: 500px;">
 
-
+			
 				<!-- Slides Container -->
 				<div u="slides"
 					style="cursor: move; position: relative; left: 0px; top: 0px; width: 700px; height: 500px; overflow: hidden; margin-left: 2.5em;">
@@ -99,8 +99,9 @@
 
 	<script>
 	
-        jQuery(document).ready(function ($) {
+        function startSlider() {
 
+        	alert("hello");
     		var num;
     	
         	
@@ -129,7 +130,7 @@
 
             var jssor_slider1 = new $JssorSlider$("slider1_container", options);
 
-        });
+        };
     </script>
 
 </c:forEach>

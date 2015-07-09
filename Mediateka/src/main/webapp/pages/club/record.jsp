@@ -34,5 +34,5 @@
 
 <!-- <form id="clubForm" action="record" method="post"></form> -->
 <div id="record_central">
-<div id="recordList" style="padding-top: 4.0em" ><jsp:include
+<div id="recordList" style="margin-top:0em"><jsp:include
 			page="record_central.jsp" /></div></div>
