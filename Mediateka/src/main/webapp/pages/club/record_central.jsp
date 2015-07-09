@@ -188,7 +188,7 @@ audio {
 											value="${comment.comment.text}"></c:out>
 									</span>
 								</div>
-								<c:if test="${userId eq comment.comment.creatorId}">
+									<c:if test="${userId eq comment.comment.creatorId}">
 								<div class="col s1 ">
 									<span onclick="deleteRecord(${comment.comment.id}); Materialize.toast('Deleted', 4000);"
 										onmouseover="this.style.color = 'red';"
@@ -196,8 +196,11 @@ audio {
 										class="waves-effect waves-circle waves-red">X</span>
 								</div>
 							</c:if>
+								</div>
 								
-							</div>
+							
+								
+							
  <div class="row message-date"><span class="comment-date">${comment.comment.formatedCreationDate}</span> <div align="right">
 				<a><span><i onclick="like('1',${comment.comment.id});"
 						class="tiny mdi-action-thumb-up waves-effect waves-green "></i></span></a> <span
@@ -207,13 +210,13 @@ audio {
 					id="recordDislike${comment.comment.id}"><c:out
 						value="${comment.comment.dislike }"></c:out></span>
 			</div></div> 
+			</div>
+			</div>
 							</c:forEach>
-						</div>
-						<div class="panel input-area ">
-							<textarea id="commentInput" class="materialize-textarea"
-								placeholder="<fmt:message bundle="${msg}" key="message" />"></textarea>
+						
+						
 
-				</c:forEach>
+				
 			</div>
 			
 			<div class="panel input-area ">
@@ -223,6 +226,7 @@ audio {
 				<button class=" col s4 offset-s8 btn" onclick="addComment(${record.id});"><fmt:message bundle="${msg1}" key="send" /></button>
 
 
+					</div>
 					</div>
 				</li>
 			</ul>
