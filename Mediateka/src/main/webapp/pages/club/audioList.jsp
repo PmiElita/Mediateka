@@ -130,9 +130,8 @@ li.playing:before {
 }
 </style>
 
-<script src="audiojs/audio.min.js"></script>
-<script src="./jquery.js"></script>
-<script src="../audiojs/audio.js"></script>
+
+
 <script>
 	$(function() {
 
@@ -153,13 +152,15 @@ li.playing:before {
 
 		// Load in the first track
 		var audio = a[0];
-		first = $('ol a').attr('data-src');
-		$('ol li').first().addClass('playing');
-		audio.load(first);
+		// 		first = $('ol a').attr('data-src');
+		// 		$('ol li').first().addClass('playing');
+		// 		audio.load(first);
 
 		// Load in a track on click
 		$('ol li').click(function(e) {
 			e.preventDefault();
+			$('.playing').removeClass('playing');
+			audio.pause();
 			$(this).addClass('playing').siblings().removeClass('playing');
 			audio.load($('a', this).attr('data-src'));
 			audio.play();
@@ -188,12 +189,16 @@ li.playing:before {
 </script>
 
 
+
+
 <div id="load"></div>
 <label id="index" hidden="true">${index}</label>
-<audio id='audioPlayer'></audio>
-<c:forEach var="audios" items="${records }">
-	<c:forEach var="audio" items="${audioMap.get(audios.id) }">
-		<li><a href="#" data-src="${audio.path }">${audio.name }</a></li>
+<audio id='audioPlayer' preload="none"></audio>
+<div id="uploaded">
+	<c:forEach var="audios" items="${records }">
+		<c:forEach var="audio" items="${audioMap.get(audios.id) }">
+			<li><a href="#" data-src="${audio.path }">${audio.name }</a></li>
+		</c:forEach>
 	</c:forEach>
-</c:forEach>
+</div>
 

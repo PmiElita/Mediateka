@@ -66,14 +66,18 @@
 				loadIndex++;
 				$("#index").text(loadIndex);
 				loadEl.id = loadEl.id + loadIndex;
+				$('#uploaded').remove();
+				$('#audiojs_wrapper' + (document.getElementById("index").textContent - 1)).remove();
 				$('#' + loadEl.id).load(
 						"viewNewAudio?audioId="
 								+ responseJSON["contentGroup"].id + "&index="
 								+ document.getElementById("index").textContent);
 				
-				$('#audiojs_wrapper0').remove();
+				
+// 				$('#audioPlayer').remove();
+// 				$('.playing').removeClass('playing');
 				$('#addAudio').closeModal();
-
+				$('#audiojs_wrapper' + (document.getElementById("index").textContent)).unwrap();				
 				Materialize.toast(' items uploaded.', 2000);
 			}
 		}
@@ -82,6 +86,7 @@
 
 	}
 </script>
+<script src="audiojs/audio.min.js"></script>
 <body>
 
 	<div class="main">

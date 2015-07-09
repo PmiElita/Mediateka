@@ -263,7 +263,7 @@ public class ClubController {
 		Integer clubId = Integer.parseInt(request.getParameter("clubId"));
 		List<ContentGroup> contentGroups = ContentGroupService
 				.getContentGroupByClubIdAndStateAndType(clubId, State.ACTIVE,
-						ContentGroupType.IMAGE);
+						ContentGroupType.VIDEO);
 		CreateContent.setContent(request, response, contentGroups);
 		Club club = ClubService.getClubById(clubId);
 		request.setAttribute("clubName", club.getName());
@@ -293,6 +293,41 @@ public class ClubController {
 		request.removeAttribute("clubName");
 		request.removeAttribute("clubId");
 	}
+	
+	@Request(url = "loadVideo", method = "post")
+	public static void createVideoPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException,
+			ReflectiveOperationException, SQLException {
+
+		CreateContent.createContent(request, response, ContentGroupType.VIDEO);
+
+	}
+
+	@Request(url = "viewNewVideo", method = "get")
+	public static void viewNewVideoGet(HttpServletRequest request,
+			HttpServletResponse response) throws ReflectiveOperationException,
+			SQLException, ServletException, IOException {
+		int clubId = 0;
+		Integer videoId = Integer.parseInt(request.getParameter("videoId"));
+		ContentGroup contentGroup = ContentGroupService
+				.getContentGroupById(videoId);
+		List<ContentGroup> videos = new ArrayList<ContentGroup>();
+		videos.add(contentGroup);
+		if (contentGroup.getClubId() != null) {
+			clubId = contentGroup.getClubId();
+		}	
+		CreateContent.setContent(request, response, videos);
+
+		if (clubId != 0) {
+			request.setAttribute("clubId", clubId);
+		}
+
+		request.setAttribute("index", request.getParameter("index"));
+
+		request.getRequestDispatcher("pages/club/videoList.jsp").forward(
+				request, response);
+	}
+	
 
 	@Request(url = "loadAudio", method = "post")
 	public static void createAudioPost(HttpServletRequest request,
@@ -307,18 +342,18 @@ public class ClubController {
 	public static void viewNewAudioGet(HttpServletRequest request,
 			HttpServletResponse response) throws ReflectiveOperationException,
 			SQLException, ServletException, IOException {
-		System.out.println("viewNewAudio");
-		System.out.println("createContent");
 		int clubId = 0;
-		System.out.println(request.getParameter("audioId"));
-		Integer audioId = Integer.parseInt(request.getParameter("audioId"));
-		ContentGroup contentGroup = ContentGroupService
-				.getContentGroupById(audioId);
+//		Integer audioId = Integer.parseInt(request.getParameter("audioId"));
+//		ContentGroup contentGroup = ContentGroupService
+//				.getContentGroupById(audioId);
 		List<ContentGroup> audios = new ArrayList<ContentGroup>();
-		audios.add(contentGroup);
-		if (contentGroup.getClubId() != null) {
-			clubId = contentGroup.getClubId();
-		}
+//		audios.add(contentGroup);
+//		if (contentGroup.getClubId() != null) {
+//			clubId = contentGroup.getClubId();
+//		}
+		audios = ContentGroupService
+				.getContentGroupByClubIdAndStateAndType(clubId, State.ACTIVE,
+						ContentGroupType.AUDIO);
 		CreateContent.setContent(request, response, audios);
 
 		if (clubId != 0) {
