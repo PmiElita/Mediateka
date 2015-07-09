@@ -34,51 +34,71 @@ import com.mediateka.exception.WrongInputException;
 import com.mediateka.model.Book;
 import com.mediateka.model.Media;
 import com.mediateka.model.enums.MediaType;
+import com.mediateka.model.enums.Role;
 import com.mediateka.model.enums.State;
 import com.mediateka.service.BookService;
+import com.mediateka.service.UserService;
 import com.mediateka.util.FileLoader;
 
 @Controller
 public class BookController {
 	private static Logger logger = Logger.getLogger(BookController.class);
 
-	
 	@Request(url = "bookPage", method = "get")
 	public static void goToBookPageGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			SQLException, ReflectiveOperationException {
-		request.getRequestDispatcher("pages/books/book_page.jsp").forward(request,
-				response);
+		request.getRequestDispatcher("pages/books/book_page.jsp").forward(
+				request, response);
 	}
-	
+
 	// create book
 
 	@Request(url = "books", method = "get")
 	public static void goToBooksPageGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			SQLException, ReflectiveOperationException {
-		request.getRequestDispatcher("pages/books/books.jsp").forward(request,
-				response);
+		if (request.getSession().getAttribute("userId") == null
+				|| UserService.getUserById(
+						Integer.parseInt(request.getSession()
+								.getAttribute("userId").toString())).getRole() != Role.USER
+				|| UserService.getUserById(
+						Integer.parseInt(request.getSession()
+								.getAttribute("userId").toString())).getState() != State.ACTIVE)
+			response.sendError(404);
+		else
+			request.getRequestDispatcher("pages/books/books.jsp").forward(
+					request, response);
 	}
 
 	@Request(url = "CreateBook", method = "get")
 	public static void bookCreateGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			SQLException, ReflectiveOperationException {
-		request.setAttribute("book_type", getBookTypeByState(State.ACTIVE));
-		request.setAttribute("book_meaning",
-				getBookMeaningByState(State.ACTIVE));
-		request.setAttribute("book_language",
-				getBookLanguageByState(State.ACTIVE));
-		request.setAttribute("imgPath",
-				getMediaById(3).getPath().replace("\\", "/"));
-		logger.debug((getBookTypeByState(State.ACTIVE) == null));
-		request.getRequestDispatcher("pages/books/create_book.jsp").forward(
-				request, response);
-		request.removeAttribute("book_type");
-		request.removeAttribute("book_meaning");
-		request.removeAttribute("book_language");
-		request.removeAttribute("imgPath");
+		if (request.getSession().getAttribute("userId") == null
+				|| UserService.getUserById(
+						Integer.parseInt(request.getSession()
+								.getAttribute("userId").toString())).getRole() != Role.USER
+				|| UserService.getUserById(
+						Integer.parseInt(request.getSession()
+								.getAttribute("userId").toString())).getState() != State.ACTIVE)
+			response.sendError(404);
+		else {
+			request.setAttribute("book_type", getBookTypeByState(State.ACTIVE));
+			request.setAttribute("book_meaning",
+					getBookMeaningByState(State.ACTIVE));
+			request.setAttribute("book_language",
+					getBookLanguageByState(State.ACTIVE));
+			request.setAttribute("imgPath",
+					getMediaById(3).getPath().replace("\\", "/"));
+			logger.debug((getBookTypeByState(State.ACTIVE) == null));
+			request.getRequestDispatcher("pages/books/create_book.jsp")
+					.forward(request, response);
+			request.removeAttribute("book_type");
+			request.removeAttribute("book_meaning");
+			request.removeAttribute("book_language");
+			request.removeAttribute("imgPath");
+		}
 	}
 
 	@Request(url = "CreateBook", method = "post")
@@ -226,30 +246,37 @@ public class BookController {
 	public static void bookUpdateGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			SQLException, ReflectiveOperationException {
+		if (request.getSession().getAttribute("userId") == null
+				|| UserService.getUserById(
+						Integer.parseInt(request.getSession()
+								.getAttribute("userId").toString())).getRole() != Role.USER
+				|| UserService.getUserById(
+						Integer.parseInt(request.getSession()
+								.getAttribute("userId").toString())).getState() != State.ACTIVE)
+			response.sendError(404);
+		else {
+			int bookId = Integer.parseInt(request.getParameter("bookId"));
+			Book book = getBookById(bookId);
 
-		request.getSession().setAttribute("bookId", 3);
-		int bookId = Integer.parseInt(request.getSession()
-				.getAttribute("bookId").toString());
-		Book book = getBookById(bookId);
+			Media media = getMediaById(book.getMediaId());
+			String imagePath = media.getPath().replace("\\", "/");
+			request.setAttribute("imagePath", imagePath);
 
-		Media media = getMediaById(book.getMediaId());
-		String imagePath = media.getPath().replace("\\", "/");
-		request.setAttribute("imagePath", imagePath);
+			request.setAttribute("book_type", getBookTypeByState(State.ACTIVE));
+			request.setAttribute("book_meaning",
+					getBookMeaningByState(State.ACTIVE));
+			request.setAttribute("book_language",
+					getBookLanguageByState(State.ACTIVE));
+			request.setAttribute("book", book);
+			request.getRequestDispatcher("pages/books/update_book.jsp")
+					.forward(request, response);
 
-		request.setAttribute("book_type", getBookTypeByState(State.ACTIVE));
-		request.setAttribute("book_meaning",
-				getBookMeaningByState(State.ACTIVE));
-		request.setAttribute("book_language",
-				getBookLanguageByState(State.ACTIVE));
-		request.setAttribute("book", book);
-		request.getRequestDispatcher("pages/books/update_book.jsp").forward(
-				request, response);
-
-		request.removeAttribute("book");
-		request.removeAttribute("book_type");
-		request.removeAttribute("book_meaning");
-		request.removeAttribute("book_language");
-		request.removeAttribute("imagePath");
+			request.removeAttribute("book");
+			request.removeAttribute("book_type");
+			request.removeAttribute("book_meaning");
+			request.removeAttribute("book_language");
+			request.removeAttribute("imagePath");
+		}
 	}
 
 	@Request(url = "UpdateBook", method = "post")
@@ -413,7 +440,6 @@ public class BookController {
 			request.removeAttribute("imagePath");
 		}
 	}
-
 
 	@Request(url = "getBookNameByRegexp", method = "get")
 	public static void getBookNameByRegexp(HttpServletRequest request,

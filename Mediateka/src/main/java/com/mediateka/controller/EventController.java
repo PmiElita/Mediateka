@@ -1,11 +1,20 @@
 package com.mediateka.controller;
 
-import static com.mediateka.service.ClubEventMemberService.*;
-import static com.mediateka.service.ContentGroupService.*;
-import static com.mediateka.service.EventService.*;
-import static com.mediateka.service.MediaService.*;
+import static com.mediateka.service.ClubEventMemberService.getClubEventMemberByEventId;
+import static com.mediateka.service.ClubEventMemberService.getClubEventMemberByUserId;
+import static com.mediateka.service.ClubEventMemberService.getClubEventMemberByUserIdAndClubId;
+import static com.mediateka.service.ClubEventMemberService.getClubEventMemberByUserIdAndEventId;
+import static com.mediateka.service.ClubEventMemberService.saveClubEventMember;
+import static com.mediateka.service.ClubEventMemberService.updateClubEventMember;
+import static com.mediateka.service.ContentGroupService.getContentGroupByEventId;
+import static com.mediateka.service.EventService.callSaveEvent;
+import static com.mediateka.service.EventService.getEventById;
+import static com.mediateka.service.EventService.updateEvent;
+import static com.mediateka.service.MediaService.callSaveMedia;
+import static com.mediateka.service.MediaService.getMediaById;
 import static com.mediateka.service.UserService.getUserById;
-import static com.mediateka.util.DateConverter.*;
+import static com.mediateka.util.DateConverter.convertIntoTimestamp;
+import static com.mediateka.util.DateConverter.timeValid;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -155,8 +164,7 @@ public class EventController {
 			}
 		} catch (NumberFormatException e) {
 			request.setAttribute("message", "No such club!");
-			request.getRequestDispatcher("error404.jsp").forward(request,
-					response);
+			response.sendError(404);
 			request.removeAttribute("message");
 		}
 	}
@@ -309,7 +317,7 @@ public class EventController {
 		} catch (WrongInputException e) {
 			logger.warn(e);
 			request.setAttribute("message", e.getMessage());
-			response.sendRedirect("error404.jsp");
+			response.sendError(404);
 			request.removeAttribute("message");
 		}
 	}
@@ -346,7 +354,7 @@ public class EventController {
 		} catch (WrongInputException e) {
 			logger.warn(e);
 			request.getSession().setAttribute("message", e.getMessage());
-			response.sendRedirect("error404.jsp");
+			response.sendError(404);
 			return;
 		}
 
@@ -500,7 +508,7 @@ public class EventController {
 		} catch (WrongInputException e) {
 			logger.warn(e);
 			request.getSession().setAttribute("message", e.getMessage());
-			response.sendRedirect("error404.jsp");
+			response.sendError(404);
 		}
 	}
 
@@ -628,7 +636,7 @@ public class EventController {
 		} catch (WrongInputException e) {
 			logger.warn(e);
 			request.getSession().setAttribute("message", e.getMessage());
-			response.sendRedirect("error404.jsp");
+			response.sendError(404);
 		}
 	}
 
@@ -722,7 +730,7 @@ public class EventController {
 		} catch (NumberFormatException e) {
 			logger.error("no event with such id : "
 					+ request.getParameter("eventId"));
-			response.sendRedirect("index");
+			response.sendError(404);
 			return;
 		}
 		boolean isMember = false;
@@ -789,6 +797,8 @@ public class EventController {
 			ReflectiveOperationException, SQLException {
 		try {
 			// watching who is user
+			if (request.getParameter("eventId") == null)
+				throw new NumberFormatException();
 			if (request.getSession().getAttribute("userId") == null)
 				throw new NumberFormatException(
 						"There is no userId in session. ");
@@ -796,11 +806,12 @@ public class EventController {
 					Integer.parseInt(request.getSession()
 							.getAttribute("userId").toString()),
 					Integer.parseInt(request.getParameter("eventId")));
+			if (user == null)
+				throw new NumberFormatException(
+						"You arent a member of this club. ");
 			if (user.getType() == ClubEventMemberType.CREATOR)
 				request.setAttribute("creator", true);
 			// setting response of users
-			if (request.getParameter("eventId") == null)
-				throw new NumberFormatException();
 			List<ClubEventMember> members = getClubEventMemberByEventId(Integer
 					.parseInt(request.getParameter("eventId")));
 			List<ClubEventMember> eventActiveMembers = new ArrayList<>();
@@ -841,8 +852,7 @@ public class EventController {
 		} catch (NumberFormatException e) {
 			logger.error("no event with such id : "
 					+ request.getParameter("event") + " " + e.getMessage());
-			request.getRequestDispatcher("error404.jsp").forward(request,
-					response);
+			response.sendError(404);
 		}
 	}
 
@@ -857,26 +867,31 @@ public class EventController {
 					.getAttribute("userId").toString());
 			if (request.getParameter("id") == null
 					|| request.getParameter("eid") == null)
-				throw new WrongInputException("There is no id or cid. ");
-			userId = Integer.parseInt(request.getParameter("id"));
+				throw new WrongInputException("There is no id or eid. ");
 			int eventId = Integer.parseInt(request.getParameter("eid"));
-			if (getUserById(userId) == null || getEventById(eventId) == null)
-				throw new WrongInputException(
-						"Ther is no club or user with such id. ");
+			if (getEventById(eventId) == null)
+				throw new NumberFormatException("No such event");
 			ClubEventMember member = getClubEventMemberByUserIdAndEventId(
 					userId, eventId);
+			if (member == null || member.getState() != State.ACTIVE
+					|| member.getType() != ClubEventMemberType.CREATOR)
+				throw new NumberFormatException(
+						"This user isnt an active creator of this event");
+			userId = Integer.parseInt(request.getParameter("id"));
+			if (getUserById(userId) == null || getEventById(eventId) == null)
+				throw new WrongInputException(
+						"Ther is no event or user with such id. ");
+			member = getClubEventMemberByUserIdAndClubId(userId, eventId);
+			if (member == null)
+				throw new NumberFormatException(
+						"There is no such member in this event");
 			member.setState(State.ACTIVE);
 			updateClubEventMember(member);
 			return;
-		} catch (NumberFormatException e) {
+		} catch (NumberFormatException | WrongInputException e) {
 			logger.error("no user id, or no SUCH user id : "
 					+ request.getParameter("userId") + " " + e.getMessage());
-			request.getRequestDispatcher("error404.jsp").forward(request,
-					response);
-		} catch (WrongInputException e) {
-			logger.error(e.getMessage());
-			request.getRequestDispatcher("error404.jsp").forward(request,
-					response);
+			response.sendError(404);
 		}
 	}
 
@@ -891,26 +906,31 @@ public class EventController {
 					.getAttribute("userId").toString());
 			if (request.getParameter("id") == null
 					|| request.getParameter("eid") == null)
-				throw new WrongInputException("There is no id or cid. ");
-			userId = Integer.parseInt(request.getParameter("id"));
+				throw new WrongInputException("There is no id or eid. ");
 			int eventId = Integer.parseInt(request.getParameter("eid"));
-			if (getUserById(userId) == null || getEventById(eventId) == null)
-				throw new WrongInputException(
-						"Ther is no club or user with such id. ");
+			if (getEventById(eventId) == null)
+				throw new NumberFormatException("No such event");
 			ClubEventMember member = getClubEventMemberByUserIdAndEventId(
 					userId, eventId);
+			if (member == null || member.getState() != State.ACTIVE
+					|| member.getType() != ClubEventMemberType.CREATOR)
+				throw new NumberFormatException(
+						"This user isnt an active creator of this event");
+			userId = Integer.parseInt(request.getParameter("id"));
+			if (getUserById(userId) == null || getEventById(eventId) == null)
+				throw new WrongInputException(
+						"Ther is no event or user with such id. ");
+			member = getClubEventMemberByUserIdAndClubId(userId, eventId);
+			if (member == null)
+				throw new NumberFormatException(
+						"There is no such member in this event");
 			member.setState(State.DELETED);
 			updateClubEventMember(member);
 			return;
-		} catch (NumberFormatException e) {
+		} catch (NumberFormatException | WrongInputException e) {
 			logger.error("no user id, or no SUCH user id : "
 					+ request.getParameter("userId") + " " + e.getMessage());
-			request.getRequestDispatcher("error404.jsp").forward(request,
-					response);
-		} catch (WrongInputException e) {
-			logger.error(e.getMessage());
-			request.getRequestDispatcher("error404.jsp").forward(request,
-					response);
+			response.sendError(404);
 		}
 	}
 
@@ -925,26 +945,31 @@ public class EventController {
 					.getAttribute("userId").toString());
 			if (request.getParameter("id") == null
 					|| request.getParameter("eid") == null)
-				throw new WrongInputException("There is no id or cid. ");
-			userId = Integer.parseInt(request.getParameter("id"));
+				throw new WrongInputException("There is no id or eid. ");
 			int eventId = Integer.parseInt(request.getParameter("eid"));
-			if (getUserById(userId) == null || getEventById(eventId) == null)
-				throw new WrongInputException(
-						"Ther is no club or user with such id. ");
+			if (getEventById(eventId) == null)
+				throw new NumberFormatException("No such event");
 			ClubEventMember member = getClubEventMemberByUserIdAndEventId(
 					userId, eventId);
+			if (member == null || member.getState() != State.ACTIVE
+					|| member.getType() != ClubEventMemberType.CREATOR)
+				throw new NumberFormatException(
+						"This user isnt an active creator of this event");
+			userId = Integer.parseInt(request.getParameter("id"));
+			if (getUserById(userId) == null || getEventById(eventId) == null)
+				throw new WrongInputException(
+						"Ther is no event or user with such id. ");
+			member = getClubEventMemberByUserIdAndClubId(userId, eventId);
+			if (member == null)
+				throw new NumberFormatException(
+						"There is no such member in this event");
 			member.setState(State.BLOCKED);
 			updateClubEventMember(member);
 			return;
-		} catch (NumberFormatException e) {
+		} catch (NumberFormatException | WrongInputException e) {
 			logger.error("no user id, or no SUCH user id : "
 					+ request.getParameter("userId") + " " + e.getMessage());
-			request.getRequestDispatcher("error404.jsp").forward(request,
-					response);
-		} catch (WrongInputException e) {
-			logger.error(e.getMessage());
-			request.getRequestDispatcher("error404.jsp").forward(request,
-					response);
+			response.sendError(404);
 		}
 	}
 
@@ -975,12 +1000,12 @@ public class EventController {
 
 		if (request.getSession().getAttribute("userId") == null) {
 			logger.warn("No user id in session");
-			response.sendRedirect("index");
+			response.sendError(404);
 			return;
 		}
 		if (request.getParameter("eventId") == null) {
 			logger.warn("No club id in session");
-			response.sendRedirect("index");
+			response.sendError(404);
 			return;
 		}
 		Integer userId = 0;
@@ -994,7 +1019,7 @@ public class EventController {
 				throw new NumberFormatException();
 		} catch (NumberFormatException e) {
 			logger.warn("Wrong format of userId or eventId, or no event with such id");
-			response.sendRedirect("index");
+			response.sendError(404);
 			return;
 		}
 
@@ -1004,12 +1029,12 @@ public class EventController {
 
 		if (user.getRole() != Role.USER) {
 			logger.warn("User role is not user!");
-			response.sendRedirect("index");
+			response.sendError(404);
 			return;
 		}
 		if (member == null || member.getType() != ClubEventMemberType.CREATOR) {
 			logger.warn("Members dont have such permissions");
-			response.sendRedirect("index");
+			response.sendError(404);
 			return;
 		}
 

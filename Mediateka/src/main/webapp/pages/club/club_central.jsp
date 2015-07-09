@@ -83,7 +83,8 @@
 										</div>
 										<div class="col s3">
 											<a class="btn" href="editClub?clubId=${club.id}"
-												style="width: 15em">Edit club</a>
+												style="width: 15em"><fmt:message bundle="${msg}"
+													key="edit_club" /></a>
 										</div>
 										<div class="col s3">
 											<a class="btn" href="ClubUsers?clubId=${club.id}"
@@ -104,8 +105,8 @@
 										</div>
 										<div class="col s3">
 											<a class="btn" href="editClub?clubId=${club.id}"
-												style="width: 15em">Edit club</a>
-										</div>
+												style="width: 15em"><fmt:message bundle="${msg}"
+													key="edit_club" /></a>
 										<div class="col s3">
 											<a class="btn" href="ClubUsers?clubId=${club.id}"
 												style="width: 15em"><fmt:message bundle="${msg}"

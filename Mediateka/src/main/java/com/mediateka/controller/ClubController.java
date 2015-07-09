@@ -75,7 +75,7 @@ public class ClubController {
 			FormValidator.validate(form);
 		} catch (WrongInputException e) {
 			logger.warn("failed to validate registration form", e);
-			response.sendRedirect("index");
+			response.sendError(404);
 			return;
 		}
 
@@ -130,7 +130,7 @@ public class ClubController {
 						"This user isnt this clubs creator");
 		} catch (NumberFormatException e) {
 			logger.error(e.getMessage());
-			response.sendRedirect("error404.jsp");
+			response.sendError(404);
 			return;
 		}
 		request.setAttribute("club", ClubService.getClubById((Integer) request
@@ -148,9 +148,31 @@ public class ClubController {
 	public static void editClubPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			SQLException, ReflectiveOperationException {
-
-		Club club = ClubService.getClubById((Integer) request.getSession()
-				.getAttribute("clubId"));
+		int clubId = 0;
+		int userId = 0;
+		ClubEventMember member = null;
+		try {
+			if (request.getParameter("clubId") != null)
+				clubId = Integer.parseInt(request.getParameter("clubId")
+						.toString());
+			else
+				throw new NumberFormatException("No club id in request.");
+			if (request.getParameter("userId") != null)
+				clubId = Integer.parseInt(request.getParameter("userId")
+						.toString());
+			else
+				throw new NumberFormatException("No user id in request.");
+			member = getClubEventMemberByUserIdAndClubId(userId, clubId);
+			if (member == null
+					|| member.getType() != ClubEventMemberType.CREATOR
+					|| member.getState() != State.ACTIVE)
+				throw new NumberFormatException(
+						"You aren't an active creator of this club.");
+		} catch (NumberFormatException e) {
+			logger.warn(e.getMessage());
+			response.sendError(404);
+		}
+		Club club = ClubService.getClubById(clubId);
 		FileLoader fileLoader = new FileLoader();
 		fileLoader.loadFile(request, "club\\club" + club.getId());
 
@@ -583,10 +605,6 @@ public class ClubController {
 		String emailSubject = request.getParameter("subject");
 		String emailBody = request.getParameter("message");
 
-		System.out.println(clubIdString);
-		System.out.println(emailBody);
-		System.out.println(emailSubject);
-
 		if (clubIdString == null) {
 			response.sendRedirect("index");
 			return;
@@ -631,8 +649,6 @@ public class ClubController {
 			return;
 		}
 
-		System.out.println("HERE");
-
 		// send emails here
 		String escapedBody = StringEscapeUtils.escapeHtml4(emailBody);
 		for (ClubEventMember member : members) {
@@ -642,21 +658,21 @@ public class ClubController {
 
 			String memberEmail = UserService.getUserById(member.getUserId())
 					.getEmail();
-			System.out.println("sending email to " + memberEmail);
 			EmailSender.sendMail(memberEmail, emailSubject, escapedBody);
-			System.out.println("done");
 		}
 
 		String myEmail = UserService.getUserById(myId).getEmail();
-		System.out.println("sending email to me");
 		EmailSender.sendMail(myEmail, emailSubject, escapedBody);
-		System.out.println("done");
 	}
 
 	@Request(url = "memberSignClub", method = "get")
 	public static void memberSignClub(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			ReflectiveOperationException, SQLException {
+		if (request.getSession().getAttribute("userId") == null) {
+			response.sendError(404);
+			return;
+		}
 		int userId = Integer.parseInt(request.getSession()
 				.getAttribute("userId").toString());
 		int clubId = 0;
@@ -668,7 +684,7 @@ public class ClubController {
 		} catch (NumberFormatException | IllegalStateException e) {
 			logger.error("no club with such id : "
 					+ request.getParameter("clubId"));
-			response.sendRedirect("index");
+			response.sendError(404);
 			return;
 		}
 
@@ -720,6 +736,8 @@ public class ClubController {
 			ReflectiveOperationException, SQLException {
 		try {
 			// watching who is user
+			if (request.getParameter("clubId") == null)
+				throw new NumberFormatException();
 			if (request.getSession().getAttribute("userId") == null)
 				throw new NumberFormatException(
 						"There is no userId in session. ");
@@ -727,11 +745,12 @@ public class ClubController {
 					Integer.parseInt(request.getSession()
 							.getAttribute("userId").toString()),
 					Integer.parseInt(request.getParameter("clubId")));
+			if (user == null)
+				throw new NumberFormatException(
+						"You arent a member of this club. ");
 			if (user.getType() == ClubEventMemberType.CREATOR)
 				request.setAttribute("creator", true);
 			// setting response of users
-			if (request.getParameter("clubId") == null)
-				throw new NumberFormatException();
 			List<ClubEventMember> members = getClubEventMemberByClubId(Integer
 					.parseInt(request.getParameter("clubId")));
 			List<ClubEventMember> clubActiveMembers = new ArrayList<>();
@@ -774,8 +793,7 @@ public class ClubController {
 		} catch (NumberFormatException e) {
 			logger.error("no club with such id : "
 					+ request.getParameter("clubId") + " " + e.getMessage());
-			request.getRequestDispatcher("error404.jsp").forward(request,
-					response);
+			response.sendError(404);
 		}
 	}
 
@@ -791,25 +809,30 @@ public class ClubController {
 			if (request.getParameter("id") == null
 					|| request.getParameter("cid") == null)
 				throw new WrongInputException("There is no id or cid. ");
-			userId = Integer.parseInt(request.getParameter("id"));
 			int clubId = Integer.parseInt(request.getParameter("cid"));
+			if (getClubById(clubId) == null)
+				throw new NumberFormatException("No such club");
+			ClubEventMember member = getClubEventMemberByUserIdAndClubId(
+					userId, clubId);
+			if (member == null || member.getState() != State.ACTIVE
+					|| member.getType() != ClubEventMemberType.CREATOR)
+				throw new NumberFormatException(
+						"This user isnt an active creator of this club");
+			userId = Integer.parseInt(request.getParameter("id"));
 			if (getUserById(userId) == null || getClubById(clubId) == null)
 				throw new WrongInputException(
 						"Ther is no club or user with such id. ");
-			ClubEventMember member = getClubEventMemberByUserIdAndClubId(
-					userId, clubId);
+			member = getClubEventMemberByUserIdAndClubId(userId, clubId);
+			if (member == null)
+				throw new NumberFormatException(
+						"There is no such member in this club");
 			member.setState(State.ACTIVE);
 			updateClubEventMember(member);
 			return;
-		} catch (NumberFormatException e) {
+		} catch (NumberFormatException | WrongInputException e) {
 			logger.error("no user id, or no SUCH user id : "
 					+ request.getParameter("userId") + " " + e.getMessage());
-			request.getRequestDispatcher("error404.jsp").forward(request,
-					response);
-		} catch (WrongInputException e) {
-			logger.error(e.getMessage());
-			request.getRequestDispatcher("error404.jsp").forward(request,
-					response);
+			response.sendError(404);
 		}
 	}
 
@@ -825,25 +848,30 @@ public class ClubController {
 			if (request.getParameter("id") == null
 					|| request.getParameter("cid") == null)
 				throw new WrongInputException("There is no id or cid. ");
-			userId = Integer.parseInt(request.getParameter("id"));
 			int clubId = Integer.parseInt(request.getParameter("cid"));
+			if (getClubById(clubId) == null)
+				throw new NumberFormatException("No such club");
+			ClubEventMember member = getClubEventMemberByUserIdAndClubId(
+					userId, clubId);
+			if (member == null || member.getState() != State.ACTIVE
+					|| member.getType() != ClubEventMemberType.CREATOR)
+				throw new NumberFormatException(
+						"This user isnt an active creator of this club");
+			userId = Integer.parseInt(request.getParameter("id"));
 			if (getUserById(userId) == null || getClubById(clubId) == null)
 				throw new WrongInputException(
 						"Ther is no club or user with such id. ");
-			ClubEventMember member = getClubEventMemberByUserIdAndClubId(
-					userId, clubId);
+			member = getClubEventMemberByUserIdAndClubId(userId, clubId);
+			if (member == null)
+				throw new NumberFormatException(
+						"There is no such member in this club");
 			member.setState(State.DELETED);
 			updateClubEventMember(member);
 			return;
-		} catch (NumberFormatException e) {
+		} catch (NumberFormatException | WrongInputException e) {
 			logger.error("no user id, or no SUCH user id : "
 					+ request.getParameter("userId") + " " + e.getMessage());
-			request.getRequestDispatcher("error404.jsp").forward(request,
-					response);
-		} catch (WrongInputException e) {
-			logger.error(e.getMessage());
-			request.getRequestDispatcher("error404.jsp").forward(request,
-					response);
+			response.sendError(404);
 		}
 	}
 
@@ -859,25 +887,30 @@ public class ClubController {
 			if (request.getParameter("id") == null
 					|| request.getParameter("cid") == null)
 				throw new WrongInputException("There is no id or cid. ");
-			userId = Integer.parseInt(request.getParameter("id"));
 			int clubId = Integer.parseInt(request.getParameter("cid"));
+			if (getClubById(clubId) == null)
+				throw new NumberFormatException("No such club");
+			ClubEventMember member = getClubEventMemberByUserIdAndClubId(
+					userId, clubId);
+			if (member == null || member.getState() != State.ACTIVE
+					|| member.getType() != ClubEventMemberType.CREATOR)
+				throw new NumberFormatException(
+						"This user isnt an active creator of this club");
+			userId = Integer.parseInt(request.getParameter("id"));
 			if (getUserById(userId) == null || getClubById(clubId) == null)
 				throw new WrongInputException(
 						"Ther is no club or user with such id. ");
-			ClubEventMember member = getClubEventMemberByUserIdAndClubId(
-					userId, clubId);
+			member = getClubEventMemberByUserIdAndClubId(userId, clubId);
+			if (member == null)
+				throw new NumberFormatException(
+						"There is no such member in this club");
 			member.setState(State.BLOCKED);
 			updateClubEventMember(member);
 			return;
-		} catch (NumberFormatException e) {
+		} catch (NumberFormatException | WrongInputException e) {
 			logger.error("no user id, or no SUCH user id : "
 					+ request.getParameter("userId") + " " + e.getMessage());
-			request.getRequestDispatcher("error404.jsp").forward(request,
-					response);
-		} catch (WrongInputException e) {
-			logger.error(e.getMessage());
-			request.getRequestDispatcher("error404.jsp").forward(request,
-					response);
+			response.sendError(404);
 		}
 	}
 
