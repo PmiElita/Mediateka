@@ -132,9 +132,12 @@ public class EventController {
 								&& content.getType() == ContentGroupType.AUDIO)
 							neededVideos.add(content);
 					}
-					request.setAttribute("albums", neededAlbums.size());
-					request.setAttribute("videos", neededVideos.size());
-					request.setAttribute("music", neededMusic.size());
+					if (neededAlbums.size() != 0)
+						request.setAttribute("albums", neededAlbums.size());
+					if (neededVideos.size() != 0)
+						request.setAttribute("videos", neededVideos.size());
+					if (neededMusic.size() != 0)
+						request.setAttribute("music", neededMusic.size());
 				}
 
 				request.setAttribute(
