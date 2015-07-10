@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <fmt:setLocale value="${cookie.lang.value}" />
-<fmt:setBundle basename="translations/club_page" var="msg" />
+<fmt:setBundle basename="translations/content" var="msg" />
 
 <form id="recordForm" enctype="multipart/form-data">
 
