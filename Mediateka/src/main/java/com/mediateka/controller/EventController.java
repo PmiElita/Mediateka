@@ -978,6 +978,76 @@ public class EventController {
 		}
 	}
 
+	@Request(url = "deleteEventAjax", method = "get")
+	public static void deleteEventAjax(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException,
+			ReflectiveOperationException, SQLException {
+		try {
+			if (request.getSession().getAttribute("userId") == null)
+				throw new WrongInputException("No user in session");
+			if (request.getParameter("eventId") == null)
+				throw new WrongInputException("No eventId in request");
+			int userId = Integer.parseInt(request.getSession()
+					.getAttribute("userId").toString());
+			int eventId = 0;
+			try {
+				eventId = Integer.parseInt(request.getParameter("eventId"));
+			} catch (NumberFormatException e) {
+				throw new WrongInputException("Wrong format of int eventId");
+			}
+			Event event = getEventById(Integer.parseInt(request
+					.getParameter("eventId")));
+			if (event == null)
+				throw new WrongInputException("There is no event with such id");
+			ClubEventMember member = getClubEventMemberByUserIdAndEventId(
+					userId, eventId);
+			if (member == null || member.getState() != State.ACTIVE
+					|| member.getType() != ClubEventMemberType.CREATOR)
+				throw new WrongInputException(
+						"This user isn't an active creator of this event.");
+			event.setState(State.DELETED);
+			updateEvent(event);
+		} catch (WrongInputException e) {
+			logger.warn(e.getMessage());
+			response.sendError(404);
+		}
+	}
+
+	@Request(url = "restoreEventAjax", method = "get")
+	public static void restoreEventAjax(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException,
+			ReflectiveOperationException, SQLException {
+		try {
+			if (request.getSession().getAttribute("userId") == null)
+				throw new WrongInputException("No user in session");
+			if (request.getParameter("eventId") == null)
+				throw new WrongInputException("No eventId in request");
+			int userId = Integer.parseInt(request.getSession()
+					.getAttribute("userId").toString());
+			int eventId = 0;
+			try {
+				eventId = Integer.parseInt(request.getParameter("eventId"));
+			} catch (NumberFormatException e) {
+				throw new WrongInputException("Wrong format of int eventId");
+			}
+			Event event = getEventById(Integer.parseInt(request
+					.getParameter("eventId")));
+			if (event == null)
+				throw new WrongInputException("There is no event with such id");
+			ClubEventMember member = getClubEventMemberByUserIdAndEventId(
+					userId, eventId);
+			if (member == null || member.getState() != State.ACTIVE
+					|| member.getType() != ClubEventMemberType.CREATOR)
+				throw new WrongInputException(
+						"This user isn't an active creator of this event.");
+			event.setState(State.ACTIVE);
+			updateEvent(event);
+		} catch (WrongInputException e) {
+			logger.warn(e.getMessage());
+			response.sendError(404);
+		}
+	}
+
 	@Request(url = "creatorBlockEvent", method = "get")
 	public static void creatorBlockEvent(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
@@ -1050,8 +1120,7 @@ public class EventController {
 		else if (state == State.DELETED)
 			response.sendRedirect("events");
 	}
-	
-	
+
 	@Request(url = "eventAlbums", method = "get")
 	public static void eventAlbumsGet(HttpServletRequest request,
 			HttpServletResponse response) throws SQLException,
@@ -1064,8 +1133,8 @@ public class EventController {
 		Event event = EventService.getEventById(eventId);
 		request.setAttribute("eventName", event.getName());
 		request.setAttribute("eventId", eventId);
-		request.getRequestDispatcher("pages/content/albums.jsp").forward(request,
-				response);
+		request.getRequestDispatcher("pages/content/albums.jsp").forward(
+				request, response);
 		request.removeAttribute("eventName");
 		request.removeAttribute("eventId");
 	}
@@ -1082,8 +1151,8 @@ public class EventController {
 		Event event = EventService.getEventById(eventId);
 		request.setAttribute("eventName", event.getName());
 		request.setAttribute("eventId", eventId);
-		request.getRequestDispatcher("pages/content/videos.jsp").forward(request,
-				response);
+		request.getRequestDispatcher("pages/content/videos.jsp").forward(
+				request, response);
 		request.removeAttribute("eventName");
 		request.removeAttribute("eventId");
 	}
@@ -1101,11 +1170,10 @@ public class EventController {
 		request.setAttribute("eventName", club.getName());
 		request.setAttribute("eventId", eventId);
 		request.setAttribute("index", 0);
-		request.getRequestDispatcher("pages/content/audios.jsp").forward(request,
-				response);
+		request.getRequestDispatcher("pages/content/audios.jsp").forward(
+				request, response);
 		request.removeAttribute("eventName");
 		request.removeAttribute("eventId");
 	}
-	
-	
+
 }
