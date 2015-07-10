@@ -80,7 +80,7 @@
 											style="width: 15em"><fmt:message bundle="${msg}"
 												key="delete_event" /></a>
 									</div>
-									<div class="col s12" id="3">
+									<div class="col s12" id="3" hidden>
 										<a class="btn" onclick="restoreEventAjax(${event.id})"
 											style="width: 30em; color: red"><fmt:message
 												bundle="${msg}" key="restore_event" /></a>
@@ -107,7 +107,7 @@
 											style="width: 15em"><fmt:message bundle="${msg}"
 												key="delete_event" /></a>
 									</div>
-									<div class="col s12" id="3">
+									<div class="col s12" id="3" hidden>
 										<a class="btn" onclick="restoreEventAjax(${event.id})"
 											style="width: 30em; color: red"><fmt:message
 												bundle="${msg}" key="restore_event" /></a>

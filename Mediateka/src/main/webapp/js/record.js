@@ -98,12 +98,13 @@ function handleFileSelect(e) {
 
 					var reader = new FileReader();
 					
-					reader.onload = function(e) {
-					
+					reader.onloadend = function(e) {
+/*					
 						var html = "<div><video width = '400' class='selFile' title='Click to remove' controls><source src=\""
 								+ e.target.result + "\"></video></div>";
 					
-						selDiv.append(html);
+						selDiv.append(html);*/
+						alert(45);
 					}
 				
 					

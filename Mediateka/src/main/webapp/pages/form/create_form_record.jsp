@@ -12,6 +12,7 @@
 <html>
 <head>
 <jsp:include page="../general/head.jsp" />
+<script type="text/javascript" src="js/form_record.js"></script>
 </head>
 <body>
 
@@ -29,12 +30,12 @@
 
 				${message}
 				<form id="create_form_record" action="CreateFormRecord"
-					method="post">
+					method="post" onsubmit="return checkFormRecordValidity();">
 
 					<div class="row">
 						<div class="input-field col s6">
-							<p>User ID</p>
-							<input id="userId" name="userId" required="required" type="text">
+							<p>Form ID</p>
+							<input id="formId" name="formId" required="required" type="text" value ="${formId }">
 						</div>
 
 						<div class="input-field col s6">
@@ -50,26 +51,32 @@
 
 						<fieldset>
 							<div class="row">
-								<div class="col s6 right">
-									<input type="radio" name="goal" value="book" checked
-										style="margin-top: 3em">Book
-								</div>
-
-								<div class="input-field col s6 left">
+								<div class = " input-field col s4 right">
 									<p>Book ID</p>
 									<input id="bookId" name="book" type="text">
+								</div>
+								<div class="col s2 right">
+									<input type="radio" name="goal" value="book" id="bookRadio" checked
+										style="margin-top: 3em">Book
+									
+								   
+								</div>
+							
+								<div class="input-field col s6 left">
+									<p>Book name</p>
+									<input id="bookName" name="bookName" type="text" autocomplete="off">
 								</div>
 							</div>
 
 							<div class="row">
 
 								<div class="col s6 right">
-									<input type="radio" name="goal" value="event">Event
+									<input type="radio" name="goal" value="event" id ="eventRadio">Event
 								</div>
 
 								<div class="col s6 left">
-									<select class="browser-default" name="event">
-										<option disabled>Event name</option>
+									<select id="event" class="browser-default" name="event">
+										<option disabled value="">Event name</option>
 										<c:forEach var="item" items="${events}">
 											<option value="${item.getId()}">
 												<c:out value="${item.getName()}" /></option>
@@ -104,6 +111,12 @@
 			</div>
 		</div>
 	</div>
+	<script type="text/javascript">
+	function setInvalid(element){
+	element.setCustomValidity('No book with such book ID');
+	element.setAttribute('class', 'validate invalid');
+}
+	</script>
 	<jsp:include page="../general/footer.jsp" />
 </body>
 </html>

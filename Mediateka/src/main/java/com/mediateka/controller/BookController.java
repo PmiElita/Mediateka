@@ -14,6 +14,7 @@ import static com.mediateka.service.MediaService.getMediaById;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -112,7 +113,7 @@ public class BookController {
 			request.setAttribute("book_language",
 					getBookLanguageByState(State.ACTIVE));
 			request.setAttribute("imgPath",
-					getMediaById(3).getPath().replace("\\", "/"));
+					getMediaById(1).getPath().replace("\\", "/"));
 			logger.debug((getBookTypeByState(State.ACTIVE) == null));
 			request.getRequestDispatcher("pages/books/create_book.jsp")
 					.forward(request, response);
@@ -139,7 +140,7 @@ public class BookController {
 			if (parameterMap.get("name") == null
 					|| parameterMap.get("name").equals("")) {
 				throw new WrongInputException("Book name is empty.");
-			} else if (parameterMap.get("name").length() > 45) {
+			} else if (parameterMap.get("name").length() > 100) {
 				throw new WrongInputException("Book name to long. ");
 			}
 
@@ -147,10 +148,20 @@ public class BookController {
 			if (parameterMap.get("author") == null
 					|| parameterMap.get("author").equals("")) {
 				throw new WrongInputException("Book author is empty. ");
-			} else if (parameterMap.get("author").length() > 45) {
+			} else if (parameterMap.get("author").length() > 100) {
 				throw new WrongInputException("Book author to long. ");
 			}
 
+			if (parameterMap.get("description") == null) {
+				throw new WrongInputException("Book description is empty. ");
+			}
+			
+			if (parameterMap.get("libraryBookId") == null) {
+				throw new WrongInputException("LibraryBookId is empty. ");
+			}else if (parameterMap.get("author").length() > 45) {
+				throw new WrongInputException("LibraryBookId to long. ");
+			}
+			
 			// book meaning valid
 			int meaningId = -1;
 			if (parameterMap.get("meaning") == null
@@ -216,7 +227,7 @@ public class BookController {
 				media.setState(State.ACTIVE);
 				media = callSaveMedia(media);
 			} catch (WrongInputException e) {
-				media = getMediaById(2);
+				media = getMediaById(1);
 			}
 
 			// logic
@@ -229,6 +240,8 @@ public class BookController {
 			book.setTypeId(typeId);
 			book.setLanguageId(languageId);
 			book.setMediaId(media.getId());
+			book.setDescription(parameterMap.get("description"));
+			book.setLibraryBookId(parameterMap.get("libraryBookId"));
 			saveBook(book);
 			String message = "Book added. ";
 
@@ -268,6 +281,7 @@ public class BookController {
 	public static void bookUpdateGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			SQLException, ReflectiveOperationException {
+		request.setCharacterEncoding("UTF-8");
 		if (request.getSession().getAttribute("userId") == null
 				|| UserService.getUserById(
 						Integer.parseInt(request.getSession()
@@ -285,16 +299,18 @@ public class BookController {
 		String message = request.getParameter("message");
 
 		if (book != null && book.getState() != State.DELETED) {
+			request.setAttribute("imagePath", MediaService.getMediaById(book.getMediaId()).getPath().replace('\\', '/'));
 			request.setAttribute("book_type", getBookTypeByState(State.ACTIVE));
 			request.setAttribute("book_meaning",
 					getBookMeaningByState(State.ACTIVE));
 			request.setAttribute("book_language",
 					getBookLanguageByState(State.ACTIVE));
 			request.setAttribute("book", book);
+			request.setAttribute("message", message);
 			request.getRequestDispatcher("pages/books/update_book.jsp")
 					.forward(request, response);
 
-			request.setAttribute("message", message);
+		
 			request.removeAttribute("book");
 			request.removeAttribute("book_type");
 			request.removeAttribute("book_meaning");
@@ -334,6 +350,13 @@ public class BookController {
 				throw new WrongInputException("Book author is empty. ");
 			}
 
+			
+			if (parameterMap.get("libraryBookId") == null) {
+				throw new WrongInputException("LibraryBookId is empty. ");
+			}else if (parameterMap.get("author").length() > 45) {
+				throw new WrongInputException("LibraryBookId to long. ");
+			} 
+			
 			// book meaning valid
 			int meaningId = -1;
 			if (parameterMap.get("meaning") == null
@@ -414,6 +437,11 @@ public class BookController {
 			book.setLanguageId(languageId);
 			book.setDescription(parameterMap.get("description"));
 			book.setMediaId(media.getId());
+			if ((!parameterMap.get("libraryBookId").equals(book.getLibraryBookId()))&&(BookService.getBookByLibraryBookId(parameterMap.get("libraryBookId"))!=null)){
+				System.out.println(new Translator("translations/create_book", request).getMessage("book_id_is_in_use"));
+				throw new WrongInputException(new Translator("translations/create_book", request).getMessage("book_id_is_in_use"));
+			}
+			book.setLibraryBookId(parameterMap.get("libraryBookId"));
 			updateBook(book);
 			String message = "Book updated. ";
 			String redirectUrl = request.getHeader("referer");
@@ -432,9 +460,10 @@ public class BookController {
 			if (indexEnd == -1) {
 				indexEnd = redirectUrl.length();
 			}
+		
 			redirectUrl = redirectUrl.substring(0, indexEnd);
-
-			response.sendRedirect(redirectUrl + "&message=" + e.getMessage());
+             response.setCharacterEncoding("UTF-8");
+			response.sendRedirect(redirectUrl + "&message=" + URLEncoder.encode(e.getMessage(),"UTF-8"));
 
 		}
 	}
@@ -553,4 +582,23 @@ public class BookController {
 		response.setContentType("application/json");
 		response.getWriter().write(new Gson().toJson(responseData));
 	}
+	
+	@Request(url ="checkLibraryBookId", method = "get")
+	public static void checkLibraryBookId(HttpServletRequest request,
+			HttpServletResponse response) throws ReflectiveOperationException,
+			SQLException, IOException {
+		String libraryBookId = request.getParameter("libraryBookId");
+		String libraryBookIdState = "free";
+		if (libraryBookId == null || BookService.getBookByLibraryBookId(libraryBookId)!=null){
+			libraryBookIdState = "notFree";
+		}
+		
+		Map<String, String> result = new HashMap<String, String>();
+		result.put("libraryBookIdState",libraryBookIdState);
+		response.setContentType("application/json");
+		response.getWriter().write(new Gson().toJson(result));
+		
+	}
+	
+
 }

@@ -117,9 +117,11 @@ function checkLibraryBookId(input) {
 					&& input.value != document
 							.getElementById("oldLibraryBookId")) {
 				setInvalid(input);
+				return false;
 			} else {
 				input.setCustomValidity('');
 				form.email.setAttribute('class', 'validate valid');
+				return true;
 			}
 		}
 	});

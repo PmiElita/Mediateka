@@ -262,4 +262,16 @@ public class BookDAO {
 					Book.class);
 		}
 	}
+
+	public static List<Book> getBooksByLibraryBookIdRegexp(String regexp)
+			throws SQLException, ReflectiveOperationException {
+		try (Connection connection = ConnectionManager.getConnection()) {
+			PreparedStatement statement = connection
+					.prepareStatement(BookStatements.SELECT_BOOKS_BY_LIBRARY_BOOK_ID_REGEXP);
+			statement.setString(1, regexp);
+			ResultSet resultSet = statement.executeQuery();
+			return Transformer
+					.transformResultSetIntoList(resultSet, Book.class);
+		}
+	}
 }

@@ -82,4 +82,9 @@ public class BookService {
 			throws ReflectiveOperationException, SQLException {
 		return BookDAO.getBookByLibraryBookId(libraryBookId);
 	}
+
+	public static List<Book> getBooksByLibraryBookIdRegexp(String regexp)
+			throws SQLException, ReflectiveOperationException {
+		return BookDAO.getBooksByLibraryBookIdRegexp(regexp);
+	}
 }

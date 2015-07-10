@@ -50,7 +50,7 @@
 					</button>
 				</div>
 				<form id="update_book" action="UpdateBook" method="post"
-					enctype="multipart/form-data">
+					enctype="multipart/form-data" onsubmit ="return checkBookValidity();">
 
 					<input name="id" value="${book.id }" hidden>
 
@@ -158,19 +158,41 @@
 								</div>
 							</div>
 
-							<input class="btn" type="file" name="image"
-								value="${book.getMediaId()}"
-								placeholder="book cover screenshot..." onchange="readURL(this);"
-								style="width: 45em"> <img id="photo" src="${imagePath}"
-								style="width: 45%;">
+							<div class="row">
+							<div class="col s3">
+								<div class="file-field input-field">
+									<input class="file-path validate" type="hidden"/>
+									<div class="btn">
+										<span>Book titler</span> <input type="file" name="image"
+											onchange="readURL(this);" />
+									</div>
+								</div>
+							</div>
+							<div class="col s6">
+								<img style="height:200px" id="photo" src="${imagePath }">
+							</div>
 
-
+							<div class="col s3">
+									<p>
+											<fmt:message bundle="${msg}" key="library_book_id" />
+										</p>
+										<input id="libraryBookId" name="libraryBookId" type="text" class="validate"
+											pattern=".{1,100}" required onchange="checkLibraryBookId(this)" value="${book.libraryBookId }">
+											<input id="oldLibraryBookId"  hidden value="${book.libraryBookId }">
+							</div>
+						</div>
+							
 						</div>
 					</div>
 				</form>
 			</div>
 		</div>
-
+<script type="text/javascript">
+function setInvalid(element){
+	Materialize.toast('<fmt:message bundle="${msg}" key="book_id_is_in_use" />', 2000);
+	element.setAttribute('class', 'validate invalid');
+}
+</script>
 	</div>
 </div>
 <jsp:include page="../general/footer.jsp" />

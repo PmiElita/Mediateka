@@ -17,6 +17,7 @@ import com.google.gson.Gson;
 import com.mediateka.annotation.Controller;
 import com.mediateka.annotation.Request;
 import com.mediateka.comparator.BookByFormRecordCount;
+import com.mediateka.comparator.BooksByLibraryBookId;
 import com.mediateka.comparator.BooksByName;
 import com.mediateka.exception.WrongInputException;
 import com.mediateka.form.SearchBookForm;
@@ -83,7 +84,7 @@ public class SearchBookController {
 			for (Book book : books) {
 				Map<String,String> map = new HashMap<String, String>();
 			    map.put("value","\"" + book.getName() + "\" " + book.getAuthor());
-			    map.put("data", book.getId().toString());
+			    map.put("data", book.getLibraryBookId().toString());
 			    result.add(map);
 			}
 		}
@@ -228,5 +229,30 @@ public class SearchBookController {
 		request.setAttribute("bookItems", bookItems);
 		request.getRequestDispatcher("pages/books/search_book_central.jsp")
 				.forward(request, response);
+	}
+	
+	@Request(url = "get_books_by_library_book_id_regexp", method = "get")
+	public static void getBooksByLibraryBookIdRegexp(HttpServletRequest request,
+			HttpServletResponse response) throws SQLException,
+			ReflectiveOperationException, IOException {
+		String regexp = request.getParameter("query");
+		List<Map<String, String>> result = new ArrayList<Map<String, String>>();
+		List<Book> books = BookService.getBooksByLibraryBookIdRegexp(regexp);
+		if (books != null) {
+		    Collections.sort(books, new BooksByLibraryBookId());
+			for (Book book : books) {
+				Map<String,String> map = new HashMap<String, String>();
+			    map.put("data","\"" + book.getName() + "\" " + book.getAuthor());
+			    map.put("value", book.getLibraryBookId().toString());
+			    result.add(map);
+			}
+		}
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("query", request.getParameter("query"));
+		map.put("suggestions", result);
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		response.getWriter().write(new Gson().toJson(map));
 	}
 }

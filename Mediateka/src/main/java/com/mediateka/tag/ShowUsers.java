@@ -81,7 +81,7 @@ public class ShowUsers extends SimpleTagSupport {
 					out.write("</button>");
 					out.write("<a class=\"waves-effect waves-teal btn-flat\" href=\"editUser?userId=" + u.getId() + "\">"
 							+ messages.getString("button.edit") + "</a>");
-					out.write("<a class=\"waves-effect waves-teal btn-flat\" href=\"CreateFormRecord\">"
+					out.write("<a class=\"waves-effect waves-teal btn-flat\" href=\"CreateFormRecord?userId="+u.getId()+"\">"
 							+ messages.getString("button.addRecord") + "</a>");
 					out.write("</div>");
 				

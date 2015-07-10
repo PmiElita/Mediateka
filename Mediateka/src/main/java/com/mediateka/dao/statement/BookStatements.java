@@ -65,4 +65,7 @@ public class BookStatements {
 	public static final String SELECT_BOOK_BY_LIBRARY_BOOK_ID = "SELECT * FROM book WHERE library_book_id = ? AND state <> 'DELETED'";
 	public static final String[] SELECT_BOOK_BY_LIBRARY_BOOK_ID_ORDER = {"library_book_id"};
 	
+	public static final String SELECT_BOOKS_BY_LIBRARY_BOOK_ID_REGEXP = "SELECT * FROM book WHERE library_book_id REGEXP ? AND state='ACTIVE'";
+
+	
 }

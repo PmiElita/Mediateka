@@ -17,6 +17,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
+
 import com.mediateka.annotation.Controller;
 import com.mediateka.annotation.Request;
 import com.mediateka.comparator.BooksByName;
@@ -28,12 +30,14 @@ import com.mediateka.model.FormRecord;
 import com.mediateka.model.User;
 import com.mediateka.model.enums.FormRecordGoal;
 import com.mediateka.model.enums.State;
+import com.mediateka.service.BookService;
 import com.mediateka.service.UserService;
 import com.mediateka.util.ObjectFiller;
 
 @Controller
 public class FormRecordController {
 
+	private static Logger logger = Logger.getLogger(FormRecordController.class);
 	@Request(url = "goToCreateFormRecord", method = "get")
 	public static void goRoFormRecordCreateGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
@@ -48,7 +52,6 @@ public class FormRecordController {
 			HttpServletResponse response) throws ServletException, IOException,
 			SQLException, ReflectiveOperationException {
 		Timestamp date = new Timestamp(new java.util.Date().getTime());
-		List<Book> books = getBookByState(State.ACTIVE);
 		List<Event> events = getEventsByDate(date);
 		List<Event> activeEvents = new ArrayList<>();
 		if (events != null) {
@@ -56,11 +59,16 @@ public class FormRecordController {
 				if (event.getState() == State.ACTIVE)
 					activeEvents.add(event);
 		}
-		if (books != null)
-			Collections.sort(books, new BooksByName());
+
 		if (events != null)
 			Collections.sort(events, new EventsByName());
-		request.setAttribute("books", books);
+		Integer formId = null;
+		try {
+            formId = UserService.getUserById(Integer.parseInt(request.getParameter("userId").toString())).getFormId();
+		} catch (NullPointerException e){
+			logger.warn("trying to get formId of unexisted user", e);
+		}
+		request.setAttribute("formId", formId);
 		request.setAttribute("events", activeEvents);
 		request.getRequestDispatcher("pages/form/create_form_record.jsp")
 				.forward(request, response);
@@ -131,7 +139,7 @@ public class FormRecordController {
 		}
 
 		// form record book valid
-		if (form.getGoal().equals("book") && form.getBook() == null) {
+		if (form.getGoal().equals("book") && form.getBook() == null&& form.getBook().equals("")) {
 			fail = true;
 			message.append("Book select is empty. ");
 		}
@@ -140,11 +148,12 @@ public class FormRecordController {
 		if (form.getGoal().equals("book") && form.getBook() != null
 				&& form.getBook() != "") {
 			try {
-				int index = Integer.parseInt(form.getBook());
-				if (getBookById(index).getName() == null)
+				String libraryBookId = form.getBook();
+				Book book = BookService.getBookByLibraryBookId(libraryBookId);
+				if (book == null)
 					throw new NumberFormatException();
 				else
-					bookId = index;
+					bookId = book.getId();
 			} catch (NumberFormatException e) {
 				fail = true;
 				message.append("Illegal book arguments. ");
