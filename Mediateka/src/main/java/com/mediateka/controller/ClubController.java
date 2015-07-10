@@ -54,6 +54,7 @@ import com.mediateka.service.ClubEventMemberService;
 import com.mediateka.service.ClubService;
 import com.mediateka.service.ContentGroupService;
 import com.mediateka.service.MediaService;
+import com.mediateka.service.ProfessionService;
 import com.mediateka.service.UserCardService;
 import com.mediateka.service.UserService;
 import com.mediateka.util.EmailSender;
@@ -483,6 +484,8 @@ public class ClubController {
 				request.setAttribute("clubId", club.getId());
 				request.setAttribute("club", club);
 				request.setAttribute("index", 0);
+				request.setAttribute("professions",
+						ProfessionService.getProfessionAll());
 				request.getRequestDispatcher("pages/club/club.jsp").forward(
 						request, response);
 

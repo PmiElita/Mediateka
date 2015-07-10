@@ -198,6 +198,8 @@ public class UserController {
 			default:
 				request.setAttribute("allEvents", allEvents);
 				request.setAttribute("allEventsAvas", allEventsAvas);
+				request.setAttribute("professions",
+						ProfessionService.getProfessionAll());
 				request.getRequestDispatcher("pages/events/events.jsp")
 						.forward(request, response);
 				request.removeAttribute("allEvents");
@@ -228,8 +230,11 @@ public class UserController {
 					avas.add(getMediaById(event.getAvaId()).getPath().replace(
 							"\\", "/"));
 			}
+
 			request.setAttribute("allEvents", events);
 			request.setAttribute("allEventsAvas", avas);
+			request.setAttribute("professions",
+					ProfessionService.getProfessionAll());
 			request.getRequestDispatcher("pages/events/events.jsp");
 			request.removeAttribute("allEvents");
 			request.removeAttribute("all|EventsAvas");
@@ -344,6 +349,8 @@ public class UserController {
 		} else {
 			request.setAttribute("allClubs", allClubs);
 			request.setAttribute("allClubsAvas", allClubsAvas);
+			request.setAttribute("professions",
+					ProfessionService.getProfessionAll());
 			request.getRequestDispatcher("pages/clubs/clubs.jsp").forward(
 					request, response);
 			request.removeAttribute("allClubs");

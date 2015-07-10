@@ -26,6 +26,7 @@ import com.mediateka.service.BookMeaningService;
 import com.mediateka.service.BookService;
 import com.mediateka.service.BookTypeService;
 import com.mediateka.service.MediaService;
+import com.mediateka.service.ProfessionService;
 import com.mediateka.util.FormValidator;
 import com.mediateka.util.ObjectFiller;
 
@@ -56,7 +57,8 @@ public class SearchBookController {
 			haveMoreResults = true;
 		}
 		}
-		
+		request.setAttribute("professions",
+				ProfessionService.getProfessionAll());
 		request.setAttribute("haveMoreResults", haveMoreResults);
 		request.setAttribute("index", 1);
 		request.setAttribute("bookItems", bookItems);

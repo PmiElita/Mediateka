@@ -55,6 +55,7 @@ import com.mediateka.service.ClubService;
 import com.mediateka.service.ContentGroupService;
 import com.mediateka.service.EventService;
 import com.mediateka.service.MediaService;
+import com.mediateka.service.ProfessionService;
 import com.mediateka.service.UserService;
 import com.mediateka.util.DateConverter;
 import com.mediateka.util.FileLoader;
@@ -147,6 +148,9 @@ public class EventController {
 						getMediaById(event.getAvaId()).getPath().replace("\\",
 								"/"));
 				request.setAttribute("isSigned", isSigned);
+				
+				request.setAttribute("professions",
+						ProfessionService.getProfessionAll());
 
 				request.getRequestDispatcher("pages/event/event.jsp").forward(
 						request, response);
