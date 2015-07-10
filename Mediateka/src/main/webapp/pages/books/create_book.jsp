@@ -124,7 +124,7 @@
 								<div class="file-field input-field">
 									<input class="file-path validate" type="hidden"/>
 									<div class="btn">
-										<span>Book titler</span> <input type="file" name="image"
+										<span><fmt:message bundle="${msg }" key="book_cover" /></span> <input type="file" name="image"
 											onchange="readURL(this);" />
 									</div>
 								</div>
