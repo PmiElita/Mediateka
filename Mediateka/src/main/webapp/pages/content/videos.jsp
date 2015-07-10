@@ -53,7 +53,7 @@
 				<div class="container">
 					<h3 class="image-cover-t">${clubName}</h3>
 					<div class="row">
-						<h4 class="image-cover-t">???Videos???</h4>
+						<h4 class="image-cover-t"><fmt:message bundle="${msg }" key="club_videos.videos"/></h4>
 						<div class="col s9">
 							<a title="??Add video" href="" data-target="addVideo"
 								class="modal-trigger"> <span><i
@@ -88,21 +88,20 @@
 						value="${eventId }">
 				</c:if>
 
-				Choose:
 				<div class="row">
 					<div class="col s3">
 						<div class="row">
 							<div class="file-field input-field">
 								<input class="file-path validate" type="hidden" />
 								<div class="btn">
-									<span>Choose files</span> <input type="file" id="video"
+									<span>fmt:message bundle="${msg }" key="club_videos.choose_files"/></span> <input type="file" id="video"
 										multiple name="video" accept="video/*" />
 								</div>
 								<label id="number" hidden="true">1</label>
 							</div>
 						</div>
 						<div class="row" style="margin-top: 5em">
-							<button class="btn" type="submit">Upload</button>
+							<button class="btn" type="submit"><fmt:message bundle="${msg }" key="club_videos.upload"/></button>
 						</div>
 					</div>
 					<div class="col s9">

@@ -39,7 +39,8 @@
 
 			<div id="progress"></div>
 			<div class="row" style="margin-left: -8em">
-				<div class="file-field input-field col s2 offset-s1" style="margin-left:18%">
+				<div class="file-field input-field col s2 offset-s1"
+					style="margin-left: 18%">
 					<div class="btn">
 						<span><i class="small mdi-image-camera-alt"></i></span> <input
 							style="font-size: 5px" type="file" id="image" name="image"
@@ -57,13 +58,11 @@
 					</div>
 
 				</div>
-				<div class="file-field input-field col s2" style="margin-left:6.3%">
+				<div class="file-field input-field col s2" style="margin-left: 6.3%">
 					<div class="btn">
 						<a class="waves-effect waves-light btn modal-trigger"
 							href="#videoLink"><span><i
-								class="small mdi-content-link"></i>
-								
-								</span></a>
+								class="small mdi-content-link"></i> </span></a>
 					</div>
 				</div>
 
@@ -79,8 +78,9 @@
 									<i class="small mdi-editor-insert-link prefix"></i>
 									<textarea class="materialize-textarea"
 										name="contentFromInternet" id="contentFromInternet"></textarea>
-									<label for="text" style="font-size: 1.5em" style="color:black;">???Please,
-										insert links from youtube or vimeo???</label>
+									<label for="text" style="font-size: 1.5em" style="color:black;">
+										<fmt:message bundle="${msg }" key="insert_video_link" />
+									</label>
 								</div>
 							</div>
 						</div>

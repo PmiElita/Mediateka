@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <jsp:include page="../general/head.jsp" />
-<title>My activity</title>
+
 </head>
 <body>
 	<div class="main">

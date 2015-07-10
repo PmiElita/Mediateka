@@ -26,7 +26,7 @@
 					form="createClub"><br>
 			</div>
 
-			Files:
+			<fmt:message bundle="${msg }" key="load_album.files"/>
 			<div class="row">
 				<div class="col s3">
 					<div class="row">

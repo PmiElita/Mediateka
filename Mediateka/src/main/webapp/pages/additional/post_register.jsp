@@ -4,9 +4,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<fmt:setLocale value="${locale}" />
-<fmt:setBundle basename="menu" />
-<fmt:requestEncoding value="utf-8" />
+<fmt:setLocale value="${cookie.lang.value}" />
+<fmt:setBundle basename="translations/post_register" var="msg" />
+
 
 <html>
 
@@ -26,15 +26,20 @@
 			<div style="margin-top: 10em; margin-right: 0em"
 				class=" section white col s12 center">
 				<div class="row offset-s4">
-					<h1 class="col8 ">Thanks!</h1>
+					<h1 class="col8 ">
+						<fmt:message bundle="${msg }" key="thanks" />
+					</h1>
 				</div>
 				<div class="row">
-					<p style="font-size: 1.5em" class="col s12 center">Check out your e-mail
-						to confirm your registration.</p>
+					<p style="font-size: 1.5em" class="col s12 center">
+						<fmt:message bundle="${msg }" key="check_email" />
+					</p>
 				</div>
 
 				<div class="row">
-					<a style="font-size: 1.5em" class="col s12 center" href="index">Back to main page.</a>
+					<a style="font-size: 1.5em" class="col s12 center" href="index">
+						<fmt:message bundle="${msg }" key="back" />
+					</a>
 				</div>
 			</div>
 		</div>

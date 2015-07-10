@@ -91,19 +91,19 @@ function addEvent() {
 									+ event_name
 									+ '</div>'
 									+ '<div class="iw-content">'
-									+ '<div class="iw-subTitle"  style="margin-top:-0.5em">Description</div>'
+									+ '<div class="iw-subTitle"  style="margin-top:-0.5em">'+ mapTranslations['Description'] +'</div>'
 									+ '<p id="description'+markers.length+'">'
 									+ event_description
 									+ '</p>'
-									+ '<div class="iw-subTitle">Adress</div>'
+									+ '<div class="iw-subTitle">'+ mapTranslations['Address'] +'</div>'
 									+ '<p id="adress'+markers.length+'">'
 									+ event_adress
 									+ '</p>'
 									
 									+ '<button class="btn" onclick="editEvent('
-									+ markers.length + ')">Edit</button>'
+									+ markers.length + ')">'+ mapTranslations['Edit'] +'</button>'
 									+ '<button class="btn right" onclick="removeEvent('
-									+ markers.length + ')">Remove</button></div>' 
+									+ markers.length + ')">'+ mapTranslations['Remove'] +'</button></div>' 
 									+ '<div class="iw-bottom-gradient"></div>'
 									+ '</div>';
 							var infoWindow = new google.maps.InfoWindow({
@@ -236,7 +236,7 @@ function addEvent() {
 								map : map,
 								draggable : true,
 								icon : changedMarkerImage,
-								title : "User "
+								title : mapTranslations['User'] + ' '
 							});
 							google.maps.event.addListener(marker, 'click',
 									function() {
@@ -273,7 +273,7 @@ function removeEvent(index) {
 	 document.getElementById("event_descr").value = "";
    document.getElementById("event_adress").value= "";
 
-   button.innerHTML = "Add new event";
+   button.innerHTML = mapTranslations['AddNewEvent'];
    button.value=-1;
 	   }
 }
@@ -296,18 +296,18 @@ function loadElements() {
 								+ data.responseJSON[i].name
 								+ '</div>'
 								+ '<div class="iw-content">'
-								+ '<div class="iw-subTitle" style="margin-top:-0.5em">Description</div>'
+								+ '<div class="iw-subTitle" style="margin-top:-0.5em">'+ mapTranslations['Description'] +'</div>'
 								+ '<p id="description'+i+'">'
 								+ data.responseJSON[i].description
 								+ '</p>'
-								+ '<div class="iw-subTitle">Adress</div>'
+								+ '<div class="iw-subTitle">'+ mapTranslations['Address'] +'</div>'
 								+ '<p id="adress'+i+'">'
 								+ data.responseJSON[i].adress
 								+ '</p>'
 								+ '<button class="btn" onclick="editEvent('
-								+ i + ')">Edit</button>'
+								+ i + ')">'+ mapTranslations['Edit'] +'</button>'
 								+ '<button class="btn right" onclick="removeEvent('
-								+ i + ')">Remove</button></div>' 
+								+ i + ')">'+ mapTranslations['Remove'] +'</button></div>' 
 								+ '<div class="iw-bottom-gradient"></div>'
 								+ '</div>';
 						var infoWindow = new google.maps.InfoWindow({
@@ -461,7 +461,7 @@ function editEvent(index){
 	 document.getElementById("event_descr").value = events[index].description;
    document.getElementById("event_adress").value= events[index].adress;
     var button =document.getElementById("map_button");
-    button.innerHTML = "Submit";
+    button.innerHTML = mapTranslations['Submit'];
     button.value=index;
 }
 
@@ -478,7 +478,7 @@ function editEvent(index){
 
 	
 	 var button =document.getElementById("map_button");
-      button.innerHTML = "Add new event";
+      button.innerHTML = mapTranslations['AddNewEvent'];
       button.value=-1;
 }
 
@@ -506,7 +506,7 @@ function saveChanges(){
 		dataType:'json',
 		data: {"json":JSON.stringify(events)},
 		complete: function(data){
-			Materialize.toast("Changes was saved.", 4000);
+			Materialize.toast(mapTranslations['ChangesWereSaved'], 4000);
 		}
 	});
 }
