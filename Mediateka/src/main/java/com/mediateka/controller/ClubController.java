@@ -88,7 +88,7 @@ public class ClubController {
 		club.setName(form.getName());
 		club.setDescription(form.getDescription());
 		club.setState(State.REQUESTED);
-		club.setAvaId(1);  // TODO: add default club ava
+		club.setAvaId(1); // TODO: add default club ava
 		club = ClubService.callSaveClub(club);
 		clubEventMember.setClubId(club.getId());
 		clubEventMember.setUserId(Integer.parseInt(request.getSession()
@@ -216,7 +216,7 @@ public class ClubController {
 	@Request(url = "viewNewAlbum", method = "get")
 	public static void viewNewAlbumGet(HttpServletRequest request,
 			HttpServletResponse response) throws ReflectiveOperationException,
-			SQLException, ServletException, IOException {	
+			SQLException, ServletException, IOException {
 		int clubId = 0;
 		int eventId = 0;
 		System.out.println(request.getParameter("albumId"));
@@ -258,8 +258,8 @@ public class ClubController {
 		Club club = ClubService.getClubById(clubId);
 		request.setAttribute("clubName", club.getName());
 		request.setAttribute("clubId", clubId);
-		request.getRequestDispatcher("pages/content/albums.jsp").forward(request,
-				response);
+		request.getRequestDispatcher("pages/content/albums.jsp").forward(
+				request, response);
 		request.removeAttribute("clubName");
 		request.removeAttribute("clubId");
 	}
@@ -276,8 +276,8 @@ public class ClubController {
 		Club club = ClubService.getClubById(clubId);
 		request.setAttribute("clubName", club.getName());
 		request.setAttribute("clubId", clubId);
-		request.getRequestDispatcher("pages/content/videos.jsp").forward(request,
-				response);
+		request.getRequestDispatcher("pages/content/videos.jsp").forward(
+				request, response);
 		request.removeAttribute("clubName");
 		request.removeAttribute("clubId");
 	}
@@ -296,12 +296,12 @@ public class ClubController {
 		request.setAttribute("clubName", club.getName());
 		request.setAttribute("clubId", clubId);
 		request.setAttribute("index", 0);
-		request.getRequestDispatcher("pages/content/audios.jsp").forward(request,
-				response);
+		request.getRequestDispatcher("pages/content/audios.jsp").forward(
+				request, response);
 		request.removeAttribute("clubName");
 		request.removeAttribute("clubId");
 	}
-	
+
 	@Request(url = "loadVideo", method = "post")
 	public static void createVideoPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
@@ -324,7 +324,7 @@ public class ClubController {
 		videos.add(contentGroup);
 		if (contentGroup.getClubId() != null) {
 			clubId = contentGroup.getClubId();
-		}	
+		}
 		if (contentGroup.getEventId() != null) {
 			eventId = contentGroup.getEventId();
 		}
@@ -342,7 +342,6 @@ public class ClubController {
 		request.getRequestDispatcher("pages/content/videoList.jsp").forward(
 				request, response);
 	}
-	
 
 	@Request(url = "loadAudio", method = "post")
 	public static void createAudioPost(HttpServletRequest request,
@@ -358,17 +357,16 @@ public class ClubController {
 			HttpServletResponse response) throws ReflectiveOperationException,
 			SQLException, ServletException, IOException {
 		int clubId = 0;
-//		Integer audioId = Integer.parseInt(request.getParameter("audioId"));
-//		ContentGroup contentGroup = ContentGroupService
-//				.getContentGroupById(audioId);
+		// Integer audioId = Integer.parseInt(request.getParameter("audioId"));
+		// ContentGroup contentGroup = ContentGroupService
+		// .getContentGroupById(audioId);
 		List<ContentGroup> audios = new ArrayList<ContentGroup>();
-//		audios.add(contentGroup);
-//		if (contentGroup.getClubId() != null) {
-//			clubId = contentGroup.getClubId();
-//		}
-		audios = ContentGroupService
-				.getContentGroupByClubIdAndStateAndType(clubId, State.ACTIVE,
-						ContentGroupType.AUDIO);
+		// audios.add(contentGroup);
+		// if (contentGroup.getClubId() != null) {
+		// clubId = contentGroup.getClubId();
+		// }
+		audios = ContentGroupService.getContentGroupByClubIdAndStateAndType(
+				clubId, State.ACTIVE, ContentGroupType.AUDIO);
 		CreateContent.setContent(request, response, audios);
 
 		if (clubId != 0) {
@@ -444,7 +442,7 @@ public class ClubController {
 							|| member.getState() == State.DELETED)
 						request.setAttribute("badGuy", true);
 
-Map<Integer, List<CommentUserCardPair>> comments = getComments(club
+				Map<Integer, List<CommentUserCardPair>> comments = getComments(club
 						.getId());
 				request.setAttribute("comments", comments);
 				List<Event> events = getEventByClubId(clubId);
@@ -519,20 +517,21 @@ Map<Integer, List<CommentUserCardPair>> comments = getComments(club
 		List<ContentGroup> records = ContentGroupService
 				.getContentGroupByClubIdAndStateAndType(clubId, State.ACTIVE,
 						ContentGroupType.RECORD);
-		if (records!=null){
-		for (ContentGroup record : records) {
-			List<CommentUserCardPair> commentUserCardPairs = new ArrayList<CommentUserCardPair>();
-		    List<ContentGroup> comments = ContentGroupService
-					.getContentGroupByParentId(record.getId());
-		    if (comments!=null){
-			for (ContentGroup comment : comments) {
-				commentUserCardPairs.add(new CommentUserCardPair(comment,
-						UserCardService.getUserCardByUserId(comment
-								.getCreatorId())));
+		if (records != null) {
+			for (ContentGroup record : records) {
+				List<CommentUserCardPair> commentUserCardPairs = new ArrayList<CommentUserCardPair>();
+				List<ContentGroup> comments = ContentGroupService
+						.getContentGroupByParentId(record.getId());
+				if (comments != null) {
+					for (ContentGroup comment : comments) {
+						commentUserCardPairs.add(new CommentUserCardPair(
+								comment, UserCardService
+										.getUserCardByUserId(comment
+												.getCreatorId())));
+					}
+				}
+				result.put(record.getId(), commentUserCardPairs);
 			}
-		    }
-			result.put(record.getId(),commentUserCardPairs);
-		}
 		}
 		return result;
 	}
@@ -988,6 +987,74 @@ Map<Integer, List<CommentUserCardPair>> comments = getComments(club
 		} catch (NumberFormatException | WrongInputException e) {
 			logger.error("no user id, or no SUCH user id : "
 					+ request.getParameter("userId") + " " + e.getMessage());
+			response.sendError(404);
+		}
+	}
+
+	@Request(url = "deleteClubAjax", method = "get")
+	public static void deleteClubAjax(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException,
+			ReflectiveOperationException, SQLException {
+		try {
+			if (request.getSession().getAttribute("userId") == null)
+				throw new WrongInputException("No user in session");
+			if (request.getParameter("clubId") == null)
+				throw new WrongInputException("No clubId in request");
+			int userId = Integer.parseInt(request.getSession()
+					.getAttribute("userId").toString());
+			int clubId = 0;
+			try {
+				clubId = Integer.parseInt(request.getParameter("clubId"));
+			} catch (NumberFormatException e) {
+				throw new WrongInputException("Wrong format of int clubId");
+			}
+			Club club = getClubById(clubId);
+			if (club == null)
+				throw new WrongInputException("There is no club with such id");
+			ClubEventMember member = getClubEventMemberByUserIdAndClubId(
+					userId, clubId);
+			if (member == null || member.getState() != State.ACTIVE
+					|| member.getType() != ClubEventMemberType.CREATOR)
+				throw new WrongInputException(
+						"This user isn't an active creator of this club.");
+			club.setState(State.DELETED);
+			updateClub(club);
+		} catch (WrongInputException e) {
+			logger.warn(e.getMessage());
+			response.sendError(404);
+		}
+	}
+
+	@Request(url = "restoreClubAjax", method = "get")
+	public static void restoreClubAjax(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException,
+			ReflectiveOperationException, SQLException {
+		try {
+			if (request.getSession().getAttribute("userId") == null)
+				throw new WrongInputException("No user in session");
+			if (request.getParameter("clubId") == null)
+				throw new WrongInputException("No clubId in request");
+			int userId = Integer.parseInt(request.getSession()
+					.getAttribute("userId").toString());
+			int clubId = 0;
+			try {
+				clubId = Integer.parseInt(request.getParameter("clubId"));
+			} catch (NumberFormatException e) {
+				throw new WrongInputException("Wrong format of int clubId");
+			}
+			Club club = getClubById(clubId);
+			if (club == null)
+				throw new WrongInputException("There is no club with such id");
+			ClubEventMember member = getClubEventMemberByUserIdAndClubId(
+					userId, clubId);
+			if (member == null || member.getState() != State.ACTIVE
+					|| member.getType() != ClubEventMemberType.CREATOR)
+				throw new WrongInputException(
+						"This user isn't an active creator of this club.");
+			club.setState(State.ACTIVE);
+			updateClub(club);
+		} catch (WrongInputException e) {
+			logger.warn(e.getMessage());
 			response.sendError(404);
 		}
 	}

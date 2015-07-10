@@ -69,7 +69,7 @@
 					<c:if test="${isSigned eq 'true'}">
 						<c:choose>
 							<c:when test="${!(creator==null)}">
-								<c:if test="${club.state eq State.ACTIVE}">
+								<c:if test="${event.state eq State.ACTIVE}">
 									<div class="col s3" id="1">
 										<a class="btn" href="creatorBlockEvent?eventId=${event.id}"
 											style="width: 15em"><fmt:message bundle="${msg}"
@@ -82,8 +82,8 @@
 									</div>
 									<div class="col s12" id="3">
 										<a class="btn" onclick="restoreEventAjax(${event.id})"
-											style="width: 15em; color: red"><fmt:message
-												bundle="${msg}" key="delete_event" /></a>
+											style="width: 30em; color: red"><fmt:message
+												bundle="${msg}" key="restore_event" /></a>
 									</div>
 									<div class="col s3" id="4">
 										<a class="btn" href="UpdateEvent?eventId=${event.id}"
@@ -96,7 +96,7 @@
 												key="look_participants" /></a>
 									</div>
 								</c:if>
-								<c:if test="${club.state eq State.BLOCKED}">
+								<c:if test="${event.state eq State.BLOCKED}">
 									<div class="col s3" id="1">
 										<a class="btn" href="creatorUnblockEvent?eventId=${event.id}"
 											style="width: 15em"><fmt:message bundle="${msg}"
@@ -109,8 +109,8 @@
 									</div>
 									<div class="col s12" id="3">
 										<a class="btn" onclick="restoreEventAjax(${event.id})"
-											style="width: 15em; color: red"><fmt:message
-												bundle="${msg}" key="delete_event" /></a>
+											style="width: 30em; color: red"><fmt:message
+												bundle="${msg}" key="restore_event" /></a>
 									</div>
 									<div class="col s3" id="4">
 										<a class="btn" href="UpdateEvent?eventId=${event.id}"
@@ -230,35 +230,35 @@
 	function deleteEventAjax(eventId) {
 		$.ajax({
 			type : 'get',
-			url : 'deleteEvent',
+			url : 'deleteEventAjax',
 			dataType : 'JSON',
 			data : {
 				'eventId' : eventId
 			},
 			complete : function(data) {
 				document.getElementById(1).hidden = true;
-				document.getElementById(3).hidden = true;
+				document.getElementById(2).hidden = true;
 				document.getElementById(4).hidden = true;
 				document.getElementById(5).hidden = true;
-				document.getElementById(2).hidden = false;
+				document.getElementById(3).hidden = false;
 			}
 		});
 	}
 
-	function restoreRecordAjax(eventId) {
+	function restoreEventAjax(eventId) {
 		$.ajax({
 			type : 'get',
-			url : 'restoreEvent',
+			url : 'restoreEventAjax',
 			dataType : 'JSON',
 			data : {
 				'eventId' : eventId
 			},
 			complete : function(data) {
 				document.getElementById(1).hidden = false;
-				document.getElementById(3).hidden = false;
+				document.getElementById(2).hidden = false;
 				document.getElementById(4).hidden = false;
 				document.getElementById(5).hidden = false;
-				document.getElementById(2).hidden = true;
+				document.getElementById(3).hidden = true;
 			}
 		});
 	}

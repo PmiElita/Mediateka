@@ -71,43 +71,54 @@
 							<c:choose>
 								<c:when test="${!(creator==null)}">
 									<c:if test="${club.state eq State.ACTIVE}">
-										<div class="col s3">
+										<div class="col s3" id="1">
 											<a class="btn" href="creatorBlockClub?clubId=${club.id}"
 												style="width: 15em"><fmt:message bundle="${msg}"
 													key="block_club" /></a>
 										</div>
-										<div class="col s3">
-											<a class="btn" href="creatorDeleteClub?clubId=${club.id}"
+										<div class="col s3" id="2">
+											<a class="btn" onclick="deleteClubAjax(${club.id})"
 												style="width: 15em"><fmt:message bundle="${msg}"
 													key="delete_club" /></a>
 										</div>
-										<div class="col s3">
+										<div class="col s12" id="3">
+											<a class="btn" onclick="restoreClubAjax(${club.id})"
+												style="width: 30em; color: red"><fmt:message
+													bundle="${msg}" key="restore_club" /></a>
+										</div>
+										<div class="col s3" id="4">
 											<a class="btn" href="editClub?clubId=${club.id}"
 												style="width: 15em"><fmt:message bundle="${msg}"
 													key="edit_club" /></a>
 										</div>
-										<div class="col s3">
+										<div class="col s3" id="5">
 											<a class="btn" href="ClubUsers?clubId=${club.id}"
 												style="width: 15em"><fmt:message bundle="${msg}"
 													key="look_participants" /></a>
 										</div>
 									</c:if>
 									<c:if test="${club.state eq State.BLOCKED}">
-										<div class="col s3">
+										<div class="col s3" id="1">
 											<a class="btn" href="creatorUnblockClub?clubId=${club.id}"
 												style="width: 15em"><fmt:message bundle="${msg}"
 													key="unblock_club" /></a>
 										</div>
-										<div class="col s3">
-											<a class="btn" href="creatorDeleteClub?clubId=${club.id}"
+										<div class="col s3" id="2">
+											<a class="btn" onclick="deleteClubAjax(${club.id})"
 												style="width: 15em"><fmt:message bundle="${msg}"
 													key="delete_club" /></a>
 										</div>
-										<div class="col s3">
+										<div class="col s12" id="3">
+											<a class="btn" onclick="restoreClubAjax(${club.id})"
+												style="width: 30em; color: red"><fmt:message
+													bundle="${msg}" key="restore_club" /></a>
+										</div>
+										<div class="col s3" id="4">
 											<a class="btn" href="editClub?clubId=${club.id}"
 												style="width: 15em"><fmt:message bundle="${msg}"
 													key="edit_club" /></a>
-										<div class="col s3">
+										</div>
+										<div class="col s3" id="5">
 											<a class="btn" href="ClubUsers?clubId=${club.id}"
 												style="width: 15em"><fmt:message bundle="${msg}"
 													key="look_participants" /></a>
@@ -121,10 +132,10 @@
 												key="sign_out" /></a>
 									</div>
 									<div class="col s6">
-											<a class="btn" href="ClubUsers?clubId=${club.id}"
-												style="width: 15em"><fmt:message bundle="${msg}"
-													key="look_participants" /></a>
-										</div>
+										<a class="btn" href="ClubUsers?clubId=${club.id}"
+											style="width: 15em"><fmt:message bundle="${msg}"
+												key="look_participants" /></a>
+									</div>
 								</c:otherwise>
 							</c:choose>
 						</c:if>
@@ -148,11 +159,14 @@
 
 		<div class="row" style="margin-left: -5em">
 			<div class="col s3">
-				<a href="clubAudios?clubId=${clubId}" data-target="modal7" class="modal-trigger">
+				<a href="clubAudios?clubId=${clubId}" data-target="modal7"
+					class="modal-trigger">
 					<div class="col s12 m8 offset-m2 l6 offset-l3 my-cardmy-small-card">
 						<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
 							<div style="margin-top: -2em">
-								<h3 class="center" style="color: black"><fmt:message bundle="${msg}" key="music" /></h3>
+								<h3 class="center" style="color: black">
+									<fmt:message bundle="${msg}" key="music" />
+								</h3>
 								<div class="row valign-wrapper">
 									<div class="col s9">
 										<img src="images/club/music.png" alt=""
@@ -175,7 +189,9 @@
 						class="col s12 m8 offset-m2 l6 offset-l3 my-card my-small-card">
 						<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
 							<div style="margin-top: -2em">
-								<h3 class="center" style="color: black"><fmt:message bundle="${msg}" key="video" /></h3>
+								<h3 class="center" style="color: black">
+									<fmt:message bundle="${msg}" key="video" />
+								</h3>
 								<div class="row valign-wrapper">
 									<div class="col s9">
 										<img src="images/club/video.jpg" alt=""
@@ -200,7 +216,9 @@
 						class="col s12 m8 offset-m2 l6 offset-l3 my-card my-small-card">
 						<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
 							<div style="margin-top: -2em">
-								<h3 class="center" style="color: black"><fmt:message bundle="${msg}" key="photo" /></h3>
+								<h3 class="center" style="color: black">
+									<fmt:message bundle="${msg}" key="photo" />
+								</h3>
 								<div class="row valign-wrapper">
 									<div class="col s9">
 										<img src="images/club/photo.png" alt=""
@@ -222,7 +240,9 @@
 						class="col s12 m8 offset-m2 l6 offset-l3 my-card my-small-card">
 						<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
 							<div style="margin-top: -2em">
-								<h3 class="center" style="color: black"><fmt:message bundle="${msg}" key="events" /></h3>
+								<h3 class="center" style="color: black">
+									<fmt:message bundle="${msg}" key="events" />
+								</h3>
 								<div class="row valign-wrapper">
 									<div class="col s8">
 										<img style="margin-top: 0em" src="images/club/events.png"
@@ -243,3 +263,40 @@
 		<p>${club_description}</p>
 	</div>
 </div>
+<script type="text/javascript">
+	function deleteClubAjax(clubId) {
+		$.ajax({
+			type : 'get',
+			url : 'deleteClubAjax',
+			dataType : 'JSON',
+			data : {
+				'clubId' : clubId
+			},
+			complete : function(data) {
+				document.getElementById(1).hidden = true;
+				document.getElementById(2).hidden = true;
+				document.getElementById(4).hidden = true;
+				document.getElementById(5).hidden = true;
+				document.getElementById(3).hidden = false;
+			}
+		});
+	}
+
+	function restoreClubAjax(clubId) {
+		$.ajax({
+			type : 'get',
+			url : 'restoreClubAjax',
+			dataType : 'JSON',
+			data : {
+				'clubId' : clubId
+			},
+			complete : function(data) {
+				document.getElementById(1).hidden = false;
+				document.getElementById(2).hidden = false;
+				document.getElementById(4).hidden = false;
+				document.getElementById(5).hidden = false;
+				document.getElementById(3).hidden = true;
+			}
+		});
+	}
+</script>

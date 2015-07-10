@@ -995,8 +995,7 @@ public class EventController {
 			} catch (NumberFormatException e) {
 				throw new WrongInputException("Wrong format of int eventId");
 			}
-			Event event = getEventById(Integer.parseInt(request
-					.getParameter("eventId")));
+			Event event = getEventById(eventId);
 			if (event == null)
 				throw new WrongInputException("There is no event with such id");
 			ClubEventMember member = getClubEventMemberByUserIdAndEventId(
@@ -1030,8 +1029,7 @@ public class EventController {
 			} catch (NumberFormatException e) {
 				throw new WrongInputException("Wrong format of int eventId");
 			}
-			Event event = getEventById(Integer.parseInt(request
-					.getParameter("eventId")));
+			Event event = getEventById(eventId);
 			if (event == null)
 				throw new WrongInputException("There is no event with such id");
 			ClubEventMember member = getClubEventMemberByUserIdAndEventId(
