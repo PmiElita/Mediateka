@@ -36,7 +36,7 @@ public class Translator {
 			break;
 		}
 		
-		
+		System.out.println(propFile);
 		this.bundle = ResourceBundle.getBundle(propFile);
 	}
 	

@@ -1,5 +1,7 @@
 package com.mediateka.controller;
 
+import static com.mediateka.service.EventService.getEventByState;
+
 import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -19,8 +21,6 @@ import com.mediateka.model.Event;
 import com.mediateka.model.enums.EventType;
 import com.mediateka.model.enums.State;
 import com.mediateka.service.ProfessionService;
-
-import static com.mediateka.service.EventService.getEventByState;
 
 @Controller
 public class IndexController {

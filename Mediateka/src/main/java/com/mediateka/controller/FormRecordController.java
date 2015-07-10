@@ -1,5 +1,12 @@
 package com.mediateka.controller;
 
+import static com.mediateka.service.BookService.getBookById;
+import static com.mediateka.service.BookService.getBookByState;
+import static com.mediateka.service.EventService.getEventById;
+import static com.mediateka.service.EventService.getEventsByDate;
+import static com.mediateka.service.FormRecordService.saveFormRecord;
+import static com.mediateka.service.UserService.getUserById;
+
 import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -23,11 +30,6 @@ import com.mediateka.model.User;
 import com.mediateka.model.enums.FormRecordGoal;
 import com.mediateka.model.enums.State;
 import com.mediateka.util.ObjectFiller;
-
-import static com.mediateka.service.FormRecordService.saveFormRecord;
-import static com.mediateka.service.BookService.*;
-import static com.mediateka.service.EventService.*;
-import static com.mediateka.service.UserService.*;
 
 @Controller
 public class FormRecordController {

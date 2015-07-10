@@ -39,10 +39,11 @@ import com.mediateka.model.enums.State;
 import com.mediateka.service.BookLanguageService;
 import com.mediateka.service.BookMeaningService;
 import com.mediateka.service.BookService;
-import com.mediateka.service.UserService;
 import com.mediateka.service.BookTypeService;
 import com.mediateka.service.MediaService;
+import com.mediateka.service.UserService;
 import com.mediateka.util.FileLoader;
+import com.mediateka.util.Translator;
 
 @Controller
 public class BookController {
@@ -497,14 +498,15 @@ public class BookController {
 		}
 		String buttonText;
 		String toastText;
+		Translator translator = new Translator("translations/book_update", request);
 		if (book.getState() == State.ACTIVE) {
 			book.setState(State.BLOCKED);
-			buttonText = "Unblock book";
-			toastText = "Book was blocked";
+			buttonText = translator.getMessage("unblock_book");
+			toastText = translator.getMessage("toast.book_was_blocked");
 		} else {
 			book.setState(State.ACTIVE);
-			buttonText = "Block book";
-			toastText = "Book was unblocked";
+			buttonText = translator.getMessage("block_book");
+			toastText = translator.getMessage("toast.book_was_unblocked");
 		}
 		BookService.updateBook(book);
 		Map<String, String> responseData = new HashMap<String, String>();

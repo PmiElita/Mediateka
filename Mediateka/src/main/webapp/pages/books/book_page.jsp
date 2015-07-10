@@ -3,12 +3,11 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
+<fmt:setLocale value="${cookie.lang.value}" />
+<fmt:setBundle basename="translations/book_page" var="msg" />
 <%@page import="com.mediateka.model.enums.Role"%>
 <%@page import="com.mediateka.model.enums.State"%>
-<fmt:setLocale value="${locale}" />
-<fmt:setBundle basename="menu" />
-<fmt:requestEncoding value="utf-8" />
+
 
 <html>
 
@@ -29,7 +28,7 @@
 		0.0px -1.0px, black 1.0px -1.0px, black 0.0 0.0 3.0px, black 0.0 0.0
 		3.0px, black 0.0 0.0 3.0px, black 0.0 0.0 3.0px, black 0.0 0.0 3.0px,
 		black 0.0 0.0 3.0px, black 0.0 0.0 3.0px, black 0.0 0.0 3.0px;
-		width : 100%;
+	width: 100%;
 }
 
 .book-cover-href {
@@ -59,51 +58,60 @@
 				<jsp:include page="../user/user_side_nav.jsp" />
 			</c:if>
 
-			<div class="container white center" style="min-height:33em; margin-bottom:0">
+			<div class="container white center"
+				style="min-height: 33em; margin-bottom: 0">
 				<div class="row">
-			  <c:if test="${userRole eq Role.ADMIN}">
-			  <div class = "col s4"><a href ="UpdateBook?bookId=${book.id }"><button class="btn">Edit</button></a> </div>
-			  </c:if>
+					<c:if test="${userRole eq Role.ADMIN}">
+						<div class="col s4">
+							<a href="UpdateBook?bookId=${book.id }"><button class="btn">
+									<fmt:message bundle="${msg }" key="edit" />
+								</button></a>
+						</div>
+					</c:if>
 					<div class="col s12 ">
 						<h5 class="book-cover-t center">"${book.name}" ${book.author }</h5>
 					</div>
 
-					
+
 
 				</div>
-            <div class="row book-row">
-				<img alt="Book name" src="${avaPath }" width="45%"
-					>
-            </div>
-            <div class = "row book-row">
-            <span>State: </span>
-            <c:choose>
-            <c:when test="${book.state eq State.ACTIVE }">
-            <span class="stateValue">Free</span>
-            </c:when>
-            <c:otherwise>
-            <span class="stateValue">Not free</span>
-            </c:otherwise>
-            </c:choose>
-            
-            </div>
-            <div class="row">
+				<div class="row book-row">
+					<img alt="Book name" src="${avaPath }" width="45%">
+				</div>
+				<div class="row book-row">
+					<span><fmt:message bundle="${msg }" key="state"/>: </span>
+					<c:choose>
+						<c:when test="${book.state eq State.ACTIVE }">
+							<span class="stateValue"><fmt:message bundle="${msg }"
+									key="state.free" /></span>
+						</c:when>
+						<c:otherwise>
+							<span class="stateValue"><fmt:message bundle="${msg }"
+									key="state.not_free" /></span>
+						</c:otherwise>
+					</c:choose>
 
-								<div class="input-field col s4">
-									<span>Type: ${bookType }</span>
-								</div>
+				</div>
+				<div class="row">
 
-								<div class="input-field col s4">
-									<span>Meaning: ${bookMeaning }</span>
-								</div>
+					<div class="input-field col s4">
+						<span><fmt:message bundle="${msg }" key="book_type" />: <fmt:message
+								bundle="${msg }" key="book_type.${bookType }" /> </span>
+					</div>
+
+					<div class="input-field col s4">
+						<span><fmt:message bundle="${msg }" key="book_meaning" />: <fmt:message
+								bundle="${msg }" key="book_meaning.${bookMeaning }" /> </span>
+					</div>
 
 
-								<div class="input-field col s4">
-									<span>Meaning: ${bookLanguage }</span>
-								</div>
-							</div>
-				<div class="section" style="margin-bottom:0">
-					<h5>Info</h5>
+					<div class="input-field col s4">
+						<span><fmt:message bundle="${msg }" key="book_language" />: <fmt:message
+								bundle="${msg }" key="book_language.${bookLanguage }" /> </span>
+					</div>
+				</div>
+				<div class="section" style="margin-bottom: 0">
+					<h5><fmt:message bundle="${msg }" key="description"/></h5>
 					<p>${book.description}</p>
 
 				</div>

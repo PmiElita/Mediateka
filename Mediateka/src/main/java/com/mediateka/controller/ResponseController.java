@@ -15,11 +15,9 @@ import org.apache.log4j.Logger;
 import com.mediateka.annotation.Controller;
 import com.mediateka.annotation.Request;
 import com.mediateka.model.Report;
-import com.mediateka.model.User;
 import com.mediateka.model.enums.Role;
 import com.mediateka.model.enums.State;
 import com.mediateka.service.ReportService;
-import com.mediateka.service.UserService;
 import com.mediateka.util.EmailSender;
 
 @Controller

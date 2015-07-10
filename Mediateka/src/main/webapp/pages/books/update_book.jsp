@@ -6,9 +6,10 @@
 <%@page import="com.mediateka.model.enums.State"%>
 <%@page import="com.mediateka.model.enums.Role"%>
 
-<fmt:setLocale value="${locale}" />
-<fmt:setBundle basename="menu" />
-<fmt:requestEncoding value="utf-8" />
+<fmt:setLocale value="${cookie.lang.value}" />
+<fmt:setBundle basename="translations/book_update" var="msg" />
+
+
 
 <head>
 <jsp:include page="../general/head.jsp" />
@@ -26,28 +27,32 @@
 		<div id="creation_form">
 
 			<div class="container section white">
-				
-                <div class = "row">
-                	<button  class="btn waves-effect titler col s3 " id = "updateBook"
-						 onclick ="document.getElementById('update_book').submit();">Update book</button>
-						<button  class="btn waves-effect titler col s3 offset-s2" id="blockBook"
-						 onclick ="blockBook(${book.id})">
-						 <c:choose>
-						 <c:when test="${book.state eq State.ACTIVE }">
-						    Block 
-						 </c:when>
-						 <c:otherwise>
-						 	Unblock
-						 </c:otherwise>
-						 </c:choose>
-						 book</button>
-						 <button  class="btn waves-effect titler col s3 " id="deleteBook"
-						 onclick ="deleteBook(${book.id})">Delete book</button>
-                </div>
+
+				<div class="row">
+					<button class="btn waves-effect titler col s3 " id="updateBook"
+						onclick="document.getElementById('update_book').submit();">
+						<fmt:message bundle="${msg }" key="update_book" />
+					</button>
+					<button class="btn waves-effect titler col s3 offset-s2"
+						id="blockBook" onclick="blockBook(${book.id})">
+						<c:choose>
+							<c:when test="${book.state eq State.ACTIVE }">
+								<fmt:message bundle="${msg }" key="block_book" />
+							</c:when>
+							<c:otherwise>
+								<fmt:message bundle="${msg }" key="unblock_book" />
+							</c:otherwise>
+						</c:choose>
+					</button>
+					<button class="btn waves-effect titler col s3 " id="deleteBook"
+						onclick="deleteBook(${book.id})">
+						<fmt:message bundle="${msg }" key="delete_book" />
+					</button>
+				</div>
 				<form id="update_book" action="UpdateBook" method="post"
 					enctype="multipart/form-data">
-                    
-				    <input name="id" value="${book.id }" hidden>
+
+					<input name="id" value="${book.id }" hidden>
 
 					<h6 style="color: blue">${message}</h6>
 
@@ -55,36 +60,48 @@
 						<div class="col s12">
 							<div class="row" style="margin-bottom: 0em">
 								<div class="input-field col s6">
-									<p>Book name</p>
+									<p>
+										<fmt:message bundle="${msg }" key="book_name" />
+									</p>
 									<input id="name" name="name" type="text" class="validate"
 										pattern=".{1,45}" required value="${book.getName()}">
 								</div>
 
 								<div class="input-field col s6">
-									<p>Book author</p>
+									<p>
+										<fmt:message bundle="${msg }" key="book_author" />
+									</p>
 									<input id="author" name="author" type="text" class="validate"
 										pattern=".{1,45}" required value="${book.getAuthor()}">
 								</div>
 							</div>
-                            <div class="row">
-                             <p>Description</p>
-                             <textarea class="materialize-textarea info" name = "description"> <c:out value=" ${book.description }"></c:out></textarea>
-                            </div>
+							<div class="row">
+								<p>
+									<fmt:message bundle="${msg }" key="book_description" />
+								</p>
+								<textarea class="materialize-textarea info" name="description"> <c:out
+										value=" ${book.description }"></c:out></textarea>
+							</div>
 							<div class="row">
 
 								<div class="input-field col s4">
 									<select name="type" id="type" class="browser-default"
 										style="margin-top: 0.75em" required>
-										<option disabled>Book type..</option>
+										<option disabled><fmt:message bundle="${msg }"
+												key="book_type" /></option>
 										<c:forEach var="types" items="${book_type}">
 											<c:choose>
 												<c:when test="${types.getId()==book.getTypeId()}">
-													<option value="${types.getId()}" selected><c:out
-															value="${types.getName()}" /></option>
+													<option value="${types.getId()}" selected>
+														<fmt:message bundle='${msg }'
+															key='book_type.${types.getName()}' />
+													</option>
 												</c:when>
 												<c:otherwise>
-													<option value="${types.getId()}"><c:out
-															value="${types.getName()}" /></option>
+													<option value="${types.getId()}">
+														<fmt:message bundle="${msg }"
+															key="book_type.${types.getName()}" />
+													</option>
 												</c:otherwise>
 											</c:choose>
 										</c:forEach>
@@ -94,16 +111,21 @@
 								<div class="input-field col s4">
 									<select name="meaning" id="meaning" class="browser-default"
 										style="margin-top: 0.75em" required>
-										<option disabled>Book meaning...</option>
+										<option disabled><fmt:message bundle="${msg }"
+												key="book_meaning" /></option>
 										<c:forEach var="meanings" items="${book_meaning}">
 											<c:choose>
 												<c:when test="${meanings.getId()==book.getMeaningId()}">
-													<option value="${meanings.getId()}" selected><c:out
-															value="${meanings.getName()}" /></option>
+													<option value="${meanings.getId()}" selected>
+														<fmt:message bundle="${msg }"
+															key="book_meaning.${meanings.getName()}" />
+													</option>
 												</c:when>
 												<c:otherwise>
-													<option value="${meanings.getId()}"><c:out
-															value="${meanings.getName()}" /></option>
+													<option value="${meanings.getId()}">
+														<fmt:message bundle="${msg }"
+															key="book_meaning.${meanings.getName()}" />
+													</option>
 												</c:otherwise>
 											</c:choose>
 										</c:forEach>
@@ -114,16 +136,21 @@
 								<div class="input-field col s4">
 									<select name="language" id="language" class="browser-default"
 										style="margin-top: 0.75em" required>
-										<option disabled>Book language...</option>
+										<option disabled><fmt:message bundle="${msg }"
+												key="book_language" /></option>
 										<c:forEach var="languages" items="${book_language}">
 											<c:choose>
 												<c:when test="${languages.getId()==book.getLanguageId()}">
-													<option value="${languages.getId()}" selected><c:out
-															value="${languages.getName()}" /></option>
+													<option value="${languages.getId()}" selected>
+														<fmt:message bundle="${msg }"
+															key="book_language.${languages.getName()}" />
+													</option>
 												</c:when>
 												<c:otherwise>
-													<option value="${languages.getId()}"><c:out
-															value="${languages.getName()}" /></option>
+													<option value="${languages.getId()}">
+														<fmt:message bundle="${msg }"
+															key="book_language.${languages.getName()}" />
+													</option>
 												</c:otherwise>
 											</c:choose>
 										</c:forEach>
@@ -134,9 +161,10 @@
 							<input class="btn" type="file" name="image"
 								value="${book.getMediaId()}"
 								placeholder="book cover screenshot..." onchange="readURL(this);"
-								style="width: 45em"> <img id="photo" src="${imagePath}" style="width:45%;">
+								style="width: 45em"> <img id="photo" src="${imagePath}"
+								style="width: 45%;">
 
-							
+
 						</div>
 					</div>
 				</form>
