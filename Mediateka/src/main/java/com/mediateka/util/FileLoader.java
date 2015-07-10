@@ -320,7 +320,7 @@ public class FileLoader {
 
 	public List<String> getAllFilePathes() throws WrongInputException {
 		if (filePaths.size() == 0) {
-			throw new WrongInputException("wrong file type");
+			return null;
 		}
 		return filePaths;
 	}

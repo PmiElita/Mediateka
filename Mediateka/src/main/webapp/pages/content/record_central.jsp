@@ -111,15 +111,8 @@ audio {
 								<img
 									src='<c:out value="${posterMap.get(video.id).path }"></c:out>'>
 							</c:if>
-						</a>
-						<a href='https://www.youtube.com/watch?v=C3lWwBslWqg'
-							data-video="true"> </a>
-
-						<%-- 						<video width="100%" poster="${posterMap.get(video.id).path }" --%>
-						<!-- 							onclick="this.play();" controls="controls" -->
-						<%-- 							title='<c:out value="${video.name}"></c:out>'> --%>
-						<%-- 							<source src='<c:out value="${video.path}"></c:out>'> --%>
-						<!-- 						</video> -->
+						</a>						
+						
 					</c:forEach>
 				</div>
 				<div align="left">

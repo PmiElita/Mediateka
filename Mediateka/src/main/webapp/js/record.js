@@ -142,7 +142,10 @@ function handleForm(e) {
 	if (document.getElementById('eventId') != null) {
 		data.append('eventId', document.getElementById('eventId').innerHTML
 				.toString());
-	}	
+	}
+	if (document.getElementById('contentFromInternet') != null) {
+		data.append('internetContent', document.getElementById('contentFromInternet').value);
+	}
 	for (var i = 0, len = storedImages.length; i < len; i++) {
 		data.append('image', storedImages[i]);
 	}
@@ -154,7 +157,7 @@ function handleForm(e) {
 	}
 	if ((document.getElementById('text').value == "")
 			&& (storedImages.length == 0) && (storedAudios.length == 0)
-			&& (storedVideos.length == 0)) {
+			&& (storedVideos.length == 0) && (document.getElementById('contentFromInternet').value == "")) {
 		return;
 	}
 

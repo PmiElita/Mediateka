@@ -64,13 +64,6 @@ public class CreateContent {
 		contentGroup = ContentGroupService.callSaveContentGroup(contentGroup);
 		List<Media> mediaList = new ArrayList<Media>();
 		try {
-			System.out.println(fileLoader.getAllFileDefaultNames() + " "
-					+ fileLoader.getAllFilePathes());
-		} catch (WrongInputException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		try {
 			if (fileLoader.getAllFilePathes() != null) {
 				for (int i = 0; i < fileLoader.getAllFilePathes().size(); i++) {
 					Media media = new Media();
@@ -88,6 +81,8 @@ public class CreateContent {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		mediaList.addAll(createContentFromInternet(fileLoader,
+				contentGroup.getId()));
 		List<Media> images = new ArrayList<Media>();
 		List<Media> videos = new ArrayList<Media>();
 		List<Media> audios = new ArrayList<Media>();
@@ -153,8 +148,8 @@ public class CreateContent {
 		}
 		request.setAttribute("index", request.getParameter("index"));
 
-		request.getRequestDispatcher("pages/content/record_central.jsp").forward(
-				request, response);
+		request.getRequestDispatcher("pages/content/record_central.jsp")
+				.forward(request, response);
 
 	}
 
@@ -252,7 +247,6 @@ public class CreateContent {
 			}
 
 		}
-		System.out.println(records);
 		request.setAttribute("creatorAva", creatorAvaRecordMap);
 		request.setAttribute("posterMap", posterMap);
 		request.setAttribute("mediaMap", mediaMap);
@@ -261,6 +255,36 @@ public class CreateContent {
 		request.setAttribute("audioMap", audioMap);
 		request.setAttribute("records", records);
 		request.setAttribute("creatorName", creatorRecordMap);
+	}
+
+	private static List<Media> createContentFromInternet(FileLoader fileLoader,
+			Integer contentGroupId) throws SQLException,
+			ReflectiveOperationException {
+
+		String linksString = fileLoader.getParameterMap()
+				.get("internetContent");
+
+		List<Media> medias = new ArrayList<Media>();
+		if (linksString != null) {
+			System.out.println(linksString);
+			String[] links = linksString.split("\\s+");
+			System.out.println(links);
+			for (String link : links) {
+				if (link.contains("https://www.youtube.com/watch?v=")
+						|| link.contains("https://vimeo.com/")) {
+					Media video = new Media();
+					video.setContentGroupId(contentGroupId);
+					video.setType(MediaType.VIDEO);
+					video.setState(State.ACTIVE);
+					video.setPath(link);
+					video.setName(link);
+					medias.add(video);
+					MediaService.saveMedia(video);
+				}
+			}
+		}
+
+		return medias;
 	}
 
 }
