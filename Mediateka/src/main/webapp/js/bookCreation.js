@@ -43,3 +43,20 @@ $(function () {
 	 
 	});
 	});
+
+function checkLibraryBookId(input){
+	$.ajax({
+		url: 'checkLibraryBookId',
+		type: 'get',
+		dataType: 'json',
+		data: {"libraryBookId": input.value},
+		complete : function(data){
+			if (data.responseJSON.libraryBookIdState != "free"){
+				setInvalid(input);
+			} else {
+				input.setCustomValidity('');
+				form.email.setAttribute('class', 'validate valid');
+			}
+		}
+	});
+}

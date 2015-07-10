@@ -17,6 +17,8 @@
 <jsp:include page="../index/index_modal_register.jsp" />
 <jsp:include page="../general/head.jsp" />
 <script src="js/comment.js"></script>
+<link type="text/css" rel="stylesheet" href="css/oleh_style.css"
+	media="screen,projection" />
 </head>
 
 <body onload="connect();" onunload="disconnect();">

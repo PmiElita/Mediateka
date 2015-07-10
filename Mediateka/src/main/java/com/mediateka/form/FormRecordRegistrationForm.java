@@ -2,7 +2,7 @@ package com.mediateka.form;
 
 public class FormRecordRegistrationForm {
 
-	private String userId;
+	private String formId;
 	private String timeTill;
 	private String goal;
 	private String book;
@@ -18,12 +18,12 @@ public class FormRecordRegistrationForm {
 		this.goal = goal;
 	}
 
-	public String getUserId() {
-		return userId;
+	public String getFormId() {
+		return formId;
 	}
 
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setFormId(String formId) {
+		this.formId = formId;
 	}
 
 	public String getTimeTill() {
@@ -68,7 +68,7 @@ public class FormRecordRegistrationForm {
 
 	@Override
 	public String toString() {
-		return "FormRecordForm [userId=" + userId + ", timeTill=" + timeTill
+		return "FormRecordForm [formId=" + formId + ", timeTill=" + timeTill
 				+ ", book=" + book + ", event=" + event + ", other=" + other
 				+ ", comment=" + comment + "]";
 	}

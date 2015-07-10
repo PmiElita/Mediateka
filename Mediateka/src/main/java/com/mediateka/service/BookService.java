@@ -74,7 +74,12 @@ public class BookService {
 
 	public static List<Book> getBooksByRegexp(String regexp)
 			throws SQLException, ReflectiveOperationException {
-	
+
 		return BookDAO.getBooksByRegexp(regexp);
+	}
+
+	public static Book getBookByLibraryBookId(String libraryBookId)
+			throws ReflectiveOperationException, SQLException {
+		return BookDAO.getBookByLibraryBookId(libraryBookId);
 	}
 }

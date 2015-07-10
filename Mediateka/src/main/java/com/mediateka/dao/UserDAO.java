@@ -115,7 +115,7 @@ public class UserDAO {
 		}
 	}
 
-	public static List<User> getUserByFormId(Integer formId)
+	public static User getUserByFormId(Integer formId)
 			throws ReflectiveOperationException, SQLException {
 		try (Connection connection = ConnectionManager.getConnection()) {
 			PreparedStatement statement = connection
@@ -126,7 +126,7 @@ public class UserDAO {
 					SELECT_USER_BY_FORM_ID_ORDER);
 			ResultSet resultSet = statement.executeQuery();
 			return Transformer
-					.transformResultSetIntoList(resultSet, User.class);
+					.transformResultSetIntoObject(resultSet, User.class);
 		}
 	}
 

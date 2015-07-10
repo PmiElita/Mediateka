@@ -17,6 +17,7 @@ import com.google.gson.Gson;
 import com.mediateka.annotation.Controller;
 import com.mediateka.annotation.Request;
 import com.mediateka.comparator.BookByFormRecordCount;
+import com.mediateka.comparator.BooksByName;
 import com.mediateka.exception.WrongInputException;
 import com.mediateka.form.SearchBookForm;
 import com.mediateka.model.Book;
@@ -73,14 +74,18 @@ public class SearchBookController {
 			HttpServletResponse response) throws SQLException,
 			ReflectiveOperationException, IOException {
 		String regexp = request.getParameter("query");
-		List<String> result = new ArrayList<String>();
+		List<Map<String, String>> result = new ArrayList<Map<String, String>>();
 		List<Book> books = BookService.getBooksByRegexp(regexp);
 		if (books != null) {
+		    Collections.sort(books, new BooksByName());
 			for (Book book : books) {
-				result.add("\"" + book.getName() + "\" " + book.getAuthor());
+				Map<String,String> map = new HashMap<String, String>();
+			    map.put("value","\"" + book.getName() + "\" " + book.getAuthor());
+			    map.put("data", book.getId().toString());
+			    result.add(map);
 			}
 		}
-		Collections.sort(result);
+		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("query", request.getParameter("query"));
 		map.put("suggestions", result);

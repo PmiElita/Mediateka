@@ -2,10 +2,10 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
+ <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <fmt:setLocale value="${cookie.lang.value}" />
 <fmt:setBundle basename="translations/club_page" var="msg" />
-
+<fmt:setBundle basename="translations/club_chat" var="msg1" />
 <!-- fotorama.css & fotorama.js. -->
 <link
 	href="http://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.css"
@@ -143,58 +143,83 @@ audio {
 
 		</div>
 		<div class="row">
-			<ul class="collapsible comments" data-collapsible="accordion">
-				<li>
-					<div class="collapsible-header">
-						<i id="collapse-icon" class="mdi-communication-comment"></i>
-						<fmt:message bundle="${msg}" key="record_central.comments" />
-					</div>
-					<div class="collapsible-body  ">
+			 <ul class="collapsible comments" data-collapsible="accordion">
+		 <li>
+		 <div class="collapsible-header" ><i
+	id="collapse-icon" class="mdi-communication-comment"></i><fmt:message bundle="${msg}" key="record_central.comments" /></div>
+		 <div class="collapsible-body  " id="colbody${record.id }" >
 
-						<div class=" comment-area" id="commentArea">
-							<c:forEach var="chatMessage" items="${chatMessages }">
-								<div class="col s12 comment-item">
-									<div class="card-panel grey lighten-5 z-depth-1"
-										style="padding: 5px;">
-										<div class="row valign-wrapper"
-											style="line-height: 20px; margin-bottom: 5px;">
-											<div class="col s1">
+			<div class=" comment-area" id="commentArea${record.id }" >
+			<c:if test="${fn:length(comments.get(record.id)) eq 0 }">
+			<span id="noComments${record.id }">No comments</span>
+			</c:if>
+				<c:forEach var="comment" items="${comments.get(record.id) }">
+					<div id = "recordId${comment.comment.id}" class="col s12 comment-item"> 
+					
+					
+						<div class="card-panel grey lighten-5 z-depth-1"
+							style="padding: 5px;">
+							<div class="row valign-wrapper"
+								style="line-height: 20px; margin-bottom: 5px;">
+								<div class="col s1">
 
-												<img src="${chatMessage.userCard.path }" alt=""
-													class="circle responsive-img">
-												<!-- notice the "circle" class -->
+									<img onload="setCommentHeight(${record.id});" src="${comment.userCard.path }" alt=""
+										class="circle responsive-img">
+									<!-- notice the "circle" class -->
 
 											</div>
 
 
-											<div class="col s10">
-												<span class="comment_user_name"> <c:out
-														value="${chatMessage.userCard.firstName }"></c:out> :
-												</span> <span class="comment-text"> <c:out
-														value="${chatMessage.chatMessage.text}"></c:out>
-												</span>
-											</div>
-										</div>
-
-									</div>
+								<div class="col s10">
+									<span class="comment_user_name"> <c:out
+											value="${comment.userCard.firstName }"></c:out> : </span> 
+											<span class="comment-text"> <c:out
+											value="${comment.comment.text}"></c:out>
+									</span>
 								</div>
-
+									<c:if test="${userId eq comment.comment.creatorId}">
+								<div class="col s1 ">
+									<span onclick="deleteRecord(${comment.comment.id}); Materialize.toast('Deleted', 4000);"
+										onmouseover="this.style.color = 'red';"
+										onmouseleave="this.style.color = 'black';"
+										class="waves-effect waves-circle waves-red">X</span>
+								</div>
+							</c:if>
+								</div>
+								
+							
+								
+							
+ <div class="row message-date"><span class="comment-date">${comment.comment.formatedCreationDate}</span> <div align="right">
+				<a><span><i onclick="like('1',${comment.comment.id});"
+						class="tiny mdi-action-thumb-up waves-effect waves-green "></i></span></a> <span
+					id="recordLike${comment.comment.id}">${comment.comment.like }</span> <a><span><i
+						onclick="like('-1',${comment.comment.id});"
+						class="tiny mdi-action-thumb-down  waves-effect waves-red"></i></span></a> <span
+					id="recordDislike${comment.comment.id}"><c:out
+						value="${comment.comment.dislike }"></c:out></span>
+			</div></div> 
+			</div>
+			</div>
 							</c:forEach>
-						</div>
-						<div class="panel input-area ">
-							<textarea id="commentInput" class="materialize-textarea"
-								placeholder="<fmt:message bundle="${msg}" key="message" />"></textarea>
+						
+						
 
-							<button class=" col s4 offset-s9 btn" onclick="addComment();">
-								<fmt:message bundle="${msg}" key="send" />
-							</button>
+				
+			</div>
+			
+			<div class="panel input-area ">
+				<textarea id="commentInput${record.id}" class="materialize-textarea"
+					placeholder="<fmt:message bundle="${msg1}" key="message" />"></textarea>
 
-						</div>
+				<button class=" col s4 offset-s8 btn" onclick="addComment(${record.id});"><fmt:message bundle="${msg1}" key="send" /></button>
 
 
+					</div>
 					</div>
 				</li>
 			</ul>
+	
 		</div>
 	</c:forEach>
 </div>

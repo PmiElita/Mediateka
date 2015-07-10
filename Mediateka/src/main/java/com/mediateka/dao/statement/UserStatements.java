@@ -37,7 +37,7 @@ public class UserStatements {
 	public static final String SELECT_USER_BY_ROLE = "SELECT * FROM user WHERE role=?";
 	public static final String[] SELECT_USER_BY_ROLE_ORDER = { "role" };
 
-	public static final String SELECT_USER_BY_FORM_ID = "SELECT * FROM user WHERE form_id=?";
+	public static final String SELECT_USER_BY_FORM_ID = "SELECT * FROM user WHERE form_id=? AND is_form_active = 1";
 	public static final String[] SELECT_USER_BY_FORM_ID_ORDER = { "form_id" };
 
 	public static final String SELECT_USER_BY_PROFESSION = "SELECT user.* FROM user, profession WHERE user.proffesion_id = proffesion.id AND profession.name=?";

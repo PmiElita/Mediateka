@@ -5,7 +5,6 @@ import static com.mediateka.service.BookService.getBookByState;
 import static com.mediateka.service.EventService.getEventById;
 import static com.mediateka.service.EventService.getEventsByDate;
 import static com.mediateka.service.FormRecordService.saveFormRecord;
-import static com.mediateka.service.UserService.getUserById;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -29,6 +28,7 @@ import com.mediateka.model.FormRecord;
 import com.mediateka.model.User;
 import com.mediateka.model.enums.FormRecordGoal;
 import com.mediateka.model.enums.State;
+import com.mediateka.service.UserService;
 import com.mediateka.util.ObjectFiller;
 
 @Controller
@@ -80,13 +80,13 @@ public class FormRecordController {
 		ObjectFiller.fill(form, request);
 
 		// form record userId valid
-		if (form.getUserId() == null || form.getUserId() == "") {
+		if (form.getFormId() == null || form.getFormId() == "") {
 			fail = true;
 			message.append("User id is empty. ");
 		} else {
 			try {
-				Integer i = Integer.parseInt(form.getUserId());
-				User user = getUserById(i);
+				Integer formId = Integer.parseInt(form.getFormId());
+				User user = UserService.getUserByFormId(formId);
 				if (user == null)
 					throw new NumberFormatException();
 			} catch (NumberFormatException e) {
@@ -199,7 +199,7 @@ public class FormRecordController {
 		if (!fail) {
 
 			FormRecord record = new FormRecord();
-			record.setUserId(Integer.parseInt(form.getUserId()));
+			record.setUserId(UserService.getUserByFormId(Integer.parseInt(form.getFormId())).getId());
 			record.setAdminId(Integer.parseInt(request.getSession()
 					.getAttribute("userId").toString()));
 			record.setDateFrom(new Timestamp(new java.util.Date().getTime()));

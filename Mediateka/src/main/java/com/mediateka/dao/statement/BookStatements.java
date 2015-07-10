@@ -3,17 +3,17 @@ package com.mediateka.dao.statement;
 public class BookStatements {
 	public static final String INSERT_BOOK = "INSERT INTO "
 			+ "book "
-			+ "(name, author, state, type_id, meaning_id, language_id, media_id, description) "
-			+ "VALUES " + "(?, ?, ?, ?, ?, ?, ?, ?) ";
+			+ "(name, author, state, type_id, meaning_id, language_id, media_id, description, library_book_id) "
+			+ "VALUES " + "(?, ?, ?, ?, ?, ?, ?, ?, ?) ";
 	public static final String[] INSERT_BOOK_ORDER = { "name", "author",
-			"state", "type_id", "meaning_id", "language_id", "media_id", "description" };
+			"state", "type_id", "meaning_id", "language_id", "media_id", "description", "library_book_id" };
 
 	public static final String UPDATE_BOOK = "UPDATE book " + "SET "
 			+ "name = ?, " + "author = ?, " + "state = ?, " + "type_id = ?, "
-			+ "meaning_id = ?, " + "language_id = ?, " + "media_id = ?, description =? "
+			+ "meaning_id = ?, " + "language_id = ?, " + "media_id = ?, description =?, library_book_id=? "
 			+ "WHERE " + "id = ?";
 	public static final String[] UPDATE_BOOK_ORDER = { "name", "author",
-			"state", "type_id", "meaning_id", "language_id", "media_id", "description", "id" };
+			"state", "type_id", "meaning_id", "language_id", "media_id", "description", "library_book_id", "id" };
 
 	public static final String SELECT_BOOK_BY_ID = "SELECT * " + "FROM "
 			+ "book " + "WHERE id = ?";
@@ -61,4 +61,8 @@ public class BookStatements {
 	public static final String SELECT_ALL_BOOKS_WITH_LIMIT_ORDER_BY_NAME = "SELECT * FROM book ORDER BY name LIMIT ?,?";
 	
 	public static final String SELECT_ALL_BOOKS_WITH_LIMIT_ORDER_BY_AUTHOR = "SELECT * FROM book ORDER BY author LIMIT ?,?";
+
+	public static final String SELECT_BOOK_BY_LIBRARY_BOOK_ID = "SELECT * FROM book WHERE library_book_id = ? AND state <> 'DELETED'";
+	public static final String[] SELECT_BOOK_BY_LIBRARY_BOOK_ID_ORDER = {"library_book_id"};
+	
 }

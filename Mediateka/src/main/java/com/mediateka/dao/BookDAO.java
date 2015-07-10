@@ -247,4 +247,19 @@ public class BookDAO {
 					.transformResultSetIntoList(resultSet, Book.class);
 		}
 	}
+
+	public static Book getBookByLibraryBookId(String libraryBookId)
+			throws ReflectiveOperationException, SQLException {
+		try (Connection connection = ConnectionManager.getConnection()) {
+			PreparedStatement statement = connection
+					.prepareStatement(BookStatements.SELECT_BOOK_BY_LIBRARY_BOOK_ID);
+			Book book = new Book();
+			book.setLibraryBookId(libraryBookId);
+			Transformer.valueIntoPreparedStatement(statement, book,
+					BookStatements.SELECT_BOOK_BY_LIBRARY_BOOK_ID_ORDER);
+			ResultSet resultSet = statement.executeQuery();
+			return Transformer.transformResultSetIntoObject(resultSet,
+					Book.class);
+		}
+	}
 }

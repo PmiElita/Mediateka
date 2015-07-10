@@ -9,14 +9,14 @@ var commentClient = null;
 var indexes = {};
 var showCommentIds={};
 window.setInterval(function() {
-	if (lastMessageTime != null) {
-		if (new Date().getTime() - lastMessageTime.getTime() > 277000) {
+	if (lastCommentTime != null) {
+		if (new Date().getTime() - lastCommentTime.getTime() > 277000) {
 			var jsonObj = {
 				"userId" : userId,
 				"clubId" : clubId,
 				"message" : ""
 			};
-			lastMessageTime = new Date();
+			lastCommentTime = new Date();
 			commentClient.send(JSON.stringify(jsonObj));
 		}
 	}

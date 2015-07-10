@@ -51,7 +51,7 @@
 											<fmt:message bundle="${msg}" key="book_name" />
 										</p>
 										<input id="name" name="name" type="text" class="validate"
-											pattern=".{1,45}" required autocomplete="off">
+											pattern=".{1,100}" required autocomplete="off">
 									</div>
 
 									<div class="input-field col s6">
@@ -59,7 +59,13 @@
 											<fmt:message bundle="${msg}" key="book_author" />
 										</p>
 										<input id="author" name="author" type="text" class="validate"
-											pattern=".{1,45}" required>
+											pattern=".{1,100}" required>
+									</div>
+									<div class = "col s12">
+									<p>
+											<fmt:message bundle="${msg}" key="description" />
+										</p>
+									 <textarea class="materialize-textarea info" name = "description"> </textarea>
 									</div>
 								</div>
 
@@ -123,8 +129,16 @@
 									</div>
 								</div>
 							</div>
-							<div class="col s9">
+							<div class="col s6">
 								<img style="height:200px" id="photo" src="images/book_title.jpg">
+							</div>
+							
+							<div class="col s3">
+									<p>
+											<fmt:message bundle="${msg}" key="library_book_id" />
+										</p>
+										<input id="libraryBookId" name="libraryBookId" type="text" class="validate"
+											pattern=".{1,100}" required onchange="checkLibraryBookId(this)">
 							</div>
 						</div>
 
@@ -133,7 +147,12 @@
 			</div>
 		</div>
 	</div>
-
+<script type="text/javascript">
+function setInvalid(element){
+	element.setCustomValidity('<fmt:message bundle="${msg}" key="book_id_is_in_use" />');
+	element.setAttribute('class', 'validate invalid');
+}
+</script>
 	<jsp:include page="../general/footer.jsp" />
 </body>
 </html>

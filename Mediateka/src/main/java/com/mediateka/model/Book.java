@@ -31,6 +31,9 @@ public class Book {
 	@Column(name = "description")
 	private String description;
 
+	@Column(name = "library_book_id")
+	private String libraryBookId;
+	
 	public Integer getId() {
 		return id;
 	}
@@ -101,6 +104,14 @@ public class Book {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public String getLibraryBookId() {
+		return libraryBookId;
+	}
+
+	public void setLibraryBookId(String libraryBookId) {
+		this.libraryBookId = libraryBookId;
 	}
 
 	@Override

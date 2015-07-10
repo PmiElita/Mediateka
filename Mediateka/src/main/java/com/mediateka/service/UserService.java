@@ -44,7 +44,7 @@ public class UserService {
 		return UserDAO.getUserByRole(role);
 	}
 
-	public static List<User> getUserByFormId(Integer formId)
+	public static User getUserByFormId(Integer formId)
 			throws ReflectiveOperationException, SQLException {
 		return UserDAO.getUserByFormId(formId);
 	}
