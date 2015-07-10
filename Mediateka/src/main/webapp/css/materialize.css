@@ -2806,6 +2806,7 @@ ul.staggered-list li {
 /*********************
   Media Query Classes
 **********************/
+
 @media only screen and (max-width : 600px) {
 	.hide-on-small-only, .hide-on-small-and-down {
 		display: none !important;
@@ -6940,9 +6941,16 @@ nav .brand-logo.center {
 	transform: translateX(-50%);
 }
 
-@media only screen and (max-width : 525px) {
+@media only screen and (max-width : 575px) {
 	nav .brand-logo {
-		width:2.25em;
+		width:2.75em;
+	}
+}
+
+@media only screen and (max-width : 525px) {
+	nav ul li a{
+		padding-left:10px;
+		padding-right:10px;
 	}
 }
 

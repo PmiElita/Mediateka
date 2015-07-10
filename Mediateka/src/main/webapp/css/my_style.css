@@ -38,11 +38,6 @@ section {
 	background-color: #fff;
 }
 
-.main-info {
-	padding-bottom: 2.0em;
-	width: 73.0%;
-	margin: auto;
-}
 
 .modal .modal-content #creation_form .container p {
 	color: grey;
@@ -170,4 +165,11 @@ section {
 div.container-side{
 	position: fixed;
 	margin-top: 3.9em;
+}
+
+.toDelete:hover{
+	transform: scale(0.75,0.75);
+	margin-left:0.5em;
+	
+	cursor: url('../images/delete_cursor.png'), default;
 }

@@ -42,6 +42,7 @@ import com.mediateka.service.BookMeaningService;
 import com.mediateka.service.BookService;
 import com.mediateka.service.BookTypeService;
 import com.mediateka.service.MediaService;
+import com.mediateka.service.ProfessionService;
 import com.mediateka.service.UserService;
 import com.mediateka.util.FileLoader;
 import com.mediateka.util.Translator;
@@ -72,6 +73,8 @@ public class BookController {
 		request.setAttribute("bookLanguage", BookLanguageService
 				.getBookLanguageById(book.getLanguageId()).getName());
 		request.setAttribute("avaPath", avaPath);
+		request.setAttribute("professions",
+				ProfessionService.getProfessionAll());
 		request.getRequestDispatcher("pages/books/book_page.jsp").forward(
 				request, response);
 	}
@@ -89,6 +92,8 @@ public class BookController {
 								.getAttribute("userId").toString())).getState() != State.ACTIVE)
 			response.sendError(404);
 		else
+			request.setAttribute("professions",
+					ProfessionService.getProfessionAll());
 			request.getRequestDispatcher("pages/books/books.jsp").forward(
 					request, response);
 	}

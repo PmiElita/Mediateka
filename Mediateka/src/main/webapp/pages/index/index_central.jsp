@@ -30,13 +30,13 @@
 								style="height: 10em">
 								<img class="activator" src="images/events/event2.jpg">
 							</div>
-							<div class="card-content">
-								<span class="card-title activator grey-text text-darken-4"><div
-										style="color: red;">
-										<a href="event?eventId=${item.id}"><div align="center">
+							<div class="card-content" style="padding:0">
+								<span class="card-title activator grey-text text-darken-4"><div class="row" style="margin-top:1em"><div
+										class="col s10">
+										<a href="event?eventId=${item.id}"><div align="center" style="margin-top:-1em; margin-left:1em" class="cyss">
 												<c:out value="${item.name}" />
 											</div></a>
-									</div> <i class="mdi-navigation-more-vert right"></i> </span>
+									</div><div class="col s2"><i class="mdi-navigation-more-vert left" style="margin-top:2em"></i></div></div>  </span>
 							</div>
 							<div class="card-reveal">
 								<span class="card-title grey-text text-darken-4"><div
@@ -62,7 +62,7 @@
 <div class="row">
 				<div class="section">
 				<jsp:include page="map.jsp" />
-					<div class="main-info">
+					<div class="section center" style="padding-left:1.5em; padding-right:1.5em; margin-top:2em; font-size:1.25em">
 						<p>Перша львівська медіатека – це проект громадського центру
 							нового типу, діє при Центральній бібліотеці для дорослих ім. Лесі
 							Українки. Медіатека – інтерактивний громадський центр, який

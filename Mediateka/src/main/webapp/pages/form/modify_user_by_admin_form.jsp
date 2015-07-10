@@ -24,13 +24,10 @@
 			</div>
 			<jsp:include page="../admin/admin_side_nav.jsp" />
 
-
-
-
-			<div class="section white center" style="width: 90%">
-
-				<div class="container white" style="padding: 1.5em;">
-
+				<div class="container white">
+					<div class="section white center">
+					
+					<h3>Change user info</h3>
 					<div id="user_modification_form">
 
 						<form method="post" onsubmit="return false;">
@@ -38,8 +35,6 @@
 							<input id="change_user_form_userId" name="userId" hidden=""
 								value="${userId }">
 
-							<div class="container" style="width: 95%">
-								<div style="margin-top: -3.5em">
 
 									<div class="row">
 										<div class="input-field col s3">
@@ -81,7 +76,7 @@
 									</div>
 
 									<div class="row">
-										<div class="input-field col s3" style="margin-top: 0.5em">
+										<div class="input-field col s3" >
 											<p>
 												<fmt:message bundle="${msg}" key="registration.nationality" />
 											</p>
@@ -90,12 +85,12 @@
 												class="validate" pattern="${consts.getOnlyChars() }"
 												required="required">
 										</div>
-										<div class="input-field col s3">
+										<div class="input-field col s3" style="margin-top:0.75em">
 											<p>
 												<fmt:message bundle="${msg}" key="registration.profession" />
 											</p>
 											<select id="change_user_form_profession" name="profession"
-												class="browser-default" style="margin-top: 0.75em"
+												class="browser-default" style="margin-top: 1em"
 												required="required">
 
 												<c:forEach items="${professions}" var="profession">
@@ -121,12 +116,12 @@
 
 											</select>
 										</div>
-										<div class="input-field col s3">
+										<div class="input-field col s3" style="margin-top:0.75em">
 											<p>
 												<fmt:message bundle="${msg}" key="registration.education" />
 											</p>
 											<select id="change_user_form_education" name="education"
-												class="browser-default" style="margin-top: 0.75em"
+												class="browser-default" style="margin-top: 1em"
 												required="required">
 
 												<c:choose>
@@ -291,15 +286,13 @@
 										</div>
 
 										<button class="btn waves-effect titler" type="submit"
-											name="action" style="margin-bottom: 3.5em"
+											name="action" style="margin-top:1em"
 											onclick=" updateUser()">
 											<fmt:message bundle="${msg}" key="change_user_info_button" />
 										</button>
 
 
 									</div>
-								</div>
-							</div>
 
 						</form>
 					</div>

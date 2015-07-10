@@ -14,7 +14,7 @@
 <fmt:setBundle basename="translations/index" var="msg" scope="session" />
 
 
-<div id="modal2" class="modal">
+<div id="modal2" class="modal" style="width:80%">
 	<div class="modal-content">
 
 		<div id="creation_form">

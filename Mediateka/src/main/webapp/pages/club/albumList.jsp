@@ -48,10 +48,10 @@
 							style="color: transparent; opacity: 0">!</span>
 					</h3>
 					<div class="row valign-wrapper" style="margin: 0;">
-						<div class="col s12 center" style="height: 12em">
+						<div class="col s12 center" style="height: 12em; padding:0">
 							<img class="responsive-image"
 								src="${imageMap.get(album.id)[0].path}" alt=""
-								style="margin: -4.4em 0 0 0; height: 100%; border-radius: 5%">
+								style="margin: -4.4em 0 0 0; height: 100%; width:100%; border-radius: 5%">
 						</div>
 						<div class="club-badge"
 							style="z-index: 10; margin-top: 0em; margin-left: -1.3em">${fn:length(imageMap.get(album.id)) }</div>

@@ -47,28 +47,33 @@
 			<c:if test="${userRole eq Role.USER}">
 				<jsp:include page="../user/user_side_nav.jsp" />
 			</c:if>
-			
-			
-			<div class="section">
-				<div class="container">
-					<h3 class="image-cover-t">${clubName}</h3>
+
+
+
+			<div class="container white">
+				<div class="section">
+					<h3 class="image-cover-t center">${clubName}</h3>
 					<div class="row">
-						<h4 class="image-cover-t"><fmt:message bundle="${msg }" key="club_videos.videos"/></h4>
-						<div class="col s9">
+						<h4 class="image-cover-t center">
+							<fmt:message bundle="${msg }" key="club_videos.videos" />
+						</h4>
+						<div class="col s9" style="margin-top:-3em">
 							<a title="??Add video" href="" data-target="addVideo"
 								class="modal-trigger"> <span><i
 									class="medium mdi-av-queue"></i></span>
 							</a>
 						</div>
 					</div>
+
+					<ol>
+						<jsp:include page="videoList.jsp" />
+					</ol>
 				</div>
 			</div>
-			
-			
-			
-			<ol>
-				<jsp:include page="videoList.jsp" />
-			</ol>
+
+
+
+
 
 
 		</div>
@@ -94,14 +99,17 @@
 							<div class="file-field input-field">
 								<input class="file-path validate" type="hidden" />
 								<div class="btn">
-									<span>fmt:message bundle="${msg }" key="club_videos.choose_files"/></span> <input type="file" id="video"
+									<span>fmt:message bundle="${msg }"
+										key="club_videos.choose_files"/></span> <input type="file" id="video"
 										multiple name="video" accept="video/*" />
 								</div>
 								<label id="number" hidden="true">1</label>
 							</div>
 						</div>
 						<div class="row" style="margin-top: 5em">
-							<button class="btn" type="submit"><fmt:message bundle="${msg }" key="club_videos.upload"/></button>
+							<button class="btn" type="submit">
+								<fmt:message bundle="${msg }" key="club_videos.upload" />
+							</button>
 						</div>
 					</div>
 					<div class="col s9">

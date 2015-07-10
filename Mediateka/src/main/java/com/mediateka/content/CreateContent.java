@@ -208,7 +208,7 @@ public class CreateContent {
 												+ ".jpg");
 								if (posters != null) {
 									if (posters.size() > 1) {
-										System.out.println("owww fuck!");
+										System.out.println("owww!");
 									}
 									Media poster = posters.get(0);
 									if (poster != null) {

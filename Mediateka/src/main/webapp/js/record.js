@@ -81,12 +81,11 @@ function handleFileSelect(e) {
 					var reader = new FileReader();
 					reader.onload = function(e) {
 					
-						var html = "<img src=\""
+						var html = "<div class='col s3 center' style='height:130px'><img src=\""
 								+ e.target.result
 								+ "\" data-file='"
 								+ f.name
-								+ "'height='100' class='selFile' title='Click to remove'>"
-								+ "<br clear=\"left\"/>";
+								+ "'height='105' class='selFile toDelete' title='Click to remove'></div>";
 			
 						selDiv.append(html);
                         

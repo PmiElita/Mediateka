@@ -56,12 +56,12 @@
 					<c:if test="${isSigned eq 'false'}">
 						<div class="col s6">
 							<a class="btn" href="memberSignEvent?eventId=${event.id}"
-								style="width: 15em"><fmt:message bundle="${msg}"
+								style="width: 20em"><fmt:message bundle="${msg}"
 									key="sign_to_event" /></a>
 						</div>
 						<div class="col s6">
 							<a class="btn" href="EventUsers?eventId=${event.id }"
-								style="width: 15em"><fmt:message bundle="${msg}"
+								style="width: 20em"><fmt:message bundle="${msg}"
 									key="look_participants" /></a>
 						</div>
 					</c:if>

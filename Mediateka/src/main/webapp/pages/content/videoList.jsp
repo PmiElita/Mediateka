@@ -12,14 +12,16 @@
 <div id="load"></div>
 <label id="index" hidden="true">${index}</label>
 <div id="uploaded">
-	<c:forEach var="record" items="${records }">
-		<c:forEach var="video" items="${videoMap.get(record.id) }">
-			<li><c:out value="${video.name}"></c:out> <video width="700"
-					poster="${posterMap.get(video.id).path }" onclick="this.play();"
-					controls="controls" title='<c:out value="${video.name}"></c:out>'>
-					<source src='<c:out value="${video.path}"></c:out>'
-						type="video/mp4">
-				</video></li>
+	<div class="row" style="margin-left:2em">
+		<c:forEach var="record" items="${records }">
+			<c:forEach var="video" items="${videoMap.get(record.id) }">
+				<li class="col s6" style="font-size:1.5em"><c:out value="${video.name}"></c:out><video style="margin-left:-1.5em; border-radius:5%" width="100%"
+						poster="${posterMap.get(video.id).path }" onclick="this.play();"
+						controls="controls" title='<c:out value="${video.name}"></c:out>'>
+						<source src='<c:out value="${video.path}"></c:out>'
+							type="video/mp4">
+					</video></li>
+			</c:forEach>
 		</c:forEach>
-	</c:forEach>
+	</div>
 </div>

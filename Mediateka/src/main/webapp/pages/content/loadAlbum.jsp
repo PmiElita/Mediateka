@@ -48,7 +48,7 @@
 					</div>
 				</div>
 				<div class="col s9">
-					<div id="selectedImages"></div>
+					<div id="selectedImages" class="row"></div>
 				</div>
 			</div>
 		</form>
@@ -67,11 +67,11 @@
 		var data = new FormData();
 		data.append('index', $('#index').text());
 		data.append('name', document.getElementById('name').value);
-		if (document.getElementById('clubId') != null) {			
+		if (document.getElementById('clubId') != null) {
 			data.append('clubId', document.getElementById('clubId').value);
 		}
 		if (document.getElementById('eventId') != null) {
-		
+
 			data.append('eventId', document.getElementById('eventId').value);
 		}
 		for (var i = 0, len = storedImages.length; i < len; i++) {

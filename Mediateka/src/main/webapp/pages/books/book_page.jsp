@@ -58,7 +58,7 @@
 				<jsp:include page="../user/user_side_nav.jsp" />
 			</c:if>
 
-			<div class="container white center"
+			<div class="container white center section"
 				style="min-height: 33em; margin-bottom: 0">
 				<div class="row">
 					<c:if test="${userRole eq Role.ADMIN}">
