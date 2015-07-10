@@ -128,6 +128,11 @@ li.playing:before {
 		display: none;
 	}
 }
+
+.progress{
+	margin:0;
+	border-radius:0;
+}
 </style>
 
 

@@ -358,14 +358,14 @@ public class ClubController {
 			HttpServletResponse response) throws ReflectiveOperationException,
 			SQLException, ServletException, IOException {
 		int clubId = 0;
-		// Integer audioId = Integer.parseInt(request.getParameter("audioId"));
-		// ContentGroup contentGroup = ContentGroupService
-		// .getContentGroupById(audioId);
+		 Integer audioId = Integer.parseInt(request.getParameter("audioId"));
+		 ContentGroup contentGroup = ContentGroupService
+		 .getContentGroupById(audioId);
 		List<ContentGroup> audios = new ArrayList<ContentGroup>();
 		// audios.add(contentGroup);
-		// if (contentGroup.getClubId() != null) {
-		// clubId = contentGroup.getClubId();
-		// }
+		 if (contentGroup.getClubId() != null) {
+		 clubId = contentGroup.getClubId();
+		 }
 		audios = ContentGroupService.getContentGroupByClubIdAndStateAndType(
 				clubId, State.ACTIVE, ContentGroupType.AUDIO);
 		CreateContent.setContent(request, response, audios);

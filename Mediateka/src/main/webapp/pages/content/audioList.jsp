@@ -90,43 +90,13 @@ li.playing:before {
 	text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.2);
 }
 
-#shortcuts {
-	position: fixed;
-	bottom: 0px;
-	width: 100%;
-	color: #666;
-	font-size: 0.9em;
-	margin: 60px 0px 0px;
-	padding: 20px 20px 15px;
-	background: #f3f3f3;
-	background: rgba(240, 240, 240, 0.7);
+.progress {
+	margin: 0px;
+	border-radius: 0px;
 }
 
-#shortcuts div {
-	width: 460px;
-	margin: 0px auto;
-}
-
-#shortcuts h1 {
-	margin: 0px 0px 6px;
-}
-
-#shortcuts p {
-	margin: 0px 0px 18px;
-}
-
-#shortcuts em {
-	position: relative;
-}
-
-@media screen and (max-device-width: 480px) {
-	#wrapper {
-		position: relative;
-		left: -3%;
-	}
-	#shortcuts {
-		display: none;
-	}
+.audiojs .play-pause {
+	padding: 3px 0px;
 }
 </style>
 
@@ -152,6 +122,7 @@ li.playing:before {
 
 		// Load in the first track
 		var audio = a[0];
+
 		// 		first = $('ol a').attr('data-src');
 		// 		$('ol li').first().addClass('playing');
 		// 		audio.load(first);
@@ -193,7 +164,10 @@ li.playing:before {
 
 <div id="load"></div>
 <label id="index" hidden="true">${index}</label>
-<audio id='audioPlayer' preload="none"></audio>
+<div style="position: fixed; top: 20%; z-index: 1; right: 2%"
+	class="row col s1" align="left">
+	<audio id='audioPlayer' preload="auto"></audio>
+</div>
 <div id="uploaded">
 	<c:forEach var="audios" items="${records }">
 		<c:forEach var="audio" items="${audioMap.get(audios.id) }">
