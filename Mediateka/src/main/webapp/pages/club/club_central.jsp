@@ -81,7 +81,7 @@
 												style="width: 15em"><fmt:message bundle="${msg}"
 													key="delete_club" /></a>
 										</div>
-										<div class="col s12" id="3">
+										<div class="col s12" id="3" hidden>
 											<a class="btn" onclick="restoreClubAjax(${club.id})"
 												style="width: 30em; color: red"><fmt:message
 													bundle="${msg}" key="restore_club" /></a>

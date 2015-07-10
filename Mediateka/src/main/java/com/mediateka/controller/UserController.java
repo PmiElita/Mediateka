@@ -30,14 +30,17 @@ import com.mediateka.comparator.FormRecordsByDateFrom;
 import com.mediateka.exception.WrongInputException;
 import com.mediateka.model.Club;
 import com.mediateka.model.ClubEventMember;
+import com.mediateka.model.ContentGroup;
 import com.mediateka.model.Event;
 import com.mediateka.model.FormRecord;
 import com.mediateka.model.Media;
 import com.mediateka.model.User;
+import com.mediateka.model.enums.ContentGroupType;
 import com.mediateka.model.enums.EventType;
 import com.mediateka.model.enums.Role;
 import com.mediateka.model.enums.State;
 import com.mediateka.service.ClubService;
+import com.mediateka.service.ContentGroupService;
 import com.mediateka.service.EventService;
 import com.mediateka.service.FormRecordService;
 import com.mediateka.service.MediaService;
@@ -216,7 +219,7 @@ public class UserController {
 			} catch (NumberFormatException e) {
 				logger.error("no club has such id : "
 						+ request.getParameter("clubId"));
-				response.sendRedirect("index");
+				response.sendError(404);
 				return;
 			}
 			List<Event> events = getEventByClubId(clubId);
@@ -435,9 +438,68 @@ public class UserController {
 
 	@Request(url = "info", method = "get")
 	public static void infoGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("pages/admin/info.jsp").forward(request,
-				response);
+			HttpServletResponse response) throws ServletException, IOException,
+			ReflectiveOperationException, SQLException {
+		try {
+			if (request.getSession().getAttribute("userId") == null)
+				throw new WrongInputException("There is no userId in session");
+			int userId = Integer.parseInt(request.getSession()
+					.getAttribute("userId").toString());
+			if (UserService.getUserById(userId).getRole() != Role.ADMIN)
+				throw new WrongInputException("This user isnt an admin");
+			List<ContentGroup> infos = ContentGroupService
+					.getContentGroupByType(ContentGroupType.INFO);
+			int infoId = infos.get(0).getId();
+			List<Media> media = MediaService.getMediaContentGroupId(infoId);
+			List<String> imagePath = new ArrayList<>();
+			for (Media image : media)
+				imagePath.add(image.getPath().replace("\\", "/"));
+			String[] textInfo = infos.get(0).getText()
+					.split("<info!split!info>");
+			request.setAttribute("imagePath1", imagePath.get(0));
+			request.setAttribute("imagePath2", imagePath.get(1));
+			request.setAttribute("imagePath3", imagePath.get(2));
+			request.setAttribute("text1", textInfo[0]);
+			request.setAttribute("text2", textInfo[1]);
+			if (request.getSession().getAttribute("goody") != null) {
+				request.setAttribute("good", "not_null");
+				request.getSession().setAttribute("goody", null);
+			}
+			request.getRequestDispatcher("pages/admin/info.jsp").forward(
+					request, response);
+			request.removeAttribute("good");
+			request.removeAttribute("imagePath1");
+			request.removeAttribute("imagePath2");
+			request.removeAttribute("imagePath3");
+			request.removeAttribute("text1");
+			request.removeAttribute("text2");
+
+		} catch (WrongInputException e) {
+			logger.warn(e.getMessage());
+			response.sendError(404);
+		}
+	}
+
+	@Request(url = "updateInfo", method = "post")
+	public static void infoPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException,
+			ReflectiveOperationException, SQLException {
+		FileLoader fileLoader = new FileLoader();
+		fileLoader.loadFile(request);
+		List<ContentGroup> infos = ContentGroupService
+				.getContentGroupByType(ContentGroupType.INFO);
+		String[] textInfo = infos.get(0).getText().split("<info!split!info>");
+		String newTextUa = fileLoader.getParameterMap().get("infoText1");
+		String newTextEn = fileLoader.getParameterMap().get("infoText2");
+		if (newTextUa == null || newTextUa.equals(""))
+			newTextUa = textInfo[0];
+		if (newTextEn == null || newTextEn.equals(""))
+			newTextEn = textInfo[0];
+		ContentGroup info = infos.get(0);
+		info.setText(newTextUa + "<info!split!info>" + newTextEn);
+		ContentGroupService.updateContentGroup(info);
+		request.getSession().setAttribute("goody", "not_null");
+		response.sendRedirect("cabinet");
 	}
 
 	@Request(url = "post_register", method = "get")

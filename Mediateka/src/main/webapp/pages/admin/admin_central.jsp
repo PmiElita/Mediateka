@@ -109,6 +109,13 @@
 						</div>
 					</a>
 				</div>
+				<c:if test="${!(good==null)}">
+					<div class="section white">
+						<h6 style="color: green">
+							<c:out value="Changes saved." />
+						</h6>
+					</div>
+				</c:if>
 
 				<div class="col s4">
 					<a href="books">
@@ -148,7 +155,7 @@
 
 											<c:out value="${totalReports }" />
 											<c:if test="${newReports > 0}">
-													<c:out value="(${newReports})" />
+												<c:out value="(${newReports})" />
 												<p>
 											</c:if>
 
