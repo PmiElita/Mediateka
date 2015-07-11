@@ -8,7 +8,7 @@
 <jsp:include page="../general/head.jsp" />
 <script src="js/admin_search_user.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+
 </head>
 <body onscroll="alert(1);">
 	<div class="main">

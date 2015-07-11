@@ -69,7 +69,7 @@
 <script type="text/javascript">
 	function sendResponse() {
 
-		Materialize.toast("sending response", 4000);
+		Materialize.toast("<fmt:message bundle="${msg}" key="toast.sending_response"/>", 4000);
 
 		request = {
 			'name' : document.getElementsByName("nameField")[0].value,
@@ -77,14 +77,12 @@
 			'response' : document.getElementsByName("responseField")[0].value,
 		};
 
-		Materialize.toast("request: " + JSON.stringify(request), 10000);
-
 		$.ajax({
 			url : 'sendResponse',
 			type : 'post',
 			data : request,
 			success : function(data) {
-				Materialize.toast("thank you for your response", 4000);
+				Materialize.toast("<fmt:message bundle="${msg}" key="toast.thanks"/>", 4000);
 			}
 		});
 

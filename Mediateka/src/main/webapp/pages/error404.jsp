@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
+
+<fmt:setLocale value="${cookie.lang.value}" />
+<fmt:setBundle basename="translations/page404" var="msg" />
 
 <html>
 <head>
@@ -34,13 +39,18 @@
 			<div class="container">
 				<div class="row" style="font-size: 1.5em; margin-top: 0.5em">
 					<a href="index"
-						style="background: black; color: white; border-radius: 10%;">Back
-						to main page</a>
+						style="background: black; color: white; border-radius: 10%;">
+						<fmt:message bundle="${msg }" key="back_to_main_page" />
+					</a>
 				</div>
 				<div style="width: 25em; margin: auto">
-					<h1 class="book-cover-t">ERROR 404</h1>
+					<h1 class="book-cover-t">
+						<fmt:message bundle="${msg }" key="error404" />
+					</h1>
 					<img src="images/error.png" />
-					<h4 style="margin-left: 0.5em" class="book-cover-t">PAGE NOT FOUND</h4>
+					<h4 style="margin-left: 0.5em" class="book-cover-t">
+						<fmt:message bundle="${msg }" key="page_not_found" />
+					</h4>
 				</div>
 			</div>
 		</div>

@@ -11,7 +11,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Clubs</title>
+<title><fmt:message bundle="${msg }" key="title" /></title>
 <jsp:include page="../general/head.jsp" />
 </head>
 <body>

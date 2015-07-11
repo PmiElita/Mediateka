@@ -25,7 +25,7 @@
 		<div class="row section" style="margin-top: 3em">
 			<div class="main-activity col s5" style="min-height: 20em">
 				<div class="row select-activityr">
-                 <h5>Формуляр</h5>
+                 <h5><fmt:message bundle="${msg }" key="form" /></h5>
                  </div>
 				<div class="row" id="formRecordsRow">
 					<div class="col s12 " id="formRecords">
