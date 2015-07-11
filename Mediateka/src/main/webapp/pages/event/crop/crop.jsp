@@ -96,6 +96,11 @@ style>.image-cover-t {
 			var xhr = new XMLHttpRequest();
 			xhr.open('POST', 'loadEventAva', true);
 			xhr.send(data);
+			if (this.status == 200) {
+				document.getElementById("clubAvaForm").reset();
+				document.getElementById("selectedImages").innerHTML = "";
+				storedImages = [];
+			}
 
 		}
 

@@ -6,6 +6,7 @@
 <fmt:setLocale value="${cookie.lang.value}" />
 <fmt:setBundle basename="translations/content" var="msg" />
 
+
 <form id="recordForm" enctype="multipart/form-data">
 
 
@@ -38,6 +39,7 @@
 			</div>
 
 			<div id="progress"></div>
+			
 			<div class="row" style="margin-left: -8em">
 				<div class="file-field input-field col s2 offset-s1"
 					style="margin-left: 18%">
