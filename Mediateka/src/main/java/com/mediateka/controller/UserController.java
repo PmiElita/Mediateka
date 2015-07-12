@@ -457,7 +457,6 @@ public class UserController {
 					.getContentGroupByParentId(infoId);
 			List<Media> media = new ArrayList<>();
 			List<String[]> photoTexts = new ArrayList<>();
-			System.out.println(all);
 			for (ContentGroup content : all) {
 				media.add(MediaService
 						.getMediaByContentGroupId(content.getId()).get(0));

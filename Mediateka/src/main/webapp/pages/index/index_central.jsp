@@ -30,13 +30,20 @@
 								style="height: 10em">
 								<img class="activator" src="images/events/event2.jpg">
 							</div>
-							<div class="card-content" style="padding:0">
-								<span class="card-title activator grey-text text-darken-4"><div class="row" style="margin-top:1em"><div
-										class="col s10">
-										<a href="event?eventId=${item.id}"><div align="center" style="margin-top:-1em; margin-left:1em" class="cyss">
-												<c:out value="${item.name}" />
-											</div></a>
-									</div><div class="col s2"><i class="mdi-navigation-more-vert left" style="margin-top:2em"></i></div></div>  </span>
+							<div class="card-content" style="padding: 0">
+								<span class="card-title activator grey-text text-darken-4"><div
+										class="row" style="margin-top: 1em">
+										<div class="col s10">
+											<a href="event?eventId=${item.id}"><div align="center"
+													style="margin-top: -1em; margin-left: 1em" class="cyss">
+													<c:out value="${item.name}" />
+												</div></a>
+										</div>
+										<div class="col s2">
+											<i class="mdi-navigation-more-vert left"
+												style="margin-top: 2em"></i>
+										</div>
+									</div> </span>
 							</div>
 							<div class="card-reveal">
 								<span class="card-title grey-text text-darken-4"><div
@@ -44,11 +51,12 @@
 										<a href="event?eventId=${item.id}"><div align="center">
 												<c:out value="${item.name}" />
 											</div></a>
-									</div> <i class="mdi-navigation-close right"></i></span><br><br>
+									</div> <i class="mdi-navigation-close right"></i></span><br> <br>
 								<p>
 								<div style="color: green;">Event time:</div>
 								<c:out value="${dates[status.index]}" />
-								</p><br>
+								</p>
+								<br>
 								<p>
 								<div style="color: green;">Description:</div>
 								<c:out value="${item.description}" />
@@ -58,28 +66,20 @@
 						</div>
 					</div>
 				</c:forEach>
-</div>
-<div class="row">
+			</div>
+			<div class="row">
 				<div class="section">
-				<jsp:include page="map.jsp" />
-					<div class="section center" style="padding-left:1.5em; padding-right:1.5em; margin-top:2em; font-size:1.25em">
-						<p>Перша львівська медіатека – це проект громадського центру
-							нового типу, діє при Центральній бібліотеці для дорослих ім. Лесі
-							Українки. Медіатека – інтерактивний громадський центр, який
-							пропонує можливість участі у заходах та використання
-							різноманітних ресурсів, включаючи Інтернет, CD та DVD-носії,
-							електронні книги, інтерактивні програми вивчення іноземних мов і
-							комп’ютерних технологій, програми дитячого розвитку, комп’ютерні
-							курси, музичну студію, кінозал, дискусійні клуби, тренінги і
-							гуртки для усіх членів родини.</p>
-						<p>Приміщення доступне для людей з особливими потребами. На
-							додачу до послуг традиційної бібліотеки громада міста може
-							насолоджуватись сучасним комфортним дизайном центру та значно
-							ширшим спектром послуг.</p>
-						<p>Медіатека складається вона з трьох функціональних приміщень
-							та студії звукозапису. У першому, найбільшому – комп’ютери, друге
-							приміщення – кімната для юнацтва, третє приміщення – кінозал та
-							конференц-зал.</p>
+					<jsp:include page="map.jsp" />
+					<div class="section center"
+						style="padding-left: 1.5em; padding-right: 1.5em; margin-top: 2em; font-size: 1.25em">
+						<p>
+							<c:if test="${cookie.lang.value eq 'uk-UA'}">
+								<c:out value="${textInfoUa}" />
+							</c:if>
+							<c:if test="${cookie.lang.value eq 'en-US'}">
+								<c:out value="${textInfoEn}" />
+							</c:if>
+						</p>
 					</div>
 				</div>
 			</div>

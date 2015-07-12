@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -17,9 +18,14 @@ import javax.servlet.http.HttpServletResponse;
 import com.mediateka.annotation.Controller;
 import com.mediateka.annotation.Request;
 import com.mediateka.comparator.EventsByDate;
+import com.mediateka.model.ContentGroup;
 import com.mediateka.model.Event;
+import com.mediateka.model.Media;
+import com.mediateka.model.enums.ContentGroupType;
 import com.mediateka.model.enums.EventType;
 import com.mediateka.model.enums.State;
+import com.mediateka.service.ContentGroupService;
+import com.mediateka.service.MediaService;
 import com.mediateka.service.ProfessionService;
 
 @Controller
@@ -77,7 +83,40 @@ public class IndexController {
 						+ format.format(dateTill);
 			dates.add(date);
 		}
+		ContentGroup info = ContentGroupService.getContentGroupByType(
+				ContentGroupType.INFO).get(0);
+		String textInfoUa = info.getText().split("<info!split!info>")[0];
+		String textInfoEn = info.getText().split("<info!split!info>")[1];
+		List<ContentGroup> allInfo = ContentGroupService
+				.getContentGroupByParentId(info.getId());
+		String image1ua = allInfo.get(0).getText().split("<info!split!info>")[0];
+		String image1en = allInfo.get(0).getText().split("<info!split!info>")[1];
+		String image2ua = allInfo.get(1).getText().split("<info!split!info>")[0];
+		String image2en = allInfo.get(1).getText().split("<info!split!info>")[1];
+		String image3ua = allInfo.get(2).getText().split("<info!split!info>")[0];
+		String image3en = allInfo.get(2).getText().split("<info!split!info>")[1];
+		List<Media> media = new ArrayList<>();
+		for (ContentGroup content : allInfo)
+			media.add(MediaService.getMediaByContentGroupId(content.getId())
+					.get(0));
+		List<String> imageTextUa = new ArrayList<>();
+		imageTextUa.add(image1ua);
+		imageTextUa.add(image2ua);
+		imageTextUa.add(image3ua);
+		List<String> imageTextEn = new ArrayList<>();
+		imageTextEn.add(image1en);
+		imageTextEn.add(image2en);
+		imageTextEn.add(image3en);
+		List<String> imagePath = new ArrayList<>();
+		for (Media image : media)
+			imagePath.add(image.getPath());
 
+		request.setAttribute("randomic", randomizeClass());
+		request.setAttribute("textInfoUa", textInfoUa);
+		request.setAttribute("textInfoEn", textInfoEn);
+		request.setAttribute("imageTextUa", imageTextUa);
+		request.setAttribute("imageTextEn", imageTextEn);
+		request.setAttribute("imagePath", imagePath);
 		request.setAttribute("dates", dates);
 		request.setAttribute("events", currentEvents);
 		request.setAttribute("professions",
@@ -87,5 +126,21 @@ public class IndexController {
 		request.removeAttribute("events");
 		request.removeAttribute("professions");
 		request.removeAttribute("dates");
+		request.removeAttribute("textInfoUa");
+		request.removeAttribute("textInfoEn");
+		request.removeAttribute("imageTextUa");
+		request.removeAttribute("imageTextEn");
+		request.removeAttribute("imagePath");
+		request.removeAttribute("randomic");
+	}
+
+	private static String randomizeClass() {
+		String result = "caption center-align";
+		double random = new Random().nextDouble();
+		if (random < 0.33)
+			result = "caption left-align";
+		else if (random > 0.67)
+			result = "caption right-align";
+		return result;
 	}
 }
