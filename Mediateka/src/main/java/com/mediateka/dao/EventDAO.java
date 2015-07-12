@@ -168,8 +168,8 @@ public class EventDAO {
 					Event.class);
 		}
 	}
-	
-	public static Integer getNumberOfRequestedEvents() throws SQLException{
+
+	public static Integer getNumberOfRequestedEvents() throws SQLException {
 		try (Connection connection = ConnectionManager.getConnection()) {
 
 			PreparedStatement statement = connection
@@ -179,7 +179,7 @@ public class EventDAO {
 			rs.next();
 			return rs.getInt(1);
 		}
-		
+
 	}
 
 }

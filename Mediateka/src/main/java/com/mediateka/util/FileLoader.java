@@ -63,17 +63,12 @@ public class FileLoader {
 		} else if (request.getSession().getAttribute("userId") != null) {
 			type = "userAva" + request.getSession().getAttribute("userId");
 		}
-		System.out.println(type);
-		System.out.println(type.replaceAll("[0-9]", "") + "\\" + type);
 		type = type.replaceAll("[0-9]", "") + "\\" + type;
 		String destFolder = request.getServletContext().getRealPath("")
 				+ "media\\" + type;
-		System.out.println(destFolder);
 		File dest;
 		for (int i = 0; i < filePaths.size(); i++) {
-			System.out.println(filePaths.get(i));
 			filePaths.set(i, filePaths.get(i).replace("temp", type));
-			System.out.println(filePaths.get(i));
 		}
 		String typeAray[] = { "images", "videos", "audios" };
 		try {
@@ -89,14 +84,10 @@ public class FileLoader {
 						File copyFile = new File(dest.getAbsolutePath() + "\\"
 								+ file.getName());
 						FileUtils.copyFile(file, copyFile);
-						System.out.println(dest.getAbsolutePath()
-								+ file.getName());
 
 						FFmpegFrameGrabber g = new FFmpegFrameGrabber(copyFile);
 						try {
 							g.start();
-							System.out.println(copyFile.getPath() + " "
-									+ copyFile.getCanonicalPath());
 							g.setFrameNumber(g.getLengthInFrames() / 2);
 							try {
 								File posterFile = new File(copyFile
@@ -107,11 +98,8 @@ public class FileLoader {
 										+ ".jpg");
 								ImageIO.write(g.grab().getBufferedImage(),
 										"png", posterFile);
-								System.out.println("ok");
 								Media posterMedia = new Media();
 								posterMedia.setType(MediaType.POSTER);
-								System.out.println("posterFile "
-										+ posterFile.getAbsolutePath());
 								posterMedia.setPath(posterFile
 										.getAbsolutePath()
 										.substring(
@@ -195,17 +183,8 @@ public class FileLoader {
 
 				if (item.getSize() > 0 && !item.isFormField()) {
 
-					if (item.getContentType()
-							.substring(0, item.getContentType().indexOf('/'))
-							.equals(item.getFieldName().toLowerCase()) == false) {
-						System.out.println(item.getContentType().substring(0,
-								item.getContentType().indexOf('/'))
-								+ " " + item.getFieldName().toLowerCase());
-						throw new WrongInputException("wrong input file type");
-					}
-
-					mediaTypes.add(MediaType.valueOf(item.getFieldName()
-							.toUpperCase()));
+					// mediaTypes.add(MediaType.valueOf(item.getFieldName()
+					// .toUpperCase()));
 					String fileName = SecurityStringGenerator
 							.generateString(16);
 					defaultFileNames.add(new File(item.getName()).getName());
@@ -217,11 +196,18 @@ public class FileLoader {
 					if (extention == "") {
 						extention = ".jpg";
 					}
+
+					File uplDir = new File(uploadFolder + "\\"
+							+ item.getFieldName().toLowerCase() + "s");
+					if (uplDir.exists() == false) {
+						uplDir.mkdirs();
+					}
 					String filePath = uploadFolder + "\\"
 							+ item.getFieldName().toLowerCase() + "s"
 							+ File.separator + fileName + extention;
 					filePaths.add(filePath);
-					relativePathseMap.put(item.getFieldName(), filePath.substring(filePath.indexOf("media\\")));
+					relativePathseMap.put(item.getFieldName(),
+							filePath.substring(filePath.indexOf("media\\")));
 					File uploadedFile = new File(filePath);
 					item.write(uploadedFile);
 					isUploaded = true;
@@ -249,11 +235,6 @@ public class FileLoader {
 									contentType.indexOf('/')).equals(
 									realContentType.substring(realContentType
 											.indexOf('/'))) == false)) {
-						System.out.println(Files.probeContentType(Paths
-								.get(filePath))
-								+ " "
-								+ item.getContentType()
-								+ " " + metadata.get(Metadata.CONTENT_TYPE));
 						uploadedFile.delete();
 						throw new WrongInputException("wrong file type");
 					}
@@ -320,8 +301,8 @@ public class FileLoader {
 		}
 		return relativePathes;
 	}
-	
-	public Map<String, String> getAllRelativePathseMap(){
+
+	public Map<String, String> getAllRelativePathseMap() {
 		return relativePathseMap;
 	}
 
@@ -331,7 +312,6 @@ public class FileLoader {
 		}
 		return filePaths;
 	}
-		
 
 	public List<String> getAllFileDefaultNames() throws WrongInputException {
 		if (defaultFileNames.size() == 0) {

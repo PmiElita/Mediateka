@@ -53,8 +53,8 @@
 										<div class="file-field input-field">
 											<input class="file-path validate" type="hidden" />
 											<div class="btn">
-												<span>Change image</span><input type="file" name="image"
-													onchange="readURL(this,1);" />
+												<span>Change image</span><input name="image1" type="file"
+													name="image" onchange="readURL(this,1);" />
 											</div>
 										</div>
 									</div>
@@ -74,8 +74,8 @@
 										<div class="file-field input-field">
 											<input class="file-path validate" type="hidden" />
 											<div class="btn">
-												<span>Change image</span><input type="file" name="image"
-													onchange="readURL(this,2);" />
+												<span>Change image</span><input name="image2" type="file"
+													name="image" onchange="readURL(this,2);" />
 											</div>
 										</div>
 									</div>
@@ -95,8 +95,8 @@
 										<div class="file-field input-field">
 											<input class="file-path validate" type="hidden" />
 											<div class="btn">
-												<span>Change image</span><input type="file" name="image"
-													onchange="readURL(this,3);" />
+												<span>Change image</span><input name="image3" type="file"
+													name="image" onchange="readURL(this,3);" />
 											</div>
 										</div>
 									</div>

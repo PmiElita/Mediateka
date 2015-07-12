@@ -508,7 +508,7 @@ public class UserController {
 			HttpServletResponse response) throws ServletException, IOException,
 			ReflectiveOperationException, SQLException {
 		FileLoader fileLoader = new FileLoader();
-		fileLoader.loadFile(request);
+		fileLoader.loadFile(request, "info image");
 		Map<String, String> map = fileLoader.getParameterMap();
 		List<ContentGroup> infos = ContentGroupService
 				.getContentGroupByType(ContentGroupType.INFO);
@@ -535,14 +535,22 @@ public class UserController {
 			media.add(MediaService.getMediaByContentGroupId(content.getId())
 					.get(0));
 		try {
-			int i = 0;
-			for (Media picture : media) {
-				if (fileLoader.getAllFilePathes() != null)
-					if (fileLoader.getAllRelativePathes().size() > i)
-						picture.setPath(fileLoader.getAllRelativePathes()
-								.get(i));
-				i++;
-				MediaService.updateMedia(picture);
+			if (fileLoader.getAllFilePathes() != null) {
+				Map<String, String> imgMap = fileLoader
+						.getAllRelativePathseMap();
+				System.out.println(imgMap);
+				if (imgMap.containsKey("image1")) {
+					media.get(0).setPath(imgMap.get("image1"));
+					MediaService.updateMedia(media.get(0));
+				}
+				if (imgMap.containsKey("image2")) {
+					media.get(1).setPath(imgMap.get("image2"));
+					MediaService.updateMedia(media.get(1));
+				}
+				if (imgMap.containsKey("image3")) {
+					media.get(2).setPath(imgMap.get("image3"));
+					MediaService.updateMedia(media.get(2));
+				}
 			}
 		} catch (WrongInputException e) {
 			logger.warn(e);
