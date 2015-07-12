@@ -9,9 +9,9 @@ import com.mediateka.model.enums.MediaType;
 import com.mediateka.model.enums.State;
 
 public class MediaService {
-	
-	
-	public static Media callSaveMedia(Media media) throws SQLException, ReflectiveOperationException {
+
+	public static Media callSaveMedia(Media media) throws SQLException,
+			ReflectiveOperationException {
 		return MediaDAO.callSaveMedia(media);
 	}
 
@@ -30,7 +30,7 @@ public class MediaService {
 		return MediaDAO.getMediaById(mediaId);
 	}
 
-	public static List<Media> getMediaContentGroupId(Integer contentGroupId)
+	public static List<Media> getMediaByContentGroupId(Integer contentGroupId)
 			throws SQLException, ReflectiveOperationException {
 		return MediaDAO.getMediaContentGroupId(contentGroupId);
 	}
@@ -49,7 +49,7 @@ public class MediaService {
 			throws SQLException, ReflectiveOperationException {
 		return MediaDAO.getMediaByNameRegex(name);
 	}
-	
+
 	public static List<Media> getMediaByPathRegex(String path)
 			throws SQLException, ReflectiveOperationException {
 		return MediaDAO.getMediaByPathRegex(path);

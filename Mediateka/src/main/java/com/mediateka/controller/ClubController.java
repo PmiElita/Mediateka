@@ -77,6 +77,12 @@ public class ClubController {
 
 		try {
 			FormValidator.validate(form);
+			if (request.getSession().getAttribute("userId") == null)
+				throw new WrongInputException("No userId in session");
+			else if (getUserById(
+					Integer.parseInt(request.getSession()
+							.getAttribute("userId").toString())).getRole() != Role.USER)
+				throw new WrongInputException("Admins are not allowed here");
 		} catch (WrongInputException e) {
 			logger.warn("failed to validate registration form", e);
 			response.sendError(404);
@@ -358,14 +364,14 @@ public class ClubController {
 			HttpServletResponse response) throws ReflectiveOperationException,
 			SQLException, ServletException, IOException {
 		int clubId = 0;
-		 Integer audioId = Integer.parseInt(request.getParameter("audioId"));
-		 ContentGroup contentGroup = ContentGroupService
-		 .getContentGroupById(audioId);
+		Integer audioId = Integer.parseInt(request.getParameter("audioId"));
+		ContentGroup contentGroup = ContentGroupService
+				.getContentGroupById(audioId);
 		List<ContentGroup> audios = new ArrayList<ContentGroup>();
 		// audios.add(contentGroup);
-		 if (contentGroup.getClubId() != null) {
-		 clubId = contentGroup.getClubId();
-		 }
+		if (contentGroup.getClubId() != null) {
+			clubId = contentGroup.getClubId();
+		}
 		audios = ContentGroupService.getContentGroupByClubIdAndStateAndType(
 				clubId, State.ACTIVE, ContentGroupType.AUDIO);
 		CreateContent.setContent(request, response, audios);
@@ -513,26 +519,28 @@ public class ClubController {
 			request.removeAttribute("message");
 		}
 	}
+
 	private static Map<Integer, List<CommentUserCardPair>> getComments(
 			Integer clubId) throws SQLException, ReflectiveOperationException {
 		Map<Integer, List<CommentUserCardPair>> result = new HashMap<Integer, List<CommentUserCardPair>>();
 		List<ContentGroup> records = ContentGroupService
 				.getContentGroupByClubIdAndStateAndType(clubId, State.ACTIVE,
 						ContentGroupType.RECORD);
-		if (records!=null){
-		for (ContentGroup record : records) {
-			List<CommentUserCardPair> commentUserCardPairs = new ArrayList<CommentUserCardPair>();
-		    List<ContentGroup> comments = ContentGroupService
-					.getContentGroupByParentId(record.getId());
-		    if (comments!=null){
-			for (ContentGroup comment : comments) {
-				commentUserCardPairs.add(new CommentUserCardPair(comment,
-						UserCardService.getUserCardByUserId(comment
-								.getCreatorId())));
+		if (records != null) {
+			for (ContentGroup record : records) {
+				List<CommentUserCardPair> commentUserCardPairs = new ArrayList<CommentUserCardPair>();
+				List<ContentGroup> comments = ContentGroupService
+						.getContentGroupByParentId(record.getId());
+				if (comments != null) {
+					for (ContentGroup comment : comments) {
+						commentUserCardPairs.add(new CommentUserCardPair(
+								comment, UserCardService
+										.getUserCardByUserId(comment
+												.getCreatorId())));
+					}
+				}
+				result.put(record.getId(), commentUserCardPairs);
 			}
-		    }
-			result.put(record.getId(),commentUserCardPairs);
-		}
 		}
 		return result;
 	}

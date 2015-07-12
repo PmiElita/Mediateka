@@ -60,7 +60,7 @@ public class EventService {
 			ReflectiveOperationException {
 		return EventDAO.callSaveEvent(event);
 	}
-	
+
 	public static Integer getNumberOfRequestedEvents() throws SQLException {
 		return EventDAO.getNumberOfRequestedEvents();
 	}

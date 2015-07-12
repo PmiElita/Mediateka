@@ -12,6 +12,7 @@
 
 <head>
 <jsp:include page="crop/crop.jsp" />
+<jsp:include page="../club/club_create_event.jsp" />
 
 <style>
 .image-cover-t {
@@ -73,14 +74,14 @@
 							<c:choose>
 								<c:when test="${!(creator==null)}">
 									<c:if test="${club.state eq State.ACTIVE}">
-										<div class="col s3" id="1">
+										<div class="col s4" id="1">
 											<a class="btn" href="creatorBlockClub?clubId=${club.id}"
-												style="width: 15em"><fmt:message bundle="${msg}"
+												style="width: 20em"><fmt:message bundle="${msg}"
 													key="block_club" /></a>
 										</div>
-										<div class="col s3" id="2">
+										<div class="col s4" id="2">
 											<a class="btn" onclick="deleteClubAjax(${club.id})"
-												style="width: 15em"><fmt:message bundle="${msg}"
+												style="width: 20em"><fmt:message bundle="${msg}"
 													key="delete_club" /></a>
 										</div>
 										<div class="col s12" id="3" hidden>
@@ -88,32 +89,38 @@
 												style="width: 30em; color: red"><fmt:message
 													bundle="${msg}" key="restore_club" /></a>
 										</div>
-										<div class="col s3" id="4">
+										<div class="col s4" id="4">
 											<a class="btn" href="editClub?clubId=${club.id}"
-												style="width: 15em"><fmt:message bundle="${msg}"
+												style="width: 20em"><fmt:message bundle="${msg}"
 													key="edit_club" /></a>
 										</div>
-										<div class="col s3" id="5">
+										<br>
+										<div class="col s4" id="5">
 											<a class="btn" href="ClubUsers?clubId=${club.id}"
-												style="width: 15em"><fmt:message bundle="${msg}"
+												style="width: 20em"><fmt:message bundle="${msg}"
 													key="look_participants" /></a>
 										</div>
 										<div class="col s4" id="6">
+											<a href="" data-target="modal18" class="btn modal-trigger"
+												style="width: 20em"><fmt:message bundle="${msg}"
+													key="create_event" /></a>
+										</div>
+										<div class="col s4" id="7">
 											<a href="" data-target="modal_send_email_to_club_members"
-												class="modal-trigger waves-effect btn"> <fmt:message
-													bundle="${msg}" key="send_email_to_club_members" />
+												class="modal-trigger btn"> <fmt:message bundle="${msg}"
+													key="send_email_to_club_members" />
 											</a>
 										</div>
 									</c:if>
 									<c:if test="${club.state eq State.BLOCKED}">
-										<div class="col s3" id="1">
+										<div class="col s4" id="1">
 											<a class="btn" href="creatorUnblockClub?clubId=${club.id}"
-												style="width: 15em"><fmt:message bundle="${msg}"
+												style="width: 20em"><fmt:message bundle="${msg}"
 													key="unblock_club" /></a>
 										</div>
-										<div class="col s3" id="2">
+										<div class="col s4" id="2">
 											<a class="btn" onclick="deleteClubAjax(${club.id})"
-												style="width: 15em"><fmt:message bundle="${msg}"
+												style="width: 20em"><fmt:message bundle="${msg}"
 													key="delete_club" /></a>
 										</div>
 										<div class="col s12" id="3">
@@ -121,15 +128,27 @@
 												style="width: 30em; color: red"><fmt:message
 													bundle="${msg}" key="restore_club" /></a>
 										</div>
-										<div class="col s3" id="4">
+										<div class="col s4" id="4">
 											<a class="btn" href="editClub?clubId=${club.id}"
-												style="width: 15em"><fmt:message bundle="${msg}"
+												style="width: 20em"><fmt:message bundle="${msg}"
 													key="edit_club" /></a>
 										</div>
-										<div class="col s3" id="5">
+										<br>
+										<div class="col s4" id="5">
 											<a class="btn" href="ClubUsers?clubId=${club.id}"
-												style="width: 15em"><fmt:message bundle="${msg}"
+												style="width: 20em"><fmt:message bundle="${msg}"
 													key="look_participants" /></a>
+										</div>
+										<div class="col s4" id="6">
+											<a href="" data-target="modal18" class="btn modal-trigger"
+												style="width: 20em"><fmt:message bundle="${msg}"
+													key="create_event" /></a>
+											<div class="col s4" id="7">
+												<a href="" data-target="modal_send_email_to_club_members"
+													class="modal-trigger btn"> <fmt:message bundle="${msg}"
+														key="send_email_to_club_members" />
+												</a>
+											</div>
 										</div>
 									</c:if>
 								</c:when>
@@ -287,6 +306,8 @@
 				document.getElementById(2).hidden = true;
 				document.getElementById(4).hidden = true;
 				document.getElementById(5).hidden = true;
+				document.getElementById(6).hidden = true;
+				document.getElementById(7).hidden = true;
 				document.getElementById(3).hidden = false;
 			}
 		});
@@ -305,6 +326,8 @@
 				document.getElementById(2).hidden = false;
 				document.getElementById(4).hidden = false;
 				document.getElementById(5).hidden = false;
+				document.getElementById(6).hidden = false;
+				document.getElementById(7).hidden = false;
 				document.getElementById(3).hidden = true;
 			}
 		});

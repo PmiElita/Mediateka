@@ -48,46 +48,63 @@
 
 								<div class="row">
 									<div class="col s6">
-										<h6>1 photo:</h6>
-										<img src="${imagePath1}" style="width: 20em; height: 20em" />
+										<img src="${imagePath1}" style="width: 20em; height: 20em"
+											id="photo1" />
+										<div class="file-field input-field">
+											<input class="file-path validate" type="hidden" />
+											<div class="btn">
+												<span>Change image</span><input type="file" name="image"
+													onchange="readURL(this,1);" />
+											</div>
+										</div>
 									</div>
 									<div class="col s6">
-										<p style="color: black; padding-top: 5em;">Ua sign to
-											picture</p>
-										<input type="text" name="photo_1_ua">
-										<p style="color: black; padding-top: 5em;">En sign to
-											picture</p>
-										<input type="text" name="photo_1_en">
-									</div>
-								</div>
-
-								<div class="row">
-									<div class="col s6">
-										<h6>2 photo:</h6>
-										<img src="${imagePath2}" style="width: 20em; height: 20em" />
-									</div>
-									<div class="col s6">
-										<p style="color: black; padding-top: 5em;">Ua sign to
-											picture</p>
-										<input type="text" name="photo_2_ua">
-										<p style="color: black; padding-top: 5em;">En sign to
-											picture</p>
-										<input type="text" name="photo_2_en">
+										<p style="color: black; padding-top: 5em;">Ua sign</p>
+										<input type="text" name="ua1" value="${ua1}">
+										<p style="color: black; padding-top: 5em;">En sign</p>
+										<input type="text" name="en1" value="${en1}">
 									</div>
 								</div>
 
+								<br>
 								<div class="row">
 									<div class="col s6">
-										<h6>3 photo:</h6>
-										<img src="${imagePath3}" style="width: 20em; height: 20em" />
+										<img src="${imagePath2}" style="width: 20em; height: 20em"
+											id="photo2" />
+										<div class="file-field input-field">
+											<input class="file-path validate" type="hidden" />
+											<div class="btn">
+												<span>Change image</span><input type="file" name="image"
+													onchange="readURL(this,2);" />
+											</div>
+										</div>
 									</div>
 									<div class="col s6">
-										<p style="color: black; padding-top: 5em;">Ua sign to
-											picture</p>
-										<input type="text" name="photo_3_ua">
-										<p style="color: black; padding-top: 5em;">En sign to
-											picture</p>
-										<input type="text" name="photo_3_en">
+										<p style="color: black; padding-top: 5em;">Ua sign</p>
+										<input type="text" name="ua2" value="${ua2}">
+										<p style="color: black; padding-top: 5em;">En sign</p>
+										<input type="text" name="en2" value="${en2}">
+									</div>
+								</div>
+
+								<br>
+								<div class="row">
+									<div class="col s6">
+										<img src="${imagePath3}" style="width: 20em; height: 20em"
+											id="photo3" />
+										<div class="file-field input-field">
+											<input class="file-path validate" type="hidden" />
+											<div class="btn">
+												<span>Change image</span><input type="file" name="image"
+													onchange="readURL(this,3);" />
+											</div>
+										</div>
+									</div>
+									<div class="col s6">
+										<p style="color: black; padding-top: 5em;">Ua sign</p>
+										<input type="text" name="ua3" value="${ua3}">
+										<p style="color: black; padding-top: 5em;">En sign</p>
+										<input type="text" name="en3" value="${en3}">
 									</div>
 								</div>
 
@@ -100,5 +117,16 @@
 	</div>
 
 	<jsp:include page="../general/footer.jsp" />
+	<script>
+		function readURL(input, id) {
+			if (input.files && input.files[0]) {
+				var reader = new FileReader();
+				reader.onload = function(e) {
+					$('#photo' + id).attr('src', e.target.result);
+				};
+				reader.readAsDataURL(input.files[0]);
+			}
+		}
+	</script>
 </body>
 </html>

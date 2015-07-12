@@ -15,6 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -238,7 +239,9 @@ public class UserController {
 			request.setAttribute("allEventsAvas", avas);
 			request.setAttribute("professions",
 					ProfessionService.getProfessionAll());
-			request.getRequestDispatcher("pages/events/events.jsp").forward(request, response);
+			request.getRequestDispatcher("pages/events/events.jsp").forward(
+					request, response);
+			;
 			request.removeAttribute("allEvents");
 			request.removeAttribute("all|EventsAvas");
 		}
@@ -402,7 +405,7 @@ public class UserController {
 		case USER:
 
 			List<FormRecord> formRecords = FormRecordService
-					.getFormRecordsByUserIdLimited(userId, 0, 5);
+					.getFormRecordsByUserIdLimited(userId, 0, 10);
 			if (formRecords != null) {
 
 				Collections.sort(formRecords, new FormRecordsByDateFrom());
@@ -450,7 +453,16 @@ public class UserController {
 			List<ContentGroup> infos = ContentGroupService
 					.getContentGroupByType(ContentGroupType.INFO);
 			int infoId = infos.get(0).getId();
-			List<Media> media = MediaService.getMediaContentGroupId(infoId);
+			List<ContentGroup> all = ContentGroupService
+					.getContentGroupByParentId(infoId);
+			List<Media> media = new ArrayList<>();
+			List<String[]> photoTexts = new ArrayList<>();
+			System.out.println(all);
+			for (ContentGroup content : all) {
+				media.add(MediaService
+						.getMediaByContentGroupId(content.getId()).get(0));
+				photoTexts.add(content.getText().split("<info!split!info>"));
+			}
 			List<String> imagePath = new ArrayList<>();
 			for (Media image : media)
 				imagePath.add(image.getPath().replace("\\", "/"));
@@ -459,6 +471,12 @@ public class UserController {
 			request.setAttribute("imagePath1", imagePath.get(0));
 			request.setAttribute("imagePath2", imagePath.get(1));
 			request.setAttribute("imagePath3", imagePath.get(2));
+			request.setAttribute("ua1", photoTexts.get(0)[0]);
+			request.setAttribute("en1", photoTexts.get(0)[1]);
+			request.setAttribute("ua2", photoTexts.get(1)[0]);
+			request.setAttribute("en2", photoTexts.get(1)[1]);
+			request.setAttribute("ua3", photoTexts.get(2)[0]);
+			request.setAttribute("en3", photoTexts.get(2)[1]);
 			request.setAttribute("text1", textInfo[0]);
 			request.setAttribute("text2", textInfo[1]);
 			if (request.getSession().getAttribute("goody") != null) {
@@ -473,7 +491,12 @@ public class UserController {
 			request.removeAttribute("imagePath3");
 			request.removeAttribute("text1");
 			request.removeAttribute("text2");
-
+			request.removeAttribute("ua1");
+			request.removeAttribute("ua2");
+			request.removeAttribute("ua3");
+			request.removeAttribute("en1");
+			request.removeAttribute("en2");
+			request.removeAttribute("en3");
 		} catch (WrongInputException e) {
 			logger.warn(e.getMessage());
 			response.sendError(404);
@@ -486,18 +509,47 @@ public class UserController {
 			ReflectiveOperationException, SQLException {
 		FileLoader fileLoader = new FileLoader();
 		fileLoader.loadFile(request);
+		Map<String, String> map = fileLoader.getParameterMap();
 		List<ContentGroup> infos = ContentGroupService
 				.getContentGroupByType(ContentGroupType.INFO);
-		String[] textInfo = infos.get(0).getText().split("<info!split!info>");
-		String newTextUa = fileLoader.getParameterMap().get("infoText1");
-		String newTextEn = fileLoader.getParameterMap().get("infoText2");
-		if (newTextUa == null || newTextUa.equals(""))
-			newTextUa = textInfo[0];
-		if (newTextEn == null || newTextEn.equals(""))
-			newTextEn = textInfo[0];
 		ContentGroup info = infos.get(0);
-		info.setText(newTextUa + "<info!split!info>" + newTextEn);
+		String textUa = whiteSpaceReturner(map, "infoText1");
+		String textEn = whiteSpaceReturner(map, "infoText2");
+		info.setText(textUa + "<info!split!info>" + textEn);
 		ContentGroupService.updateContentGroup(info);
+		List<ContentGroup> all = ContentGroupService
+				.getContentGroupByParentId(info.getId());
+		String ua1 = whiteSpaceReturner(map, "ua1");
+		String ua2 = whiteSpaceReturner(map, "ua2");
+		String ua3 = whiteSpaceReturner(map, "ua3");
+		String en1 = whiteSpaceReturner(map, "en1");
+		String en2 = whiteSpaceReturner(map, "en2");
+		String en3 = whiteSpaceReturner(map, "en3");
+		all.get(0).setText(ua1 + "<info!split!info>" + en1);
+		all.get(1).setText(ua2 + "<info!split!info>" + en2);
+		all.get(2).setText(ua3 + "<info!split!info>" + en3);
+		for (ContentGroup content : all)
+			ContentGroupService.updateContentGroup(content);
+		List<Media> media = new ArrayList<>();
+		for (ContentGroup content : all)
+			media.add(MediaService.getMediaByContentGroupId(content.getId())
+					.get(0));
+		try {
+			int i = 0;
+			for (Media picture : media) {
+				if (fileLoader.getAllFilePathes() != null)
+					if (fileLoader.getAllRelativePathes().size() > i)
+						picture.setPath(fileLoader.getAllRelativePathes()
+								.get(i));
+				i++;
+				MediaService.updateMedia(picture);
+			}
+		} catch (WrongInputException e) {
+			logger.warn(e);
+			response.sendError(404);
+			return;
+		}
+
 		request.getSession().setAttribute("goody", "not_null");
 		response.sendRedirect("cabinet");
 	}
@@ -527,6 +579,16 @@ public class UserController {
 		media = MediaService.callSaveMedia(media);
 		user.setAvaId(media.getId());
 		UserService.updateUser(user);
+	}
+
+	private static String whiteSpaceReturner(Map<String, String> map,
+			String attributeName) {
+		String result;
+		if (map.get(attributeName) == null || map.get(attributeName).equals(""))
+			result = " ";
+		else
+			result = map.get(attributeName);
+		return result;
 	}
 
 }

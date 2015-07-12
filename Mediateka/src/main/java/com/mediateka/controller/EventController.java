@@ -152,7 +152,7 @@ public class EventController {
 						getMediaById(event.getAvaId()).getPath().replace("\\",
 								"/"));
 				request.setAttribute("isSigned", isSigned);
-				
+
 				request.setAttribute("professions",
 						ProfessionService.getProfessionAll());
 
@@ -212,6 +212,33 @@ public class EventController {
 		ObjectFiller.fill(form, request);
 
 		try {
+			if (request.getSession().getAttribute("userId") == null)
+				throw new WrongInputException("No userId in session");
+			else if (getUserById(
+					Integer.parseInt(request.getSession()
+							.getAttribute("userId").toString())).getRole() != Role.USER)
+				throw new WrongInputException("Admins are not allowed here");
+			int userId = Integer.parseInt(request.getSession()
+					.getAttribute("userId").toString());
+			int clubId = -1;
+			if (request.getParameter("clubId") != null) {
+				try {
+					clubId = Integer.parseInt(request.getParameter("clubId")
+							.toString());
+				} catch (NumberFormatException e) {
+					throw new WrongInputException(
+							"Wrong format of clubId in request");
+				}
+				if (ClubService.getClubById(clubId) == null)
+					throw new WrongInputException(
+							"There is no club with such id");
+				ClubEventMember member = getClubEventMemberByUserIdAndClubId(
+						userId, clubId);
+				if (member == null || member.getState() != State.ACTIVE
+						|| member.getType() != ClubEventMemberType.CREATOR)
+					throw new WrongInputException(
+							"This user isn't this clubs active creator");
+			}
 			FormValidator.validate(form);
 
 			Timestamp currentTime = new Timestamp(
@@ -239,9 +266,8 @@ public class EventController {
 			event.setState(State.REQUESTED);
 			event.setDateFrom(dateFrom);
 			event.setDateTill(dateTill);
-			if (request.getSession().getAttribute("club_id") != null)
-				event.setClubId(Integer.parseInt(request.getSession()
-						.getAttribute("club_id").toString()));
+			if (clubId != -1)
+				event.setClubId(clubId);
 			event.setAvaId(1);
 			event = callSaveEvent(event);
 
@@ -275,6 +301,33 @@ public class EventController {
 		ObjectFiller.fill(form, request);
 
 		try {
+			if (request.getSession().getAttribute("userId") == null)
+				throw new WrongInputException("No userId in session");
+			else if (getUserById(
+					Integer.parseInt(request.getSession()
+							.getAttribute("userId").toString())).getRole() != Role.USER)
+				throw new WrongInputException("Admins are not allowed here");
+			int userId = Integer.parseInt(request.getSession()
+					.getAttribute("userId").toString());
+			int clubId = -1;
+			if (request.getParameter("clubId") != null) {
+				try {
+					clubId = Integer.parseInt(request.getParameter("clubId")
+							.toString());
+				} catch (NumberFormatException e) {
+					throw new WrongInputException(
+							"Wrong format of clubId in request");
+				}
+				if (ClubService.getClubById(clubId) == null)
+					throw new WrongInputException(
+							"There is no club with such id");
+				ClubEventMember member = getClubEventMemberByUserIdAndClubId(
+						userId, clubId);
+				if (member == null || member.getState() != State.ACTIVE
+						|| member.getType() != ClubEventMemberType.CREATOR)
+					throw new WrongInputException(
+							"This user isn't this clubs active creator");
+			}
 			FormValidator.validate(form);
 
 			Timestamp currentTime = new Timestamp(
@@ -309,9 +362,8 @@ public class EventController {
 			event.setState(State.REQUESTED);
 			event.setDateFrom(dateFrom);
 			event.setDateTill(dateTill);
-			if (request.getSession().getAttribute("club_id") != null)
-				event.setClubId(Integer.parseInt(request.getSession()
-						.getAttribute("club_id").toString()));
+			if (clubId != -1)
+				event.setClubId(clubId);
 			event.setAvaId(1);
 			event = callSaveEvent(event);
 
