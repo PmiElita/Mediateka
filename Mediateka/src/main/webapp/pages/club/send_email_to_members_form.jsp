@@ -14,8 +14,6 @@
 
 	<form onsubmit="return false;"></form>
 	<div>
-		<input type="text" id="clubId" name="clubId" required
-			form="createClub" value="${club.id}" hidden>
 
 		<div class="row">
 			<div class="input-field col s12">
@@ -51,7 +49,7 @@
 		alert('ololo');
 
 		var requestBody = {
-			'clubId' : document.getElementById('clubId').value,
+			'clubId' : document.getElementById('clubId').innerHTML,
 			'subject' : document.getElementById('emailSubject').value,
 			'message' : document.getElementById('emailBody').value
 		}
