@@ -55,29 +55,30 @@
 									varStatus="status">
 									<li id="userNo${current.id}">
 										<div class="collapsible-header">
-											<a class="button" href="user?userId=${current.id}"> <c:out
-													value="${current.firstName} ${current.lastName} ${current.middleName}" /></a>
+											<c:out
+												value="${current.firstName} ${current.lastName} ${current.middleName}" />
 										</div> <c:if test="${!(creator==null)}">
-										<c:if test="${!(userId==current.id)}">
-											<div class="collapsible-body">
-												<p>
+											<c:if test="${!(userId==current.id)}">
+												<div class="collapsible-body">
+													<p>
 
-													<button class="btn waves-effect orange titler" type="submit"
-														name="action" style="margin-bottom: 3.5em"
-														onclick="block(${current.id},${eventId});">
-														<fmt:message bundle="${msg}" key="block" />
-														<i class="mdi-content-send right"></i>
-													</button>
+														<button class="btn waves-effect orange titler"
+															type="submit" name="action" style="margin-bottom: 3.5em"
+															onclick="block(${current.id},${eventId});">
+															<fmt:message bundle="${msg}" key="block" />
+															<i class="mdi-content-send right"></i>
+														</button>
 
-													<button class="btn waves-effect red titler" type="submit"
-														name="action" style="margin-bottom: 3.5em"
-														onclick="deleted(${current.id},${eventId});">
-														<fmt:message bundle="${msg}" key="delete" />
-														<i class="mdi-content-send right"></i>
-													</button>
+														<button class="btn waves-effect red titler" type="submit"
+															name="action" style="margin-bottom: 3.5em"
+															onclick="deleted(${current.id},${eventId});">
+															<fmt:message bundle="${msg}" key="delete" />
+															<i class="mdi-content-send right"></i>
+														</button>
 
-												</p>
-											</div></c:if>
+													</p>
+												</div>
+											</c:if>
 										</c:if>
 									</li>
 								</c:forEach>
@@ -102,14 +103,14 @@
 										varStatus="status">
 										<li id="userNo${current.id}">
 											<div class="collapsible-header">
-												<a class="button" href="user?userId=${current.id}"> <c:out
-														value="${current.firstName} ${current.lastName} ${current.middleName}" /></a>
+												<c:out
+													value="${current.firstName} ${current.lastName} ${current.middleName}" />
 											</div> <c:if test="${!(creator==null)}">
 												<div class="collapsible-body">
 													<p>
 
-														<button class="btn waves-effect green titler" type="submit"
-															name="action" style="margin-bottom: 3.5em"
+														<button class="btn waves-effect green titler"
+															type="submit" name="action" style="margin-bottom: 3.5em"
 															onclick="activate(${current.id},${eventId});">
 															<fmt:message bundle="${msg}" key="activate" />
 															<i class="mdi-content-send right"></i>
