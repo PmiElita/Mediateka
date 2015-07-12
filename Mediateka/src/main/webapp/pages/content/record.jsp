@@ -28,11 +28,11 @@
 <script src="js/record.js"></script>
 <div class="collapsible-header" style="font-size: 2em">+</div>
 <div class="collapsible-body">
-	<div id="record_form"><jsp:include
-			page="record_form.jsp" /></div>	
+	<div id="record_form"><jsp:include page="record_form.jsp" /></div>
 </div>
 
 <!-- <form id="clubForm" action="record" method="post"></form> -->
 <div id="record_central">
-<div id="recordList" style="margin-top:0em"><jsp:include
-			page="record_central.jsp" /></div></div>
+	<div id="recordList" style="margin-top: 0em"><jsp:include
+			page="record_central.jsp"></jsp:include></div>
+</div>

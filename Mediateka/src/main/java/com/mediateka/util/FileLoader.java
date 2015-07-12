@@ -183,8 +183,8 @@ public class FileLoader {
 
 				if (item.getSize() > 0 && !item.isFormField()) {
 
-					// mediaTypes.add(MediaType.valueOf(item.getFieldName()
-					// .toUpperCase()));
+					 mediaTypes.add(MediaType.valueOf(item.getFieldName()
+					 .toUpperCase()));
 					String fileName = SecurityStringGenerator
 							.generateString(16);
 					defaultFileNames.add(new File(item.getName()).getName());

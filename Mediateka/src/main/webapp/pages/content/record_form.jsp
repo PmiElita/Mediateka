@@ -82,8 +82,8 @@
 							<div class="col s10" style="margin-top: 2em">
 								<div class="input-field image-cover-t">
 									<i class="small mdi-editor-insert-link prefix"></i>
-									<textarea class="materialize-textarea"
-										name="contentFromInternet" id="contentFromInternet"></textarea>
+									<textarea id="likedTextarea" class="materialize-textarea"
+										name="contentFromInternet"></textarea>
 									<label for="text" style="font-size: 1.5em" style="color:black;">
 										<fmt:message bundle="${msg }" key="insert_video_link" />
 									</label>
@@ -92,7 +92,7 @@
 						</div>
 					</div>
 					<div class="modal-footer">
-						<a href="#!"
+						<a onclick="linkedVideoForm();" href="#!"
 							class=" modal-action modal-close waves-effect waves-green btn-flat">Ok</a>
 					</div>
 				</div>

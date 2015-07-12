@@ -13,14 +13,14 @@ function deleteRecord(recordId) {
 			'recordId' : recordId
 		},
 		complete : function(data) {
-			//document.getElementById('recordId' + recordId).innerHTML = "";
+			// document.getElementById('recordId' + recordId).innerHTML = "";
 			document.getElementById('recordId' + recordId).hidden = true;
 			document.getElementById('restore' + recordId).hidden = false;
 		}
 	});
 }
 
-function restoreRecord(recordId){
+function restoreRecord(recordId) {
 	$.ajax({
 		type : 'get',
 		url : 'restoreRecord',
@@ -29,7 +29,7 @@ function restoreRecord(recordId){
 			'recordId' : recordId
 		},
 		complete : function(data) {
-			//document.getElementById('recordId' + recordId).innerHTML = "";
+			// document.getElementById('recordId' + recordId).innerHTML = "";
 			document.getElementById('recordId' + recordId).hidden = false;
 			document.getElementById('restore' + recordId).hidden = true;
 		}
@@ -76,64 +76,74 @@ function handleFileSelect(e) {
 				selDiv = $("#selectedFiles");
 				if (f.type.match("image.*")) {
 					storedImages.push(f);
-					//selDiv = $("#selectedImages");
+					// selDiv = $("#selectedImages");
 
 					var reader = new FileReader();
 					reader.onload = function(e) {
-					
-						var html = "<div id='"+f.name+"' class='col s3 center' style='height:130px'><img src=\""
+
+						var html = "<div id='"
+								+ f.name
+								+ "' class='col s3 center' style='height:130px'><img src=\""
 								+ e.target.result
 								+ "\" data-file='"
 								+ f.name
 								+ "'height='105' class='selFile toDelete' title='Click to remove'></div>";
-			
+
 						selDiv.prepend(html);
-                        
+
 					}
 					reader.readAsDataURL(f);
 				} else if (f.type.match("video.*")) {
 					storedVideos.push(f);
-				//	selDiv = $("#selectedVideos");
+					// selDiv = $("#selectedVideos");
 
 					var reader = new FileReader();
-					
+
 					reader.onloadend = function(e) {
-/*					
-						var html = "<div><video width = '400' class='selFile' title='Click to remove' controls><source src=\""
-								+ e.target.result + "\"></video></div>";
-					
-						selDiv.append(html);*/
-						
-						var html = "<div id='"+f.name+"' class='col s3 center' style='height:130px'><img src=\""
-						+ "images/photo-video-start-icon.png"
-						+ "\" data-file='"
-						+ f.name
-						+ "'height='105' class='selFile toDelete' title='Click to remove'>"+ f.name +"</div>";
+						/*
+						 * var html = "<div><video width = '400'
+						 * class='selFile' title='Click to remove' controls><source
+						 * src=\"" + e.target.result + "\"></video></div>";
+						 * 
+						 * selDiv.append(html);
+						 */
+
+						var html = "<div id='"
+								+ f.name
+								+ "' class='col s3 center' style='height:130px'><img src=\""
+								+ "images/photo-video-start-icon.png"
+								+ "\" data-file='"
+								+ f.name
+								+ "'height='105' class='selFile toDelete' title='Click to remove'>"
+								+ f.name + "</div>";
 						selDiv.prepend(html);
 					}
-				
-					
+
 					reader.readAsDataURL(f);
 				} else if (f.type.match("audio.*")) {
 					storedAudios.push(f);
 
-				//	selDiv = $("#selectedAudios");
+					// selDiv = $("#selectedAudios");
 
 					var reader = new FileReader();
 					reader.onload = function(e) {
 
-//						var html = "<div><audio class='selFile' title='Click to remove' controls><source src=\""
-//								+ e.target.result + "\"></audio></div>";
-						
-						var html = "<div id='"+f.name+"' class='col s3 center' style='height:130px'><img src=\""
-							+ "images/AudioIcon2.png"
-							+ "\" data-file='"
-							+ f.name
-							+ "'height='105' class='selFile toDelete' title='Click to remove'>" + f.name + "</div>";
+						// var html = "<div><audio class='selFile' title='Click
+						// to remove' controls><source src=\""
+						// + e.target.result + "\"></audio></div>";
+
+						var html = "<div id='"
+								+ f.name
+								+ "' class='col s3 center' style='height:130px'><img src=\""
+								+ "images/AudioIcon2.png"
+								+ "\" data-file='"
+								+ f.name
+								+ "'height='105' class='selFile toDelete' title='Click to remove'>"
+								+ f.name + "</div>";
 						selDiv.prepend(html);
 
 					}
-					
+
 					reader.readAsDataURL(f);
 				} else {
 					return;
@@ -155,8 +165,9 @@ function handleForm(e) {
 		data.append('eventId', document.getElementById('eventId').innerHTML
 				.toString());
 	}
-	if (document.getElementById('contentFromInternet') != null) {
-		data.append('internetContent', document.getElementById('contentFromInternet').value);
+	if (document.getElementById('likedTextarea') != null) {
+		data.append('internetContent', document
+				.getElementById('likedTextarea').value);
 	}
 	for (var i = 0, len = storedImages.length; i < len; i++) {
 		data.append('image', storedImages[i]);
@@ -168,28 +179,32 @@ function handleForm(e) {
 		data.append('audio', storedAudios[i]);
 	}
 	if ((document.getElementById('text').value == "")
-			&& (storedImages.length == 0) && (storedAudios.length == 0)
-			&& (storedVideos.length == 0) && (document.getElementById('contentFromInternet').value == "")) {
+			&& (storedImages.length == 0)
+			&& (storedAudios.length == 0)
+			&& (storedVideos.length == 0)
+			&& (document.getElementById('likedTextarea').value
+					.indexOf("https://www.youtube.com/watch?v=") < 0)
+			&& (document.getElementById('likedTextarea').value
+					.indexOf("https://vimeo.com/") < 0)) {
 		return;
 	}
 
 	var xhr = new XMLHttpRequest();
 	xhr.upload.addEventListener("progress", function(evt) {
-	      if (evt.lengthComputable) {
-	        var percentComplete = evt.loaded / evt.total;
-	        percentComplete = parseInt(percentComplete * 100);
-	        document.getElementById("progress").hidden = false;
-	        if (percentComplete === 100) {
-	        	document.getElementById("progress").hidden = true;
-	        	alert(percentComplete);
-	        }
+		if (evt.lengthComputable) {
+			var percentComplete = evt.loaded / evt.total;
+			percentComplete = parseInt(percentComplete * 100);
+			document.getElementById("progress").hidden = false;
+			if (percentComplete === 100) {
+				document.getElementById("progress").hidden = true;
+			}
 
-	      }
-	    }, false);
+		}
+	}, false);
 	xhr.open('POST', 'loadRecord', true);
 
 	xhr.onload = function(e, data) {
-		
+
 		if (this.status == 200) {
 			document.getElementById("recordForm").reset();
 			document.getElementById("selectedImages").innerHTML = "";
@@ -211,7 +226,7 @@ function handleForm(e) {
 							+ "&index="
 							+ document.getElementById("index").textContent);
 
-			Materialize.toast(' files uploaded.',2000);
+			Materialize.toast(' files uploaded.', 2000);
 		}
 	}
 
@@ -220,12 +235,20 @@ function handleForm(e) {
 }
 
 function removeFile(e) {
+	alert(this.id);
+	if (this.id == "link") {
+		var name = new String(this.name);
+		document.getElementById("likedTextarea").value = document
+				.getElementById("likedTextarea").value.replace(name, "");
+		document.getElementById(this.name).remove();
+		return;
+	}
 	var file = $(this).data("file");
 	document.getElementById(file).remove();
 	for (var i = 0; i < storedImages.length; i++) {
 		if (storedImages[i].name == file) {
 			storedImages.splice(i, 1);
-			
+
 			break;
 		}
 	}
@@ -240,6 +263,28 @@ function removeFile(e) {
 			storedAudios.splice(i, 1);
 			break;
 		}
-	}	
+	}
 	$(this).remove();
+}
+
+function linkedVideoForm() {
+	selDiv = $("#selectedFiles");
+
+	var links = document.getElementById("likedTextarea").value;
+	alert(links);
+	var link = links.match(/\S+/g);
+	for (var i = 0; i < link.length; i++) {
+		if ((link[i].indexOf("https://www.youtube.com/watch?v=") > -1)
+				|| (link[i].indexOf("https://vimeo.com/") > -1)) {
+			var html = "<div id =\""
+					+ link[i]
+					+ "\" class='col s3 center' style='height:130px'><img id='link' name =\""
+					+ link[i]
+					+ "\"src= images/photo-video-start-icon.png height='105' class='selFile toDelete' title='Click to remove'>"
+					+ link[i] + "</div>";
+			selDiv.prepend(html);
+		} else {
+			Materialize.toast('Some links is incorect', 2000);
+		}
+	}
 }
