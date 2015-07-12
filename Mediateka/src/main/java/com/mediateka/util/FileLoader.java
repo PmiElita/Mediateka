@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
@@ -39,6 +40,7 @@ public class FileLoader {
 	private List<String> filePaths = new ArrayList<String>();
 	private HashMap<String, String> parameterMap = new HashMap<String, String>();
 	private List<MediaType> mediaTypes = new ArrayList<MediaType>();
+	private Map<String, String> relativePathseMap = new HashMap<String, String>();
 
 	public boolean loadFile(HttpServletRequest request) throws ServletException {
 		String folderName = "temp";
@@ -219,6 +221,7 @@ public class FileLoader {
 							+ item.getFieldName().toLowerCase() + "s"
 							+ File.separator + fileName + extention;
 					filePaths.add(filePath);
+					relativePathseMap.put(item.getFieldName(), filePath.substring(filePath.indexOf("media\\")));
 					File uploadedFile = new File(filePath);
 					item.write(uploadedFile);
 					isUploaded = true;
@@ -317,6 +320,10 @@ public class FileLoader {
 		}
 		return relativePathes;
 	}
+	
+	public Map<String, String> getAllRelativePathseMap(){
+		return relativePathseMap;
+	}
 
 	public List<String> getAllFilePathes() throws WrongInputException {
 		if (filePaths.size() == 0) {
@@ -324,6 +331,7 @@ public class FileLoader {
 		}
 		return filePaths;
 	}
+		
 
 	public List<String> getAllFileDefaultNames() throws WrongInputException {
 		if (defaultFileNames.size() == 0) {
