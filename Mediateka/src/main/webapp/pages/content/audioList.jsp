@@ -123,9 +123,9 @@ li.playing:before {
 		// Load in the first track
 		var audio = a[0];
 
-		// 		first = $('ol a').attr('data-src');
-		// 		$('ol li').first().addClass('playing');
-		// 		audio.load(first);
+				first = $('ol a').attr('data-src');
+				$('ol li').first().addClass('playing');
+				audio.load(first);
 
 		// Load in a track on click
 		$('ol li').click(function(e) {

@@ -6,7 +6,6 @@
 <fmt:setLocale value="${cookie.lang.value}" />
 <fmt:setBundle basename="translations/content" var="msg" />
 
-
 <form id="recordForm" enctype="multipart/form-data">
 
 
@@ -17,7 +16,8 @@
 		<input type="hidden" name="eventId" id="eventId" value="${eventId }">
 	</c:if>
 
-	<div class="section main-info container z-depth-1" style="width: 100%">
+	<div id="uploadSection" class="section main-info container z-depth-1"
+		style="width: 100%">
 		<div class="row">
 			<div class="row">
 				<div class="col s10" style="margin-top: 2em">
@@ -38,8 +38,12 @@
 				</div>
 			</div>
 
-			<div id="progress"></div>
-			
+			<div id="progress" hidden="true">
+				<div class="progress">
+					<div class="indeterminate"></div>
+				</div>
+			</div>
+
 			<div class="row" style="margin-left: -8em">
 				<div class="file-field input-field col s2 offset-s1"
 					style="margin-left: 18%">
@@ -103,14 +107,12 @@
 				</div>
 			</div>
 			<div class="row" style="margin-top: 5em">
+				<div id="selectedFiles"></div>
 				<div id="selectedImages"></div>
-			</div>
 
-			<div class="row">
 				<div id="selectedVideos"></div>
-			</div>
 
-			<div class="row">
+
 				<div id="selectedAudios"></div>
 			</div>
 		</div>

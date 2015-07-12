@@ -73,27 +73,27 @@ function handleFileSelect(e) {
 	var filesArr = Array.prototype.slice.call(files);
 	filesArr
 			.forEach(function(f) {
-
+				selDiv = $("#selectedFiles");
 				if (f.type.match("image.*")) {
 					storedImages.push(f);
-					selDiv = $("#selectedImages");
+					//selDiv = $("#selectedImages");
 
 					var reader = new FileReader();
 					reader.onload = function(e) {
 					
-						var html = "<div class='col s3 center' style='height:130px'><img src=\""
+						var html = "<div id='"+f.name+"' class='col s3 center' style='height:130px'><img src=\""
 								+ e.target.result
 								+ "\" data-file='"
 								+ f.name
 								+ "'height='105' class='selFile toDelete' title='Click to remove'></div>";
 			
-						selDiv.append(html);
+						selDiv.prepend(html);
                         
 					}
 					reader.readAsDataURL(f);
 				} else if (f.type.match("video.*")) {
 					storedVideos.push(f);
-					selDiv = $("#selectedVideos");
+				//	selDiv = $("#selectedVideos");
 
 					var reader = new FileReader();
 					
@@ -103,7 +103,13 @@ function handleFileSelect(e) {
 								+ e.target.result + "\"></video></div>";
 					
 						selDiv.append(html);*/
-						alert(45);
+						
+						var html = "<div id='"+f.name+"' class='col s3 center' style='height:130px'><img src=\""
+						+ "images/photo-video-start-icon.png"
+						+ "\" data-file='"
+						+ f.name
+						+ "'height='105' class='selFile toDelete' title='Click to remove'>"+ f.name +"</div>";
+						selDiv.prepend(html);
 					}
 				
 					
@@ -111,14 +117,20 @@ function handleFileSelect(e) {
 				} else if (f.type.match("audio.*")) {
 					storedAudios.push(f);
 
-					selDiv = $("#selectedAudios");
+				//	selDiv = $("#selectedAudios");
 
 					var reader = new FileReader();
 					reader.onload = function(e) {
 
-						var html = "<div><audio class='selFile' title='Click to remove' controls><source src=\""
-								+ e.target.result + "\"></audio></div>";
-						selDiv.append(html);
+//						var html = "<div><audio class='selFile' title='Click to remove' controls><source src=\""
+//								+ e.target.result + "\"></audio></div>";
+						
+						var html = "<div id='"+f.name+"' class='col s3 center' style='height:130px'><img src=\""
+							+ "images/AudioIcon2.png"
+							+ "\" data-file='"
+							+ f.name
+							+ "'height='105' class='selFile toDelete' title='Click to remove'>" + f.name + "</div>";
+						selDiv.prepend(html);
 
 					}
 					
@@ -162,9 +174,22 @@ function handleForm(e) {
 	}
 
 	var xhr = new XMLHttpRequest();
+	xhr.upload.addEventListener("progress", function(evt) {
+	      if (evt.lengthComputable) {
+	        var percentComplete = evt.loaded / evt.total;
+	        percentComplete = parseInt(percentComplete * 100);
+	        document.getElementById("progress").hidden = false;
+	        if (percentComplete === 100) {
+	        	document.getElementById("progress").hidden = true;
+	        	alert(percentComplete);
+	        }
+
+	      }
+	    }, false);
 	xhr.open('POST', 'loadRecord', true);
 
 	xhr.onload = function(e, data) {
+		
 		if (this.status == 200) {
 			document.getElementById("recordForm").reset();
 			document.getElementById("selectedImages").innerHTML = "";
@@ -173,6 +198,7 @@ function handleForm(e) {
 			storedAudios = [];
 			document.getElementById("selectedVideos").innerHTML = "";
 			document.getElementById("selectedAudios").innerHTML = "";
+			document.getElementById("selectedFiles").innerHTML = "";
 			var responseJSON = JSON.parse(e.currentTarget.responseText);
 
 			loadIndex = document.getElementById('index').textContent;
@@ -195,9 +221,11 @@ function handleForm(e) {
 
 function removeFile(e) {
 	var file = $(this).data("file");
+	document.getElementById(file).remove();
 	for (var i = 0; i < storedImages.length; i++) {
 		if (storedImages[i].name == file) {
 			storedImages.splice(i, 1);
+			
 			break;
 		}
 	}
@@ -212,6 +240,6 @@ function removeFile(e) {
 			storedAudios.splice(i, 1);
 			break;
 		}
-	}
+	}	
 	$(this).remove();
 }

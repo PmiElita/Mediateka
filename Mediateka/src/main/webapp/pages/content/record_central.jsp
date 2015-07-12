@@ -88,13 +88,14 @@
 					</div>
 				</div>
 
-
+				<c:if test="${record.text ne null and record.text ne ''}">
 				<div class="col s8">
 					<div class="card-title card-panel grey lighten-5 z-depth-1 row"
 						style="margin: 3% 10%;">
 						<div class="valign-wrapper">
 							<div class="col s10">
-								<span class="black-text align left"> <c:out value="${record.text}" />
+								<span class="black-text align left"> <c:out
+										value="${record.text}" />
 								</span>
 							</div>
 
@@ -102,31 +103,32 @@
 						</div>
 					</div>
 				</div>
+				</c:if>
 
 
+				<div class="row">
+					<div class="fotorama" id='gallery${record.id }' data-nav="thumbs"
+						data-width="700" data-maxwidth="100%" data-ratio="16/9"
+						data-allowfullscreen="true" data-nav="thumbs" data-keyboard="true"
+						align="center" data-swipe="true">
+						<c:forEach var="image" items="${imageMap.get(record.id) }">
 
+							<a href='<c:out value="${image.path}"></c:out>'
+								data-thumb='<c:out value="${image.path}"></c:out>'> <img
+								src='<c:out value="${image.path}"></c:out>' data-fit="scaledown">
+							</a>
+						</c:forEach>
+						<c:forEach var="video" items="${videoMap.get(record.id) }">
+							<a href='<c:out value="${video.path}"></c:out>' data-video="true"
+								data-thumb='<c:out value="${posterMap.get(video.id).path }"></c:out>'>
+								<c:if test="${posterMap.get(video.id).path ne null}">
+									<img
+										src='<c:out value="${posterMap.get(video.id).path }"></c:out>'>
+								</c:if>
+							</a>
 
-				<div class="fotorama" id='gallery${record.id }' data-nav="thumbs"
-					data-width="700" data-maxwidth="100%" data-ratio="16/9"
-					data-allowfullscreen="true" data-nav="thumbs" data-keyboard="true"
-					align="center" data-swipe="true">
-					<c:forEach var="image" items="${imageMap.get(record.id) }">
-
-						<a href='<c:out value="${image.path}"></c:out>'
-							data-thumb='<c:out value="${image.path}"></c:out>'> <img
-							src='<c:out value="${image.path}"></c:out>' data-fit="scaledown">
-						</a>
-					</c:forEach>
-					<c:forEach var="video" items="${videoMap.get(record.id) }">
-						<a href='<c:out value="${video.path}"></c:out>' data-video="true"
-							data-thumb='<c:out value="${posterMap.get(video.id).path }"></c:out>'>
-							<c:if test="${posterMap.get(video.id).path ne null}">
-								<img
-									src='<c:out value="${posterMap.get(video.id).path }"></c:out>'>
-							</c:if>
-						</a>
-
-					</c:forEach>
+						</c:forEach>
+					</div>
 				</div>
 				<!-- 				<div class="fotorama " data-width="700" data-maxwidth="100%" -->
 				<!-- 					align="center" data-video="true" data-click="false" -->
@@ -141,27 +143,29 @@
 
 				<%-- 					</c:forEach> --%>
 				<!-- 				</div> -->
-				<c:forEach var="audio" items="${audioMap.get(record.id) }">
-					<div class="row">
-						<div class="col s6 offset-s2">
-							<audio title="<c:out value="${audio.name}"></c:out>" controls
-								style="width: 100%; float: left;">
-								<source src='<c:out value="${audio.path}"></c:out>'>
-							</audio>
+				<div class="row">
+					<c:forEach var="audio" items="${audioMap.get(record.id) }">
+						<div class="row">
+							<div class="col s6 offset-s2">
+								<audio title="<c:out value="${audio.name}"></c:out>" controls
+									style="width: 100%; float: left;">
+									<source src='<c:out value="${audio.path}"></c:out>'>
+								</audio>
+							</div>
+							<div class="col"
+								style="font-family: Trebuchet; margin-top: 0.5%; font-weight: bold;">
+								<c:out value="${audio.name}"></c:out>
+							</div>
+
 						</div>
-						<div class="col"
-							style="font-family: Trebuchet; margin-top: 0.5%; font-weight: bold;">
-							<c:out value="${audio.name}"></c:out>
-						</div>
-
-					</div>
 
 
-				</c:forEach>
+					</c:forEach>
+				</div>
 			</div>
 			<div align="right">
 				<a><span><i onclick="like('1',${record.id});"
-						class="tiny mdi-action-thumb-up waves-effect waves-green "></i></span></a> <span
+						class="tiny mdi-action-thumb-up waves-effect waves-green"></i></span></a> <span
 					id="recordLike${record.id}">${record.like }</span> <a><span><i
 						onclick="like('-1',${record.id});"
 						class="tiny mdi-action-thumb-down  waves-effect waves-red"></i></span></a> <span
