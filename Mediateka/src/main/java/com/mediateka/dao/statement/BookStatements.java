@@ -54,7 +54,7 @@ public class BookStatements {
 	
 	public static final String CALL_GET_BOOKS_BY_REGEXP = "CALL getBooksByRegexp(?)";
 	
-	public static final String SELECT_BOOK_BY_NAME_AND_AUTHOR="SELECT * FROM book WHERE name=? AND author=?";
+	public static final String SELECT_BOOK_BY_NAME_AND_AUTHOR="SELECT * FROM book WHERE name REGEXP ? AND author REGEXP ?";
 
 	public static final String[] SELECT_BOOK_BY_NAME_AND_AUTHOR_ORDER = {"name","author"};
 	

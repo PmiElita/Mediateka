@@ -30,7 +30,7 @@
 
 				${message}
 				<form id="create_form_record" action="CreateFormRecord"
-					method="post" onsubmit="return checkFormRecordValidity();">
+					method="post" onsubmit="return checkFormRecordValidity();" onkeydown=" checkEnterPress(event);">
 
 					<div class="row">
 						<div class="input-field col s6">

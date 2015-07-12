@@ -24,14 +24,14 @@ $(function () {
 	});
 	});
 $(function(){
-	$('#bookId').keypress(function(e){
+	$('#bookId').keydown(function(e){
 		document.getElementById("bookName").value="";
 	});
 });
 
 $(function(){
-	$('#bookName').keypress(function(e){
-		var input =document.getElementById("bookId");
+	$('#bookName').keydown(function(e){
+		document.getElementById("bookId").value = "";
 
 	});
 
@@ -91,3 +91,10 @@ function getSelectedOption(select){
 		}
 	}
 }
+
+function checkEnterPress(event) {
+    var key = event.keyCode || event.charCode;
+
+    if( key == 13 )
+        event.preventDefault();
+};

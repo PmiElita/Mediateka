@@ -20,3 +20,18 @@ function bodyScroll(){
 						
 					
 }
+
+function makeAdmin(button){
+	var userId=button.value;
+	  $.ajax({
+			url:'makeAdmin',
+			type: 'post',
+			dataType: 'json',
+			data: {"userId" : userId},
+		    complete : function(data) {
+		    	if ((data.responseJSON.message.toString()==="success")){
+		    		button.innerHTML = data.responseJSON.button.toString();
+		    	} 
+				   }
+		});
+}

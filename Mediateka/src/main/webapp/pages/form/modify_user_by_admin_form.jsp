@@ -135,33 +135,6 @@
 													</c:otherwise>
 												</c:choose>
 
-												<c:choose>
-													<c:when test="${user.education == 'LOWER_SECONDARY'}">
-														<option value="LOWER_SECONDARY" selected><fmt:message
-																bundle="${msg}"
-																key="registration.education.lower_secondary" /></option>
-													</c:when>
-													<c:otherwise>
-														<option value="LOWER_SECONDARY"><fmt:message
-																bundle="${msg}"
-																key="registration.education.lower_secondary" /></option>
-													</c:otherwise>
-												</c:choose>
-
-												<c:choose>
-													<c:when test="${user.education == 'UPPER_SECONDARY'}">
-														<option value="UPPER_SECONDARY" selected><fmt:message
-																bundle="${msg}"
-																key="registration.education.upper_secondary" /></option>
-													</c:when>
-													<c:otherwise>
-														<option value="UPPER_SECONDARY"><fmt:message
-																bundle="${msg}"
-																key="registration.education.upper_secondary" /></option>
-													</c:otherwise>
-												</c:choose>
-
-
 
 
 												<c:choose>

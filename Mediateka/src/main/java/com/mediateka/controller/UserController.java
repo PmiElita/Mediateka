@@ -238,7 +238,7 @@ public class UserController {
 			request.setAttribute("allEventsAvas", avas);
 			request.setAttribute("professions",
 					ProfessionService.getProfessionAll());
-			request.getRequestDispatcher("pages/events/events.jsp");
+			request.getRequestDispatcher("pages/events/events.jsp").forward(request, response);
 			request.removeAttribute("allEvents");
 			request.removeAttribute("all|EventsAvas");
 		}
@@ -402,7 +402,7 @@ public class UserController {
 		case USER:
 
 			List<FormRecord> formRecords = FormRecordService
-					.getFormRecordsByUserIdLimited(userId, 0, 10);
+					.getFormRecordsByUserIdLimited(userId, 0, 5);
 			if (formRecords != null) {
 
 				Collections.sort(formRecords, new FormRecordsByDateFrom());

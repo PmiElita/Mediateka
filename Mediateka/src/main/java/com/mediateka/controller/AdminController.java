@@ -25,6 +25,7 @@ import com.mediateka.exception.WrongInputException;
 import com.mediateka.form.SearchUserForm;
 import com.mediateka.form.UserRegistrationForm;
 import com.mediateka.model.User;
+import com.mediateka.model.enums.Role;
 import com.mediateka.model.enums.State;
 import com.mediateka.search.UserSearch;
 import com.mediateka.service.ProfessionService;
@@ -355,5 +356,59 @@ public class AdminController {
 
 		return;
 		
+	}
+
+	@Request(url = "makeAdmin", method = "post")
+	public static void makeAdmin(HttpServletRequest request,
+			HttpServletResponse response) throws ReflectiveOperationException,
+			SQLException, IOException {
+		try {
+			Integer userId;
+			try {
+				userId = Integer.parseInt(request.getParameter("userId"));
+			} catch (NumberFormatException e) {
+				throw new WrongInputException("wrong userId");
+			}
+
+			User user = UserService.getUserById(userId);
+			String buttonText = null;
+			if (user != null) {
+				Translator translator = new Translator("translations/users",
+						request);
+
+				if (user.getRole()==Role.ADMIN) {
+					user.setRole(Role.USER);
+
+					buttonText = translator.getMessage("button.makeAdmin");
+					
+				} else {
+					user.setRole(Role.ADMIN);
+					buttonText = translator.getMessage("button.makeUser");
+					
+				}
+				UserService.updateUser(user);
+			} else {
+				throw new WrongInputException("Wrong userId");
+			}
+
+			if (buttonText != null) {
+				Map<String, String> map = new HashMap<String, String>();
+				map.put("message", "success");
+				map.put("button", buttonText);
+				response.setContentType("application/json");
+				response.setCharacterEncoding("UTF-8");
+				response.getWriter().write(new Gson().toJson(map));
+			} else {
+				throw new WrongInputException("Wrong userId");
+			}
+
+		} catch (WrongInputException e) {
+			logger.warn("Wrong userId", e);
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("message", e.getMessage());
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().write(new Gson().toJson(map));
+		}
 	}
 }

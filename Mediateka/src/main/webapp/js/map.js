@@ -2,7 +2,7 @@
 var map;
 var userLocation;
 var markerImage;
-
+var autocomplete;
 var markers = [];
 
 var minZoom = 2 ;
@@ -47,6 +47,13 @@ $(document).ready(function initialize() {
 	var mapDiv = document.getElementById('map-canvas');
 	map = new google.maps.Map(mapDiv, mapOptions);
 	loadElements();
+	var input = (document.getElementById("event_adress"));
+
+	 autocomplete = new google.maps.places.Autocomplete(input);
+	  autocomplete.bindTo('bounds', map);
+	  
+
+
 });
 
 
@@ -238,6 +245,25 @@ function addEvent() {
 								icon : changedMarkerImage,
 								title : mapTranslations['User'] + ' '
 							});
+							
+							   var place = autocomplete.getPlace();
+							   
+							    if (place.geometry) {
+							   
+
+							    // If the place has a geometry, then present it on a map.
+							    if (place.geometry.viewport) {
+							      map.fitBounds(place.geometry.viewport);
+							    } else {
+							     
+							      map.setZoom(17);  // Why 17? Because it looks good.
+							    }
+							 
+							    marker.setPosition(place.geometry.location);
+							    map.setCenter(place.geometry.location);
+							    marker.setVisible(true);
+
+							    }
 							google.maps.event.addListener(marker, 'click',
 									function() {
 										infoWindow.open(map, marker);
@@ -251,7 +277,7 @@ function addEvent() {
 									});
 							markers.push(marker);
 							events.push({name:event_name, description:event_description, adress:event_adress, latitude:marker.position.lat(), longitude:marker.position.lng(), state:"ACTIVE"});
-							map.setCenter(pos);
+							
 						}, function() {
 							handleNoGeolocation(true);
 						});
@@ -460,6 +486,7 @@ function editEvent(index){
 	document.getElementById("event_name").value = events[index].name;
 	 document.getElementById("event_descr").value = events[index].description;
    document.getElementById("event_adress").value= events[index].adress;
+ 
     var button =document.getElementById("map_button");
     button.innerHTML = mapTranslations['Submit'];
     button.value=index;
@@ -472,6 +499,24 @@ function editEvent(index){
 	 document.getElementById("title"+index).innerHTML= events[index].name;
 	 document.getElementById("description"+index).innerHTML= events[index].description;
 	 document.getElementById("adress"+index).innerHTML= events[index].adress;
+	  var place = autocomplete.getPlace();
+	   
+	   if (place.geometry) {
+	  
+
+	   // If the place has a geometry, then present it on a map.
+	   if (place.geometry.viewport) {
+	     map.fitBounds(place.geometry.viewport);
+	   } else {
+	    
+	     map.setZoom(17);  // Why 17? Because it looks good.
+	   }
+
+	   markers[index].setPosition(place.geometry.location);
+	   map.setCenter(place.geometry.location);
+	   markers[index].setVisible(true);
+
+	   }
 	 document.getElementById("event_name").value = "";
 	 document.getElementById("event_descr").value = "";
    document.getElementById("event_adress").value= "";
@@ -509,4 +554,11 @@ function saveChanges(){
 			Materialize.toast(mapTranslations['ChangesWereSaved'], 4000);
 		}
 	});
+}
+
+function enterPress(event){
+	 var key = event.keyCode || event.charCode;
+
+	    if( key == 13 )
+	        event.preventDefault();
 }

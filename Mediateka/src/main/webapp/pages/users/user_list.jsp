@@ -15,7 +15,7 @@
 <fmt:setBundle basename="translations/search_book" var="msg1" />
 
 <div id="userList" onscroll="alert(20);">
-<u:showUsers users="${users}" locale="${cookie.lang.value}"/>
+<u:showUsers users="${users}" locale="${cookie.lang.value}" adminId="${userId }"/>
 </div>
 <div id="empty">
 <c:if test="${haveMoreResults }">

@@ -77,8 +77,16 @@ public class SearchBookController {
 			HttpServletResponse response) throws SQLException,
 			ReflectiveOperationException, IOException {
 		String regexp = request.getParameter("query");
+		List<Book> books = null;
+		if (regexp.indexOf("\"")!=-1){
+			String bookName=regexp.substring(1).split("\" ")[0];
+			String bookAuthor = regexp.split("\" ")[1];
+			books=BookService.getBooksByNameAndAuthor(bookName, bookAuthor);
+			} else if (regexp != "") {
+				books = BookService.getBooksByRegexp(regexp);
+			}
 		List<Map<String, String>> result = new ArrayList<Map<String, String>>();
-		List<Book> books = BookService.getBooksByRegexp(regexp);
+		
 		if (books != null) {
 		    Collections.sort(books, new BooksByName());
 			for (Book book : books) {

@@ -41,13 +41,13 @@
 
 
 			<div class="row input-field">
-				<form onsubmit="return butt_click();">
+				<form onsubmit="return butt_click();" onkeydown=" enterPress(event);">
 					<input placeholder="Type an event's name"
 						ng-model="dummyInputs.inputFieldInput" id="event_name" type="text"
-						maxlength="101" required> <input
-						placeholder="Type an event's description" id="event_descr"
-						type="text" maxlength="125" required> <input
-						placeholder="Type an event's adress" id="event_adress" type="text"
+						maxlength="101" required>
+					 <input	placeholder="Type an event's description" id="event_descr"
+						type="text" maxlength="125" required>
+					 <input placeholder="Type an event's adress" id="event_adress" type="text"
 						maxlength="101" required>
 					<button class="btn" id="map_button"><fmt:message bundle="${msg }" key="add_new_event"/></button>
 				</form>
@@ -66,7 +66,7 @@
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/vertx/2.0.0/vertxbus.js"></script>
 	<script
-		src="https://maps.googleapis.com/maps/api/js?v=3.exp&language=en"></script>
+		src="https://maps.googleapis.com/maps/api/js?v=3.exp&language=en&libraries=places"></script>
 
 	<!-- <script type="text/javascript" src="javascript/modernizr.custom.js"></script> -->
 	<!-- <script type="text/javascript" src="javascript/html-sanitizer-minified.js"></script> -->

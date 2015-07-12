@@ -12,6 +12,7 @@
 
 <html>
 <head>
+<jsp:include page="../general/head.jsp" />
 <link class="jsbin"
 	href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/base/jquery-ui.css"
 	rel="stylesheet" type="text/css" />
