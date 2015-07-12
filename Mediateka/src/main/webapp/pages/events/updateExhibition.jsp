@@ -67,28 +67,6 @@
 						<textarea name="description" pattern=".{0,255}"
 							class="materialize-textarea"><c:out
 								value="${event.getDescription()}" /></textarea>
-						<!-- XXX -->
-						<fmt:message bundle="${msg}"
-							key="update_exhibition.exhibition_avatar" />
-						<input type="file" name="image" id="image"
-							placeholder="book cover screenshot..."
-							value="${event.getAvaId()}" onchange="readURL(this);"><img
-							id="photo" src="${imagePath}"><br>
-						<fmt:message bundle="${msg}" key="update_exhibition.state" />
-						<c:if test="${event.state eq State.ACTIVE}">
-							<input type="radio" name="state" value="active" checked>
-							<fmt:message bundle="${msg}" key="update_exhibition.active" />
-							<input type="radio" name="state" value="blocked">
-							<fmt:message bundle="${msg}" key="update_exhibition.blocked" />
-						</c:if>
-						<c:if test="${event.state eq State.BLOCKED}">
-							<input type="radio" name="state" value="active">
-							<fmt:message bundle="${msg}" key="update_exhibition.active" />
-							<input type="radio" name="state" value="blocked" checked>
-							<fmt:message bundle="${msg}" key="update_exhibition.blocked" />
-						</c:if>
-						<br>
-						<!-- XXX -->
 						<input type="submit" id="submit" value="Update exhibition"
 							class="btn">
 					</div>

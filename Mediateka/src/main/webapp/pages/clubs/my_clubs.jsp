@@ -10,11 +10,13 @@
 	<div class="col s12">
 		<ul class="tabs">
 			<li class="tab col s4" style="margin-left: 5em;"><a
-				href="#my_active_clubs"><fmt:message bundle="${msg}" key="my_clubs.active"/></a></li>
-			<li class="tab col s4"><a
-				href="#my_blocked_clubs"><fmt:message bundle="${msg}" key="my_clubs.blocked"/></a></li>
+				href="#my_active_clubs"><fmt:message bundle="${msg}"
+						key="my_clubs.active" /></a></li>
+			<li class="tab col s4"><a href="#my_blocked_clubs"><fmt:message
+						bundle="${msg}" key="my_clubs.blocked" /></a></li>
 			<li class="tab col s4" style="margin-left: -5em"><a
-				href="#my_requested_clubs"><fmt:message bundle="${msg}" key="my_clubs.requested"/></a></li>
+				href="#my_requested_clubs"><fmt:message bundle="${msg}"
+						key="my_clubs.requested" /></a></li>
 		</ul>
 	</div>
 </div>
@@ -25,15 +27,19 @@
 				<c:forEach var="item" items="${myActiveClubs}" varStatus="status">
 					<div class="row my-picture-row">
 						<div class="col s12">
-									<div
-										class="waves-effect waves-block waves-light my-picture-wrap" style="border:3px solid #008080;background:grey">
+							<div class="waves-effect waves-block waves-light my-picture-wrap"
+								style="border: 3px solid #008080; background: grey">
 								<a href="club?clubId=${item.id}">
 									<div align="center">
 										<h2 class="image-cover-t">
-											<c:out value="${item.name}" />
+											<c:out value="${item.name} " />
+											<h4>
+												<c:out value=" (${myActiveClubsMemberNumber[status.index]})" />
+											</h4>
 										</h2>
 										<img class="my-picture-club"
-											src="${myActiveClubsAvas[status.index]}" align="middle" style="margin-top:-10.2em;">
+											src="${myActiveClubsAvas[status.index]}" align="middle"
+											style="margin-top: -10.2em;">
 									</div>
 								</a>
 							</div>
@@ -49,7 +55,9 @@
 								<div
 									class="waves-effect waves-block waves-light my-picture-wrap">
 									<div align="center">
-										<h2><fmt:message bundle="${msg}" key="there_are_no_such_clubs"/></h2>
+										<h2>
+											<fmt:message bundle="${msg}" key="there_are_no_such_clubs" />
+										</h2>
 									</div>
 								</div>
 							</div>
@@ -69,14 +77,16 @@
 							<div class="row my-picture-row">
 								<div class="col s12">
 									<div
-										class="waves-effect waves-block waves-light my-picture-wrap" style="border:3px solid #008080; background:grey">
+										class="waves-effect waves-block waves-light my-picture-wrap"
+										style="border: 3px solid #008080; background: grey">
 										<a href="club?clubId=${item.id}">
 											<div align="center">
 												<h2 class="image-cover-t">
 													<c:out value="${item.name}" />
 												</h2>
 												<img class="my-picture-club"
-													src="${myBlockedClubsAvas[status.index]}" align="middle" style="margin-top:-10.2em;">
+													src="${myBlockedClubsAvas[status.index]}" align="middle"
+													style="margin-top: -10.2em;">
 											</div>
 										</a>
 									</div>
@@ -94,7 +104,9 @@
 								<div
 									class="waves-effect waves-block waves-light my-picture-wrap">
 									<div align="center">
-										<h2><fmt:message bundle="${msg}" key="there_are_no_such_clubs"/></h2>
+										<h2>
+											<fmt:message bundle="${msg}" key="there_are_no_such_clubs" />
+										</h2>
 									</div>
 								</div>
 							</div>
@@ -104,22 +116,23 @@
 			</c:otherwise>
 		</c:choose>
 	</div>
-	
+
 	<div id="my_requested_clubs">
 		<c:choose>
 			<c:when test="${!myRequestedClubs.isEmpty()}">
 				<c:forEach var="item" items="${myRequestedClubs}" varStatus="status">
 					<div class="row my-picture-row">
 						<div class="col s12">
-									<div
-										class="waves-effect waves-block waves-light my-picture-wrap" style="border:3px solid #008080;background:grey">
+							<div class="waves-effect waves-block waves-light my-picture-wrap"
+								style="border: 3px solid #008080; background: grey">
 								<a href="club?clubId=${item.id}">
 									<div align="center">
 										<h2 class="image-cover-t">
 											<c:out value="${item.name}" />
 										</h2>
 										<img class="my-picture-club"
-											src="${myRequestedClubsAvas[status.index]}" align="middle" style="margin-top:-10.2em;">
+											src="${myRequestedClubsAvas[status.index]}" align="middle"
+											style="margin-top: -10.2em;">
 									</div>
 								</a>
 							</div>
@@ -135,7 +148,9 @@
 								<div
 									class="waves-effect waves-block waves-light my-picture-wrap">
 									<div align="center">
-										<h2><fmt:message bundle="${msg}" key="there_are_no_such_clubs"/></h2>
+										<h2>
+											<fmt:message bundle="${msg}" key="there_are_no_such_clubs" />
+										</h2>
 									</div>
 								</div>
 							</div>

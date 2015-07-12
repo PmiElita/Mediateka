@@ -84,11 +84,12 @@
 					<c:choose>
 						<c:when test="${!(allClubs==null)}">
 							<ul class="collapsible" data-collapsible="accordion">
-								<c:forEach items="${allClubs}" var="current">
+								<c:forEach items="${allClubs}" var="current" varStatus="status">
 									<li id="clubNo${current.id}">
 										<div class="collapsible-header">
 											<a class="button" href="club?clubId=${current.id}"> <c:out
-													value="${current.name}" /></a>
+													value="${current.name} " />
+												<c:out value="( ${clubsMemberNumber[status.index]})" /></a>
 										</div>
 										<div class="collapsible-body">
 											<p>

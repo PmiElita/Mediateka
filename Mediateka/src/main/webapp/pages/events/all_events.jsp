@@ -21,7 +21,10 @@
 							<a href="event?eventId=${item.id}">
 								<div align="center">
 									<h2 class="image-cover-t">
-										<c:out value="${item.name}" />
+										<c:out value="${item.name} " />
+										<h4>
+											<c:out value=" (${allEventsMemberNumber[status.index]})" />
+										</h4>
 									</h2>
 									<img class="my-picture-club"
 										src="${allEventsAvas[status.index]}" align="middle"
@@ -40,7 +43,9 @@
 						<div class="col s12">
 							<div class="waves-effect waves-block waves-light my-picture-wrap">
 								<div align="center">
-									<h2><fmt:message bundle="${msg}" key="there_are_no_such_events" /></h2>
+									<h2>
+										<fmt:message bundle="${msg}" key="there_are_no_such_events" />
+									</h2>
 								</div>
 							</div>
 						</div>

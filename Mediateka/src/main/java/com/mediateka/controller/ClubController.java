@@ -44,7 +44,6 @@ import com.mediateka.model.Media;
 import com.mediateka.model.User;
 import com.mediateka.model.enums.ClubEventMemberType;
 import com.mediateka.model.enums.ContentGroupType;
-import com.mediateka.model.enums.MediaType;
 import com.mediateka.model.enums.Role;
 import com.mediateka.model.enums.State;
 import com.mediateka.pair.ChatMessageUserCardPair;
@@ -167,9 +166,11 @@ public class ClubController {
 						.toString());
 			else
 				throw new NumberFormatException("No club id in request.");
-			if (request.getParameter("userId") != null)
-				clubId = Integer.parseInt(request.getParameter("userId")
-						.toString());
+			if (ClubService.getClubById(clubId) == null)
+				throw new NumberFormatException("There is no such club.");
+			if (request.getSession().getAttribute("userId") != null)
+				userId = Integer.parseInt(request.getSession()
+						.getAttribute("userId").toString());
 			else
 				throw new NumberFormatException("No user id in request.");
 			member = getClubEventMemberByUserIdAndClubId(userId, clubId);
@@ -186,18 +187,7 @@ public class ClubController {
 		FileLoader fileLoader = new FileLoader();
 		fileLoader.loadFile(request, "club\\club" + club.getId());
 
-		Media media = new Media();
-
-		try {
-			fileLoader.getAllFilePathes();
-			media.setType(MediaType.IMAGE);
-			media.setState(State.ACTIVE);
-			media.setPath(fileLoader.getRelativePath().replace("\\", "/"));
-			media.setName(fileLoader.getDefaultFileName());
-			media = MediaService.callSaveMedia(media);
-		} catch (WrongInputException e) {
-			media = MediaService.getMediaById(club.getAvaId());
-		}
+		Media media = MediaService.getMediaById(club.getAvaId());
 
 		club.setName(fileLoader.getParameterMap().get(("club_name")));
 		club.setDescription(fileLoader.getParameterMap().get(
@@ -627,7 +617,6 @@ public class ClubController {
 		response.getWriter().write("");
 		return;
 	}
-
 
 	@Request(url = "sendEmailToClubMembers", method = "post")
 	public static void sendEmailToClubMembersPost(HttpServletRequest request,

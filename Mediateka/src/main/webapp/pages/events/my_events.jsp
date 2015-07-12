@@ -10,11 +10,13 @@
 	<div class="col s12">
 		<ul class="tabs">
 			<li class="tab col s4" style="margin-left: 5em;"><a
-				href="#my_active_events"><fmt:message bundle="${msg}" key="my_events.active" /></a></li>
-			<li class="tab col s4"><a
-				href="#my_blocked_events"><fmt:message bundle="${msg}" key="my_events.blocked" /></a></li>
+				href="#my_active_events"><fmt:message bundle="${msg}"
+						key="my_events.active" /></a></li>
+			<li class="tab col s4"><a href="#my_blocked_events"><fmt:message
+						bundle="${msg}" key="my_events.blocked" /></a></li>
 			<li class="tab col s4" style="margin-left: -5em"><a
-				href="#my_requested_events"><fmt:message bundle="${msg}" key="my_events.requested" /></a></li>
+				href="#my_requested_events"><fmt:message bundle="${msg}"
+						key="my_events.requested" /></a></li>
 		</ul>
 	</div>
 </div>
@@ -25,15 +27,20 @@
 				<c:forEach var="item" items="${myActiveEvents}" varStatus="status">
 					<div class="row my-picture-row">
 						<div class="col s12">
-									<div
-										class="waves-effect waves-block waves-light my-picture-wrap" style="border:3px solid #008080;background:grey">
+							<div class="waves-effect waves-block waves-light my-picture-wrap"
+								style="border: 3px solid #008080; background: grey">
 								<a href="event?eventId=${item.id}">
 									<div align="center">
 										<h2 class="image-cover-t">
-											<c:out value="${item.name}" />
+											<c:out value="${item.name} " />
+											<h4>
+												<c:out
+													value=" (${myActiveEventsMemberNumber[status.index]})" />
+											</h4>
 										</h2>
 										<img class="my-picture-club"
-											src="${myActiveEventsAvas[status.index]}" align="middle" style="margin-top:-10.2em;">
+											src="${myActiveEventsAvas[status.index]}" align="middle"
+											style="margin-top: -10.2em;">
 									</div>
 								</a>
 							</div>
@@ -46,10 +53,13 @@
 					<div class="container">
 						<div class="row my-picture-row">
 							<div class="col s12">
-									<div
-										class="waves-effect waves-block waves-light my-picture-wrap" style="border:3px solid #008080;background:grey">
+								<div
+									class="waves-effect waves-block waves-light my-picture-wrap"
+									style="border: 3px solid #008080; background: grey">
 									<div align="center">
-										<h2><fmt:message bundle="${msg}" key="there_are_no_such_events" /></h2>
+										<h2>
+											<fmt:message bundle="${msg}" key="there_are_no_such_events" />
+										</h2>
 									</div>
 								</div>
 							</div>
@@ -66,15 +76,16 @@
 				<c:forEach var="item" items="${myBlockedEvents}" varStatus="status">
 					<div class="row my-picture-row">
 						<div class="col s12">
-									<div
-										class="waves-effect waves-block waves-light my-picture-wrap" style="border:3px solid #008080;background:grey">
+							<div class="waves-effect waves-block waves-light my-picture-wrap"
+								style="border: 3px solid #008080; background: grey">
 								<a href="event?eventId=${item.id}">
 									<div align="center">
 										<h2 class="image-cover-t">
 											<c:out value="${item.name}" />
 										</h2>
 										<img class="my-picture-club"
-											src="${myBlockedEventsAvas[status.index]}" align="middle" style="margin-top:-10.2em;">
+											src="${myBlockedEventsAvas[status.index]}" align="middle"
+											style="margin-top: -10.2em;">
 									</div>
 								</a>
 							</div>
@@ -87,10 +98,13 @@
 					<div class="container">
 						<div class="row my-picture-row">
 							<div class="col s12">
-									<div
-										class="waves-effect waves-block waves-light my-picture-wrap" style="border:3px solid #008080;background:grey">
+								<div
+									class="waves-effect waves-block waves-light my-picture-wrap"
+									style="border: 3px solid #008080; background: grey">
 									<div align="center">
-										<h2><fmt:message bundle="${msg}" key="there_are_no_such_events" /></h2>
+										<h2>
+											<fmt:message bundle="${msg}" key="there_are_no_such_events" />
+										</h2>
 									</div>
 								</div>
 							</div>
@@ -100,22 +114,24 @@
 			</c:otherwise>
 		</c:choose>
 	</div>
-	
+
 	<div id="my_requested_events">
 		<c:choose>
 			<c:when test="${!myRequestedEvents.isEmpty()}">
-				<c:forEach var="item" items="${myRequestedEvents}" varStatus="status">
+				<c:forEach var="item" items="${myRequestedEvents}"
+					varStatus="status">
 					<div class="row my-picture-row">
 						<div class="col s12">
-									<div
-										class="waves-effect waves-block waves-light my-picture-wrap" style="border:3px solid #008080;background:grey">
+							<div class="waves-effect waves-block waves-light my-picture-wrap"
+								style="border: 3px solid #008080; background: grey">
 								<a href="event?eventId=${item.id}">
 									<div align="center">
 										<h2 class="image-cover-t">
 											<c:out value="${item.name}" />
 										</h2>
 										<img class="my-picture-club"
-											src="${myRequestedEventsAvas[status.index]}" align="middle" style="margin-top:-10.2em;">
+											src="${myRequestedEventsAvas[status.index]}" align="middle"
+											style="margin-top: -10.2em;">
 									</div>
 								</a>
 							</div>
@@ -128,10 +144,12 @@
 					<div class="container">
 						<div class="row my-picture-row">
 							<div class="col s12">
-									<div
-										class="waves-effect waves-block waves-light my-picture-wrap">
+								<div
+									class="waves-effect waves-block waves-light my-picture-wrap">
 									<div align="center">
-										<h2><fmt:message bundle="${msg}" key="there_are_no_such_events" /></h2>
+										<h2>
+											<fmt:message bundle="${msg}" key="there_are_no_such_events" />
+										</h2>
 									</div>
 								</div>
 							</div>

@@ -10,7 +10,6 @@ import static com.mediateka.service.ContentGroupService.getContentGroupByEventId
 import static com.mediateka.service.EventService.callSaveEvent;
 import static com.mediateka.service.EventService.getEventById;
 import static com.mediateka.service.EventService.updateEvent;
-import static com.mediateka.service.MediaService.callSaveMedia;
 import static com.mediateka.service.MediaService.getMediaById;
 import static com.mediateka.service.UserService.getUserById;
 import static com.mediateka.util.DateConverter.convertIntoTimestamp;
@@ -50,7 +49,6 @@ import com.mediateka.model.User;
 import com.mediateka.model.enums.ClubEventMemberType;
 import com.mediateka.model.enums.ContentGroupType;
 import com.mediateka.model.enums.EventType;
-import com.mediateka.model.enums.MediaType;
 import com.mediateka.model.enums.Role;
 import com.mediateka.model.enums.State;
 import com.mediateka.service.ClubEventMemberService;
@@ -533,40 +531,13 @@ public class EventController {
 			else if (map.get("description").length() > 255)
 				throw new WrongInputException("Event description is too long. ");
 
-			// event media valid
-			Media media = new Media();
-			try {
-				fileLoader.getAllFilePathes();
-				media = new Media();
-				media.setName(fileLoader.getDefaultFileName());
-				media.setPath(fileLoader.getRelativePath());
-				media.setType(MediaType.IMAGE);
-				media.setState(State.ACTIVE);
-				media = callSaveMedia(media);
-			} catch (WrongInputException e) {
-				Event event = getEventById(eventId);
-				media = getMediaById(event.getAvaId());
-			}
+			Event event = getEventById(eventId);
 
 			// event state valid
-			if (map.get("state") == null || map.get("state") == "")
-				throw new WrongInputException("Event state is empty. ");
-			else if (!map.get("state").toUpperCase().equals("ACTIVE")
-					&& !map.get("state").toUpperCase().equals("BLOCKED"))
-				throw new WrongInputException("No such event type. ");
-
-			Event event = new Event();
-			event.setId(eventId);
-			event.setType(EventType.EXHIBITION);
 			event.setName(map.get("name"));
 			event.setDateFrom(dateFrom);
 			event.setDateTill(dateTill);
-			if (request.getSession().getAttribute("clubId") != null)
-				event.setClubId(Integer.parseInt(request.getSession()
-						.getAttribute("clubId").toString()));
 			event.setDescription(map.get("description"));
-			event.setState(State.valueOf(map.get("state").toUpperCase()));
-			event.setAvaId(media.getId());
 			updateEvent(event);
 			request.getSession().setAttribute("message", "Event updated. ");
 			response.sendRedirect("event?eventId=" + eventId);
@@ -661,40 +632,11 @@ public class EventController {
 			else if (map.get("description").length() > 255)
 				throw new WrongInputException("Event description is too long. ");
 
-			// event media valid
-			Media media = new Media();
-			try {
-				fileLoader.getAllFilePathes();
-				media = new Media();
-				media.setName(fileLoader.getDefaultFileName());
-				media.setPath(fileLoader.getRelativePath());
-				media.setType(MediaType.IMAGE);
-				media.setState(State.ACTIVE);
-				media = callSaveMedia(media);
-			} catch (WrongInputException e) {
-				Event event = getEventById(eventId);
-				media = getMediaById(event.getAvaId());
-			}
-
-			// event state valid
-			if (map.get("state") == null || map.get("state") == "")
-				throw new WrongInputException("Event state is empty. ");
-			else if (!map.get("state").toUpperCase().equals("ACTIVE")
-					&& !map.get("state").toUpperCase().equals("BLOCKED"))
-				throw new WrongInputException("No such event type. ");
-
-			Event event = new Event();
-			event.setId(eventId);
-			event.setType(EventType.MEETING);
+			Event event = getEventById(eventId);
 			event.setName(map.get("name"));
 			event.setDateFrom(dateFrom);
 			event.setDateTill(dateTill);
-			if (request.getSession().getAttribute("clubId") != null)
-				event.setClubId(Integer.parseInt(request.getSession()
-						.getAttribute("clubId").toString()));
 			event.setDescription(map.get("description"));
-			event.setState(State.valueOf(map.get("state").toUpperCase()));
-			event.setAvaId(media.getId());
 			updateEvent(event);
 			request.getSession().setAttribute("message", "Event updated. ");
 			response.sendRedirect("event?eventId=" + eventId);
@@ -1287,9 +1229,6 @@ public class EventController {
 			return;
 		}
 
-		
-		
-		
 		Runnable asyncEmailSender = new Runnable() {
 			@Override
 			public void run() {
@@ -1314,9 +1253,10 @@ public class EventController {
 					String myEmail = UserService.getUserById(myId).getEmail();
 
 					EmailSender.sendMail(myEmail, emailSubject, escapedBody);
-					
-				} catch (MessagingException | ReflectiveOperationException | SQLException e) {
-					// Do nothing. 
+
+				} catch (MessagingException | ReflectiveOperationException
+						| SQLException e) {
+					// Do nothing.
 				}
 
 			}

@@ -1,6 +1,6 @@
 package com.mediateka.controller;
 
-import static com.mediateka.service.ClubEventMemberService.getClubEventMemberByUserId;
+import static com.mediateka.service.ClubEventMemberService.*;
 import static com.mediateka.service.ClubService.getClubById;
 import static com.mediateka.service.ClubService.getClubByState;
 import static com.mediateka.service.EventService.getEventByClubId;
@@ -65,8 +65,23 @@ public class UserController {
 					"userId");
 
 			List<Event> allEvents = getEventByState(State.ACTIVE);
-			if (allEvents != null)
+			List<Integer> allEventsMemberNumber = new ArrayList<>();
+			if (allEvents != null) {
 				Collections.sort(allEvents, new EventsByDate());
+				for (Event event : allEvents) {
+					if (getClubEventMemberByEventId(event.getId()) == null)
+						allEventsMemberNumber.add(0);
+					else {
+						int k = 0;
+						for (ClubEventMember member : getClubEventMemberByEventId(event
+								.getId()))
+							if (member.getState() == State.ACTIVE)
+								k++;
+						allEventsMemberNumber.add(k);
+						k = 0;
+					}
+				}
+			}
 
 			// all events avas
 			List<String> allEventsAvas = new ArrayList<>();
@@ -151,10 +166,17 @@ public class UserController {
 				List<Event> myActiveEvents = new ArrayList<>();
 				List<Event> myBlockedEvents = new ArrayList<>();
 				List<Event> myRequestedEvents = new ArrayList<>();
+				List<Integer> myActiveEventsMemberNumber = new ArrayList<>();
 				for (Event event : myEvents) {
-					if (event.getState() == State.ACTIVE)
+					if (event.getState() == State.ACTIVE) {
 						myActiveEvents.add(event);
-					else if (event.getState() == State.BLOCKED)
+						if (getClubEventMemberByEventId(event.getId()) == null)
+							myActiveEventsMemberNumber.add(0);
+						else
+							myActiveEventsMemberNumber
+									.add(getClubEventMemberByEventId(
+											event.getId()).size());
+					} else if (event.getState() == State.BLOCKED)
 						myBlockedEvents.add(event);
 					else if (event.getState() == State.REQUESTED)
 						myRequestedEvents.add(event);
@@ -178,6 +200,10 @@ public class UserController {
 					myRequestedEventsAvas.add(getMediaById(event.getAvaId())
 							.getPath().replace("\\", "/"));
 
+				request.setAttribute("allEventsMemberNumber",
+						allEventsMemberNumber);
+				request.setAttribute("myActiveEventsMemberNumber",
+						myActiveEventsMemberNumber);
 				request.setAttribute("myActiveEvents", myActiveEvents);
 				request.setAttribute("myBlockedEvents", myBlockedEvents);
 				request.setAttribute("myRequestedEvents", myRequestedEvents);
@@ -197,9 +223,14 @@ public class UserController {
 				request.removeAttribute("myRequestedEventsAvas");
 				request.removeAttribute("allEvents");
 				request.removeAttribute("allEventsAvas");
+				request.removeAttribute("allEventsMemberNumber");
+				request.removeAttribute("myActiveEventsMemberNumber");
+
 				break;
 
 			default:
+				request.setAttribute("allEventsMemberNumber",
+						allEventsMemberNumber);
 				request.setAttribute("allEvents", allEvents);
 				request.setAttribute("allEventsAvas", allEventsAvas);
 				request.setAttribute("professions",
@@ -208,6 +239,7 @@ public class UserController {
 						.forward(request, response);
 				request.removeAttribute("allEvents");
 				request.removeAttribute("allEventsAvas");
+				request.removeAttribute("allEventsMemberNumber");
 				break;
 			}
 		} else if (request.getParameter("clubId") != null) {
@@ -223,27 +255,45 @@ public class UserController {
 				response.sendError(404);
 				return;
 			}
-			List<Event> events = getEventByClubId(clubId);
+			List<Event> eventss = getEventByClubId(clubId);
 			List<String> avas = new ArrayList<>();
+			List<Event> events = new ArrayList<>();
 			if (events != null) {
-				for (int i = 0; i < events.size(); i++)
-					if (events.get(i).getState() != State.ACTIVE)
-						events.remove(i);
+				for (int i = 0; i < eventss.size(); i++)
+					if (eventss.get(i).getState() != State.ACTIVE)
+						events.add(eventss.get(i));
 				Collections.sort(events, new EventsByDate());
 				for (Event event : events)
 					avas.add(getMediaById(event.getAvaId()).getPath().replace(
 							"\\", "/"));
 			}
+			List<Integer> eventsMemberNumber = new ArrayList<>();
+			if (!events.isEmpty()) {
+				for (Event event : events) {
+					if (getClubEventMemberByEventId(event.getId()) == null)
+						eventsMemberNumber.add(0);
+					else {
+						int k = 0;
+						for (ClubEventMember member : getClubEventMemberByEventId(event
+								.getId()))
+							if (member.getState() == State.ACTIVE)
+								k++;
+						eventsMemberNumber.add(k);
+						k = 0;
+					}
+				}
+			}
 
+			request.setAttribute("allEventsMemberNumber", eventsMemberNumber);
 			request.setAttribute("allEvents", events);
 			request.setAttribute("allEventsAvas", avas);
 			request.setAttribute("professions",
-					ProfessionService.getProfessionAll());
+					ProfessionService.getProfessionByState(State.ACTIVE));
 			request.getRequestDispatcher("pages/events/events.jsp").forward(
 					request, response);
-			;
 			request.removeAttribute("allEvents");
 			request.removeAttribute("all|EventsAvas");
+			request.removeAttribute("allEventsMemberNumber");
 		}
 	}
 
@@ -256,8 +306,23 @@ public class UserController {
 
 		// all clubs
 		List<Club> allClubs = getClubByState(State.ACTIVE);
-		if (allClubs != null)
+		List<Integer> clubsMemberNumber = new ArrayList<>();
+		if (allClubs != null) {
 			Collections.sort(allClubs, new ClubsByMembersNumber());
+			for (Club club : allClubs) {
+				if (getClubEventMemberByClubId(club.getId()) == null)
+					clubsMemberNumber.add(0);
+				else {
+					int k = 0;
+					for (ClubEventMember member : getClubEventMemberByClubId(club
+							.getId()))
+						if (member.getState() == State.ACTIVE)
+							k++;
+					clubsMemberNumber.add(k);
+					k = 0;
+				}
+			}
+		}
 
 		// all clubs avas
 		List<String> allClubsAvas = new ArrayList<>();
@@ -282,6 +347,7 @@ public class UserController {
 				|| (user.getRole() == Role.MODERATOR)) {
 			List<Club> requestedClubs = getClubByState(State.REQUESTED);
 
+			request.setAttribute("clubsMemberNumber", clubsMemberNumber);
 			request.setAttribute("requestedClubs", requestedClubs);
 			request.setAttribute("allClubs", allClubs);
 
@@ -290,6 +356,7 @@ public class UserController {
 
 			request.removeAttribute("allClubs");
 			request.removeAttribute("requestedClubs");
+			request.removeAttribute("clubsMemberNumber");
 			return;
 
 		} else if (user.getRole() == Role.USER) {
@@ -311,10 +378,17 @@ public class UserController {
 			List<Club> myActiveClubs = new ArrayList<>();
 			List<Club> myBlockedClubs = new ArrayList<>();
 			List<Club> myRequestedClubs = new ArrayList<>();
+			List<Integer> myActiveClubsMemberNumber = new ArrayList<>();
 			for (Club club : myClubs) {
-				if (club.getState() == State.ACTIVE)
+				if (club.getState() == State.ACTIVE) {
 					myActiveClubs.add(club);
-				else if (club.getState() == State.BLOCKED)
+					if (getClubEventMemberByClubId(club.getId()) == null)
+						myActiveClubsMemberNumber.add(0);
+					else
+						myActiveClubsMemberNumber
+								.add(getClubEventMemberByClubId(club.getId())
+										.size());
+				} else if (club.getState() == State.BLOCKED)
 					myBlockedClubs.add(club);
 				else if (club.getState() == State.REQUESTED)
 					myRequestedClubs.add(club);
@@ -334,6 +408,9 @@ public class UserController {
 				myRequestedClubsAvas.add(getMediaById(club.getAvaId())
 						.getPath().replace("\\", "/"));
 
+			request.setAttribute("myActiveClubsMemberNumber",
+					myActiveClubsMemberNumber);
+			request.setAttribute("clubsMemberNumber", clubsMemberNumber);
 			request.setAttribute("allClubs", allClubs);
 			request.setAttribute("allClubsAvas", allClubsAvas);
 			request.setAttribute("myActiveClubsAvas", myActiveClubsAvas);
@@ -352,7 +429,10 @@ public class UserController {
 			request.removeAttribute("myActiveClubs");
 			request.removeAttribute("allClubs");
 			request.removeAttribute("allClubsAvas");
+			request.removeAttribute("clubsMemberNumber");
+			request.removeAttribute("myActiveClubsMemberNumber");
 		} else {
+			request.setAttribute("clubsMemberNumber", clubsMemberNumber);
 			request.setAttribute("allClubs", allClubs);
 			request.setAttribute("allClubsAvas", allClubsAvas);
 			request.setAttribute("professions",
@@ -361,6 +441,7 @@ public class UserController {
 					request, response);
 			request.removeAttribute("allClubs");
 			request.removeAttribute("allClubsAvas");
+			request.removeAttribute("clubsMemberNumber");
 		}
 	}
 

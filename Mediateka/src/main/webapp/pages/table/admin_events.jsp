@@ -87,7 +87,9 @@
 							</ul>
 						</c:when>
 						<c:otherwise>
-							<h2 align="center"><fmt:message bundle="${msg}" key="no_events" /></h2>
+							<h2 align="center">
+								<fmt:message bundle="${msg}" key="no_events" />
+							</h2>
 						</c:otherwise>
 					</c:choose>
 				</div>
@@ -102,7 +104,8 @@
 									<li id="eventNo${current.id}">
 										<div class="collapsible-header">
 											<a class="button" href="event?eventId=${current.id}"> <c:out
-													value="${current.name}" /></a>
+													value="${current.name} " />
+												<c:out value=" (${allEventsMemberNumber[status.index]})" /></a>
 										</div>
 										<div class="collapsible-body">
 											<p>
@@ -135,7 +138,9 @@
 							</ul>
 						</c:when>
 						<c:otherwise>
-							<h2 align="center"><fmt:message bundle="${msg}" key="no_events" /></h2>
+							<h2 align="center">
+								<fmt:message bundle="${msg}" key="no_events" />
+							</h2>
 						</c:otherwise>
 					</c:choose>
 				</div>
