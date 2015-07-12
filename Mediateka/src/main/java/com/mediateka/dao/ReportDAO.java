@@ -57,7 +57,7 @@ public class ReportDAO {
 
 	public static List<Report> getResponses(Integer limit, Integer offset)
 			throws SQLException {
-		String GET_RESPONSES = "SELECT id, email, text, name, date, state "
+		String GET_RESPONSES = "SELECT id, email, text, name, date, state, response, admin_id "
 				+ "FROM report WHERE  state <> 'DELETED' "
 				+ "ORDER BY date DESC " + "LIMIT ? OFFSET ? ";
 
@@ -79,6 +79,11 @@ public class ReportDAO {
 				report.setName(rs.getString(4));
 				report.setDate(rs.getTimestamp(5));
 				report.setState(State.valueOf(rs.getString(6).toUpperCase()));
+				report.setResponse(rs.getString(7));
+				report.setAdminId(rs.getInt(8));
+				if (rs.wasNull()){
+					report.setAdminId(null);
+				}
 				retval.add(report);
 			}
 

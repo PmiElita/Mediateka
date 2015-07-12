@@ -12,18 +12,24 @@ public class Report {
 
 	@Column(name = "email")
 	private String email;
-	
+
 	@Column(name = "text")
 	private String text;
-	
+
 	@Column(name = "name")
 	private String name;
-	
+
 	@Column(name = "date")
 	private Timestamp date;
 
 	@Column(name = "state")
 	private State state;
+
+	@Column(name = "response")
+	private String response;
+
+	@Column(name = "admin_id")
+	private Integer adminId;
 
 	public Integer getId() {
 		return id;
@@ -73,13 +79,29 @@ public class Report {
 		this.state = state;
 	}
 
+	public String getResponse() {
+		return response;
+	}
+
+	public void setResponse(String response) {
+		this.response = response;
+	}
+
+	public Integer getAdminId() {
+		return adminId;
+	}
+
+	public void setAdminId(Integer admin_id) {
+		this.adminId = admin_id;
+	}
+
 	@Override
 	public String toString() {
 		return "Report [id=" + id + ", email=" + email + ", text=" + text
 				+ ", name=" + name + ", date=" + date + ", state=" + state
-				+ "]";
+				+ ", response=" + response + ", adminI=" + adminId + "]";
 	}
-	
-	
-	
+
+
+
 }

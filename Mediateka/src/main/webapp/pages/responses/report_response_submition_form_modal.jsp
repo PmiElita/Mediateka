@@ -26,7 +26,7 @@
 									key="name" /></label>
 						</div>
 						<div class="input-field col s6">
-							<input disabled placeholder="santa@example.com"
+							<input disabled
 								id="responseEmailField" type="text" class="validate"> <label
 								for="responseEmailField"><fmt:message
 										bundle="${msg}" key="email" /></label>

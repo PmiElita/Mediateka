@@ -80,19 +80,41 @@
 											<div class="col s12">
 												<p>
 													<span style="color: black"><fmt:message
-															bundle="${msg}" key="date" /></span> 
+															bundle="${msg}" key="date" /></span>
 
-													<fmt:formatDate pattern="dd.MM.yyyy hh:mm" value="${response.date }" />
+													<fmt:formatDate pattern="dd.MM.yyyy hh:mm"
+														value="${response.date }" />
 												</p>
 											</div>
 										</div>
 									</div>
+
+
+									<c:if test="${response.adminId ne null}">
+										<div class='card-content white-text'>
+											<div class="row">
+												<span class='card-title'><fmt:message bundle="${msg}"
+														key="response_by" /> ${admins[response.adminId]  }:</span>
+												<div class="col s12">
+													<p>
+														${response.response}
+													</p>
+												</div>
+											</div>
+										</div>
+									</c:if>
+
+
 									<div class='card-action' style="padding-top: 0">
 										<a href='#' onclick='deleteResponse(${response.id})'><fmt:message
-												bundle="${msg}" key="delete" /></a> <a href=""
-											class="btn modal-trigger waves-effect" data-target="modal26"
-											onclick="markResponse(${response.id}, '${response.name }', '${response.email }')"><fmt:message
-												bundle="${msg}" key="answer" /></a>
+												bundle="${msg}" key="delete" /></a>
+
+										<c:if test="${response.adminId eq null}">
+											<a href="" class="btn modal-trigger waves-effect"
+												data-target="modal26"
+												onclick="markResponse(${response.id}, '${response.name }', '${response.email }')"><fmt:message
+													bundle="${msg}" key="answer" /></a>
+										</c:if>
 									</div>
 								</div>
 							</div>

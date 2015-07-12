@@ -3,6 +3,7 @@ package com.mediateka.controller;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.mail.MessagingException;
@@ -15,9 +16,11 @@ import org.apache.log4j.Logger;
 import com.mediateka.annotation.Controller;
 import com.mediateka.annotation.Request;
 import com.mediateka.model.Report;
+import com.mediateka.model.User;
 import com.mediateka.model.enums.Role;
 import com.mediateka.model.enums.State;
 import com.mediateka.service.ReportService;
+import com.mediateka.service.UserService;
 import com.mediateka.util.EmailSender;
 
 @Controller
@@ -105,7 +108,7 @@ public class ResponseController {
 		if ((limit <= 0) || (limit > 100)){
 			return;
 		}
-		
+		HashMap<Integer, String> admins = new HashMap<Integer, String>();
 		List<Report> reports = ReportService.getResponses(limit, offset);
 		for (Report r : reports){
 			if (r.getState() == State.ACTIVE){
@@ -113,8 +116,14 @@ public class ResponseController {
 				ReportService.updateReport(r);
 				r.setState(State.ACTIVE);
 			}
+			
+			if (r.getAdminId() != null){
+				User admin = UserService.getUserById(r.getAdminId());
+				admins.put(r.getAdminId(), admin.getFirstName());
+			}
 		}
 
+		request.setAttribute("admins", admins);
 		Integer totalReports = ReportService.getNumberOfAllReports();
 		
 		request.setAttribute("responses", reports);
@@ -230,18 +239,18 @@ public class ResponseController {
 			return;
 		}
 
-		email = ReportService.getReportById(reportId).getEmail();
+		Report report =ReportService.getReportById(reportId); 
+		if (report == null) {
+			System.out.println("r3");
+			return;
+		}
+		email = report.getEmail();
 		text = request.getParameter("text");
 		if ((email == null) || (text == null)) {
 			System.out.println("r2");
 			return;
 		}
 
-		Report report = ReportService.getReportById(reportId);
-		if (report == null) {
-			System.out.println("r3");
-			return;
-		}
 
 		// quote report body
 		StringBuilder sb = new StringBuilder();
@@ -263,6 +272,9 @@ public class ResponseController {
 
 		System.out.println(mailBody);
 		EmailSender.sendMail(email, "Mediateka", mailBody);
-		System.out.println("ok");
+
+		report.setAdminId((Integer)request.getSession().getAttribute("userId"));
+		report.setResponse(mailBody);
+		ReportService.updateReport(report);
 	}
 }
