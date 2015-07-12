@@ -148,11 +148,13 @@
 					</c:if>
 				</c:when>
 				<c:otherwise>
-					<text align="center">
-					<h4>
-						<fmt:message bundle="${msg}" key="login_to_see_more" />
-					</h4>
-					</text>
+					<c:if test="${!(userRole eq Role.ADMIN)}">
+						<text align="center">
+						<h4>
+							<fmt:message bundle="${msg}" key="login_to_see_more" />
+						</h4>
+						</text>
+					</c:if>
 				</c:otherwise>
 			</c:choose>
 		</div>
