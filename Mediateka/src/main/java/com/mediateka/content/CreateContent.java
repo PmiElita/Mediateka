@@ -184,9 +184,9 @@ public class CreateContent {
 					List<Media> videos = new ArrayList<Media>();
 					List<Media> audios = new ArrayList<Media>();
 					mediaMap.put(record.getId(),
-							MediaService.getMediaContentGroupId(record.getId()));
+							MediaService.getMediaByContentGroupId(record.getId()));
 					List<Media> medias = MediaService
-							.getMediaContentGroupId(record.getId());
+							.getMediaByContentGroupId(record.getId());
 					if (medias != null) {
 						for (Media media : medias) {
 							System.out.println(media);

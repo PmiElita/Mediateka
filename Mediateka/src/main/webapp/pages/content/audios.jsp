@@ -111,7 +111,7 @@
 					<div class="row">
 						<h4 class="image-cover-t"><fmt:message bundle="${msg }" key="club_audios.audios" /></h4>
 						<div class="col s9">
-							<a title="??Add audio??" href="" data-target="addAudio"
+							<a title='<fmt:message bundle="${msg }" key="club_audios.add_file"/>' href="" data-target="addAudio"
 								class="modal-trigger"> <span><i
 									class="medium mdi-av-queue"></i></span>
 							</a>

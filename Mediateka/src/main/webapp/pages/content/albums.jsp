@@ -68,7 +68,7 @@
 						</h4>
 					</div>
 					<div class="row" style="margin-top: -5em;">
-						<a title="Add Album" href="" data-target="addAlbum"
+						<a title='<fmt:message bundle="${msg }" key="albums.add_album"/>' href="" data-target="addAlbum"
 							class="modal-trigger"> <span style="margin-left:5em"><i
 								class="medium mdi-av-queue"></i></span>
 						</a>

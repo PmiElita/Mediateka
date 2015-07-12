@@ -59,8 +59,8 @@
 						<h4 class="image-cover-t center">
 							<fmt:message bundle="${msg }" key="club_videos.videos" />
 						</h4>
-						<div class="col s9" style="margin-top:-3em">
-							<a title="??Add video" href="" data-target="addVideo"
+						<div class="col s9" style="margin-top: -3em">
+							<a title='<fmt:message bundle="${msg }" key="club_videos.add_file"/>' href="" data-target="addVideo"
 								class="modal-trigger"> <span><i
 									class="medium mdi-av-queue"></i></span>
 							</a>
@@ -101,8 +101,8 @@
 							<div class="file-field input-field">
 								<input class="file-path validate" type="hidden" />
 								<div class="btn">
-									<span>fmt:message bundle="${msg }"
-										key="club_videos.choose_files"/></span> <input type="file" id="video"
+									<span><fmt:message bundle="${msg }"
+											key="club_videos.choose_files" > </fmt:message> </span> <input type="file" id="video"
 										multiple name="video" accept="video/*" />
 								</div>
 								<label id="number" hidden="true">1</label>

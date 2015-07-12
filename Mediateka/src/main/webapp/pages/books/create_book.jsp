@@ -9,9 +9,6 @@
 
 <%@page import="com.mediateka.model.enums.Role"%>
 
-<fmt:setLocale value="${locale}" />
-<fmt:setBundle basename="menu" />
-<fmt:requestEncoding value="utf-8" />
 
 <html>
 <head>
