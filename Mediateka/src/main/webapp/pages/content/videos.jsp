@@ -8,6 +8,8 @@
 <%@page import="com.mediateka.model.enums.Role"%>
 
 
+<fmt:setLocale value="${cookie.lang.value}" />
+<fmt:setBundle basename="translations/club_page" var="msg" />
 
 <html>
 

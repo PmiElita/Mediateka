@@ -1,8 +1,15 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<fmt:setLocale value="${cookie.lang.value}" />
+<fmt:setBundle basename="translations/crop" var="msg" />
+
 <!DOCTYPE html>
 <html>
 <head lang="en">
 <meta charset="UTF-8">
-<title>Crop Box</title>
+<title><fmt:message bundle="${msg }" key="crop_box" /></title>
 <link rel="stylesheet" href="pages/event/crop/crop.css" type="text/css" />
 <style>
 .crop-container {
@@ -25,7 +32,9 @@
 
 					<div class="imageBox">
 						<div class="thumbBox"></div>
-						<div class="spinner" style="display: none">Loading...</div>
+						<div class="spinner" style="display: none">
+							<fmt:message bundle="${msg }" key="loading" />
+						</div>
 					</div>
 					<div class="action" style="margin-top: -0.8em">
 
@@ -34,8 +43,9 @@
 								<div class="file-field input-field col s3 offset-s3">
 									<input class="file-path validate" type="hidden" />
 									<div class="btn" style="width: 100%">
-										<span>Choose image</span> <input type="file" id="file"
-											name="image" onchange="readURL(this);" accept="image/*" />
+										<span><fmt:message bundle="${msg }" key="choose_image" /></span>
+										<input type="file" id="file" name="image"
+											onchange="readURL(this);" accept="image/*" />
 									</div>
 								</div>
 							</form>
@@ -51,7 +61,9 @@
 						</div>
 						<div class="row" style="margin-top: -1em">
 							<button class="btn col s12" id="btnCrop" type="submit"
-								form="clubAvaForm" name="action">Confirm</button>
+								form="clubAvaForm" name="action">
+								<fmt:message bundle="${msg }" key="confirm" />
+							</button>
 						</div>
 					</div>
 				</div>

@@ -25,6 +25,7 @@
 		black 0.0 0.0 3.0px, black 0.0 0.0 3.0px, black 0.0 0.0 3.0px;
 }
 </style>
+<jsp:include page="send_email_to_members_form.jsp" />
 </head>
 
 
@@ -94,6 +95,12 @@
 										<a class="btn" href="EventUsers?eventId=${event.id }"
 											style="width: 15em"><fmt:message bundle="${msg}"
 												key="look_participants" /></a>
+									</div>
+									<div class="col s4" id="6">
+										<a href="" data-target="modal_send_email_to_event_members"
+											class="modal-trigger waves-effect btn"> <fmt:message
+												bundle="${msg}" key="send_email_to_event_members" />
+										</a>
 									</div>
 								</c:if>
 								<c:if test="${event.state eq State.BLOCKED}">

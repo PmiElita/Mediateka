@@ -26,10 +26,12 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.mail.MessagingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.log4j.Logger;
 
 import com.mediateka.annotation.Controller;
@@ -51,6 +53,7 @@ import com.mediateka.model.enums.EventType;
 import com.mediateka.model.enums.MediaType;
 import com.mediateka.model.enums.Role;
 import com.mediateka.model.enums.State;
+import com.mediateka.service.ClubEventMemberService;
 import com.mediateka.service.ClubService;
 import com.mediateka.service.ContentGroupService;
 import com.mediateka.service.EventService;
@@ -58,6 +61,7 @@ import com.mediateka.service.MediaService;
 import com.mediateka.service.ProfessionService;
 import com.mediateka.service.UserService;
 import com.mediateka.util.DateConverter;
+import com.mediateka.util.EmailSender;
 import com.mediateka.util.FileLoader;
 import com.mediateka.util.FormValidator;
 import com.mediateka.util.ObjectFiller;
@@ -1178,4 +1182,75 @@ public class EventController {
 		request.removeAttribute("eventId");
 	}
 
+	
+	
+	
+	@Request(url = "sendEmailToEventMembers", method = "post")
+	public static void sendEmailToClubMembersPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException,
+			ReflectiveOperationException, SQLException, MessagingException {
+
+		String eventIdString = request.getParameter("eventId");
+		String emailSubject = request.getParameter("subject");
+		String emailBody = request.getParameter("message");
+
+		if (eventIdString == null) {
+			response.sendRedirect("index");
+			return;
+		}
+		Integer eventId = Integer.parseInt(eventIdString);
+		if (eventId == null) {
+			response.sendRedirect("index");
+			return;
+		}
+
+		if ((emailBody == null) || (emailSubject == null)) {
+			response.sendRedirect("index");
+			return;
+		}
+
+		// check if you are the creator of the club
+		Integer myId = (Integer) request.getSession().getAttribute("userId");
+
+		if (myId == null) {
+			response.sendRedirect("index");
+			return;
+		}
+
+		List<ClubEventMember> members = ClubEventMemberService
+				.getClubEventMemberByEventId(eventId);
+		if (members == null) {
+			response.sendRedirect("index");
+			return;
+		}
+
+		boolean IAmTheEventCreator = false;
+		for (ClubEventMember member : members) {
+			if ((member.getUserId().equals(myId))
+					&& (member.getType() == ClubEventMemberType.CREATOR)) {
+				IAmTheEventCreator = true;
+				break;
+			}
+		}
+
+		if (!IAmTheEventCreator) {
+			response.sendRedirect("index");
+			return;
+		}
+
+		// send emails here
+		String escapedBody = StringEscapeUtils.escapeHtml4(emailBody);
+		for (ClubEventMember member : members) {
+			if (member.getUserId() == myId) {
+				continue;
+			}
+
+			String memberEmail = UserService.getUserById(member.getUserId())
+					.getEmail();
+			EmailSender.sendMail(memberEmail, emailSubject, escapedBody);
+		}
+
+		String myEmail = UserService.getUserById(myId).getEmail();
+		EmailSender.sendMail(myEmail, emailSubject, escapedBody);
+	}
 }

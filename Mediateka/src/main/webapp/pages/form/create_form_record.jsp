@@ -5,7 +5,7 @@
 
 
 <fmt:setLocale value="${cookie.lang.value}" />
-<fmt:setBundle basename="translations/create_event" var="msg" />
+<fmt:setBundle basename="translations/forms" var="msg" />
 <fmt:requestEncoding value="utf-8" />
 
 <!DOCTYPE html>
@@ -26,7 +26,10 @@
 			</div>
 
 			<div class="container section white">
-				<h4>Create form record:</h4>
+				<h4>
+					<fmt:message bundle="${msg }"
+						key="create_form_record.create_form_record" />
+				</h4>
 
 				${message}
 				<form id="create_form_record" action="CreateFormRecord"
@@ -34,12 +37,15 @@
 
 					<div class="row">
 						<div class="input-field col s6">
-							<p>Form ID</p>
-							<input id="formId" name="formId" required="required" type="text" value ="${formId }">
+							<p><fmt:message bundle="${msg }" key="create_form_record.form_id" /></p>
+							<input id="formId" name="formId" required="required" type="text"
+								value="${formId }">
 						</div>
 
 						<div class="input-field col s6">
-							<p>Time till</p>
+							<p>
+								<fmt:message bundle="${msg }" key="create_form_record.time_till" />
+							</p>
 							<input data-field="time" type="text" id="timeTill"
 								name="timeTill" required="required">
 							<div id="dtBox1"></div>
@@ -47,36 +53,44 @@
 					</div>
 
 					<div class="row">
-						<h5>Goal:</h5>
+						<h5>
+							<fmt:message bundle="${msg }" key="create_form_record.goal" />
+						</h5>
 
 						<fieldset>
 							<div class="row">
-								<div class = " input-field col s4 right">
-									<p>Book ID</p>
+								<div class=" input-field col s4 right">
+									<p>
+										<fmt:message bundle="${msg }" key="create_form_record.book_id" />
+									</p>
 									<input id="bookId" name="book" type="text">
 								</div>
 								<div class="col s2 right">
-									<input type="radio" name="goal" value="book" id="bookRadio" checked
-										style="margin-top: 3em">Book
-									
-								   
+									<input type="radio" name="goal" value="book" id="bookRadio"
+										checked style="margin-top: 3em">
+									<fmt:message bundle="${msg }" key="create_form_record.book" />
+
+
 								</div>
-							
+
 								<div class="input-field col s6 left">
-									<p>Book name</p>
-									<input id="bookName" name="bookName" type="text" autocomplete="off">
+									<p><fmt:message bundle="${msg }" key="create_form_record.book_name" /></p>
+									<input id="bookName" name="bookName" type="text"
+										autocomplete="off">
 								</div>
 							</div>
 
 							<div class="row">
 
 								<div class="col s6 right">
-									<input type="radio" name="goal" value="event" id ="eventRadio">Event
+									<input type="radio" name="goal" value="event" id="eventRadio">
+									<fmt:message bundle="${msg }" key="create_form_record.event" />
 								</div>
 
 								<div class="col s6 left">
 									<select id="event" class="browser-default" name="event">
-										<option disabled value="">Event name</option>
+										<option disabled value=""><fmt:message
+												bundle="${msg }" key="create_form_record.event" /></option>
 										<c:forEach var="item" items="${events}">
 											<option value="${item.getId()}">
 												<c:out value="${item.getName()}" /></option>
@@ -87,13 +101,18 @@
 
 							<div class="row">
 								<div class="col s6 right">
-									<input type="radio" name="goal" value="other">Other
+									<input type="radio" name="goal" value="other">
+									<fmt:message bundle="${msg }" key="create_form_record.other" />
 								</div>
 
 								<div class="col s6 left">
 									<fieldset class="col s12">
-										<input type="radio" name="other" value="WI_FI" checked>Wi-fi
-										<input type="radio" name="other" value="INTERNET">Internet<br>
+										<input type="radio" name="other" value="WI_FI" checked>
+										<fmt:message bundle="${msg }" key="create_form_record.wi_fi" />
+										<input type="radio" name="other" value="INTERNET">
+										<fmt:message bundle="${msg }"
+											key="create_form_record.internet" />
+										<br>
 									</fieldset>
 								</div>
 							</div>
@@ -102,7 +121,7 @@
 
 
 					<div class="row">
-						Comment:
+						<fmt:message bundle="${msg }" key="create_form_record.comment" />
 						<textarea name="comment" class="materialize-textarea info">
 					</textarea>
 						<input type="submit" value="Create form record" class="btn">
@@ -112,10 +131,10 @@
 		</div>
 	</div>
 	<script type="text/javascript">
-	function setInvalid(element){
-	element.setCustomValidity('No book with such book ID');
-	element.setAttribute('class', 'validate invalid');
-}
+		function setInvalid(element) {
+			element.setCustomValidity('<fmt:message bundle="${msg }" key="create_form_record.no_book_with_such_id" />');
+			element.setAttribute('class', 'validate invalid');
+		}
 	</script>
 	<jsp:include page="../general/footer.jsp" />
 </body>
