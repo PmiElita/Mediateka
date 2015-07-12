@@ -1234,9 +1234,6 @@ public class EventController {
 		request.removeAttribute("eventId");
 	}
 
-	
-	
-	
 	@Request(url = "sendEmailToEventMembers", method = "post")
 	public static void sendEmailToClubMembersPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
@@ -1290,19 +1287,42 @@ public class EventController {
 			return;
 		}
 
-		// send emails here
-		String escapedBody = StringEscapeUtils.escapeHtml4(emailBody);
-		for (ClubEventMember member : members) {
-			if (member.getUserId() == myId) {
-				continue;
+		
+		
+		
+		Runnable asyncEmailSender = new Runnable() {
+			@Override
+			public void run() {
+				try {
+					String escapedBody = StringEscapeUtils
+							.escapeHtml4(emailBody);
+					for (ClubEventMember member : members) {
+						if (member.getUserId() == myId) {
+							continue;
+						}
+
+						String memberEmail = null;
+
+						memberEmail = UserService.getUserById(
+								member.getUserId()).getEmail();
+
+						EmailSender.sendMail(memberEmail, emailSubject,
+								escapedBody);
+
+					}
+
+					String myEmail = UserService.getUserById(myId).getEmail();
+
+					EmailSender.sendMail(myEmail, emailSubject, escapedBody);
+					
+				} catch (MessagingException | ReflectiveOperationException | SQLException e) {
+					// Do nothing. 
+				}
+
 			}
+		};
 
-			String memberEmail = UserService.getUserById(member.getUserId())
-					.getEmail();
-			EmailSender.sendMail(memberEmail, emailSubject, escapedBody);
-		}
-
-		String myEmail = UserService.getUserById(myId).getEmail();
-		EmailSender.sendMail(myEmail, emailSubject, escapedBody);
+		// send mails here
+		new Thread(asyncEmailSender).start();
 	}
 }
