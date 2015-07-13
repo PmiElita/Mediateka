@@ -13,9 +13,6 @@
 
 <head>
 
-<script src="js/jssor.js"></script>
-<script src="js/jssor.slider.js"></script>
-
 </head>
 
 

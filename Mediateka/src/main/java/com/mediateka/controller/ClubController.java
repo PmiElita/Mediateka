@@ -235,7 +235,24 @@ public class ClubController {
 		if (contentGroup.getEventId() != null) {
 			eventId = contentGroup.getEventId();
 		}
-		CreateContent.setContent(request, response, albums);
+		Map<ContentGroup, PathCountPair> result = new LinkedHashMap<ContentGroup, PathCountPair>();
+		if (albums!=null){
+			
+		for (ContentGroup album : albums) {
+			String path = null;
+			Media media = MediaService
+					.getFirstMediaByContentGroupId(album.getId());
+			if (media != null) {
+				path = media.getPath();
+			}
+			result.put(
+					album,
+					new PathCountPair(path,
+							MediaService
+									.getMediaCountByContentGroupId(album
+											.getId())));
+		}
+		}
 
 		if (clubId != 0) {
 			request.setAttribute("clubId", clubId);
@@ -243,7 +260,7 @@ public class ClubController {
 		if (eventId != 0) {
 			request.setAttribute("eventId", eventId);
 		}
-
+		request.setAttribute("albums", result);
 		request.setAttribute("index", request.getParameter("index"));
 
 		request.getRequestDispatcher("pages/content/albumList.jsp").forward(

@@ -47,7 +47,7 @@
 					</div>
 				</div>
 				<div class="col s9">
-					<div id="selectedImages" class="row"></div>
+					<div id="selectedFiles" class="row"></div>
 				</div>
 			</div>
 		</form>
@@ -88,7 +88,7 @@
 			if (this.status == 200) {
 				document.getElementById("loadAlbumForm").reset();
 				document.getElementById("name").value = "";
-				document.getElementById("selectedImages").innerHTML = "";
+				document.getElementById("selectedFiles").innerHTML = "";
 				storedImages = [];
 				alert(JSON.stringify(e.currentTarget));
 				var responseJSON = JSON.parse(e.currentTarget.responseText);
