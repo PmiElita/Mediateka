@@ -171,7 +171,7 @@
 				// 				$('#audioPlayer').remove();
 				// 				$('.playing').removeClass('playing');
 				$('#addVideo').closeModal();
-				Materialize.toast(' items uploaded.', 2000);
+				Materialize.toast("<fmt:message bundle="${msg }" key="toast.files_uploaded" />", 2000);
 			}
 		}
 

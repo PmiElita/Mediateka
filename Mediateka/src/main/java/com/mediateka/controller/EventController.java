@@ -10,6 +10,7 @@ import static com.mediateka.service.ContentGroupService.getContentGroupByEventId
 import static com.mediateka.service.EventService.callSaveEvent;
 import static com.mediateka.service.EventService.getEventById;
 import static com.mediateka.service.EventService.updateEvent;
+import static com.mediateka.service.MediaService.callSaveMedia;
 import static com.mediateka.service.MediaService.getMediaById;
 import static com.mediateka.service.UserService.getUserById;
 import static com.mediateka.util.DateConverter.convertIntoTimestamp;
@@ -50,6 +51,7 @@ import com.mediateka.model.User;
 import com.mediateka.model.enums.ClubEventMemberType;
 import com.mediateka.model.enums.ContentGroupType;
 import com.mediateka.model.enums.EventType;
+import com.mediateka.model.enums.MediaType;
 import com.mediateka.model.enums.Role;
 import com.mediateka.model.enums.State;
 import com.mediateka.service.ClubEventMemberService;
@@ -1249,40 +1251,25 @@ public class EventController {
 			return;
 		}
 
-		Runnable asyncEmailSender = new Runnable() {
-			@Override
-			public void run() {
-				try {
-					String escapedBody = StringEscapeUtils
-							.escapeHtml4(emailBody);
-					for (ClubEventMember member : members) {
-						if (member.getUserId() == myId) {
-							continue;
-						}
-
-						String memberEmail = null;
-
-						memberEmail = UserService.getUserById(
-								member.getUserId()).getEmail();
-
-						EmailSender.sendMail(memberEmail, emailSubject,
-								escapedBody);
-
-					}
-
-					String myEmail = UserService.getUserById(myId).getEmail();
-
-					EmailSender.sendMail(myEmail, emailSubject, escapedBody);
-
-				} catch (MessagingException | ReflectiveOperationException
-						| SQLException e) {
-					// Do nothing.
-				}
-
-			}
-		};
-
 		// send mails here
-		new Thread(asyncEmailSender).start();
+		
+		String escapedBody = StringEscapeUtils.escapeHtml4(emailBody);
+		for (ClubEventMember member : members) {
+			if (member.getUserId() == myId) {
+				continue;
+			}
+
+			String memberEmail = null;
+
+			memberEmail = UserService.getUserById(member.getUserId())
+					.getEmail();
+
+			EmailSender.sendMail(memberEmail, emailSubject, escapedBody);
+
+		}
+
+		String myEmail = UserService.getUserById(myId).getEmail();
+
+		EmailSender.sendMail(myEmail, emailSubject, escapedBody);
 	}
 }

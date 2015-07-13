@@ -2,7 +2,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
+<fmt:setLocale value="${cookie.lang.value}" />
+<fmt:setBundle basename="translations/index" var="msg" scope="session" />
 <%@page import="com.mediateka.model.enums.EventType"%>
 
 <fmt:setLocale value="${locale}" />
@@ -53,8 +56,7 @@
 											</div></a>
 									</div> <i class="mdi-navigation-close right"></i></span><br> <br>
 								<p>
-								<div style="color: green;">Event time:</div>
-								<br>
+								<div style="color: green;"><fmt:message bundle="${msg }" key="event_time" /> </div>
 								<c:out value="${dates[status.index]}" />
 								<c:if test="${item.type eq EventType.MEETING}">
 									<c:out value="${times[status.index]}" />
@@ -62,7 +64,7 @@
 								</p>
 								<br>
 								<p>
-								<div style="color: green;">Description:</div>
+								<div style="color: green;"><fmt:message bundle="${msg }" key="description" /></div>
 								<c:out value="${item.description}" />
 								</p>
 								<br>

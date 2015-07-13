@@ -79,7 +79,7 @@
 // 				$('.playing').removeClass('playing');
 				$('#addAudio').closeModal();
 				$('#audiojs_wrapper' + (document.getElementById("index").textContent)).unwrap();				
-				Materialize.toast(' items uploaded.', 2000);
+				Materialize.toast("<fmt:message bundle="${msg }" key="toast.files_uploaded" />", 2000);
 			}
 		}
 
