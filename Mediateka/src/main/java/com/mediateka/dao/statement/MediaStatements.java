@@ -39,4 +39,10 @@ public class MediaStatements {
 
 	public static final String[] CALL_INSERT_MEDIA_ORDER = { "name", "type",
 			"path", "description", "content_group_id", "state" };
+	
+	public static final String SELECT_FRIST_MEDIA_BY_CONTENT_GROUP_ID = "SELECT * FROM media WHERE content_group_id =? AND state='ACTIVE' ORDER BY id LIMIT 0,1";;
+	public static final String[] SELECT_FRIST_MEDIA_BY_CONTENT_GROUP_ID_ORDER = { "content_group_id" };
+
+	public static final String SELECT_MEDIA_COUNT_BY_CONTENT_GROUP_ID = "SELECT count(*) FROM media  WHERE content_group_id = ? AND state='ACTIVE'";
+	public static final String[] SELECT_MEDIA_COUNT_BY_CONTENT_GROUP_ID_ORDER = {"content_group_id"};
 }
