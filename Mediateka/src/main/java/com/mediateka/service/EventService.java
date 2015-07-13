@@ -64,5 +64,9 @@ public class EventService {
 	public static Integer getNumberOfRequestedEvents() throws SQLException {
 		return EventDAO.getNumberOfRequestedEvents();
 	}
+	
+	public static int getNotDeletedEventsCount() throws SQLException {
+		return EventDAO.getNotDeletedEventsCount();
+	}
 
 }

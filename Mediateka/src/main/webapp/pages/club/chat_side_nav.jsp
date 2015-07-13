@@ -95,6 +95,8 @@ var isShowMessage;
 	window.setInterval(function() {
 		if (lastMessageTime != null) {
 			if (new Date().getTime() - lastMessageTime.getTime() > 277000) {
+				var clubId = document.getElementById("clubId").innerHTML;
+				var userId = document.getElementById("userId").value;
 				var jsonObj = {
 					"userId" : userId,
 					"clubId" : clubId,

@@ -56,7 +56,7 @@
 
 					<div class="row" style="margin-left: -5em; margin-top: 4em">
 
-						<div class="col s3">
+						<div class="col s4">
 							<a title="<fmt:message bundle="${msg}" key="find_book" />"
 								href="searchBook">
 
@@ -75,7 +75,7 @@
 							</a>
 						</div>
 
-						<div class="col s3">
+						<div class="col s4">
 							<a title="<fmt:message bundle="${msg}" key="create_book" />"
 								href="CreateBook">
 								<div class="col s12 m8 offset-m2 l6 offset-l3 my-card">
@@ -92,24 +92,8 @@
 								</div>
 							</a>
 						</div>
-						<div class="col s3">
-							<a title="<fmt:message bundle="${msg}" key="update_book" />"
-								href="UpdateBook">
-								<div class="col s12 m8 offset-m2 l6 offset-l3 my-card">
-									<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
-										<div style="margin-top: 2em">
-											<div class="row valign-wrapper">
-												<div class="col s9">
-													<img src="images/admin/book_update.png" alt=""
-														class="responsive-img" />
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</a>
-						</div>
-						<div class="col s3">
+						
+						<div class="col s4">
 							<a title="<fmt:message bundle="${msg}" key="book_statistics" />"
 								href="bookStatistics">
 								<div class="col s12 m8 offset-m2 l6 offset-l3 my-card">

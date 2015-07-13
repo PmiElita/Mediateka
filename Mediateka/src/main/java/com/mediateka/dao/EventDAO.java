@@ -6,6 +6,7 @@ import static com.mediateka.dao.statement.EventStatements.CALL_INSERT_EVENT_ORDE
 import static com.mediateka.dao.statement.EventStatements.INSERT_EVENT;
 import static com.mediateka.dao.statement.EventStatements.INSERT_EVENT_ORDER;
 import static com.mediateka.dao.statement.EventStatements.SELECT_COUNT_OF_REQUESTED_EVENTS;
+import static com.mediateka.dao.statement.EventStatements.SELECT_EVENTS_COUNT_NOT_DELETED;
 import static com.mediateka.dao.statement.EventStatements.SELECT_EVENT_ALL;
 import static com.mediateka.dao.statement.EventStatements.SELECT_EVENT_BY_CLUB_ID;
 import static com.mediateka.dao.statement.EventStatements.SELECT_EVENT_BY_CLUB_ID_ORDER;
@@ -180,6 +181,16 @@ public class EventDAO {
 			return rs.getInt(1);
 		}
 
+	}
+	
+	public static int getNotDeletedEventsCount() throws SQLException {
+		try (Connection connection = ConnectionManager.getConnection()) {
+			PreparedStatement statement = connection
+					.prepareStatement(SELECT_EVENTS_COUNT_NOT_DELETED);
+			ResultSet rs = statement.executeQuery();
+			rs.next();
+			return rs.getInt(1);
+		}
 	}
 
 }

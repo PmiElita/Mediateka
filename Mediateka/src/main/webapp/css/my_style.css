@@ -98,6 +98,21 @@ section {
 	border-radius:5%;
 }
 
+.my-album-card {
+	width: 16.0em;
+	height: 11.0em;
+	border-radius:5%;
+}
+
+.my-back-card:hover {
+	background-color: #e8eaf6;
+	min-width:17.5em;
+}
+
+.my-back-card img {
+	margin-left: 1.0em;
+}
+
 .section white .container #infoText {
 	height: 20.0em;
 }

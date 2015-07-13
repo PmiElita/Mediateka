@@ -27,7 +27,7 @@
 											<img src="images/admin/users.png" alt=""
 												class="circle responsive-img" />
 										</div>
-										<div class="my-badge">4</div>
+										<div class="my-badge">${usersCount }</div>
 									</div>
 								</div>
 							</div>
@@ -48,9 +48,9 @@
 											<img src="images/admin/clubs.png" alt=""
 												class="circle responsive-img">
 										</div>
-										<div class="my-badge">
+										<div class="my-badge">${clubsCount}
 											<c:if test="${requestedClubCount > 0}">
-													+<c:out value="${requestedClubCount}" />
+													(+<c:out value="${requestedClubCount}" />)
 												<p>
 											</c:if>
 										</div>
@@ -74,9 +74,9 @@
 											<img style="margin-top: 0em" src="images/admin/events.png"
 												alt="" class="circle responsive-img">
 										</div>
-										<div class="my-badge" style="margin-left: 0.75em">
+										<div class="my-badge" style="margin-left: 0.75em"> ${eventsCount}
 											<c:if test="${requestedEventCount > 0}">
-													+<c:out value="${requestedEventCount}" />
+													(+<c:out value="${requestedEventCount}" />)
 												<p>
 											</c:if>
 										</div>
@@ -102,7 +102,7 @@
 											<img src="images/admin/info.png" alt=""
 												class="circle responsive-img">
 										</div>
-										<div class="my-badge" style="margin-left: 0.4em">1</div>
+										<div class="my-badge" style="margin-left: 0.4em"></div>
 									</div>
 								</div>
 							</div>
@@ -130,7 +130,7 @@
 											<img src="images/admin/books.png" alt=""
 												class="circle responsive-img">
 										</div>
-										<div class="my-badge" style="margin-left: 0.2em">88</div>
+										<div class="my-badge" style="margin-left: 0.2em">${booksCount }</div>
 									</div>
 								</div>
 							</div>

@@ -25,6 +25,7 @@ import org.apache.log4j.Logger;
 
 import com.mediateka.annotation.Controller;
 import com.mediateka.annotation.Request;
+import com.mediateka.annotation.Roles;
 import com.mediateka.comparator.ClubsByMembersNumber;
 import com.mediateka.comparator.EventsByDate;
 import com.mediateka.comparator.FormRecordsByDateFrom;
@@ -40,6 +41,7 @@ import com.mediateka.model.enums.ContentGroupType;
 import com.mediateka.model.enums.EventType;
 import com.mediateka.model.enums.Role;
 import com.mediateka.model.enums.State;
+import com.mediateka.service.BookService;
 import com.mediateka.service.ClubService;
 import com.mediateka.service.ContentGroupService;
 import com.mediateka.service.EventService;
@@ -446,6 +448,7 @@ public class UserController {
 	}
 
 	@Request(url = "cabinet", method = "get")
+	@Roles({ Role.USER, Role.ADMIN})
 	public static void cabinetGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			ReflectiveOperationException, SQLException {
@@ -453,8 +456,7 @@ public class UserController {
 		Integer userId = (Integer) request.getSession().getAttribute("userId");
 
 		if (userId == null) {
-			request.getRequestDispatcher("pages/error404.jsp").forward(request,
-					response);
+			response.sendError(404);
 			return;
 		}
 
@@ -478,7 +480,14 @@ public class UserController {
 					ReportService.getNumberOfAllReports());
 			request.setAttribute("newReports",
 					ReportService.getNumberOfNewReports());
-
+            request.setAttribute("usersCount", UserService.getNotDeletedUsersCount());
+            
+            request.setAttribute("booksCount", BookService.getNotDeletedBooksCount());
+            
+            request.setAttribute("clubsCount", ClubService.getNotDeletedClubsCount());
+            
+            request.setAttribute("eventsCount", EventService.getNotDeletedEventsCount());
+            
 			request.getRequestDispatcher("pages/admin/admin.jsp").forward(
 					request, response);
 			break;
@@ -521,6 +530,7 @@ public class UserController {
 	}
 
 	@Request(url = "info", method = "get")
+	@Roles({ Role.ADMIN})
 	public static void infoGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			ReflectiveOperationException, SQLException {
@@ -584,6 +594,7 @@ public class UserController {
 	}
 
 	@Request(url = "updateInfo", method = "post")
+	@Roles({Role.ADMIN})
 	public static void infoPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			ReflectiveOperationException, SQLException {

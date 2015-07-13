@@ -18,12 +18,15 @@ import org.apache.log4j.Logger;
 import com.google.gson.Gson;
 import com.mediateka.annotation.Controller;
 import com.mediateka.annotation.Request;
+import com.mediateka.annotation.Roles;
 import com.mediateka.exception.WrongInputException;
 import com.mediateka.form.UserModificationForm;
 import com.mediateka.model.Profession;
 import com.mediateka.model.User;
 import com.mediateka.model.UserCard;
+import com.mediateka.model.enums.Role;
 import com.mediateka.model.enums.State;
+import com.mediateka.service.MediaService;
 import com.mediateka.service.ProfessionService;
 import com.mediateka.service.UserCardService;
 import com.mediateka.service.UserService;
@@ -37,6 +40,7 @@ public class ModifyUserController {
 	private static Logger logger = Logger.getLogger(UserController.class);
 
 	@Request(url = "modifyUser", method = "get")
+	@Roles({ Role.USER, Role.ADMIN})
 	public static void getModificationForm(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			SQLException, ReflectiveOperationException {
@@ -57,7 +61,7 @@ public class ModifyUserController {
 		request.setAttribute("birthDate", birthDate);
 		request.setAttribute("address", me.getAdress());
 		request.setAttribute("phone", me.getPhone());
-
+		request.setAttribute("imagePath", MediaService.getMediaById(me.getAvaId()).getPath().replace('\\', '/'));
 		request.setAttribute("professions",
 				ProfessionService.getProfessionAll());
 
@@ -66,6 +70,7 @@ public class ModifyUserController {
 	}
 
 	@Request(url = "modifyUser", method = "post")
+	@Roles({ Role.USER, Role.ADMIN})
 	public static void modifyUser(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			ReflectiveOperationException, SQLException,
@@ -117,6 +122,7 @@ public class ModifyUserController {
 	}
 
 	@Request(url = "modifyUserAjax", method = "post")
+	@Roles({ Role.USER, Role.ADMIN})
 	public static void modifyUserUsingAjax(HttpServletRequest request,
 			HttpServletResponse response) throws IllegalArgumentException,
 			ReflectiveOperationException, SQLException, ParseException,

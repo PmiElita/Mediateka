@@ -1,9 +1,6 @@
 package com.mediateka.content;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -147,7 +144,7 @@ public class CreateContent {
 			request.setAttribute("eventId", eventId);
 		}
 		request.setAttribute("index", request.getParameter("index"));
-
+		request.setAttribute("isNew", true);
 		request.getRequestDispatcher("pages/content/record_central.jsp")
 				.forward(request, response);
 

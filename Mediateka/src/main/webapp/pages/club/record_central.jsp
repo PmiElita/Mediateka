@@ -160,7 +160,7 @@ audio {
 		<div class="row">
 			 <ul class="collapsible comments" data-collapsible="accordion">
 		 <li>
-		 <div class="collapsible-header" ><i
+		 <div class="collapsible-header" onclick ="openBody(${record.id }, ${isNew });"><i
 	id="collapse-icon" class="mdi-communication-comment"></i><fmt:message bundle="${msg}" key="record_central.comments" /></div>
 		 <div class="collapsible-body  " id="colbody${record.id }" >
 

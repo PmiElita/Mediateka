@@ -18,6 +18,7 @@ import org.apache.log4j.Logger;
 
 import com.mediateka.annotation.Controller;
 import com.mediateka.annotation.Request;
+import com.mediateka.annotation.Roles;
 import com.mediateka.exception.WrongInputException;
 import com.mediateka.form.AnonymousUserRegistrationForm;
 import com.mediateka.form.PasswordChangingForm;
@@ -158,6 +159,7 @@ public class RegisterUserController {
 	 * @throws ServletException
 	 */
 	@Request(url = "anonymousRegisterNewUser", method = "post")
+	@Roles({ Role.ADMIN})
 	public static void anonymousRegisterNewUser(HttpServletRequest request,
 			HttpServletResponse response) throws ParseException,
 			SecurityException, IllegalArgumentException, IOException,

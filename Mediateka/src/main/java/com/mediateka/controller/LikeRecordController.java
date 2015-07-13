@@ -10,8 +10,10 @@ import javax.servlet.http.HttpSession;
 import com.google.gson.Gson;
 import com.mediateka.annotation.Controller;
 import com.mediateka.annotation.Request;
+import com.mediateka.annotation.Roles;
 import com.mediateka.model.ContentGroup;
 import com.mediateka.model.LikeRecord;
+import com.mediateka.model.enums.Role;
 import com.mediateka.service.ContentGroupService;
 import com.mediateka.service.LikeRecordService;
 
@@ -19,6 +21,7 @@ import com.mediateka.service.LikeRecordService;
 public class LikeRecordController {
 
 	@Request(url = "likes", method = "get")
+	@Roles({ Role.USER, Role.ADMIN})
 	public static void likeDislikeGet(HttpServletRequest request,
 			HttpServletResponse response) throws SQLException,
 			ReflectiveOperationException, IOException {

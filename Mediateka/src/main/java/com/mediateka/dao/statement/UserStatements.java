@@ -63,5 +63,6 @@ public class UserStatements {
 	public static final String[] SELECT_USER_BY_SOCIAL_ID_ORDER ={"social_id"};
 	
 	public static final String SELECT_USERS_LIMITED = "SELECT * FROM user WHERE state<>'DELETED' LIMIT ?,?";
-
+	
+	public static final String SELECT_USERS_COUNT_NOT_DELETED = "SELECT count(*) FROM user WHERE state <> 'DELETED'";
 }

@@ -161,4 +161,14 @@ public class ClubDAO {
 
 		}
 	}
+	
+	public static int getNotDeletedClubssCount() throws SQLException {
+		try (Connection connection = ConnectionManager.getConnection()) {
+			PreparedStatement statement = connection
+					.prepareStatement(ClubStatements.SELECT_CLUBS_COUNT_NOT_DELETED);
+			ResultSet rs = statement.executeQuery();
+			rs.next();
+			return rs.getInt(1);
+		}
+	}
 }

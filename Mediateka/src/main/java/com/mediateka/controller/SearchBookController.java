@@ -16,12 +16,14 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import com.mediateka.annotation.Controller;
 import com.mediateka.annotation.Request;
+import com.mediateka.annotation.Roles;
 import com.mediateka.comparator.BookByFormRecordCount;
 import com.mediateka.comparator.BooksByLibraryBookId;
 import com.mediateka.comparator.BooksByName;
 import com.mediateka.exception.WrongInputException;
 import com.mediateka.form.SearchBookForm;
 import com.mediateka.model.Book;
+import com.mediateka.model.enums.Role;
 import com.mediateka.service.BookLanguageService;
 import com.mediateka.service.BookMeaningService;
 import com.mediateka.service.BookService;
@@ -240,6 +242,7 @@ public class SearchBookController {
 	}
 	
 	@Request(url = "get_books_by_library_book_id_regexp", method = "get")
+	@Roles({Role.ADMIN})
 	public static void getBooksByLibraryBookIdRegexp(HttpServletRequest request,
 			HttpServletResponse response) throws SQLException,
 			ReflectiveOperationException, IOException {

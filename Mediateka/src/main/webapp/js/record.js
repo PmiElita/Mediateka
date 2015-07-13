@@ -288,3 +288,13 @@ function linkedVideoForm() {
 		}
 	}
 }
+function openBody(recordId,isNew){
+if (isNew){
+	var body=document.getElementById("colbody"+recordId);
+	if (body.style.display == "none"){
+		body.style.display = "block";
+	} else {
+	body.style.display ="none";
+	}
+}
+}

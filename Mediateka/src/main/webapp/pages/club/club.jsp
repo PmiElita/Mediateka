@@ -60,7 +60,7 @@
 	</div>
 
 
-
+<label hidden id="currentUserId">${userId }</label>
 	<jsp:include page="../general/footer.jsp" />
 
 </body>

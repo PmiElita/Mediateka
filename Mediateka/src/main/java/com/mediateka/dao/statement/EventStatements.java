@@ -42,5 +42,5 @@ public class EventStatements {
 			"ava_id" };
 
 	public static final String SELECT_COUNT_OF_REQUESTED_EVENTS = "SELECT count(*) FROM event WHERE state = 'REQUESTED'";
-
+	public static final String SELECT_EVENTS_COUNT_NOT_DELETED = "SELECT count(*) FROM event WHERE state<>'DELETED'";
 }

@@ -67,5 +67,6 @@ public class BookStatements {
 	
 	public static final String SELECT_BOOKS_BY_LIBRARY_BOOK_ID_REGEXP = "SELECT * FROM book WHERE library_book_id REGEXP ? AND state='ACTIVE'";
 
+	public static final String SELECT_BOOKS_COUNT_NOT_DELETED = "SELECT count(*) FROM book WHERE state <> 'DELETED'";
 	
 }

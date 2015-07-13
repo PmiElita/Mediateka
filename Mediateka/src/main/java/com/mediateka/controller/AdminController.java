@@ -20,6 +20,7 @@ import org.apache.log4j.Logger;
 import com.google.gson.Gson;
 import com.mediateka.annotation.Controller;
 import com.mediateka.annotation.Request;
+import com.mediateka.annotation.Roles;
 import com.mediateka.comparator.UsersByFullname;
 import com.mediateka.exception.WrongInputException;
 import com.mediateka.form.SearchUserForm;
@@ -41,6 +42,7 @@ public class AdminController {
 	private static final int USER_COUNT = 5;
 	
 	@Request(url="getMoreUsersForAdmin", method="get")
+	@Roles({ Role.ADMIN})
 	public static void getMoreUsersForAdmin(HttpServletRequest request, HttpServletResponse response) throws SQLException, ReflectiveOperationException, ServletException, IOException{
 		try {
 			String query =null;
@@ -87,6 +89,7 @@ public class AdminController {
 	}
 	
 	@Request(url = "get_users_by_regexp", method = "get")
+	@Roles({ Role.ADMIN})
 	public static void getUsersByRegexp(HttpServletRequest request,
 			HttpServletResponse response) throws SQLException,
 			ReflectiveOperationException, IOException {
@@ -117,6 +120,7 @@ public class AdminController {
 	}
 
 	@Request(url = "users", method = "get")
+	@Roles({ Role.ADMIN})
 	public static void showUsersGet(HttpServletRequest request,
 			HttpServletResponse response) throws IllegalArgumentException,
 			SecurityException, SQLException, ReflectiveOperationException,
@@ -158,6 +162,7 @@ public class AdminController {
 	}
 
 	@Request(url = "users", method = "post")
+	@Roles({ Role.ADMIN})
 	public static void showUsers(HttpServletRequest request,
 			HttpServletResponse response) throws IllegalArgumentException,
 			SecurityException, SQLException, ReflectiveOperationException,
@@ -198,6 +203,7 @@ public class AdminController {
 	}
 
 	@Request(url = "ckeckUsers", method = "post")
+	@Roles({ Role.ADMIN})
 	public static void checkUsers(HttpServletRequest request,
 			HttpServletResponse response) throws SecurityException,
 			IllegalArgumentException, IOException,
@@ -230,6 +236,7 @@ public class AdminController {
 	}
 
 	@Request(url = "blockUser", method = "post")
+	@Roles({ Role.ADMIN})
 	public static void blockUnblockUser(HttpServletRequest request,
 			HttpServletResponse response) throws ReflectiveOperationException,
 			SQLException, IOException {
@@ -286,6 +293,7 @@ public class AdminController {
 
 
 	@Request(url = "editUser", method = "get")
+	@Roles({ Role.ADMIN})
 	public static void editUserGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			ReflectiveOperationException, SQLException {
@@ -317,6 +325,7 @@ public class AdminController {
 
 	
 	@Request(url = "editUser", method = "post")
+	@Roles({ Role.ADMIN})
 	public static void editUserPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			ReflectiveOperationException, SQLException, ParseException {
@@ -359,6 +368,7 @@ public class AdminController {
 	}
 
 	@Request(url = "makeAdmin", method = "post")
+	@Roles({ Role.ADMIN})
 	public static void makeAdmin(HttpServletRequest request,
 			HttpServletResponse response) throws ReflectiveOperationException,
 			SQLException, IOException {

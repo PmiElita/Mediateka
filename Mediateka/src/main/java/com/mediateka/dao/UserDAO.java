@@ -125,8 +125,8 @@ public class UserDAO {
 			Transformer.valueIntoPreparedStatement(statement, user,
 					SELECT_USER_BY_FORM_ID_ORDER);
 			ResultSet resultSet = statement.executeQuery();
-			return Transformer
-					.transformResultSetIntoObject(resultSet, User.class);
+			return Transformer.transformResultSetIntoObject(resultSet,
+					User.class);
 		}
 	}
 
@@ -186,14 +186,14 @@ public class UserDAO {
 		}
 	}
 
-	public static List<User> getUsersByOneRegexp(String regexp, int offset, int limit)
-			throws SQLException, ReflectiveOperationException {
+	public static List<User> getUsersByOneRegexp(String regexp, int offset,
+			int limit) throws SQLException, ReflectiveOperationException {
 		try (Connection connection = ConnectionManager.getConnection()) {
 			CallableStatement statement = connection
 					.prepareCall(CALL_GET_USERS_BY_ONE_REGEXP);
 			statement.setString(1, regexp);
 			statement.setInt(2, offset);
-			statement.setInt(3,limit);
+			statement.setInt(3, limit);
 			ResultSet resultSet = statement.executeQuery();
 			return Transformer
 					.transformResultSetIntoList(resultSet, User.class);
@@ -209,7 +209,7 @@ public class UserDAO {
 			statement.setString(1, firstRegexp);
 			statement.setString(2, secondRegexp);
 			statement.setInt(3, offset);
-			statement.setInt(4,limit);
+			statement.setInt(4, limit);
 			ResultSet resultSet = statement.executeQuery();
 			return Transformer
 					.transformResultSetIntoList(resultSet, User.class);
@@ -217,8 +217,8 @@ public class UserDAO {
 	}
 
 	public static List<User> getUsersByThreeRegexp(String firstRegexp,
-			String secondRegexp, String thirdRegexp, int offset, int limit) throws SQLException,
-			ReflectiveOperationException {
+			String secondRegexp, String thirdRegexp, int offset, int limit)
+			throws SQLException, ReflectiveOperationException {
 		try (Connection connection = ConnectionManager.getConnection()) {
 			CallableStatement statement = connection
 					.prepareCall(CALL_GET_USERS_BY_THREE_REGEXP);
@@ -226,33 +226,48 @@ public class UserDAO {
 			statement.setString(2, secondRegexp);
 			statement.setString(3, thirdRegexp);
 			statement.setInt(4, offset);
-			statement.setInt(5,limit);
+			statement.setInt(5, limit);
 			ResultSet resultSet = statement.executeQuery();
 			return Transformer
 					.transformResultSetIntoList(resultSet, User.class);
 		}
 	}
-	
+
 	public static User getUserBySocialId(String socialId) throws SQLException,
 			ReflectiveOperationException {
 		try (Connection connection = ConnectionManager.getConnection()) {
-			PreparedStatement statement = connection.prepareStatement(SELECT_USER_BY_SOCIAL_ID);
+			PreparedStatement statement = connection
+					.prepareStatement(SELECT_USER_BY_SOCIAL_ID);
 			User user = new User();
 			user.setSocialId(socialId);
-			Transformer.valueIntoPreparedStatement(statement, user, SELECT_USER_BY_SOCIAL_ID_ORDER);
+			Transformer.valueIntoPreparedStatement(statement, user,
+					SELECT_USER_BY_SOCIAL_ID_ORDER);
 			ResultSet resultSet = statement.executeQuery();
-			return Transformer.transformResultSetIntoObject(resultSet, User.class);
+			return Transformer.transformResultSetIntoObject(resultSet,
+					User.class);
 		}
 	}
-	
-	public static List<User> getUsersByStateLimited( int offset,
-			int limit) throws SQLException, ReflectiveOperationException {
+
+	public static List<User> getUsersByStateLimited(int offset, int limit)
+			throws SQLException, ReflectiveOperationException {
 		try (Connection connection = ConnectionManager.getConnection()) {
-			PreparedStatement statement = connection.prepareStatement(SELECT_USERS_LIMITED);
+			PreparedStatement statement = connection
+					.prepareStatement(SELECT_USERS_LIMITED);
 			statement.setInt(1, offset);
 			statement.setInt(2, limit);
 			ResultSet resultSet = statement.executeQuery();
-			return Transformer.transformResultSetIntoList(resultSet, User.class);
+			return Transformer
+					.transformResultSetIntoList(resultSet, User.class);
+		}
+	}
+
+	public static int getNotDeletedUsersCount() throws SQLException {
+		try (Connection connection = ConnectionManager.getConnection()) {
+			PreparedStatement statement = connection
+					.prepareStatement(SELECT_USERS_COUNT_NOT_DELETED);
+			ResultSet rs = statement.executeQuery();
+			rs.next();
+			return rs.getInt(1);
 		}
 	}
 }

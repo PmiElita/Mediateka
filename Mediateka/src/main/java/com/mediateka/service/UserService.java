@@ -97,4 +97,8 @@ public class UserService {
 			throws SQLException, ReflectiveOperationException {
 		return UserDAO.getUsersByStateLimited(offset, limit);
 	}
+	
+	public static int getNotDeletedUsersCount() throws SQLException {
+		return UserDAO.getNotDeletedUsersCount();
+	}
 }

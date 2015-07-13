@@ -274,4 +274,14 @@ public class BookDAO {
 					.transformResultSetIntoList(resultSet, Book.class);
 		}
 	}
+	
+	public static int getNotDeletedBooksCount() throws SQLException {
+		try (Connection connection = ConnectionManager.getConnection()) {
+			PreparedStatement statement = connection
+					.prepareStatement(BookStatements.SELECT_BOOKS_COUNT_NOT_DELETED);
+			ResultSet rs = statement.executeQuery();
+			rs.next();
+			return rs.getInt(1);
+		}
+	}
 }

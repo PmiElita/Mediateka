@@ -17,6 +17,8 @@ import org.apache.log4j.Logger;
 
 import com.mediateka.annotation.Controller;
 import com.mediateka.annotation.Request;
+import com.mediateka.annotation.Roles;
+import com.mediateka.model.enums.Role;
 import com.mediateka.service.StatisticService;
 
 @Controller
@@ -26,6 +28,7 @@ public class StatisticsController {
 	private static Logger logger = Logger.getLogger(UserController.class);
 
 	@Request(url = "bookStatistics", method = "get")
+	@Roles({ Role.ADMIN})
 	public static void getBooksStatistics(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			SQLException {
@@ -83,6 +86,7 @@ public class StatisticsController {
 	}
 
 	@Request(url = "userStatistics", method = "get")
+	@Roles({Role.ADMIN})
 	public static void getUserStatistics(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			SQLException {

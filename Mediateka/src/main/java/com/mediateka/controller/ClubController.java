@@ -30,6 +30,7 @@ import org.apache.log4j.Logger;
 
 import com.mediateka.annotation.Controller;
 import com.mediateka.annotation.Request;
+import com.mediateka.annotation.Roles;
 import com.mediateka.comparator.ChatMessageByCreationDate;
 import com.mediateka.comparator.UsersByName;
 import com.mediateka.content.CreateContent;
@@ -67,6 +68,7 @@ public class ClubController {
 	private static Logger logger = Logger.getLogger(ClubController.class);
 
 	@Request(url = "createClub", method = "post")
+	@Roles({ Role.USER, Role.ADMIN})
 	public static void createClubPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			SQLException, ReflectiveOperationException {
@@ -112,6 +114,7 @@ public class ClubController {
 	}
 
 	@Request(url = "editClub", method = "get")
+	@Roles({ Role.USER, Role.ADMIN})
 	public static void editClubGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			ReflectiveOperationException, SQLException {
@@ -154,6 +157,7 @@ public class ClubController {
 	}
 
 	@Request(url = "editClub", method = "post")
+	@Roles({ Role.USER, Role.ADMIN})
 	public static void editClubPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			SQLException, ReflectiveOperationException {
@@ -202,6 +206,7 @@ public class ClubController {
 	}
 
 	@Request(url = "loadAlbum", method = "post")
+	@Roles({ Role.USER, Role.ADMIN})
 	public static void createAlbumPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			ReflectiveOperationException, SQLException {
@@ -300,6 +305,7 @@ public class ClubController {
 	}
 
 	@Request(url = "loadVideo", method = "post")
+	@Roles({ Role.USER, Role.ADMIN})
 	public static void createVideoPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			ReflectiveOperationException, SQLException {
@@ -341,6 +347,7 @@ public class ClubController {
 	}
 
 	@Request(url = "loadAudio", method = "post")
+	@Roles({ Role.USER, Role.ADMIN})
 	public static void createAudioPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			ReflectiveOperationException, SQLException {
@@ -543,6 +550,7 @@ public class ClubController {
 	}
 
 	@Request(url = "activateClub", method = "get")
+	@Roles({ Role.ADMIN})
 	public static void activateClub(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			ReflectiveOperationException, SQLException {
@@ -580,6 +588,7 @@ public class ClubController {
 	}
 
 	@Request(url = "deleteClub", method = "get")
+	@Roles({ Role.ADMIN})
 	public static void deleteClub(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			ReflectiveOperationException, SQLException {
@@ -619,6 +628,7 @@ public class ClubController {
 	}
 
 	@Request(url = "sendEmailToClubMembers", method = "post")
+	@Roles({ Role.USER, Role.ADMIN})
 	public static void sendEmailToClubMembersPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			ReflectiveOperationException, SQLException, MessagingException {
@@ -733,6 +743,7 @@ public class ClubController {
 	}
 
 	@Request(url = "loadClubAva", method = "post")
+	@Roles({ Role.USER, Role.ADMIN})
 	public static void loadClubAvaPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException,
 			ReflectiveOperationException, SQLException, WrongInputException {
@@ -820,6 +831,7 @@ public class ClubController {
 	}
 
 	@Request(url = "activateClubUser", method = "get")
+	@Roles({ Role.USER, Role.ADMIN})
 	public static void activateClubUser(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			ReflectiveOperationException, SQLException {
@@ -859,6 +871,7 @@ public class ClubController {
 	}
 
 	@Request(url = "deleteClubUser", method = "get")
+	@Roles({ Role.USER, Role.ADMIN})
 	public static void deleteClubUser(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			ReflectiveOperationException, SQLException {
@@ -898,6 +911,7 @@ public class ClubController {
 	}
 
 	@Request(url = "blockClubUser", method = "get")
+	@Roles({ Role.USER, Role.ADMIN})
 	public static void blockClubUser(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			ReflectiveOperationException, SQLException {
@@ -937,6 +951,7 @@ public class ClubController {
 	}
 
 	@Request(url = "deleteClubAjax", method = "get")
+	@Roles({ Role.USER, Role.ADMIN})
 	public static void deleteClubAjax(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			ReflectiveOperationException, SQLException {
@@ -971,6 +986,7 @@ public class ClubController {
 	}
 
 	@Request(url = "restoreClubAjax", method = "get")
+	@Roles({ Role.USER, Role.ADMIN})
 	public static void restoreClubAjax(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			ReflectiveOperationException, SQLException {
@@ -1005,6 +1021,7 @@ public class ClubController {
 	}
 
 	@Request(url = "creatorBlockClub", method = "get")
+	@Roles({ Role.USER, Role.ADMIN})
 	public static void creatorBlockClub(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			ReflectiveOperationException, SQLException {
@@ -1012,6 +1029,7 @@ public class ClubController {
 	}
 
 	@Request(url = "creatorUnblockClub", method = "get")
+	@Roles({ Role.USER, Role.ADMIN})
 	public static void creatorUnblockClub(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			ReflectiveOperationException, SQLException {
@@ -1019,6 +1037,7 @@ public class ClubController {
 	}
 
 	@Request(url = "creatorDeleteClub", method = "get")
+	@Roles({ Role.USER, Role.ADMIN})
 	public static void creatorDeleteClub(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			ReflectiveOperationException, SQLException {

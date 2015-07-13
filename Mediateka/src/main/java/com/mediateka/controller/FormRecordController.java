@@ -1,6 +1,5 @@
 package com.mediateka.controller;
 
-import static com.mediateka.service.BookService.getBookById;
 import static com.mediateka.service.BookService.getBookByState;
 import static com.mediateka.service.EventService.getEventById;
 import static com.mediateka.service.EventService.getEventsByDate;
@@ -21,6 +20,7 @@ import org.apache.log4j.Logger;
 
 import com.mediateka.annotation.Controller;
 import com.mediateka.annotation.Request;
+import com.mediateka.annotation.Roles;
 import com.mediateka.comparator.BooksByName;
 import com.mediateka.comparator.EventsByName;
 import com.mediateka.form.FormRecordRegistrationForm;
@@ -29,6 +29,7 @@ import com.mediateka.model.Event;
 import com.mediateka.model.FormRecord;
 import com.mediateka.model.User;
 import com.mediateka.model.enums.FormRecordGoal;
+import com.mediateka.model.enums.Role;
 import com.mediateka.model.enums.State;
 import com.mediateka.service.BookService;
 import com.mediateka.service.UserService;
@@ -48,6 +49,7 @@ public class FormRecordController {
 	}
 
 	@Request(url = "CreateFormRecord", method = "get")
+	@Roles({ Role.ADMIN})
 	public static void formRecordCreateGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			SQLException, ReflectiveOperationException {
@@ -78,6 +80,7 @@ public class FormRecordController {
 
 	@SuppressWarnings("deprecation")
 	@Request(url = "CreateFormRecord", method = "post")
+	@Roles({ Role.ADMIN})
 	public static void formRecordCreatePost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			SQLException, ReflectiveOperationException {

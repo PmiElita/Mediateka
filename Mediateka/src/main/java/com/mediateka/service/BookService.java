@@ -87,4 +87,8 @@ public class BookService {
 			throws SQLException, ReflectiveOperationException {
 		return BookDAO.getBooksByLibraryBookIdRegexp(regexp);
 	}
+
+	public static int getNotDeletedBooksCount() throws SQLException {
+		return BookDAO.getNotDeletedBooksCount();
+	}
 }

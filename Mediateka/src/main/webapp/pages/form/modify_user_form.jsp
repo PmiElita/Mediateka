@@ -14,9 +14,10 @@
 <head>
 <jsp:include page="../general/head.jsp" />
 <script src="js/modifyUser.js"></script>
+
 </head>
 <body>
-
+<jsp:include page="crop/crop.jsp"/>
 	<div class="main">
 		<jsp:include page="../general/nav.jsp" />
 
@@ -38,12 +39,21 @@
 				<h3 style="margin-left:1em"><fmt:message bundle="${msg}" key="user_form" /></h3>
 				<form id="modifyUser" action="modifyUser" method="post"
 					onsubmit="return submitModify();">
-
+                <div class = "row">
+                <div class = "col s3">
 					<button class="btn waves-effect titler" type="submit"
 						name="action" style="margin-bottom: 0.5em; margin-top: 2em; margin-left:1em">
 						<fmt:message bundle="${msg}" key="button" />
 					</button>
-
+					</div>
+					<c:if test="${userRole eq Role.ADMIN }">
+					 <div class =" col s3 offset-s2">
+						<a  title="Change avatar" href="" data-target="modal21"
+							class="modal-trigger waves-effect col s12"><img
+							src="${imagePath }" id="avatar" style="border-radius:50%;" class="col s12"/></a>
+					</div>
+					</c:if>
+					</div> 
 					<div class="row">
 						<div class="input-field col s4">
 							<p>

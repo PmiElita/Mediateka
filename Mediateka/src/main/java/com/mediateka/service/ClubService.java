@@ -52,4 +52,8 @@ public class ClubService {
 			ReflectiveOperationException {
 		return ClubDAO.getAllNotDeletedClubs();
 	}
+	
+	public static int getNotDeletedClubsCount() throws SQLException {
+		return ClubDAO.getNotDeletedClubssCount();
+	}
 }

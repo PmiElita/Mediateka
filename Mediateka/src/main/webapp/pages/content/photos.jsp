@@ -1,78 +1,29 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-
-<%@page import="com.mediateka.model.enums.Role"%>
-
-<fmt:setLocale value="${locale}" />
-<fmt:setBundle basename="menu" />
-<fmt:requestEncoding value="utf-8" />
-
-<head>
-
-<script src="js/jssor.js"></script>
+    pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+    <script src="js/jssor.js"></script>
 <script src="js/jssor.slider.js"></script>
-
-</head>
-
-
-<style>
-.image-cover-t {
-	color: white;
-	position: relative;
-	margin-top: 0em;
-	text-shadow: black 1.0px 0.0px, black 1.0px 1.0px, black 0.0px 1.0px,
-		black -1.0px 1.0px, black -1.0px 0.0px, black -1.0px -1.0px, black
-		0.0px -1.0px, black 1.0px -1.0px, black 0.0 0.0 3.0px, black 0.0 0.0
-		3.0px, black 0.0 0.0 3.0px, black 0.0 0.0 3.0px, black 0.0 0.0 3.0px,
-		black 0.0 0.0 3.0px, black 0.0 0.0 3.0px, black 0.0 0.0 3.0px;
-}
-</style>
-
-
-<div id="load"></div>
-<label id="index" hidden="true">${index}</label>
-
-<c:forEach var="album" items="${records}">
-	<div id="recordId${album.id}" class="col s4" style="margin-bottom: 3.0em;">
-		<div class="col s12 m8 offset-m2 l6 offset-l2 my-back-card my-small-card">
-			<div onclick="loadAlbumPhoto(${album.id})"
+<c:forEach var="photo" items="${photos}" varStatus="loop">
+	<div id="photId${photo.id}" class="col s4" style="margin-bottom: 3.0em;">
+		<div class="col s12 m8 offset-m2 l6 offset-l2 my-back-card my-small-card" onclick="setOptions(${loop.index})">
+			<div 
 				class="my-album-card card-panel grey lighten-5 z-depth-1"
 				style="padding: 0">
-				<a title="${album.name }" href="photos?albumId=${album.id }" 
-					>
+				<a title="${photo.name }" href="" data-target="modal33"
+					class="modal-trigger">
 					<div class="row valign-wrapper" style="margin: 0;">
 						<div class="col s12 center" style="height: 12em;padding-left:0; padding-right:0;" >
 							<img class="responsive-image"
-								src="${imageMap.get(album.id)[0].path}" alt=""
+								src="${photo.path}" alt=""
 								style="margin: 0 0 0 0; height: 100%; width:100%;  border-radius: 5%">
 						</div>
-						<div class="club-badge"
-							style="z-index: 10; margin-top: 3em; margin-left: -1.3em">${fn:length(imageMap.get(album.id)) }</div>
-					</div>
+						</div>
 				</a>
 			</div>
 		</div>
 	</div>
-
-	<div id="albumView${album.id}" class="modal black" style="width: 80%">
-		<div class="modal-content">
-			<div class="row">
-												
-			<c:forEach var="image" items="${imageMap.get(album.id) }">
-
-					<img class="modal-trigger col" 
-						src="<c:out value='${image.path}' ></c:out>" data-target="modal33"
-						style="cursor: pointer; height: 10em; margin-top: 0.5em">
-				</c:forEach>
-			</div>
-		</div>
-	</div>
-
-	<div id="modal33" class="modal black" style="width: 60%;">
+	</c:forEach>
+		<div id="modal33" class="modal black" style="width: 60%;">
 		<div class="modal-content">
 			<div class="row">
 			<div id="slider1_container"
@@ -83,9 +34,9 @@
 				<div u="slides"
 					style="cursor: move; position: relative; left: 0px; top: 0px; width: 700px; height: 500px; overflow: hidden; margin-left: 2.5em;">
 
-					<c:forEach var="image" items="${imageMap.get(album.id) }">
+					<c:forEach var="image" items="${photos }">
 						<div>
-							<img u=image src="<c:out value='${image.path}'></c:out>">
+							<img   u=image src="<c:out value='${image.path}'></c:out>">
 						</div>
 					</c:forEach>
 				</div>
@@ -93,9 +44,12 @@
 </div>
 		</div>
 	</div>
-
-	<script>
 	
+	<script>
+	var jssor_slider1
+	function setOptions(index){
+		jssor_slider1.$GoTo(index);
+	}
         jQuery(document).ready(function ($) {
 
     		var num;
@@ -124,16 +78,7 @@
                 }
             };
 
-            var jssor_slider1 = new $JssorSlider$("slider1_container", options);
+             jssor_slider1 = new $JssorSlider$("slider1_container", options);
 
         });
     </script>
-
-</c:forEach>
-
-
-<script>
-	function loadAlbumPhoto(albumId) {
-		alert(albumId);
-	}
-</script>

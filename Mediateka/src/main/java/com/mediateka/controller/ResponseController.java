@@ -15,6 +15,7 @@ import org.apache.log4j.Logger;
 
 import com.mediateka.annotation.Controller;
 import com.mediateka.annotation.Request;
+import com.mediateka.annotation.Roles;
 import com.mediateka.model.Report;
 import com.mediateka.model.User;
 import com.mediateka.model.enums.Role;
@@ -75,6 +76,7 @@ public class ResponseController {
 
 
 	@Request(url = "showResponsesPage", method = "get")
+	@Roles({Role.ADMIN})
 	public static void showResponsesPage(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			SQLException, ReflectiveOperationException {
@@ -141,6 +143,7 @@ public class ResponseController {
 	}
 
 	@Request(url = "markResponseAsReaded", method = "get")
+	@Roles({ Role.ADMIN})
 	public static void markResponseAsReaded(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			SQLException, ReflectiveOperationException {
@@ -176,6 +179,7 @@ public class ResponseController {
 	}
 
 	@Request(url = "deleteResponse", method = "get")
+	@Roles({Role.ADMIN})
 	public static void deleteResponse(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			SQLException, ReflectiveOperationException {
@@ -210,6 +214,7 @@ public class ResponseController {
 	}
 
 	@Request(url = "sendResponseToReport", method = "get")
+	@Roles({Role.ADMIN})
 	public static void sendResponseToReport(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			SQLException, ReflectiveOperationException, MessagingException {

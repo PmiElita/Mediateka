@@ -37,7 +37,7 @@ public class MapEventController {
 	}
 
 	
-	@Request(url="eventsMap", method ="get")
+	@Request(url="eventsMap", method ="get")	
 	public static void getEventsMap(HttpServletRequest request, HttpServletResponse response) throws SQLException, ReflectiveOperationException, IOException{
 		List<MapEvent> mapEvents = MapEventService.getActiveMapEvents();
 		response.setContentType("application/json");
@@ -46,6 +46,7 @@ public class MapEventController {
 	}
 	
 	@Request(url="saveMapEventChanges", method ="post")
+	@Roles({ Role.ADMIN})
 	public static void  saveMapEventChanges(HttpServletRequest request, HttpServletResponse response) throws ParseException, SQLException, ReflectiveOperationException{
 		String jsonArrayString = request.getParameter("json");
 		if (jsonArrayString!=null){

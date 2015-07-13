@@ -11,6 +11,8 @@ var showCommentIds={};
 window.setInterval(function() {
 	if (lastCommentTime != null) {
 		if (new Date().getTime() - lastCommentTime.getTime() > 277000) {
+			var userId = document.getElementById("userId").value;
+			var clubId = document.getElementById("clubId").innerHTML;
 			var jsonObj = {
 				"userId" : userId,
 				"clubId" : clubId,

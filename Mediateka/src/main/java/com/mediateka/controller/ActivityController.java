@@ -37,8 +37,9 @@ public class ActivityController {
 		request.getRequestDispatcher("pages/activity/activity.jsp").forward(
 				request, response);
 	}
-
+	
 	@Request(url = "reloadActivity", method = "get")
+	@Roles({ Role.ADMIN, Role.USER })
 	public static void reloadActivity(HttpServletRequest request,
 			HttpServletResponse response) throws SQLException,
 			ReflectiveOperationException, ServletException, IOException {

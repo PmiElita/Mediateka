@@ -31,6 +31,7 @@ import org.apache.log4j.Logger;
 import com.google.gson.Gson;
 import com.mediateka.annotation.Controller;
 import com.mediateka.annotation.Request;
+import com.mediateka.annotation.Roles;
 import com.mediateka.exception.WrongInputException;
 import com.mediateka.model.Book;
 import com.mediateka.model.Media;
@@ -100,6 +101,7 @@ public class BookController {
 
 	// create book
 	@Request(url = "CreateBook", method = "get")
+	@Roles({ Role.ADMIN})
 	public static void bookCreateGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			SQLException, ReflectiveOperationException {
@@ -130,6 +132,7 @@ public class BookController {
 	}
 
 	@Request(url = "CreateBook", method = "post")
+	@Roles({ Role.ADMIN})
 	public static void bookCreatePost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			SecurityException, IllegalArgumentException, SQLException,
@@ -283,6 +286,7 @@ public class BookController {
 	// update book
 
 	@Request(url = "UpdateBook", method = "get")
+	@Roles({ Role.ADMIN})
 	public static void bookUpdateGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			SQLException, ReflectiveOperationException {
@@ -327,6 +331,7 @@ public class BookController {
 	}
 
 	@Request(url = "UpdateBook", method = "post")
+	@Roles({ Role.ADMIN})
 	public static void bookUpdatePost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			SQLException, ReflectiveOperationException {
@@ -520,6 +525,7 @@ public class BookController {
 	}
 
 	@Request(url = "blockBook", method = "post")
+	@Roles({ Role.ADMIN})
 	public static void blockBook(HttpServletRequest request,
 			HttpServletResponse response) throws IOException,
 			ReflectiveOperationException, SQLException {
@@ -552,6 +558,7 @@ public class BookController {
 	}
 
 	@Request(url = "deleteBook", method = "post")
+	@Roles({ Role.ADMIN})
 	public static void deleteBook(HttpServletRequest request,
 			HttpServletResponse response) throws IOException,
 			ReflectiveOperationException, SQLException {

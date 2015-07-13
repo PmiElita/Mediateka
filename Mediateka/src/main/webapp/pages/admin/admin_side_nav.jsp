@@ -12,7 +12,6 @@
 <jsp:include page="../form/register_user_form.jsp" />
 <jsp:include page="admin_modal_users.jsp" />
 </head>
-
 <div class="container-side">
 	<div id="sidebar" >
 		<ul>
@@ -23,7 +22,12 @@
 			<li><a href="goToCreateFormRecord"
 				class="waves-effect"><fmt:message bundle="${msg}"
 						key="admin.create_form_record" /></a></li>	
-								
+			<li><a href="map"
+				class="waves-effect"><fmt:message bundle="${msg}"
+						key="admin.map" /></a></li>	
+			<li><a href="userStatistics"
+				class="waves-effect"><fmt:message bundle="${msg}"
+						key="admin.userStatistics" /></a></li>						
 			<li><a href="cabinet"><fmt:message bundle="${msg}"
 						key="admin.cabinet" /></a></li>
 			<li><a href="index"><fmt:message bundle="${msg}"

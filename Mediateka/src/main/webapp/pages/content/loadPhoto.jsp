@@ -6,13 +6,12 @@
 
 <script src="js/record.js"></script>
 
-<div id="addAlbum" class="modal">
+<div id="addPhoto" class="modal">
 	<div class="modal-content">
 
 
-		<form id="loadAlbumForm" action="loadAlbum" method="post"
+		<form id="loadPhotoForm" action="loadPhotos" method="post"
 			enctype="multipart/form-data">
-
 			<c:if test="${clubId ne null}">
 				<input type="hidden" name="clubId" id="clubId" value='${clubId }'>
 			</c:if>
@@ -20,11 +19,7 @@
 				<input type="hidden" name="eventId" id="eventId" value="${eventId }">
 			</c:if>
 
-			<div class="row">
-				<fmt:message bundle="${msg}" key="load_album.album_name" />
-				<input type="text" id="name" name="name" required pattern=".{1,45}"
-					form="createClub"><br>
-			</div>
+				<input name="albumId" id ="albumId" value="${albumId }" hidden>
 
 			<fmt:message bundle="${msg }" key="load_album.files"/>
 			<div class="row">
@@ -55,38 +50,37 @@
 </div>
 <script>
 	$(document).ready(function() {
-		$("#loadAlbumForm").on("submit", handleAlbum);
+		$("#loadPhotoForm").on("submit", handlePhotos);
 
 	});
 
-	function handleAlbum(e) {
+	function handlePhotos(e) {
 		alert(1);
 
 		e.preventDefault();
 		var data = new FormData();
 		data.append('index', $('#index').text());
-		data.append('name', document.getElementById('name').value);
+		data.append('albumId', document.getElementById('albumId').value);
 		if (document.getElementById('clubId') != null) {
 			data.append('clubId', document.getElementById('clubId').value);
 		}
 		if (document.getElementById('eventId') != null) {
-			data.appent('eventId', document.getElementById('eventId').value);
+			data.appent('eventId', document.getElementById('clubId').innerHTML
+					.toString());
 		}
 		for (var i = 0, len = storedImages.length; i < len; i++) {
 			data.append('image', storedImages[i]);
 		}
-		if ((document.getElementById('name').value == "")
-				&& (storedImages.length == 0)) {
+		if (storedImages.length == 0) {
 			return;
 		}
 
 		var xhr = new XMLHttpRequest();
-		xhr.open('POST', 'loadAlbum', true);
+		xhr.open('POST', 'loadPhotos', true);
 
 		xhr.onload = function(e, data) {
 			if (this.status == 200) {
-				document.getElementById("loadAlbumForm").reset();
-				document.getElementById("name").value = "";
+				document.getElementById("loadPhotoForm").reset();
 				document.getElementById("selectedImages").innerHTML = "";
 				storedImages = [];
 				alert(JSON.stringify(e.currentTarget));
