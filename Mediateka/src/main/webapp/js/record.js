@@ -236,7 +236,6 @@ function handleForm(e) {
 }
 
 function removeFile(e) {
-	alert(this.id);
 	if (this.id == "link") {
 		var name = new String(this.name);
 		document.getElementById("likedTextarea").value = document

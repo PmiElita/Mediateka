@@ -34,29 +34,59 @@
 <label id="index" hidden="true">${index}</label>
 
 <c:forEach var="album" items="${albums}">
-	<div id="recordId${album.key.id}" class="col s4" style="margin-bottom: 3.0em;">
-		<div class="col s12 m8 offset-m2 l6 offset-l2 my-back-card my-small-card">
-			<div onclick="loadAlbumPhoto(${album.key.id})"
-				class="my-album-card card-panel grey lighten-5 z-depth-1"
-				style="padding: 0">
-				<a title="${album.key.name }" href="photos?albumId=${album.key.id }" 
-					>
-					<div class="row valign-wrapper" style="margin: 0;">
-						<div class="col s12 center" style="height: 12em;padding-left:0; padding-right:0;" >
-							<img class="responsive-image"
-								src="${album.value.path}" alt=""
-								style="margin: 0 0 0 0; height: 100%; width:100%;  border-radius: 5%">
-						</div>
-						<div class="club-badge"
-							style="z-index: 10; margin-top: 3em; margin-left: -1.3em">${album.value.count }</div>
-					</div>
-				</a>
-			</div>
+	<div id="restore${album.key.id}" hidden="true">
+		<div title="${album.key.name }" class="col s3"
+			style="margin-bottom: 3.0em;">
+			<a
+				onclick="restoreRecord(${album.key.id }); Materialize.toast('<fmt:message bundle="${msg}" key="record_central.restored" />', 4000)"
+				class="waves-effect waves-light btn"><fmt:message
+					bundle="${msg}" key="record_central.restore" /></a>
+
 		</div>
 	</div>
+	<div id="recordId${album.key.id}">
+		<div class="col s3" style="margin-bottom: 3.0em;">
+			<div
+				class="col s12 m8 offset-m2 l6 offset-l2 my-back-card my-small-card">
+				<div onclick="loadAlbumPhoto(${album.key.id})"
+					class="my-album-card card-panel grey lighten-5 z-depth-1"
+					style="padding: 0">
+					<a title="${album.key.name }"
+						href="photos?albumId=${album.key.id }">
+						<div class="row valign-wrapper" style="margin: 0;">
+							<div class="col s12 center"
+								style="height: 12em; padding-left: 0; padding-right: 0;">
+								<img class="responsive-image" src="${album.value.path}" alt=""
+									style="margin: 0 0 0 0; height: 100%; width: 100%; border-radius: 5%">
+							</div>
+							<div class="club-badge"
+								style="z-index: 10; margin-top: 3em; margin-left: -1.3em">${album.value.count }</div>
+						</div>
+					</a>
+				</div>
 
-	
+			</div>
+		</div>
+		<div class="col s1">
+			<c:if test="${userId eq album.key.creatorId}">
+
+				<span
+					onclick="deleteRecord(${album.key.id}); Materialize.toast('<fmt:message bundle="${msg}" key="record_central.deleted" />', 4000);"
+					onmouseover="this.style.color = 'red';"
+					onmouseleave="this.style.color = 'black';"
+					class="waves-effect waves-circle waves-red">X</span>
+
+			</c:if>
+			<c:if test="${userId ne album.key.creatorId}">
+				<pre>
+					<span> </span>
+				</pre>
+			</c:if>
+		</div>
+
+	</div>
+
+
 
 </c:forEach>
-
 

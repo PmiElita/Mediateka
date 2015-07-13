@@ -15,12 +15,14 @@ import org.apache.log4j.Logger;
 import com.google.gson.Gson;
 import com.mediateka.annotation.Controller;
 import com.mediateka.annotation.Request;
+import com.mediateka.annotation.Roles;
 import com.mediateka.exception.WrongInputException;
 import com.mediateka.model.ContentGroup;
 import com.mediateka.model.Media;
 import com.mediateka.model.enums.ClubEventMemberType;
 import com.mediateka.model.enums.ContentGroupType;
 import com.mediateka.model.enums.MediaType;
+import com.mediateka.model.enums.Role;
 import com.mediateka.model.enums.State;
 import com.mediateka.service.ClubEventMemberService;
 import com.mediateka.service.ContentGroupService;
@@ -119,4 +121,23 @@ public class MediaController {
 			response.sendError(404);
 		}
 	}
+@Request(url="deleteAlbum", method="get")
+	@Roles({ Role.USER, Role.ADMIN})
+	public static void deleteRecordGet(HttpServletRequest request, HttpServletResponse response) throws NumberFormatException, ReflectiveOperationException, SQLException, ServletException, IOException{
+		ContentGroup contentGroup = ContentGroupService.getContentGroupById(Integer.parseInt(request.getParameter("albumId")));
+		contentGroup.setState(State.DELETED);
+		ContentGroupService.updateContentGroup(contentGroup);		
+	}
+	
+	@Request(url = "restoreAlbum", method="get")
+	@Roles({ Role.USER, Role.ADMIN})
+	public static void restoreRecordGet(HttpServletRequest request, HttpServletResponse response) throws NumberFormatException, ReflectiveOperationException, SQLException, ServletException, IOException{
+		ContentGroup contentGroup = ContentGroupService.getContentGroupById(Integer.parseInt(request.getParameter("albumId")));		
+		contentGroup.setState(State.ACTIVE);
+		ContentGroupService.updateContentGroup(contentGroup);	
+		
+	}
+
+
 }
+

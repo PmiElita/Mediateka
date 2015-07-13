@@ -57,7 +57,7 @@
 		xhr.onload = function(e, data) {
 			if (this.status == 200) {
 				document.getElementById("loadAudioForm").reset();
-				document.getElementById("selectedAudios").innerHTML = "";
+				document.getElementById("selectedFiles").innerHTML = "";
 				storedAudios = [];
 				alert(JSON.stringify(e.currentTarget));
 				var responseJSON = JSON.parse(e.currentTarget.responseText);
@@ -167,7 +167,7 @@
 						</div>
 					</div>
 					<div class="col s9">
-						<div id="selectedAudios"></div>
+						<div id="selectedFiles"></div>
 					</div>
 				</div>
 			</form>
