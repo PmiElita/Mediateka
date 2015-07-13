@@ -66,22 +66,28 @@ public class IndexController {
 		}
 
 		List<String> dates = new ArrayList<>();
+		List<String> times = new ArrayList<>();
 		Timestamp dateFrom;
 		Timestamp dateTill;
 		String date = "It goes right now!";
+		String time = "It goes right now!";
 		SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd");
 		SimpleDateFormat formatMeeting = new SimpleDateFormat("hh:mm");
 		for (Event event : currentEvents) {
 			dateFrom = event.getDateFrom();
 			dateTill = event.getDateTill();
-			if (event.getType() == EventType.MEETING)
-				date = format.format(dateFrom) + "    "
-						+ formatMeeting.format(dateFrom) + "  -  "
+			if (event.getType() == EventType.MEETING) {
+				date = format.format(dateFrom);
+				time = formatMeeting.format(dateFrom) + "  -  "
 						+ formatMeeting.format(dateTill);
-			else if (event.getType() == EventType.EXHIBITION)
+				dates.add(date);
+				times.add(time);
+			} else if (event.getType() == EventType.EXHIBITION) {
 				date = format.format(dateFrom) + "  -  "
 						+ format.format(dateTill);
-			dates.add(date);
+				dates.add(date);
+				times.add("");
+			}
 		}
 		ContentGroup info = ContentGroupService.getContentGroupByType(
 				ContentGroupType.INFO).get(0);
@@ -118,6 +124,7 @@ public class IndexController {
 		request.setAttribute("imageTextEn", imageTextEn);
 		request.setAttribute("imagePath", imagePath);
 		request.setAttribute("dates", dates);
+		request.setAttribute("times", times);
 		request.setAttribute("events", currentEvents);
 		request.setAttribute("professions",
 				ProfessionService.getProfessionAll());
@@ -126,6 +133,7 @@ public class IndexController {
 		request.removeAttribute("events");
 		request.removeAttribute("professions");
 		request.removeAttribute("dates");
+		request.removeAttribute("times");
 		request.removeAttribute("textInfoUa");
 		request.removeAttribute("textInfoEn");
 		request.removeAttribute("imageTextUa");

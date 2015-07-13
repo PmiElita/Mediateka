@@ -54,7 +54,11 @@
 									</div> <i class="mdi-navigation-close right"></i></span><br> <br>
 								<p>
 								<div style="color: green;">Event time:</div>
+								<br>
 								<c:out value="${dates[status.index]}" />
+								<c:if test="${item.type eq EventType.MEETING}">
+									<c:out value="${times[status.index]}" />
+								</c:if>
 								</p>
 								<br>
 								<p>
