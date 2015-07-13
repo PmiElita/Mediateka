@@ -81,7 +81,6 @@
 													<i class="mdi-content-send right"></i>
 												</button>
 											</p>
-										</div>
 									</li>
 								</c:forEach>
 							</ul>
@@ -157,8 +156,8 @@
 			data : {
 				id : clubId
 			},
-			success : function(data) {
-				document.getElementById("eventNo" + clubId).innerHTML = "";					
+			success : function(data) {	
+				document.getElementById("eventNo" + clubId).innerHTML = "";	
 				}
 			}
 		);

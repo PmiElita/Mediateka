@@ -22,6 +22,8 @@ import static com.mediateka.dao.statement.MediaStatements.SELECT_MEDIA_BY_STATE_
 import static com.mediateka.dao.statement.MediaStatements.SELECT_MEDIA_BY_TYPE;
 import static com.mediateka.dao.statement.MediaStatements.SELECT_MEDIA_BY_TYPE_ORDER;
 import static com.mediateka.dao.statement.MediaStatements.SELECT_MEDIA_COUNT_BY_CONTENT_GROUP_ID;
+import static com.mediateka.dao.statement.MediaStatements.SELECT_MEDIA_COUNT_BY_CONTENT_GROUP_ID_AND_TYPE;
+import static com.mediateka.dao.statement.MediaStatements.SELECT_MEDIA_COUNT_BY_CONTENT_GROUP_ID_AND_TYPE_ORDER;
 import static com.mediateka.dao.statement.MediaStatements.SELECT_MEDIA_COUNT_BY_CONTENT_GROUP_ID_ORDER;
 import static com.mediateka.dao.statement.MediaStatements.UPDATE_MEDIA_BY_ID;
 import static com.mediateka.dao.statement.MediaStatements.UPDATE_MEDIA_BY_ID_ORDER;
@@ -219,6 +221,23 @@ public class MediaDAO {
 			media.setContentGroupId(contentGroupId);
 			Transformer.valueIntoPreparedStatement(statement, media,
 					SELECT_MEDIA_COUNT_BY_CONTENT_GROUP_ID_ORDER);
+			ResultSet resultSet = statement.executeQuery();
+			resultSet.next();
+			return resultSet.getInt(1);
+		}
+	}
+
+	public static Integer getMediaCountByContentGroupIdAndType(
+			Integer contentGroupId, MediaType type)
+			throws ReflectiveOperationException, SQLException {
+		try (Connection connection = ConnectionManager.getConnection()) {
+			PreparedStatement statement = connection
+					.prepareStatement(SELECT_MEDIA_COUNT_BY_CONTENT_GROUP_ID_AND_TYPE);
+			Media media = new Media();
+			media.setContentGroupId(contentGroupId);
+			media.setType(type);
+			Transformer.valueIntoPreparedStatement(statement, media,
+					SELECT_MEDIA_COUNT_BY_CONTENT_GROUP_ID_AND_TYPE_ORDER);
 			ResultSet resultSet = statement.executeQuery();
 			resultSet.next();
 			return resultSet.getInt(1);

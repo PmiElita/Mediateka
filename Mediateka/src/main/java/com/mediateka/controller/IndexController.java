@@ -116,8 +116,7 @@ public class IndexController {
 		List<String> imagePath = new ArrayList<>();
 		for (Media image : media)
 			imagePath.add(image.getPath().replace("\\", "/"));
-		System.out.println(imageTextUa);
-		System.out.println(imageTextEn);
+		System.out.println(imagePath);
 
 		request.setAttribute("randomic", randomizeClass());
 		request.setAttribute("textInfoUa", textInfoUa);

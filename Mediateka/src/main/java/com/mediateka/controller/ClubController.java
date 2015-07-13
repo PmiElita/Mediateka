@@ -47,6 +47,7 @@ import com.mediateka.model.Media;
 import com.mediateka.model.User;
 import com.mediateka.model.enums.ClubEventMemberType;
 import com.mediateka.model.enums.ContentGroupType;
+import com.mediateka.model.enums.MediaType;
 import com.mediateka.model.enums.Role;
 import com.mediateka.model.enums.State;
 import com.mediateka.pair.ChatMessageUserCardPair;
@@ -501,26 +502,39 @@ public class ClubController {
 				List<Event> events = getEventByClubId(clubId);
 				List<ContentGroup> albums = getContentGroupByClubId(clubId);
 				if (albums != null) {
-					List<ContentGroup> neededAlbums = new ArrayList<>();
-					List<ContentGroup> neededMusic = new ArrayList<>();
-					List<ContentGroup> neededVideos = new ArrayList<>();
+					int neededAlbums = 0;
+					int neededMusic = 0;
+					int neededVideos = 0;
 					for (ContentGroup content : albums) {
 						if (content.getState() == State.ACTIVE
 								&& content.getType() == ContentGroupType.IMAGE)
-							neededAlbums.add(content);
+							neededAlbums++;
 						else if (content.getState() == State.ACTIVE
-								&& content.getType() == ContentGroupType.VIDEO)
-							neededVideos.add(content);
-						else if (content.getState() == State.ACTIVE
-								&& content.getType() == ContentGroupType.AUDIO)
-							neededMusic.add(content);
+								&& content.getType() == ContentGroupType.VIDEO) {
+							if (MediaService
+									.getMediaCountByContentGroupIdAndType(
+											content.getId(), MediaType.VIDEO) != null)
+								neededVideos += MediaService
+										.getMediaCountByContentGroupIdAndType(
+												content.getId(),
+												MediaType.VIDEO);
+						} else if (content.getState() == State.ACTIVE
+								&& content.getType() == ContentGroupType.AUDIO) {
+							if (MediaService
+									.getMediaCountByContentGroupIdAndType(
+											content.getId(), MediaType.AUDIO) != null)
+								neededMusic += MediaService
+										.getMediaCountByContentGroupIdAndType(
+												content.getId(),
+												MediaType.AUDIO);
+						}
 					}
-					if (neededAlbums.size() != 0)
-						request.setAttribute("albums", neededAlbums.size());
-					if (neededVideos.size() != 0)
-						request.setAttribute("videos", neededVideos.size());
-					if (neededMusic.size() != 0)
-						request.setAttribute("music", neededMusic.size());
+					if (neededAlbums != 0)
+						request.setAttribute("albums", neededAlbums);
+					if (neededVideos != 0)
+						request.setAttribute("videos", neededVideos);
+					if (neededMusic != 0)
+						request.setAttribute("music", neededMusic);
 				}
 				if (events != null)
 					request.setAttribute("events", events.size());

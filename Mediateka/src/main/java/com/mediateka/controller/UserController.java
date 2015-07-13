@@ -490,10 +490,10 @@ public class UserController {
 					BookService.getNotDeletedBooksCount());
 
 			request.setAttribute("clubsCount",
-					ClubService.getNotDeletedClubsCount());
+					ClubService.getClubByState(State.ACTIVE).size());
 
 			request.setAttribute("eventsCount",
-					EventService.getNotDeletedEventsCount());
+					EventService.getEventByState(State.ACTIVE).size());
 
 			request.getRequestDispatcher("pages/admin/admin.jsp").forward(
 					request, response);

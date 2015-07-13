@@ -27,7 +27,7 @@
 											<img src="images/admin/users.png" alt=""
 												class="circle responsive-img" />
 										</div>
-										<div class="my-badge">${usersCount }</div>
+										<div class="my-badge">${usersCount}</div>
 									</div>
 								</div>
 							</div>
@@ -48,11 +48,14 @@
 											<img src="images/admin/clubs.png" alt=""
 												class="circle responsive-img">
 										</div>
-										<div class="my-badge">${clubsCount}
-											<c:if test="${requestedClubCount > 0}">
-													(+<c:out value="${requestedClubCount}" />)
-												<p>
-											</c:if>
+										<div class="my-badge">
+											<div class="row">
+												<h5>${clubsCount}
+													<c:if test="${requestedClubCount > 0}">
+													(+<c:out value="${requestedClubCount}" />)	
+												</c:if>
+												</h5>
+											</div>
 										</div>
 									</div>
 								</div>
@@ -74,11 +77,14 @@
 											<img style="margin-top: 0em" src="images/admin/events.png"
 												alt="" class="circle responsive-img">
 										</div>
-										<div class="my-badge" style="margin-left: 0.75em"> ${eventsCount}
-											<c:if test="${requestedEventCount > 0}">
+										<div class="my-badge" style="margin-left: 0.75em">
+											<div class="row">
+												<h5>${eventsCount}
+													<c:if test="${requestedEventCount > 0}">
 													(+<c:out value="${requestedEventCount}" />)
-												<p>
-											</c:if>
+													</c:if>
+												</h5>
+											</div>
 										</div>
 									</div>
 								</div>

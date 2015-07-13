@@ -69,4 +69,11 @@ public class MediaService {
 			throws ReflectiveOperationException, SQLException {
 		return MediaDAO.getMediaCountByContentGroupId(contentGroupId);
 	}
+
+	public static Integer getMediaCountByContentGroupIdAndType(
+			Integer contentGroupId, MediaType type)
+			throws ReflectiveOperationException, SQLException {
+		return MediaDAO.getMediaCountByContentGroupIdAndType(contentGroupId,
+				type);
+	}
 }

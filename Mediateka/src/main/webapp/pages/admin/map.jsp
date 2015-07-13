@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title><fmt:message bundle="${msg }" key="title"/> </title>
+<title><fmt:message bundle="${msg }" key="title" /></title>
 <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
 <meta charset="utf-8">
 <jsp:include page="../general/head.jsp" />
@@ -24,15 +24,18 @@
 <body>
 
 	<jsp:include page="../general/nav.jsp" />
+	
 
 	<div class="parallax-container my-parallax">
 		<div class="parallax">
 			<img src="images/parallax1.jpg">
 		</div>
-
+<jsp:include page="admin_side_nav.jsp" />
 		<div class=" container section white">
 			<div class="row">
-				<button class="btn" onclick="saveChanges();"><fmt:message bundle="${msg }" key="save_changes"/></button>
+				<button class="btn" onclick="saveChanges();">
+					<fmt:message bundle="${msg }" key="save_changes" />
+				</button>
 			</div>
 			<div class="row mapchat">
 				<div id="map-canvas"></div>
@@ -41,15 +44,18 @@
 
 
 			<div class="row input-field">
-				<form onsubmit="return butt_click();" onkeydown=" enterPress(event);">
+				<form onsubmit="return butt_click();"
+					onkeydown=" enterPress(event);">
 					<input placeholder="Type an event's name"
 						ng-model="dummyInputs.inputFieldInput" id="event_name" type="text"
+						maxlength="101" required> <input
+						placeholder="Type an event's description" id="event_descr"
+						type="text" maxlength="125" required> <input
+						placeholder="Type an event's adress" id="event_adress" type="text"
 						maxlength="101" required>
-					 <input	placeholder="Type an event's description" id="event_descr"
-						type="text" maxlength="125" required>
-					 <input placeholder="Type an event's adress" id="event_adress" type="text"
-						maxlength="101" required>
-					<button class="btn" id="map_button"><fmt:message bundle="${msg }" key="add_new_event"/></button>
+					<button class="btn" id="map_button">
+						<fmt:message bundle="${msg }" key="add_new_event" />
+					</button>
 				</form>
 			</div>
 		</div>
@@ -73,7 +79,7 @@
 	<!-- <script src="javascript/main.js"></script> -->
 	<script src="js/map.js"></script>
 	<script type="text/javascript">
-	mapTranslations = {
+		mapTranslations = {
 			"Description" : "<fmt:message bundle="${msg}" key="map_js.description"/>",
 			"Address" : "<fmt:message bundle="${msg}" key="map_js.address"/>",
 			"Edit" : "<fmt:message bundle="${msg}" key="map_js.edit"/>",
@@ -82,8 +88,7 @@
 			"AddNewEvent" : "<fmt:message bundle="${msg}" key="map_js.add_new_event"/>",
 			"Submit" : "<fmt:message bundle="${msg}" key="map_js.submit"/>",
 			"ChangesWereSaved" : "<fmt:message bundle="${msg}" key="map_js.changes_were_saved"/>",
-	};
-	
+		};
 	</script>
 
 
