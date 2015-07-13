@@ -10,7 +10,6 @@ import static com.mediateka.service.ContentGroupService.getContentGroupByEventId
 import static com.mediateka.service.EventService.callSaveEvent;
 import static com.mediateka.service.EventService.getEventById;
 import static com.mediateka.service.EventService.updateEvent;
-import static com.mediateka.service.MediaService.callSaveMedia;
 import static com.mediateka.service.MediaService.getMediaById;
 import static com.mediateka.service.UserService.getUserById;
 import static com.mediateka.util.DateConverter.convertIntoTimestamp;
@@ -51,7 +50,6 @@ import com.mediateka.model.User;
 import com.mediateka.model.enums.ClubEventMemberType;
 import com.mediateka.model.enums.ContentGroupType;
 import com.mediateka.model.enums.EventType;
-import com.mediateka.model.enums.MediaType;
 import com.mediateka.model.enums.Role;
 import com.mediateka.model.enums.State;
 import com.mediateka.service.ClubEventMemberService;
@@ -121,11 +119,7 @@ public class EventController {
 				}
 
 				List<ContentGroup> albums = getContentGroupByEventId(eventId);
-				if (albums == null) {
-					request.setAttribute("albums", 0);
-					request.setAttribute("videos", 0);
-					request.setAttribute("music", 0);
-				} else if (albums != null) {
+				if (albums != null) {
 					List<ContentGroup> neededAlbums = new ArrayList<>();
 					List<ContentGroup> neededMusic = new ArrayList<>();
 					List<ContentGroup> neededVideos = new ArrayList<>();
@@ -138,7 +132,7 @@ public class EventController {
 							neededVideos.add(content);
 						else if (content.getState() == State.ACTIVE
 								&& content.getType() == ContentGroupType.AUDIO)
-							neededVideos.add(content);
+							neededMusic.add(content);
 					}
 					if (neededAlbums.size() != 0)
 						request.setAttribute("albums", neededAlbums.size());
@@ -1252,7 +1246,7 @@ public class EventController {
 		}
 
 		// send mails here
-		
+
 		String escapedBody = StringEscapeUtils.escapeHtml4(emailBody);
 		for (ClubEventMember member : members) {
 			if (member.getUserId() == myId) {

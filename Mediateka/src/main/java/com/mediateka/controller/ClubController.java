@@ -191,16 +191,15 @@ public class ClubController {
 			return;
 		}
 		Club club = ClubService.getClubById(clubId);
-//		FileLoader fileLoader = new FileLoader();
-//		fileLoader.loadFile(request, "club\\club" + club.getId());
+		// FileLoader fileLoader = new FileLoader();
+		// fileLoader.loadFile(request, "club\\club" + club.getId());
 
-//		Media media = MediaService.getMediaById(club.getAvaId());
+		// Media media = MediaService.getMediaById(club.getAvaId());
 
 		club.setName(request.getParameter(("club_name")));
-		club.setDescription(request.getParameter(
-				("club_description")));
+		club.setDescription(request.getParameter(("club_description")));
 		ClubService.updateClub(club);
-//		request.setAttribute("source", media.getPath().replace("\\", "/"));
+		// request.setAttribute("source", media.getPath().replace("\\", "/"));
 		request.getRequestDispatcher("pages/club/club.jsp").forward(request,
 				response);
 	}
@@ -451,11 +450,7 @@ public class ClubController {
 				request.setAttribute("comments", comments);
 				List<Event> events = getEventByClubId(clubId);
 				List<ContentGroup> albums = getContentGroupByClubId(clubId);
-				if (albums == null) {
-					request.setAttribute("albums", 0);
-					request.setAttribute("videos", 0);
-					request.setAttribute("music", 0);
-				} else if (albums != null) {
+				if (albums != null) {
 					List<ContentGroup> neededAlbums = new ArrayList<>();
 					List<ContentGroup> neededMusic = new ArrayList<>();
 					List<ContentGroup> neededVideos = new ArrayList<>();
@@ -746,12 +741,12 @@ public class ClubController {
 	@Roles({ Role.USER, Role.ADMIN })
 	public static void loadClubAvaPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException,
-			ReflectiveOperationException, SQLException, WrongInputException {		
+			ReflectiveOperationException, SQLException, WrongInputException {
 		FileLoader fileLoader = new FileLoader();
 		fileLoader.loadFile(request);
 		Club club = ClubService.getClubById(Integer.parseInt(fileLoader
 				.getParameterMap().get("clubId")));
-		Media media = new Media();		
+		Media media = new Media();
 		media.setType(fileLoader.getMediaType());
 		media.setState(State.ACTIVE);
 		media.setPath(fileLoader.getRelativePath().replace("\\", "/"));

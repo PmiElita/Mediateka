@@ -289,7 +289,8 @@ public class UserController {
 			}
 
 			request.setAttribute("allEventsMemberNumber", eventsMemberNumber);
-			request.setAttribute("allEvents", events);
+			if (!events.isEmpty())
+				request.setAttribute("allEvents", events);
 			request.setAttribute("allEventsAvas", avas);
 			request.setAttribute("professions",
 					ProfessionService.getProfessionByState(State.ACTIVE));

@@ -51,4 +51,3 @@
 		</c:if>
 	</ul>
 </div>
-${imagePath[2]}

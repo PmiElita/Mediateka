@@ -11,23 +11,30 @@
 <nav>
 	<div class="nav-wrapper">
 
-		<a href="index" class="brand-logo"><img alt="Logo"
-			src="images/logo.png" style="width: inherit" /></a>
+		<a href="index" class="brand-logo"><c:if
+				test="${cookie.lang.value eq 'uk-UA'}">
+				<img alt="Logo" src="images/logo.png" style="width: inherit" />
+			</c:if> <c:if test="${cookie.lang.value eq 'en-US'}">
+				<img alt="Logo" src="images/logoEn.png" style="width: inherit" />
+			</c:if></a>
 
 		<ul class="right">
 
-			<li><a title="<fmt:message bundle="${msg}" key="events" />" href="events" class="waves-effect"> <i
-					style="width: 1em"><img style="width: 120%; height: 60%; margin-top:0.35em; margin-left:-0.25em"
+			<li><a title="<fmt:message bundle="${msg}" key="events" />"
+				href="events" class="waves-effect"> <i style="width: 1em"><img
+						style="width: 120%; height: 60%; margin-top: 0.35em; margin-left: -0.25em"
 						src="images/admin/events.png" /></i>
 			</a></li>
 
-			<li><a title="<fmt:message bundle="${msg}" key="clubs" />" href="clubs" class="waves-effect"> <i
-					style="width: 1em"><img style="width: 120%; margin-left:-0.15em"
+			<li><a title="<fmt:message bundle="${msg}" key="clubs" />"
+				href="clubs" class="waves-effect"> <i style="width: 1em"><img
+						style="width: 120%; margin-left: -0.15em"
 						src="images/admin/clubs.png" /></i>
 			</a></li>
 
-			<li><a title="<fmt:message bundle="${msg}" key="books" />" href="searchBook" class="waves-effect"> <i
-					style="width: 1em"><img style="width: 120%; height:60%; margin-top:0.35em; margin-left:-0.15em"
+			<li><a title="<fmt:message bundle="${msg}" key="books" />"
+				href="searchBook" class="waves-effect"> <i style="width: 1em"><img
+						style="width: 120%; height: 60%; margin-top: 0.35em; margin-left: -0.15em"
 						src="images/admin/books.png" /></i>
 			</a></li>
 
