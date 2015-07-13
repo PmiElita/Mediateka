@@ -9,10 +9,10 @@
 <form id="recordForm" enctype="multipart/form-data">
 
 
-		<c:if test="${clubId } != null">
+		<c:if test="${clubId ne null}">
 			<input type="hidden" name="clubId" id="clubId" value='${clubId }'>
 		</c:if>
-		<c:if test="${eventId } != null">
+		<c:if test="${eventId ne null}">
 			<input type="hidden" name="eventId" id="eventId" value="${eventId }">
 		</c:if>
 

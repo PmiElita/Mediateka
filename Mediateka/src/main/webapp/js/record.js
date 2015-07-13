@@ -195,6 +195,7 @@ function handleForm(e) {
 			var percentComplete = evt.loaded / evt.total;
 			percentComplete = parseInt(percentComplete * 100);
 			document.getElementById("progress").hidden = false;
+			document.getElementById("determinate").style.width = percentComplete + "%";
 			if (percentComplete === 100) {
 				document.getElementById("progress").hidden = true;
 			}

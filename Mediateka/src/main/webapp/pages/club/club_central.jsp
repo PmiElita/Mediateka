@@ -107,7 +107,7 @@
 										</div>
 										<div class="col s4" id="7">
 											<a href="" data-target="modal_send_email_to_club_members"
-												class="modal-trigger btn"> <fmt:message bundle="${msg}"
+												class="modal-trigger btn" style="width: 20em"> <fmt:message bundle="${msg}"
 													key="send_email_to_club_members" />
 											</a>
 										</div>
@@ -188,8 +188,7 @@
 
 		<div class="row" style="margin-left: -5em">
 			<div class="col s3">
-				<a href="clubAudios?clubId=${clubId}" data-target="modal7"
-					class="modal-trigger">
+				<a href="clubAudios?clubId=${clubId}">
 					<div class="col s12 m8 offset-m2 l6 offset-l3 my-cardmy-small-card">
 						<div class="my-admin-card card-panel grey lighten-5 z-depth-1">
 							<div style="margin-top: -2em">

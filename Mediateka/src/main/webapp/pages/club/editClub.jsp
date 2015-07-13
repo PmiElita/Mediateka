@@ -27,19 +27,18 @@
 		<div id="creation_form">
 			<div class="container">
 
-				<form id="editClub" action="editClub" name="editClub" method="post"
-					enctype="multipart/form-data">
+				<form id="editClub" action="editClub" name="editClub" method="post">
 					<div class="row">
 						<fmt:message bundle="${msg}" key="edit_club.club_name" />
 						<input name="club_name" id="club_name" type="text"
-							value="${club.name}" form="editClub" /> <br>
+							value="${club_name}" form="editClub" /> <br>
 					</div>
 					<div class="row">
 						<textarea name="club_description" id="club_description " cols="40"
-							rows="5" form="editClub">${club.description}</textarea>
+							rows="5" form="editClub">${club_description}</textarea>
 					</div>
 					<input type="submit" id="subbut" name="subbut" value="save"
-						form="editClub"> <input hidden name="clubId"
+						form="editClub"> <input hidden="true" name="clubId"
 						value="${clubId}">
 				</form>
 			</div>

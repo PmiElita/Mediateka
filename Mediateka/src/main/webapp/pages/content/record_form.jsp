@@ -40,7 +40,7 @@
 
 			<div id="progress" hidden="true">
 				<div class="progress">
-					<div class="indeterminate"></div>
+					<div id="determinate" class="determinate"></div>
 				</div>
 			</div>
 

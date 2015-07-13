@@ -145,8 +145,10 @@ public class ClubController {
 			response.sendError(404);
 			return;
 		}
-		request.setAttribute("club", ClubService.getClubById((Integer) request
-				.getSession().getAttribute("clubId")));
+		club = ClubService.getClubById(clubId);
+		request.setAttribute("clubId", clubId);
+		request.setAttribute("club_name", club.getName());
+		request.setAttribute("club_description", club.getDescription());
 		request.setAttribute(
 				"clubAva",
 				MediaService.getMediaById(club.getAvaId()).getPath()
@@ -188,18 +190,18 @@ public class ClubController {
 			response.sendError(404);
 		}
 		Club club = ClubService.getClubById(clubId);
-		FileLoader fileLoader = new FileLoader();
-		fileLoader.loadFile(request, "club\\club" + club.getId());
+//		FileLoader fileLoader = new FileLoader();
+//		fileLoader.loadFile(request, "club\\club" + club.getId());
 
-		Media media = MediaService.getMediaById(club.getAvaId());
+//		Media media = MediaService.getMediaById(club.getAvaId());
 
-		club.setName(fileLoader.getParameterMap().get(("club_name")));
-		club.setDescription(fileLoader.getParameterMap().get(
+		club.setName(request.getParameter(("club_name")));
+		club.setDescription(request.getParameter(
 				("club_description")));
 
-		club.setAvaId(media.getId());
+//		club.setAvaId(media.getId());
 		ClubService.updateClub(club);
-		request.setAttribute("source", media.getPath().replace("\\", "/"));
+//		request.setAttribute("source", media.getPath().replace("\\", "/"));
 		request.getRequestDispatcher("pages/club/club.jsp").forward(request,
 				response);
 
@@ -468,7 +470,7 @@ public class ClubController {
 							neededVideos.add(content);
 						else if (content.getState() == State.ACTIVE
 								&& content.getType() == ContentGroupType.AUDIO)
-							neededVideos.add(content);
+							neededMusic.add(content);
 					}
 					if (neededAlbums.size() != 0)
 						request.setAttribute("albums", neededAlbums.size());
@@ -746,14 +748,12 @@ public class ClubController {
 	@Roles({ Role.USER, Role.ADMIN})
 	public static void loadClubAvaPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException,
-			ReflectiveOperationException, SQLException, WrongInputException {
-		System.out.println("loadAva");
+			ReflectiveOperationException, SQLException, WrongInputException {		
 		FileLoader fileLoader = new FileLoader();
 		fileLoader.loadFile(request);
 		Club club = ClubService.getClubById(Integer.parseInt(fileLoader
 				.getParameterMap().get("clubId")));
-		Media media = new Media();
-		System.out.println(fileLoader.getFilePath());
+		Media media = new Media();		
 		media.setType(fileLoader.getMediaType());
 		media.setState(State.ACTIVE);
 		media.setPath(fileLoader.getRelativePath().replace("\\", "/"));

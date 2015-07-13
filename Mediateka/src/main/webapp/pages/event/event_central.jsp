@@ -186,6 +186,7 @@
 						</div>
 					</div>
 				</div>
+			</a>
 		</div>
 
 		<div class="col s4">
