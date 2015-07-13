@@ -20,10 +20,11 @@
 							<a href="club?clubId=${item.id}" style="min-width: 100%">
 								<div align="center">
 									<h2 class="image-cover-t">
-										<c:out value="${item.name} " />
-										<c:out value=" (${clubsMemberNumber[status.index]})" />
+										<div class="row">
+											<c:out value="${item.name} " />
+											<c:out value=" (${clubsMemberNumber[status.index]})" />
+										</div>
 									</h2>
-
 									<img class="my-picture-club center"
 										src="${allClubsAvas[status.index]}" align="middle"
 										style="margin-top: -10.2em;">

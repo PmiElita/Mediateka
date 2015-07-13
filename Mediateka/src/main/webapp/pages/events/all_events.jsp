@@ -21,10 +21,10 @@
 							<a href="event?eventId=${item.id}">
 								<div align="center">
 									<h2 class="image-cover-t">
-										<c:out value="${item.name} " />
-										<h4>
+										<div class="row">
+											<c:out value="${item.name} " />
 											<c:out value=" (${allEventsMemberNumber[status.index]})" />
-										</h4>
+										</div>
 									</h2>
 									<img class="my-picture-club"
 										src="${allEventsAvas[status.index]}" align="middle"
