@@ -262,7 +262,7 @@ public class UserController {
 			List<Event> eventss = getEventByClubId(clubId);
 			List<String> avas = new ArrayList<>();
 			List<Event> events = new ArrayList<>();
-			if (events != null) {
+			if (eventss != null) {
 				for (int i = 0; i < eventss.size(); i++)
 					if (eventss.get(i).getState() != State.ACTIVE)
 						events.add(eventss.get(i));
