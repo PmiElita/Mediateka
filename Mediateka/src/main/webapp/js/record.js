@@ -99,7 +99,7 @@ function handleFileSelect(e) {
 
 					var reader = new FileReader();
 
-					reader.onloadend = function(e) {
+					reader.onload = function(e) {
 						/*
 						 * var html = "<div><video width = '400'
 						 * class='selFile' title='Click to remove' controls><source

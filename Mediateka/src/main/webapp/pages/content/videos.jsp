@@ -16,7 +16,8 @@
 <head>
 
 <jsp:include page="../general/head.jsp" />
-<jsp:include page="loadAlbum.jsp" />
+<jsp:include page="../../js/record.js.jsp" />
+<script src="js/record.js"></script>
 
 
 <style>
@@ -115,7 +116,9 @@
 						</div>
 					</div>
 					<div class="col s9">
-						<div id="selectedVideos"></div>
+					<div class="row">
+						<div id="selectedFiles"></div>
+					</div>
 					</div>
 				</div>
 			</form>
@@ -153,7 +156,7 @@
 		xhr.onload = function(e, data) {
 			if (this.status == 200) {
 				document.getElementById("loadVideoForm").reset();
-				document.getElementById("selectedVideos").innerHTML = "";
+				document.getElementById("selectedFiles").innerHTML = "";
 				storedVideos = [];
 				alert(JSON.stringify(e.currentTarget));
 				var responseJSON = JSON.parse(e.currentTarget.responseText);
@@ -166,7 +169,7 @@
 				$('#' + loadEl.id).load(
 						"viewNewVideo?videoId="
 								+ responseJSON["contentGroup"].id + "&index="
-								+ document.getElementById("index").textContent);
+								+ document.getElementById("index").textContent+" #listVideos");
 
 				// 				$('#audioPlayer').remove();
 				// 				$('.playing').removeClass('playing');

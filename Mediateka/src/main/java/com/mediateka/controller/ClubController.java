@@ -17,6 +17,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -32,6 +33,7 @@ import com.mediateka.annotation.Controller;
 import com.mediateka.annotation.Request;
 import com.mediateka.annotation.Roles;
 import com.mediateka.comparator.ChatMessageByCreationDate;
+import com.mediateka.comparator.ContentGroupByDate;
 import com.mediateka.comparator.UsersByName;
 import com.mediateka.content.CreateContent;
 import com.mediateka.exception.WrongInputException;
@@ -49,6 +51,7 @@ import com.mediateka.model.enums.Role;
 import com.mediateka.model.enums.State;
 import com.mediateka.pair.ChatMessageUserCardPair;
 import com.mediateka.pair.CommentUserCardPair;
+import com.mediateka.pair.PathCountPair;
 import com.mediateka.service.ChatMessageService;
 import com.mediateka.service.ClubEventMemberService;
 import com.mediateka.service.ClubService;
@@ -220,7 +223,7 @@ public class ClubController {
 			SQLException, ServletException, IOException {
 		int clubId = 0;
 		int eventId = 0;
-		System.out.println(request.getParameter("albumId"));
+
 		Integer albumId = Integer.parseInt(request.getParameter("albumId"));
 		ContentGroup contentGroup = ContentGroupService
 				.getContentGroupById(albumId);
@@ -251,14 +254,44 @@ public class ClubController {
 	public static void clubAlbumsGet(HttpServletRequest request,
 			HttpServletResponse response) throws SQLException,
 			ReflectiveOperationException, ServletException, IOException {
+		Integer userId = null;
+		try {
+			userId = Integer.parseInt( request.getSession().getAttribute("userId").toString());
+		} catch (NullPointerException|NumberFormatException e){
+			logger.info("unlogined user get photos", e);
+		}
 		Integer clubId = Integer.parseInt(request.getParameter("clubId"));
+		ClubEventMember clubEventMember = ClubEventMemberService.getClubEventMemberByUserIdAndClubId(userId, clubId);
+		ClubEventMemberType userMemberType= null;
+		if (clubEventMember!=null){
+		 userMemberType = clubEventMember.getType();
+		}
 		List<ContentGroup> contentGroups = ContentGroupService
 				.getContentGroupByClubIdAndStateAndType(clubId, State.ACTIVE,
 						ContentGroupType.IMAGE);
-		CreateContent.setContent(request, response, contentGroups);
+		Map<ContentGroup, PathCountPair> result = new LinkedHashMap<ContentGroup, PathCountPair>();
+		if (contentGroups!=null){
+			Collections.sort(contentGroups, new ContentGroupByDate());
+		for (ContentGroup contentGroup : contentGroups) {
+			String path = null;
+			Media media = MediaService
+					.getFirstMediaByContentGroupId(contentGroup.getId());
+			if (media != null) {
+				path = media.getPath();
+			}
+			result.put(
+					contentGroup,
+					new PathCountPair(path,
+							MediaService
+									.getMediaCountByContentGroupId(contentGroup
+											.getId())));
+		}
+		}
 		Club club = ClubService.getClubById(clubId);
+		request.setAttribute("memberType", userMemberType);
 		request.setAttribute("clubName", club.getName());
 		request.setAttribute("clubId", clubId);
+		request.setAttribute("albums", result);
 		request.getRequestDispatcher("pages/content/albums.jsp").forward(
 				request, response);
 		request.removeAttribute("clubName");

@@ -3,7 +3,7 @@
 
 <fmt:setLocale value="${cookie.lang.value}" />
 <fmt:setBundle basename="translations/club_page" var="msg" />
-
+<jsp:include page="../../js/record.js.jsp"/>
 <script src="js/record.js"></script>
 
 <div id="addPhoto" class="modal">
@@ -42,7 +42,7 @@
 					</div>
 				</div>
 				<div class="col s9">
-					<div id="selectedImages"></div>
+					<div id="selectedFiles"></div>
 				</div>
 			</div>
 		</form>
@@ -81,24 +81,19 @@
 		xhr.onload = function(e, data) {
 			if (this.status == 200) {
 				document.getElementById("loadPhotoForm").reset();
-				document.getElementById("selectedImages").innerHTML = "";
+				document.getElementById("selectedFiles").innerHTML = "";
 				storedImages = [];
 				alert(JSON.stringify(e.currentTarget));
 				var responseJSON = JSON.parse(e.currentTarget.responseText);
 
-				loadIndex = document.getElementById('index').textContent;
-				var loadEl = document.getElementById("load");
-				loadIndex++;
-				$("#index").text(loadIndex);
-				loadEl.id = loadEl.id + loadIndex;
-				$('#' + loadEl.id).load(
-						"viewNewAlbum?albumId="
-								+ responseJSON["contentGroup"].id + "&index="
-								+ document.getElementById("index").textContent);
+				
+				$('#photoList').load(
+						"viewNewPhoto?albumId="
+								+ responseJSON["albumId"]);
 
-				$('#addAlbum').closeModal();
+				$('#addPhoto').closeModal();
 
-				alert(' items uploaded.');
+				Materialize.toast(' items uploaded.', 3000);
 			}
 		}
 

@@ -55,6 +55,7 @@ public class FacebookLoginDAO {
 			InputStreamReader newIsr = new InputStreamReader(ins, "UTF-8");
 			JSONParser parser = new JSONParser();
 			JSONObject jsonUser = (JSONObject) parser.parse(newIsr);
+
 			userId = jsonUser.get("id").toString();
 
 			User user = new User();

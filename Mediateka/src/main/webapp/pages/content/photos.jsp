@@ -3,6 +3,7 @@
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
     <script src="js/jssor.js"></script>
 <script src="js/jssor.slider.js"></script>
+<div id="photoList">
 <c:forEach var="photo" items="${photos}" varStatus="loop">
 	<div id="photId${photo.id}" class="col s4" style="margin-bottom: 3.0em;">
 		<div class="col s12 m8 offset-m2 l6 offset-l2 my-back-card my-small-card" onclick="setOptions(${loop.index})">
@@ -82,3 +83,4 @@
 
         });
     </script>
+    </div>

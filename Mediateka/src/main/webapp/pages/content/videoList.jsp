@@ -9,10 +9,12 @@
 <fmt:setLocale value="${locale}" />
 <fmt:setBundle basename="menu" />
 <fmt:requestEncoding value="utf-8" />
+<div class="row">
+<div id="listVideos">
 <div id="load"></div>
 <label id="index" hidden="true">${index}</label>
 <div id="uploaded">
-	<div class="row" style="margin-left:2em">
+	<div   style="margin-left:2em">
 		<c:forEach var="record" items="${records }">
 			<c:forEach var="video" items="${videoMap.get(record.id) }">
 				<li class="col s6" style="font-size:1.5em"><c:out value="${video.name}"></c:out><video style="margin-left:-1.5em; border-radius:5%" width="100%"
@@ -24,4 +26,6 @@
 			</c:forEach>
 		</c:forEach>
 	</div>
+</div>
+</div>
 </div>

@@ -6,7 +6,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <%@page import="com.mediateka.model.enums.Role"%>
-
+<%@page import="com.mediateka.model.enums.ClubEventMemberType"%>
 <fmt:setLocale value="${cookie.lang.value}" />
 <fmt:setBundle basename="translations/club_page" var="msg" />
 
@@ -15,7 +15,9 @@
 <head>
 
 <jsp:include page="../general/head.jsp" />
+<c:if test="${memberType eq ClubEventMemberType.CREATOR }">
 <jsp:include page="loadPhoto.jsp" />
+</c:if>
 
 </head>
 
@@ -53,18 +55,20 @@
 
 			<div class="container  white" style="width: 75%;">
 				<div class="section">
-					<h3 class="image-cover-t center" style="margin-top: 0.5em;">${clubName}</h3>
+				
 					<div class="row">
 						<h4 class="image-cover-t center">
-							<fmt:message bundle="${msg}" key="albums" />
+							${albumName }
 						</h4>
 					</div>
+					<c:if test="${memberType eq ClubEventMemberType.CREATOR }">
 					<div class="row" style="margin-top: -5em;">
 						<a title="Add Photo" href="" data-target="addPhoto"
 							class="modal-trigger"> <span style="margin-left:5em"><i
 								class="medium mdi-av-queue"></i></span>
 						</a>
 					</div>
+					</c:if>
 				</div>
 
 				<div class="section">
