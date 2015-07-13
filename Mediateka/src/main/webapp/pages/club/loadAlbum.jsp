@@ -4,6 +4,7 @@
 <fmt:setLocale value="${cookie.lang.value}" />
 <fmt:setBundle basename="translations/club_page" var="msg" />
 
+<jsp:include page="../../js/record.js.jsp" />
 <script src="js/record.js"></script>
 
 <div id="addAlbum" class="modal">

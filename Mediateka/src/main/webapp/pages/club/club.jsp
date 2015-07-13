@@ -19,6 +19,8 @@
 <script src="js/comment.js"></script>
 <link type="text/css" rel="stylesheet" href="css/oleh_style.css"
 	media="screen,projection" />
+
+<jsp:include page="../../js/record.js.jsp" />
 </head>
 
 <body onload="connect();" onunload="disconnect();">
@@ -60,7 +62,7 @@
 	</div>
 
 
-<label hidden id="currentUserId">${userId }</label>
+	<label hidden id="currentUserId">${userId }</label>
 	<jsp:include page="../general/footer.jsp" />
 
 </body>

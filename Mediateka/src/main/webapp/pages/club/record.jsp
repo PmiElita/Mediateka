@@ -24,7 +24,7 @@
 }
 </style>
 
-
+<jsp:include page="../../js/record.js.jsp" />
 <script src="js/record.js"></script>
 <div class="collapsible-header" style="font-size: 2em">+</div>
 <div class="collapsible-body">

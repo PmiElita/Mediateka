@@ -87,7 +87,7 @@ function handleFileSelect(e) {
 								+ e.target.result
 								+ "\" data-file='"
 								+ f.name
-								+ "'height='105' class='selFile toDelete' title='Click to remove'></div>";
+								+ "'height='105' class='selFile toDelete' title='" + recordJsTranslations["click_to_remove"] + "'></div>";
 
 						selDiv.prepend(html);
 
@@ -114,7 +114,7 @@ function handleFileSelect(e) {
 								+ "images/photo-video-start-icon.png"
 								+ "\" data-file='"
 								+ f.name
-								+ "'height='105' class='selFile toDelete' title='Click to remove'>"
+								+ "'height='105' class='selFile toDelete' title='" + recordJsTranslations["click_to_remove"] + "'>"
 								+ f.name + "</div>";
 						selDiv.prepend(html);
 					}
@@ -138,7 +138,7 @@ function handleFileSelect(e) {
 								+ "images/AudioIcon2.png"
 								+ "\" data-file='"
 								+ f.name
-								+ "'height='105' class='selFile toDelete' title='Click to remove'>"
+								+ "'height='105' class='selFile toDelete' title='" + recordJsTranslations["click_to_remove"] + "'>"
 								+ f.name + "</div>";
 						selDiv.prepend(html);
 
@@ -227,7 +227,7 @@ function handleForm(e) {
 							+ "&index="
 							+ document.getElementById("index").textContent);
 
-			Materialize.toast(' files uploaded.', 2000);
+			Materialize.toast(recordJsTranslations["file_is_uploaded"], 2000);
 		}
 	}
 
@@ -281,11 +281,11 @@ function linkedVideoForm() {
 					+ link[i]
 					+ "\" class='col s3 center' style='height:130px'><img id='link' name =\""
 					+ link[i]
-					+ "\"src= images/photo-video-start-icon.png height='105' class='selFile toDelete' title='Click to remove'>"
+					+ "\"src= images/photo-video-start-icon.png height='105' class='selFile toDelete' title='" + recordJsTranslations["click_to_remove"] + "'>"
 					+ link[i] + "</div>";
 			selDiv.prepend(html);
 		} else {
-			Materialize.toast('Some links is incorect', 2000);
+			Materialize.toast(recordJsTranslations["some_links_are_incorrect"], 2000);
 		}
 	}
 }

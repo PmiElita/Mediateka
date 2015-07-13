@@ -21,6 +21,7 @@
 
 
 <jsp:include page="../general/head.jsp" />
+<jsp:include page="../../js/record.js.jsp" />
 <script src="js/record.js"></script>
 
 </head>

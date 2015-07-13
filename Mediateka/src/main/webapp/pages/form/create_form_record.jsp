@@ -12,6 +12,7 @@
 <html>
 <head>
 <jsp:include page="../general/head.jsp" />
+<jsp:include page="../../js/record.js.jsp" />
 <script type="text/javascript" src="js/form_record.js"></script>
 </head>
 <body>
