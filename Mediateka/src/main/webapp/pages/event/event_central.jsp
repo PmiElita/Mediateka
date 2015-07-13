@@ -71,12 +71,12 @@
 						<c:choose>
 							<c:when test="${!(creator==null)}">
 								<c:if test="${event.state eq State.ACTIVE}">
-									<div class="col s3" id="1">
+									<div class="col s4" id="1">
 										<a class="btn" href="creatorBlockEvent?eventId=${event.id}"
 											style="width: 15em"><fmt:message bundle="${msg}"
 												key="block_event" /></a>
 									</div>
-									<div class="col s3" id="2">
+									<div class="col s4" id="2">
 										<a class="btn" onclick="deleteEventAjax(${event.id})"
 											style="width: 15em"><fmt:message bundle="${msg}"
 												key="delete_event" /></a>
@@ -86,20 +86,21 @@
 											style="width: 30em; color: red"><fmt:message
 												bundle="${msg}" key="restore_event" /></a>
 									</div>
-									<div class="col s3" id="4">
+									<div class="col s4" id="4">
 										<a class="btn" href="UpdateEvent?eventId=${event.id}"
 											style="width: 15em"><fmt:message bundle="${msg}"
 												key="update_event" /></a>
 									</div>
-									<div class="col s3" id="5">
+									<div class="col s4" id="5">
 										<a class="btn" href="EventUsers?eventId=${event.id }"
 											style="width: 15em"><fmt:message bundle="${msg}"
 												key="look_participants" /></a>
 									</div>
-									<div class="col s4" id="6">
+									<div class="col s6" id="6" style="align: center;">
 										<a href="" data-target="modal_send_email_to_event_members"
-											class="modal-trigger waves-effect btn"> <fmt:message
-												bundle="${msg}" key="send_email_to_event_members" />
+											class="modal-trigger waves-effect btn" style="width: 15em">
+											<fmt:message bundle="${msg}"
+												key="send_email_to_event_members" />
 										</a>
 									</div>
 								</c:if>
@@ -128,6 +129,13 @@
 										<a class="btn" href="EventUsers?eventId=${event.id }"
 											style="width: 15em"><fmt:message bundle="${msg}"
 												key="look_participants" /></a>
+									</div>
+									<div class="col s6" id="6" style="align: center;">
+										<a href="" data-target="modal_send_email_to_event_members"
+											class="modal-trigger waves-effect btn" style="width: 15em">
+											<fmt:message bundle="${msg}"
+												key="send_email_to_event_members" />
+										</a>
 									</div>
 								</c:if>
 							</c:when>
@@ -250,6 +258,7 @@
 				document.getElementById(2).hidden = true;
 				document.getElementById(4).hidden = true;
 				document.getElementById(5).hidden = true;
+				document.getElementById(6).hidden = true;
 				document.getElementById(3).hidden = false;
 			}
 		});
@@ -268,6 +277,7 @@
 				document.getElementById(2).hidden = false;
 				document.getElementById(4).hidden = false;
 				document.getElementById(5).hidden = false;
+				document.getElementById(6).hidden = false;
 				document.getElementById(3).hidden = true;
 			}
 		});

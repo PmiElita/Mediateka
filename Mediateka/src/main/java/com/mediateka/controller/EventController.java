@@ -184,7 +184,7 @@ public class EventController {
 	// create event
 
 	@Request(url = "CreateExhibition", method = "get")
-	@Roles({ Role.USER, Role.ADMIN})
+	@Roles({ Role.USER, Role.ADMIN })
 	public static void exhibitionCreateGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 
@@ -194,7 +194,7 @@ public class EventController {
 	}
 
 	@Request(url = "CreateMeeting", method = "get")
-	@Roles({ Role.USER, Role.ADMIN})
+	@Roles({ Role.USER, Role.ADMIN })
 	public static void meetingCreateGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 
@@ -205,7 +205,7 @@ public class EventController {
 
 	@SuppressWarnings("deprecation")
 	@Request(url = "CreateExhibition", method = "post")
-	@Roles({ Role.USER, Role.ADMIN})
+	@Roles({ Role.USER, Role.ADMIN })
 	public static void exhibitionCreatePost(HttpServletRequest request,
 			HttpServletResponse response) throws ParseException, SQLException,
 			ReflectiveOperationException, ServletException, IOException {
@@ -295,7 +295,7 @@ public class EventController {
 
 	@SuppressWarnings("deprecation")
 	@Request(url = "CreateMeeting", method = "post")
-	@Roles({ Role.USER, Role.ADMIN})
+	@Roles({ Role.USER, Role.ADMIN })
 	public static void meetingCreatePost(HttpServletRequest request,
 			HttpServletResponse response) throws ParseException, SQLException,
 			ReflectiveOperationException, ServletException, IOException {
@@ -393,7 +393,7 @@ public class EventController {
 	// update event
 
 	@Request(url = "UpdateEvent", method = "get")
-	@Roles({ Role.USER, Role.ADMIN})
+	@Roles({ Role.USER, Role.ADMIN })
 	public static void eventUpdateGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			SQLException, ReflectiveOperationException {
@@ -434,6 +434,7 @@ public class EventController {
 			request.setAttribute("imagePath", imagePath);
 		}
 		request.setAttribute("event", event);
+		request.setAttribute("eventId", eventId);
 
 		SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
 		String dateFrom = format.format(event.getDateFrom());
@@ -471,7 +472,7 @@ public class EventController {
 	}
 
 	@Request(url = "UpdateExhibition", method = "post")
-	@Roles({ Role.USER, Role.ADMIN})
+	@Roles({ Role.USER, Role.ADMIN })
 	public static void exhibitionUpdatePost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			SQLException, ReflectiveOperationException {
@@ -557,7 +558,7 @@ public class EventController {
 
 	@SuppressWarnings("deprecation")
 	@Request(url = "UpdateMeeting", method = "post")
-	@Roles({ Role.USER, Role.ADMIN})
+	@Roles({ Role.USER, Role.ADMIN })
 	public static void meetingUpdatePost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			SQLException, ReflectiveOperationException {
@@ -656,7 +657,7 @@ public class EventController {
 	}
 
 	@Request(url = "activateEvent", method = "get")
-	@Roles({  Role.ADMIN})
+	@Roles({ Role.ADMIN })
 	public static void activateEvent(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			ReflectiveOperationException, SQLException {
@@ -694,7 +695,7 @@ public class EventController {
 	}
 
 	@Request(url = "deleteEvent", method = "get")
-	@Roles({ Role.ADMIN})
+	@Roles({ Role.ADMIN })
 	public static void deleteEvent(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			ReflectiveOperationException, SQLException {
@@ -788,7 +789,7 @@ public class EventController {
 	}
 
 	@Request(url = "loadEventAva", method = "post")
-	@Roles({ Role.USER, Role.ADMIN})
+	@Roles({ Role.USER, Role.ADMIN })
 	public static void loadClubAvaPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException,
 			ReflectiveOperationException, SQLException, WrongInputException {
@@ -875,7 +876,7 @@ public class EventController {
 	}
 
 	@Request(url = "activateEventUser", method = "get")
-	@Roles({ Role.USER, Role.ADMIN})
+	@Roles({ Role.USER, Role.ADMIN })
 	public static void activateEventUser(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			ReflectiveOperationException, SQLException {
@@ -915,7 +916,7 @@ public class EventController {
 	}
 
 	@Request(url = "deleteEventUser", method = "get")
-	@Roles({ Role.USER, Role.ADMIN})
+	@Roles({ Role.USER, Role.ADMIN })
 	public static void deleteEventUser(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			ReflectiveOperationException, SQLException {
@@ -955,7 +956,7 @@ public class EventController {
 	}
 
 	@Request(url = "blockEventUser", method = "get")
-	@Roles({ Role.USER, Role.ADMIN})
+	@Roles({ Role.USER, Role.ADMIN })
 	public static void blockEventUser(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			ReflectiveOperationException, SQLException {
@@ -995,7 +996,7 @@ public class EventController {
 	}
 
 	@Request(url = "deleteEventAjax", method = "get")
-	@Roles({ Role.USER, Role.ADMIN})
+	@Roles({ Role.USER, Role.ADMIN })
 	public static void deleteEventAjax(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			ReflectiveOperationException, SQLException {
@@ -1030,7 +1031,7 @@ public class EventController {
 	}
 
 	@Request(url = "restoreEventAjax", method = "get")
-	@Roles({ Role.USER, Role.ADMIN})
+	@Roles({ Role.USER, Role.ADMIN })
 	public static void restoreEventAjax(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			ReflectiveOperationException, SQLException {
@@ -1065,7 +1066,7 @@ public class EventController {
 	}
 
 	@Request(url = "creatorBlockEvent", method = "get")
-	@Roles({ Role.USER, Role.ADMIN})
+	@Roles({ Role.USER, Role.ADMIN })
 	public static void creatorBlockEvent(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			ReflectiveOperationException, SQLException {
@@ -1073,7 +1074,7 @@ public class EventController {
 	}
 
 	@Request(url = "creatorUnblockEvent", method = "get")
-	@Roles({ Role.USER, Role.ADMIN})
+	@Roles({ Role.USER, Role.ADMIN })
 	public static void creatorUnblockEvent(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			ReflectiveOperationException, SQLException {
@@ -1081,7 +1082,7 @@ public class EventController {
 	}
 
 	@Request(url = "creatorDeleteEvent", method = "get")
-	@Roles({ Role.USER, Role.ADMIN})
+	@Roles({ Role.USER, Role.ADMIN })
 	public static void creatorDeleteEvent(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			ReflectiveOperationException, SQLException {
