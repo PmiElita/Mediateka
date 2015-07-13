@@ -32,19 +32,20 @@ import com.mediateka.util.FileLoader;
 @Controller
 public class MediaController {
 	private static Logger logger = Logger.getLogger(MediaController.class);
-	@Request(url="loadPhotos", method = "post")
+
+	@Request(url = "loadPhotos", method = "post")
 	public static void loadPhotos(HttpServletRequest request,
 			HttpServletResponse resposne) throws ServletException,
 			WrongInputException, SQLException, ReflectiveOperationException,
 			IOException {
 		FileLoader fileLoader = new FileLoader();
 		fileLoader.loadFile(request);
-		Map<String,String> parameterMap=fileLoader.getParameterMap();
+		Map<String, String> parameterMap = fileLoader.getParameterMap();
 		Integer albumId = Integer.parseInt(parameterMap.get("albumId"));
-		if (albumId!=null){
-			List<String>  pathes = fileLoader.getAllRelativePathes();
+		if (albumId != null) {
+			List<String> pathes = fileLoader.getAllRelativePathes();
 			List<String> names = fileLoader.getAllFileDefaultNames();
-			for (int i=0; i<pathes.size(); i++){
+			for (int i = 0; i < pathes.size(); i++) {
 				Media media = new Media();
 				media.setContentGroupId(albumId);
 				media.setPath(pathes.get(i));
@@ -59,85 +60,131 @@ public class MediaController {
 			resposne.getWriter().write(new Gson().toJson(result));
 		}
 	}
-	
-	@Request(url="photos", method="get")
-	public static void getPhotos(HttpServletRequest request, HttpServletResponse response) throws SQLException, ReflectiveOperationException, ServletException, IOException{
+
+	@Request(url = "photos", method = "get")
+	public static void getPhotos(HttpServletRequest request,
+			HttpServletResponse response) throws SQLException,
+			ReflectiveOperationException, ServletException, IOException {
 		Integer albumId = Integer.parseInt(request.getParameter("albumId"));
 		Integer userId = null;
 		try {
-			userId = Integer.parseInt( request.getSession().getAttribute("userId").toString());
-		} catch (NullPointerException|NumberFormatException e){
+			userId = Integer.parseInt(request.getSession()
+					.getAttribute("userId").toString());
+		} catch (NullPointerException | NumberFormatException e) {
 			logger.info("unlogined user get photos", e);
 		}
-		if (albumId!=null){
-			ContentGroup album = ContentGroupService.getContentGroupById(albumId);
-			if (album!=null&&album.getType()==ContentGroupType.IMAGE){
-			List<Media> photos = MediaService.getMediaByContentGroupId(albumId);
-			request.setAttribute("albumId", albumId);
-			ClubEventMemberType userMemberType = null;
-			if (album.getClubId()!=null){
-				if (userId!=null){
-				userMemberType = ClubEventMemberService.getClubEventMemberByUserIdAndClubId(userId, album.getClubId()).getType();
+		if (albumId != null) {
+			ContentGroup album = ContentGroupService
+					.getContentGroupById(albumId);
+			if (album != null && album.getType() == ContentGroupType.IMAGE) {
+				List<Media> photos = MediaService
+						.getMediaByContentGroupId(albumId);
+				request.setAttribute("albumId", albumId);
+				ClubEventMemberType userMemberType = null;
+				if (album.getClubId() != null) {
+					if (userId != null) {
+						userMemberType = ClubEventMemberService
+								.getClubEventMemberByUserIdAndClubId(userId,
+										album.getClubId()).getType();
+					}
+					request.setAttribute("clubId", album.getClubId());
+				} else if (album.getEventId() != null) {
+					if (userId != null) {
+						userMemberType = ClubEventMemberService
+								.getClubEventMemberByUserIdAndEventId(userId,
+										album.getEventId()).getType();
+					}
+					request.setAttribute("eventId", album.getEventId());
 				}
-				request.setAttribute("clubId", album.getClubId());
-			} else if (album.getEventId()!=null){
-				if (userId!= null){
-				userMemberType = ClubEventMemberService.getClubEventMemberByUserIdAndEventId(userId, album.getEventId()).getType();
-				}
-				request.setAttribute("eventId", album.getEventId());
-			}
-			request.setAttribute("memberType", userMemberType);
-			request.setAttribute("albumName", album.getName());
-			request.setAttribute("photos", photos);
-			request.getRequestDispatcher("pages/content/album.jsp").forward(request, response);
+				request.setAttribute("memberType", userMemberType);
+				request.setAttribute("albumName", album.getName());
+				request.setAttribute("photos", photos);
+				request.getRequestDispatcher("pages/content/album.jsp")
+						.forward(request, response);
 			}
 		} else {
 			response.sendError(404);
 		}
-		
+
 	}
-	
+
 	@Request(url = "viewNewPhoto", method = "get")
 	public static void viewNewAlbumGet(HttpServletRequest request,
 			HttpServletResponse response) throws ReflectiveOperationException,
 			SQLException, ServletException, IOException {
 
-
 		Integer albumId = Integer.parseInt(request.getParameter("albumId"));
-		if (albumId!=null){
-			ContentGroup album = ContentGroupService.getContentGroupById(albumId);
-			if (album!=null&&album.getType()==ContentGroupType.IMAGE){
-			List<Media> photos = MediaService.getMediaByContentGroupId(albumId);
-			request.setAttribute("albumId", albumId);
-			if (album.getClubId()!=null){
-				request.setAttribute("clubId", album.getClubId());
-			} else if (album.getEventId()!=null){
-				request.setAttribute("eventId", album.getEventId());
-			}
-			request.setAttribute("photos", photos);
-			request.getRequestDispatcher("pages/content/photos.jsp").forward(request, response);
+		if (albumId != null) {
+			ContentGroup album = ContentGroupService
+					.getContentGroupById(albumId);
+			if (album != null && album.getType() == ContentGroupType.IMAGE) {
+				List<Media> photos = MediaService
+						.getMediaByContentGroupId(albumId);
+				request.setAttribute("albumId", albumId);
+				if (album.getClubId() != null) {
+					request.setAttribute("clubId", album.getClubId());
+				} else if (album.getEventId() != null) {
+					request.setAttribute("eventId", album.getEventId());
+				}
+				request.setAttribute("photos", photos);
+				request.getRequestDispatcher("pages/content/photos.jsp")
+						.forward(request, response);
 			}
 		} else {
 			response.sendError(404);
 		}
 	}
-@Request(url="deleteAlbum", method="get")
-	@Roles({ Role.USER, Role.ADMIN})
-	public static void deleteRecordGet(HttpServletRequest request, HttpServletResponse response) throws NumberFormatException, ReflectiveOperationException, SQLException, ServletException, IOException{
-		ContentGroup contentGroup = ContentGroupService.getContentGroupById(Integer.parseInt(request.getParameter("albumId")));
+
+	@Request(url = "deleteAlbum", method = "get")
+	@Roles({ Role.USER, Role.ADMIN })
+	public static void deleteRecordGet(HttpServletRequest request,
+			HttpServletResponse response) throws NumberFormatException,
+			ReflectiveOperationException, SQLException, ServletException,
+			IOException {
+		ContentGroup contentGroup = ContentGroupService
+				.getContentGroupById(Integer.parseInt(request
+						.getParameter("albumId")));
 		contentGroup.setState(State.DELETED);
-		ContentGroupService.updateContentGroup(contentGroup);		
-	}
-	
-	@Request(url = "restoreAlbum", method="get")
-	@Roles({ Role.USER, Role.ADMIN})
-	public static void restoreRecordGet(HttpServletRequest request, HttpServletResponse response) throws NumberFormatException, ReflectiveOperationException, SQLException, ServletException, IOException{
-		ContentGroup contentGroup = ContentGroupService.getContentGroupById(Integer.parseInt(request.getParameter("albumId")));		
-		contentGroup.setState(State.ACTIVE);
-		ContentGroupService.updateContentGroup(contentGroup);	
-		
+		ContentGroupService.updateContentGroup(contentGroup);
 	}
 
+	@Request(url = "restoreAlbum", method = "get")
+	@Roles({ Role.USER, Role.ADMIN })
+	public static void restoreRecordGet(HttpServletRequest request,
+			HttpServletResponse response) throws NumberFormatException,
+			ReflectiveOperationException, SQLException, ServletException,
+			IOException {
+		ContentGroup contentGroup = ContentGroupService
+				.getContentGroupById(Integer.parseInt(request
+						.getParameter("albumId")));
+		contentGroup.setState(State.ACTIVE);
+		ContentGroupService.updateContentGroup(contentGroup);
+
+	}
+
+	@Request(url = "deleteMedia", method = "get")
+	@Roles({ Role.USER, Role.ADMIN })
+	public static void deleteMediaGet(HttpServletRequest request,
+			HttpServletResponse response) throws NumberFormatException,
+			ReflectiveOperationException, SQLException, ServletException,
+			IOException {
+		Media media = MediaService.getMediaById(Integer.parseInt(request
+				.getParameter("mediaId")));
+		media.setState(State.DELETED);
+		MediaService.updateMedia(media);
+	}
+
+	@Request(url = "restoreMedia", method = "get")
+	@Roles({ Role.USER, Role.ADMIN })
+	public static void restoreMediaGet(HttpServletRequest request,
+			HttpServletResponse response) throws NumberFormatException,
+			ReflectiveOperationException, SQLException, ServletException,
+			IOException {		
+		Media media = MediaService.getMediaById(Integer.parseInt(request
+				.getParameter("mediaId")));
+		media.setState(State.ACTIVE);
+		MediaService.updateMedia(media);
+
+	}
 
 }
-

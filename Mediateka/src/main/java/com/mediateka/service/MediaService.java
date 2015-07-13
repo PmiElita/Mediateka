@@ -76,4 +76,9 @@ public class MediaService {
 		return MediaDAO.getMediaCountByContentGroupIdAndType(contentGroupId,
 				type);
 	}
+	
+	public static List<Media> getMediaByContentGroupIdAndState(Integer contentGroupId, State state)
+			throws SQLException, ReflectiveOperationException {
+		return MediaDAO.getMediaContentGroupIdAndState(contentGroupId, state);
+	}
 }

@@ -49,4 +49,9 @@ public class MediaStatements {
 	public static final String SELECT_MEDIA_COUNT_BY_CONTENT_GROUP_ID_AND_TYPE = "SELECT count(*) FROM media  WHERE content_group_id = ? AND state='ACTIVE' AND type=?";
 	public static final String[] SELECT_MEDIA_COUNT_BY_CONTENT_GROUP_ID_AND_TYPE_ORDER = {
 			"content_group_id", "type" };
+		
+	public static final String SELECT_MEDIA_BY_CONTENT_GROUP_ID_AND_STATE = "SELECT * FROM media WHERE content_group_id =? AND state = ?";
+	public static final String[] SELECT_MEDIA_BY_CONTENT_GROUP_ID_AND_STATE_ORDER = { "content_group_id", "state" };
+	
+	
 }

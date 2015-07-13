@@ -43,7 +43,7 @@ a {
 }
 
 ol {
-	padding: 0px;
+	padding: 0px 30px 0px 0px;
 	margin: 0px;
 	list-style: decimal-leading-zero inside;
 	color: #ccc;
@@ -63,7 +63,8 @@ ol li {
 ol li a {
 	display: block;
 	text-indent: -3.3ex;
-	padding: 0px 0px 0px 20px;
+	padding: 0px 0px 0px 10px;
+	margin: -18px 0px 0px 0px;
 }
 
 li.playing {
@@ -162,7 +163,7 @@ li.playing:before {
 
 
 
-<div id="load"></div>
+<div  id="load"></div>
 <label id="index" hidden="true">${index}</label>
 <div style="position: fixed; top: 20%; z-index: 1; right: 2%"
 	class="row col s1" align="left">
@@ -171,7 +172,33 @@ li.playing:before {
 <div id="uploaded">
 	<c:forEach var="audios" items="${records }">
 		<c:forEach var="audio" items="${audioMap.get(audios.id) }">
-			<li><a href="#" data-src="${audio.path }">${audio.name }</a></li>
+
+
+			<li id="mediaId${audio.id}" class="col s1">
+				<div class="row" style="margin-bottom: 0;">
+					<div class="col s9 offset-s1" style="padding-top: -10px;">
+						<a href="#" data-src="${audio.path }">${audio.name }</a>
+					</div>
+					<div class="col s2" style="margin: -20px 0px 0px 0px;">
+						<c:if test="${userId eq audios.creatorId}">
+
+							<span
+								onclick="deleteMedia(${audio.id}); Materialize.toast('<fmt:message bundle="${msg}" key="record_central.deleted" />', 4000); $('.playing').removeClass('playing');"
+								onmouseover="this.style.color = 'red';"
+								onmouseleave="this.style.color = 'black';"
+								class="waves-effect waves-circle waves-red">X</span>
+
+						</c:if>
+						<c:if test="${userId ne audios.creatorId}">
+							<pre>
+									<span> </span>
+								</pre>
+						</c:if>
+					</div>
+				</div>
+			</li>
+
+
 		</c:forEach>
 	</c:forEach>
 </div>

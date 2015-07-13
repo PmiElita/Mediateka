@@ -4,6 +4,45 @@ var storedVideos = [];
 var storedAudios = [];
 var num;
 
+function deleteMedia(mediaId) {
+	$.ajax({
+		type : 'get',
+		url : 'deleteMedia',
+		dataType : 'JSON',
+		data : {
+			'mediaId' : mediaId
+		},
+		complete : function(data) {
+			// document.getElementById('recordId' + recordId).innerHTML = "";
+
+			document.getElementById('mediaId' + mediaId).hidden = true;
+			if (document.getElementById('restore' + mediaId) != null) {
+				document.getElementById('restore' + mediaId).hidden = false;
+			}
+		}
+	});
+}
+
+function restoreMedia(mediaId) {
+	$.ajax({
+		type : 'get',
+		url : 'restoreMedia',
+		dataType : 'JSON',
+		data : {
+			'mediaId' : mediaId
+		},
+		complete : function(data) {
+
+			// document.getElementById('recordId' + recordId).innerHTML = "";
+			document.getElementById('mediaId' + mediaId).hidden = false;
+			if (document.getElementById('restore' + mediaId) != null) {
+				document.getElementById('restore' + mediaId).hidden = true;
+
+			}
+		}
+	});
+}
+
 function deleteRecord(recordId) {
 	$.ajax({
 		type : 'get',
@@ -87,7 +126,9 @@ function handleFileSelect(e) {
 								+ e.target.result
 								+ "\" data-file='"
 								+ f.name
-								+ "'height='105' class='selFile toDelete' title='" + recordJsTranslations["click_to_remove"] + "'></div>";
+								+ "'height='105' class='selFile toDelete' title='"
+								+ recordJsTranslations["click_to_remove"]
+								+ "'></div>";
 
 						selDiv.prepend(html);
 
@@ -114,8 +155,9 @@ function handleFileSelect(e) {
 								+ "images/photo-video-start-icon.png"
 								+ "\" data-file='"
 								+ f.name
-								+ "'height='105' class='selFile toDelete' title='" + recordJsTranslations["click_to_remove"] + "'>"
-								+ f.name + "</div>";
+								+ "'height='105' class='selFile toDelete' title='"
+								+ recordJsTranslations["click_to_remove"]
+								+ "'>" + f.name + "</div>";
 						selDiv.prepend(html);
 					}
 
@@ -138,8 +180,9 @@ function handleFileSelect(e) {
 								+ "images/AudioIcon2.png"
 								+ "\" data-file='"
 								+ f.name
-								+ "'height='105' class='selFile toDelete' title='" + recordJsTranslations["click_to_remove"] + "'>"
-								+ f.name + "</div>";
+								+ "'height='105' class='selFile toDelete' title='"
+								+ recordJsTranslations["click_to_remove"]
+								+ "'>" + f.name + "</div>";
 						selDiv.prepend(html);
 
 					}
@@ -166,8 +209,8 @@ function handleForm(e) {
 				.toString());
 	}
 	if (document.getElementById('likedTextarea') != null) {
-		data.append('internetContent', document
-				.getElementById('likedTextarea').value);
+		data.append('internetContent',
+				document.getElementById('likedTextarea').value);
 	}
 	for (var i = 0, len = storedImages.length; i < len; i++) {
 		data.append('image', storedImages[i]);
@@ -190,18 +233,22 @@ function handleForm(e) {
 	}
 
 	var xhr = new XMLHttpRequest();
-	xhr.upload.addEventListener("progress", function(evt) {
-		if (evt.lengthComputable) {
-			var percentComplete = evt.loaded / evt.total;
-			percentComplete = parseInt(percentComplete * 100);
-			document.getElementById("progress").hidden = false;
-			document.getElementById("determinate").style.width = percentComplete + "%";
-			if (percentComplete === 100) {
-				document.getElementById("progress").hidden = true;
-			}
+	xhr.upload
+			.addEventListener(
+					"progress",
+					function(evt) {
+						if (evt.lengthComputable) {
+							var percentComplete = evt.loaded / evt.total;
+							percentComplete = parseInt(percentComplete * 100);
+							document.getElementById("progress").hidden = false;
+							document.getElementById("determinate").style.width = percentComplete
+									+ "%";
+							if (percentComplete === 100) {
+								document.getElementById("progress").hidden = true;
+							}
 
-		}
-	}, false);
+						}
+					}, false);
 	xhr.open('POST', 'loadRecord', true);
 
 	xhr.onload = function(e, data) {
@@ -280,21 +327,23 @@ function linkedVideoForm() {
 					+ link[i]
 					+ "\" class='col s3 center' style='height:130px'><img id='link' name =\""
 					+ link[i]
-					+ "\"src= images/photo-video-start-icon.png height='105' class='selFile toDelete' title='" + recordJsTranslations["click_to_remove"] + "'>"
-					+ link[i] + "</div>";
+					+ "\"src= images/photo-video-start-icon.png height='105' class='selFile toDelete' title='"
+					+ recordJsTranslations["click_to_remove"] + "'>" + link[i]
+					+ "</div>";
 			selDiv.prepend(html);
 		} else {
-			Materialize.toast(recordJsTranslations["some_links_are_incorrect"], 2000);
+			Materialize.toast(recordJsTranslations["some_links_are_incorrect"],
+					2000);
 		}
 	}
 }
-function openBody(recordId,isNew){
-if (isNew){
-	var body=document.getElementById("colbody"+recordId);
-	if (body.style.display == "none"){
-		body.style.display = "block";
-	} else {
-	body.style.display ="none";
+function openBody(recordId, isNew) {
+	if (isNew) {
+		var body = document.getElementById("colbody" + recordId);
+		if (body.style.display == "none") {
+			body.style.display = "block";
+		} else {
+			body.style.display = "none";
+		}
 	}
-}
 }
