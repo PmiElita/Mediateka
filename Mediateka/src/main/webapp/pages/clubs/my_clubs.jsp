@@ -29,7 +29,7 @@
 						<div class="col s12">
 							<div class="waves-effect waves-block waves-light my-picture-wrap"
 								style="border: 3px solid #008080; background: grey">
-								<a href="club?clubId=${item.id}">
+								<a href="club?clubId=${item.id}" style="min-width: 100%">
 									<div align="center">
 										<h2 class="image-cover-t">
 											<div class="row">
@@ -37,7 +37,7 @@
 												<c:out value=" (${myActiveClubsMemberNumber[status.index]})" />
 											</div>
 										</h2>
-										<img class="my-picture-club"
+										<img class="my-picture-club center"
 											src="${myActiveClubsAvas[status.index]}" align="middle"
 											style="margin-top: -10.2em;">
 									</div>
@@ -79,12 +79,12 @@
 									<div
 										class="waves-effect waves-block waves-light my-picture-wrap"
 										style="border: 3px solid #008080; background: grey">
-										<a href="club?clubId=${item.id}">
+										<a href="club?clubId=${item.id}" style="min-width: 100%">
 											<div align="center">
 												<h2 class="image-cover-t">
 													<c:out value="${item.name}" />
 												</h2>
-												<img class="my-picture-club"
+												<img class="my-picture-club center"
 													src="${myBlockedClubsAvas[status.index]}" align="middle"
 													style="margin-top: -10.2em;">
 											</div>
