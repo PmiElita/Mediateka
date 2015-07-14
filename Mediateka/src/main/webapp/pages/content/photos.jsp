@@ -1,51 +1,81 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-    <script src="js/jssor.js"></script>
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<script src="js/jssor.js"></script>
 <script src="js/jssor.slider.js"></script>
 <div id="photoList">
-<c:forEach var="photo" items="${photos}" varStatus="loop">
-	<div id="photId${photo.id}" class="col s4" style="margin-bottom: 3.0em;">
-		<div class="col s12 m8 offset-m2 l6 offset-l2 my-back-card my-small-card" onclick="setOptions(${loop.index})">
-			<div 
-				class="my-album-card card-panel grey lighten-5 z-depth-1"
-				style="padding: 0">
-				<a title="${photo.name }" href="" data-target="modal33"
-					class="modal-trigger">
-					<div class="row valign-wrapper" style="margin: 0;">
-						<div class="col s12 center" style="height: 12em;padding-left:0; padding-right:0;" >
-							<img class="responsive-image"
-								src="${photo.path}" alt=""
-								style="margin: 0 0 0 0; height: 100%; width:100%;  border-radius: 5%">
-						</div>
-						</div>
-				</a>
-			</div>
-		</div>
-	</div>
-	</c:forEach>
-		<div id="modal33" class="modal black" style="width: 60%;">
-		<div class="modal-content">
-			<div class="row">
-			<div id="slider1_container"
-				style="position: relative; width: 600px; height: 500px;" class="col s12">
-
-
-				<!-- Slides Container -->
-				<div u="slides"
-					style="cursor: move; position: relative; left: 0px; top: 0px; width: 700px; height: 500px; overflow: hidden; margin-left: 2.5em;">
-
-					<c:forEach var="image" items="${photos }">
-						<div>
-							<img   u=image src="<c:out value='${image.path}'></c:out>">
-						</div>
-					</c:forEach>
+	<c:forEach var="photo" items="${photos}" varStatus="loop">
+		<div id="mediaId${photo.id}">
+			<div class="col s3" style="margin-bottom: 3.0em;">
+				<div
+					class="col s12 m8 offset-m2 l6 offset-l2 my-back-card my-small-card"
+					onclick="setOptions(${loop.index})">
+					<div class="my-album-card card-panel grey lighten-5 z-depth-1"
+						style="padding: 0">
+						<a title="${photo.name }" href="" data-target="modal33"
+							class="modal-trigger">
+							<div class="row valign-wrapper" style="margin: 0;">
+								<div class="col s12 center"
+									style="height: 12em; padding-left: 0; padding-right: 0;">
+									<img class="responsive-image" src="${photo.path}" alt=""
+										style="margin: 0 0 0 0; height: 100%; width: 100%; border-radius: 5%">
+								</div>
+							</div>
+						</a>
+					</div>
 				</div>
 			</div>
-</div>
+			<div class="col s1">
+				<c:if test="${userId eq creatorId}">
+
+					<span
+						onclick="deleteMedia(${photo.id}); Materialize.toast('<fmt:message bundle="${msg}" key="record_central.deleted" />', 4000);"
+						onmouseover="this.style.color = 'red';"
+						onmouseleave="this.style.color = 'black';"
+						class="waves-effect waves-circle waves-red">X</span>
+
+				</c:if>
+				<c:if test="${userId ne creatorId}">
+					<pre> </pre>
+
+				</c:if>
+			</div>
+		</div>
+		<div id="restore${photo.id}" hidden="true">
+			<div title="${photo.name }" class="col s4"
+				style="margin-bottom: 3.0em;">
+				<a
+					onclick="restoreMedia(${photo.id }); Materialize.toast('<fmt:message bundle="${msg}" key="record_central.restored" />', 4000)"
+					class="waves-effect waves-light btn"><fmt:message
+						bundle="${msg}" key="record_central.restore" /></a>
+
+			</div>
+		</div>
+	</c:forEach>
+	<div id="modal33" class="modal black" style="width: 60%;">
+		<div class="modal-content">
+			<div class="row">
+				<div id="slider1_container"
+					style="position: relative; width: 600px; height: 500px;"
+					class="col s12">
+
+
+					<!-- Slides Container -->
+					<div u="slides"
+						style="cursor: move; position: relative; left: 0px; top: 0px; width: 700px; height: 500px; overflow: hidden; margin-left: 2.5em;">
+
+						<c:forEach var="image" items="${photos }">
+							<div>
+								<img u=image src="<c:out value='${image.path}'></c:out>">
+							</div>
+						</c:forEach>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
-	
+
 	<script>
 	var jssor_slider1
 	function setOptions(index){
@@ -83,4 +113,4 @@
 
         });
     </script>
-    </div>
+</div>

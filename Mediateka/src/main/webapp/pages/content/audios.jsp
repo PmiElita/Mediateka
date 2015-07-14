@@ -33,7 +33,6 @@
 	});
 
 	function handleAudio(e) {
-		alert(1);
 
 		e.preventDefault();
 		var data = new FormData();
@@ -52,6 +51,22 @@
 		}
 
 		var xhr = new XMLHttpRequest();
+		xhr.upload
+				.addEventListener(
+						"progress",
+						function(evt) {
+							if (evt.lengthComputable) {
+								var percentComplete = evt.loaded / evt.total;
+								percentComplete = parseInt(percentComplete * 100);
+								document.getElementById("progress").hidden = false;
+								document.getElementById("determinate").style.width = percentComplete
+										+ "%";
+								if (percentComplete === 100) {
+									document.getElementById("progress").hidden = true;
+								}
+
+							}
+						}, false);
 		xhr.open('POST', 'loadAudio', true);
 
 		xhr.onload = function(e, data) {
@@ -68,18 +83,26 @@
 				$("#index").text(loadIndex);
 				loadEl.id = loadEl.id + loadIndex;
 				$('#uploaded').remove();
-				$('#audiojs_wrapper' + (document.getElementById("index").textContent - 1)).remove();
+				$(
+						'#audiojs_wrapper'
+								+ (document.getElementById("index").textContent - 1))
+						.remove();
 				$('#' + loadEl.id).load(
 						"viewNewAudio?audioId="
 								+ responseJSON["contentGroup"].id + "&index="
 								+ document.getElementById("index").textContent);
-				
-				
-// 				$('#audioPlayer').remove();
-// 				$('.playing').removeClass('playing');
+
+				// 				$('#audioPlayer').remove();
+				// 				$('.playing').removeClass('playing');
 				$('#addAudio').closeModal();
-				$('#audiojs_wrapper' + (document.getElementById("index").textContent)).unwrap();				
-				Materialize.toast("<fmt:message bundle="${msg }" key="toast.files_uploaded" />", 2000);
+				$(
+						'#audiojs_wrapper'
+								+ (document.getElementById("index").textContent))
+						.unwrap();
+				Materialize
+						.toast(
+								"<fmt:message bundle="${msg }" key="toast.files_uploaded" />",
+								2000);
 			}
 		}
 
@@ -110,10 +133,13 @@
 				<div class="container">
 					<h3 class="image-cover-t">${clubName}</h3>
 					<div class="row">
-						<h4 class="image-cover-t"><fmt:message bundle="${msg }" key="club_audios.audios" /></h4>
+						<h4 class="image-cover-t">
+							<fmt:message bundle="${msg }" key="club_audios.audios" />
+						</h4>
 						<div class="col s9">
-							<a title='<fmt:message bundle="${msg }" key="club_audios.add_file"/>' href="" data-target="addAudio"
-								class="modal-trigger"> <span><i
+							<a
+								title='<fmt:message bundle="${msg }" key="club_audios.add_file"/>'
+								href="" data-target="addAudio" class="modal-trigger"> <span><i
 									class="medium mdi-av-queue"></i></span>
 							</a>
 						</div>
@@ -138,7 +164,11 @@
 	<div id="addAudio" class="modal">
 		<div class="modal-content">
 
-
+			<div id="progress" hidden="true">
+				<div class="progress">
+					<div id="determinate" class="determinate"></div>
+				</div>
+			</div>
 			<form id="loadAudioForm" enctype="multipart/form-data">
 
 				<c:if test="${clubId ne null}">
@@ -156,14 +186,17 @@
 							<div class="file-field input-field">
 								<input class="file-path validate" type="hidden" />
 								<div class="btn">
-									<span><fmt:message bundle="${msg }" key="club_audios.choose_files"/></span> <input type="file" id="audio"
-										multiple name="audio" accept="audio/*" />
+									<span><fmt:message bundle="${msg }"
+											key="club_audios.choose_files" /></span> <input type="file"
+										id="audio" multiple name="audio" accept="audio/*" />
 								</div>
 								<label id="number" hidden="true">1</label>
 							</div>
 						</div>
 						<div class="row" style="margin-top: 5em">
-							<button class="btn" type="submit"><fmt:message bundle="${msg }" key="club_audios.upload"/></button>
+							<button class="btn" type="submit">
+								<fmt:message bundle="${msg }" key="club_audios.upload" />
+							</button>
 						</div>
 					</div>
 					<div class="col s9">

@@ -60,8 +60,9 @@
 							<fmt:message bundle="${msg }" key="club_videos.videos" />
 						</h4>
 						<div class="col s9" style="margin-top: -3em">
-							<a title='<fmt:message bundle="${msg }" key="club_videos.add_file"/>' href="" data-target="addVideo"
-								class="modal-trigger"> <span><i
+							<a
+								title='<fmt:message bundle="${msg }" key="club_videos.add_file"/>'
+								href="" data-target="addVideo" class="modal-trigger"> <span><i
 									class="medium mdi-av-queue"></i></span>
 							</a>
 						</div>
@@ -84,7 +85,11 @@
 	<div id="addVideo" class="modal">
 		<div class="modal-content">
 
-
+			<div id="progress" hidden="true">
+				<div class="progress">
+					<div id="determinate" class="determinate"></div>
+				</div>
+			</div>
 			<form id="loadVideoForm" enctype="multipart/form-data">
 
 				<c:if test="${clubId ne null}">
@@ -102,8 +107,9 @@
 								<input class="file-path validate" type="hidden" />
 								<div class="btn">
 									<span><fmt:message bundle="${msg }"
-											key="club_videos.choose_files" > </fmt:message> </span> <input type="file" id="video"
-										multiple name="video" accept="video/*" />
+											key="club_videos.choose_files">
+										</fmt:message> </span> <input type="file" id="video" multiple name="video"
+										accept="video/*" />
 								</div>
 								<label id="number" hidden="true">1</label>
 							</div>
@@ -115,9 +121,9 @@
 						</div>
 					</div>
 					<div class="col s9">
-					<div class="row">
-						<div id="selectedFiles"></div>
-					</div>
+						<div class="row">
+							<div id="selectedFiles"></div>
+						</div>
 					</div>
 				</div>
 			</form>
@@ -150,6 +156,22 @@
 		}
 
 		var xhr = new XMLHttpRequest();
+		xhr.upload
+				.addEventListener(
+						"progress",
+						function(evt) {
+							if (evt.lengthComputable) {
+								var percentComplete = evt.loaded / evt.total;
+								percentComplete = parseInt(percentComplete * 100);
+								document.getElementById("progress").hidden = false;
+								document.getElementById("determinate").style.width = percentComplete
+										+ "%";
+								if (percentComplete === 100) {
+									document.getElementById("progress").hidden = true;
+								}
+
+							}
+						}, false);
 		xhr.open('POST', 'loadVideo', true);
 
 		xhr.onload = function(e, data) {
@@ -168,12 +190,16 @@
 				$('#' + loadEl.id).load(
 						"viewNewVideo?videoId="
 								+ responseJSON["contentGroup"].id + "&index="
-								+ document.getElementById("index").textContent+" #listVideos");
+								+ document.getElementById("index").textContent
+								+ " #listVideos");
 
 				// 				$('#audioPlayer').remove();
 				// 				$('.playing').removeClass('playing');
 				$('#addVideo').closeModal();
-				Materialize.toast("<fmt:message bundle="${msg }" key="toast.files_uploaded" />", 2000);
+				Materialize
+						.toast(
+								"<fmt:message bundle="${msg }" key="toast.files_uploaded" />",
+								2000);
 			}
 		}
 

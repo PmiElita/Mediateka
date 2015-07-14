@@ -78,9 +78,7 @@
 
 			</c:if>
 			<c:if test="${userId ne album.key.creatorId}">
-				<pre>
-					<span> </span>
-				</pre>
+				<pre> </pre>
 			</c:if>
 		</div>
 

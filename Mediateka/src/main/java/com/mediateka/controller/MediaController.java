@@ -78,7 +78,8 @@ public class MediaController {
 					.getContentGroupById(albumId);
 			if (album != null && album.getType() == ContentGroupType.IMAGE) {
 				List<Media> photos = MediaService
-						.getMediaByContentGroupId(albumId);
+						.getMediaByContentGroupIdAndState(albumId, State.ACTIVE);
+				request.setAttribute("creatorId", album.getCreatorId());
 				request.setAttribute("albumId", albumId);
 				ClubEventMemberType userMemberType = null;
 				if (album.getClubId() != null) {
@@ -119,8 +120,9 @@ public class MediaController {
 					.getContentGroupById(albumId);
 			if (album != null && album.getType() == ContentGroupType.IMAGE) {
 				List<Media> photos = MediaService
-						.getMediaByContentGroupId(albumId);
+						.getMediaByContentGroupIdAndState(albumId, State.ACTIVE);
 				request.setAttribute("albumId", albumId);
+				request.setAttribute("creatorId", album.getCreatorId());
 				if (album.getClubId() != null) {
 					request.setAttribute("clubId", album.getClubId());
 				} else if (album.getEventId() != null) {

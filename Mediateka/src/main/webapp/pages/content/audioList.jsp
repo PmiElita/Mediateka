@@ -183,7 +183,7 @@ li.playing:before {
 						<c:if test="${userId eq audios.creatorId}">
 
 							<span
-								onclick="deleteMedia(${audio.id}); Materialize.toast('<fmt:message bundle="${msg}" key="record_central.deleted" />', 4000); $('.playing').removeClass('playing');"
+								onclick="deleteMedia(${audio.id}); Materialize.toast('<fmt:message bundle="${msg}" key="record_central.deleted" />', 4000);"
 								onmouseover="this.style.color = 'red';"
 								onmouseleave="this.style.color = 'black';"
 								class="waves-effect waves-circle waves-red">X</span>

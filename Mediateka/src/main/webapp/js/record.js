@@ -4,7 +4,7 @@ var storedVideos = [];
 var storedAudios = [];
 var num;
 
-function deleteMedia(mediaId) {
+function deleteMedia(mediaId) {	
 	$.ajax({
 		type : 'get',
 		url : 'deleteMedia',
@@ -14,7 +14,7 @@ function deleteMedia(mediaId) {
 		},
 		complete : function(data) {
 			// document.getElementById('recordId' + recordId).innerHTML = "";
-
+			alert(mediaId);
 			document.getElementById('mediaId' + mediaId).hidden = true;
 			if (document.getElementById('restore' + mediaId) != null) {
 				document.getElementById('restore' + mediaId).hidden = false;

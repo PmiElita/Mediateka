@@ -9,7 +9,11 @@
 <div id="addAlbum" class="modal">
 	<div class="modal-content">
 
-
+		<div id="progress" hidden="true">
+			<div class="progress">
+				<div id="determinate" class="determinate"></div>
+			</div>
+		</div>
 		<form id="loadAlbumForm" action="loadAlbum" method="post"
 			enctype="multipart/form-data">
 
@@ -82,6 +86,22 @@
 		}
 
 		var xhr = new XMLHttpRequest();
+		xhr.upload
+				.addEventListener(
+						"progress",
+						function(evt) {
+							if (evt.lengthComputable) {
+								var percentComplete = evt.loaded / evt.total;
+								percentComplete = parseInt(percentComplete * 100);
+								document.getElementById("progress").hidden = false;
+								document.getElementById("determinate").style.width = percentComplete
+										+ "%";
+								if (percentComplete === 100) {
+									document.getElementById("progress").hidden = true;
+								}
+
+							}
+						}, false);
 		xhr.open('POST', 'loadAlbum', true);
 
 		xhr.onload = function(e, data) {

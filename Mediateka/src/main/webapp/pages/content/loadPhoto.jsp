@@ -3,13 +3,17 @@
 
 <fmt:setLocale value="${cookie.lang.value}" />
 <fmt:setBundle basename="translations/club_page" var="msg" />
-<jsp:include page="../../js/record.js.jsp"/>
+<jsp:include page="../../js/record.js.jsp" />
 <script src="js/record.js"></script>
 
 <div id="addPhoto" class="modal">
 	<div class="modal-content">
 
-
+		<div id="progress" hidden="true">
+			<div class="progress">
+				<div id="determinate" class="determinate"></div>
+			</div>
+		</div>
 		<form id="loadPhotoForm" action="loadPhotos" method="post"
 			enctype="multipart/form-data">
 			<c:if test="${clubId ne null}">
@@ -19,9 +23,9 @@
 				<input type="hidden" name="eventId" id="eventId" value="${eventId }">
 			</c:if>
 
-				<input name="albumId" id ="albumId" value="${albumId }" hidden>
+			<input name="albumId" id="albumId" value="${albumId }" hidden>
 
-			<fmt:message bundle="${msg }" key="load_album.files"/>
+			<fmt:message bundle="${msg }" key="load_album.files" />
 			<div class="row">
 				<div class="col s3">
 					<div class="row">
@@ -29,16 +33,17 @@
 							<input class="file-path validate" type="hidden" />
 							<div class="btn">
 								<span><fmt:message bundle="${msg}"
-										key="load_album.choose_files" />
-									</span> <input
-									type="file" id="image" multiple name="image"
-									onchange="readURL(this);" accept="image/*" />
+										key="load_album.choose_files" /> </span> <input type="file"
+									id="image" multiple name="image" onchange="readURL(this);"
+									accept="image/*" />
 							</div>
 							<label id="number" hidden="true">1</label>
 						</div>
 					</div>
 					<div class="row" style="margin-top: 5em">
-						<button class="btn" type="submit"><fmt:message bundle="${msg}" key="load_album.upload" /></button>
+						<button class="btn" type="submit">
+							<fmt:message bundle="${msg}" key="load_album.upload" />
+						</button>
 					</div>
 				</div>
 				<div class="col s9">
@@ -55,7 +60,6 @@
 	});
 
 	function handlePhotos(e) {
-		alert(1);
 
 		e.preventDefault();
 		var data = new FormData();
@@ -76,6 +80,22 @@
 		}
 
 		var xhr = new XMLHttpRequest();
+		xhr.upload
+				.addEventListener(
+						"progress",
+						function(evt) {
+							if (evt.lengthComputable) {
+								var percentComplete = evt.loaded / evt.total;
+								percentComplete = parseInt(percentComplete * 100);
+								document.getElementById("progress").hidden = false;
+								document.getElementById("determinate").style.width = percentComplete
+										+ "%";
+								if (percentComplete === 100) {
+									document.getElementById("progress").hidden = true;
+								}
+
+							}
+						}, false);
 		xhr.open('POST', 'loadPhotos', true);
 
 		xhr.onload = function(e, data) {
@@ -86,10 +106,8 @@
 				alert(JSON.stringify(e.currentTarget));
 				var responseJSON = JSON.parse(e.currentTarget.responseText);
 
-				
 				$('#photoList').load(
-						"viewNewPhoto?albumId="
-								+ responseJSON["albumId"]);
+						"viewNewPhoto?albumId=" + responseJSON["albumId"]);
 
 				$('#addPhoto').closeModal();
 

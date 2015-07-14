@@ -38,9 +38,7 @@
 									class="waves-effect waves-circle waves-red">X</span>
 
 							</c:if> <c:if test="${userId ne record.creatorId}">
-								<pre>
-									<span> </span>
-								</pre>
+								<pre> </pre>
 							</c:if> <video style="margin-left: -1.5em; border-radius: 5%"
 								width="100%" poster="${posterMap.get(video.id).path }"
 								onclick="this.play();" controls="controls"
