@@ -65,6 +65,7 @@ public class RegisterUserController {
 	 * @throws NoSuchAlgorithmException
 	 */
 	@Request(url = "registerNewUser", method = "post")
+	@Roles({ Role.ADMIN})
 	public static void registerNewUser(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			SecurityException, IllegalArgumentException, SQLException,
@@ -159,7 +160,7 @@ public class RegisterUserController {
 	 * @throws ServletException
 	 */
 	@Request(url = "anonymousRegisterNewUser", method = "post")
-	@Roles({ Role.ADMIN})
+
 	public static void anonymousRegisterNewUser(HttpServletRequest request,
 			HttpServletResponse response) throws ParseException,
 			SecurityException, IllegalArgumentException, IOException,

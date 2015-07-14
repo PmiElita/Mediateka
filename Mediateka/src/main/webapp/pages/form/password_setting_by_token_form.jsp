@@ -25,7 +25,7 @@
 			<div class="parallax">
 				<img src="images/parallax1.jpg">
 			</div>
-			<div class="container" style="margin-top: 5em">
+			<div class="container section white" style="margin-top: 5em">
 				<form class="form-horizontal" action="setNewPasswordByToken"
 					method="post">
 					<fieldset>
@@ -40,7 +40,7 @@
 						<div class="control-group">
 							<p><fmt:message bundle="${msg }" key="password_setting_by_token_form.new_password" /></p>
 							<div class="controls">
-								<input id="password" name="password" type="text"
+								<input id="password" name="password" type="password"
 									class="input-xlarge" required="">
 
 							</div>
@@ -50,7 +50,7 @@
 						<div class="control-group">
 							<p><fmt:message bundle="${msg }" key="password_setting_by_token_form.confirm_password" /></p>
 							<div class="controls">
-								<input id="password" name="confirmPassword" type="text"
+								<input id="password" name="confirmPassword" type="password"
 									class="input-xlarge" required="">
 							</div>
 						</div>

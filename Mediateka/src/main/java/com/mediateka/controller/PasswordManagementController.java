@@ -17,6 +17,7 @@ import com.mediateka.exception.WrongInputException;
 import com.mediateka.form.PasswordChangingForm;
 import com.mediateka.form.PasswordInvalidationForm;
 import com.mediateka.model.User;
+import com.mediateka.service.ProfessionService;
 import com.mediateka.service.UserService;
 import com.mediateka.util.EmailSender;
 import com.mediateka.util.FormValidator;
@@ -98,6 +99,8 @@ public class PasswordManagementController {
 	public static void forgotPasswordPage(HttpServletRequest request,
 			HttpServletResponse response) throws SecurityException, IllegalArgumentException, IOException, ReflectiveOperationException, SQLException, MessagingException, ServletException {
 
+		request.setAttribute("professions",
+				ProfessionService.getProfessionAll());
 		request.getRequestDispatcher("pages/form/forgot_password_form.jsp").forward(
 				request, response);
 		
@@ -109,11 +112,9 @@ public class PasswordManagementController {
 	public static void invalidatePassword(HttpServletRequest request,
 			HttpServletResponse response) throws SecurityException, IllegalArgumentException, IOException, ReflectiveOperationException, SQLException, MessagingException, ServletException {
 
-		System.out.println("DOING THIS");
-		
 		PasswordInvalidationForm form = new PasswordInvalidationForm();
 		ObjectFiller.fill(form, request);
-		
+
 		try {
 			FormValidator.validate(form);
 		} catch (WrongInputException e) {
@@ -121,6 +122,7 @@ public class PasswordManagementController {
 			request.setAttribute("notification", "no_user_with_such_email");
 			request.getRequestDispatcher("pages/index/index.jsp").forward(
 					request, response);
+			
 			return;
 		}
 		
@@ -132,6 +134,7 @@ public class PasswordManagementController {
 			request.setAttribute("notification", "no_user_with_such_email");
 			request.getRequestDispatcher("pages/index/index.jsp").forward(
 					request, response);
+
 			return;
 		}
 		
@@ -155,15 +158,13 @@ public class PasswordManagementController {
 			
 			user.setPasswordChangingToken(null);
 			UserService.updateUser(user);
-			System.out.println("can't send email");
+
 			return;
 		}
 		request.setAttribute("notification", "check_your_email");
 		request.getRequestDispatcher("pages/index/index.jsp").forward(
 				request, response);
-		
-		
-		System.out.println("DONE");
+
 
 	}
 

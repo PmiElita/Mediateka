@@ -28,18 +28,19 @@
 			<div class="parallax">
 				<img src="images/parallax1.jpg">
 			</div>
-			<div class="container">
+			<div class="container section white">
 				<c:if test="${notification ne null }">
 					<fmt:message bundle="${msg}" key="${notification}" />
 				</c:if>
 
+	<h3><fmt:message bundle="${msg}" key="form_name" /></h3>
 
 				<div class="row">
 					<div class="input-field col s6">
 						<p>
 							<fmt:message bundle="${msg}" key="email" />
 						</p>
-						<input id="email" name="email" class="validate" required>
+						<input id="emailField" name="emailField" class="validate" required>
 					</div>
 				</div>
 
@@ -54,23 +55,25 @@
 	<script type="text/javascript">
 		function show() {
 			wrongEmail = false;
+			
+
 			$.ajax({
 				url : 'checkemail',
 				data : {
-					email : document.getElementById("email").value
+					'email' : document.getElementById("emailField").value
 				},
 				success : function(data) {
 					if (data == 'true') {
-						Materialize.toast("wrong email", 1000);
+						Materialize.toast("<fmt:message bundle="${msg}" key="wrong_email" />", 1000);
 					} else {
-						Materialize.toast("check your email", 3000);
+						Materialize.toast("<fmt:message bundle="${msg}" key="check_your_email" />", 3000);
 
 						$.ajax({
 							url : 'invalidatePassword',
 							type : 'post',
 							dataType : 'json',
 							data : {
-								email : document.getElementById("email").value
+								'email' : document.getElementById("emailField").value
 							}
 						});
 
