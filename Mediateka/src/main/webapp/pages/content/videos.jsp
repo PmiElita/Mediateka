@@ -68,9 +68,9 @@
 						</div>
 					</div>
 
-					<ol>
+					<ul>
 						<jsp:include page="videoList.jsp" />
-					</ol>
+					</ul>
 				</div>
 			</div>
 
