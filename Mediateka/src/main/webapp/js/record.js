@@ -347,3 +347,24 @@ function openBody(recordId, isNew) {
 		}
 	}
 }
+
+function scrollRecords(){
+	var index = document.getElementById("scrollIndex").innerHTML.toString();
+	var scroll = document.getElementById("scroll");
+	var clubId =null;
+	var eventId = null;
+	if (document.getElementById('clubId') != null) {
+		clubId =document.getElementById('clubId').innerHTML
+				.toString();
+	}
+	if (document.getElementById('eventId') != null) {
+	    eventId = document.getElementById('eventId').innerHTML
+				.toString();
+	}
+	scroll.id = "main" + index;
+	var regexp = document.getElementById("index").innerHTML.toString()
+	$('#' + scroll.id).load(
+			"getMoreRecords?clubId=" + clubId + "&eventId=" + eventId+ "&index=" + index);
+}
+	
+

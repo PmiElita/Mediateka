@@ -23,8 +23,9 @@
 </style>
 
 
-
+<c:if test="${load }">
 <div id="load"></div>
+</c:if>
 <label id="index" hidden="true">${index}</label>
 <div id="uploaded">
 	<c:forEach var="record" items="${records}">
@@ -174,6 +175,7 @@
 			</div>
 
 		</div>
+		
 		<div class="row">
 			<ul class="collapsible comments" data-collapsible="accordion">
 				<li>
@@ -249,7 +251,7 @@
 
 
 						</div>
-
+<c:if test="${isSigned eq 'true'||isSigned}">
 						<div class="panel input-area ">
 							<textarea id="commentInput${record.id}"
 								class="materialize-textarea"
@@ -262,10 +264,23 @@
 
 
 						</div>
+							</c:if>
 					</div>
 				</li>
 			</ul>
 
 		</div>
+	
 	</c:forEach>
+	<c:if test="${scroll }">
+<div id="scroll">
+<div class="row main-books">
+			<button class="  waves-effect btn book-scroll"
+				onclick="scrollRecords()">
+				<fmt:message bundle="${msg}" key="show_more_results" />
+			</button>
+			<p id="scrollIndex" hidden="true">${scrollIndex }</p>
+		</div>
+</div>
+</c:if>
 </div>

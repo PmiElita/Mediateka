@@ -10,8 +10,9 @@
 <fmt:setBundle basename="translations/event_page" var="msg" />
 
 <head>
+<c:if test="${!(creator==null)}">
 <jsp:include page="crop/crop.jsp" />
-
+</c:if>
 <style>
 .image-cover-t {
 	color: white;
@@ -35,9 +36,10 @@
 		<div class="col s12" style="background-color: #212121;">
 			<div
 				class="waves-effect waves-block waves-light my-picture-wrap col s12">
-
+<c:if test="${!(creator==null)}">
 				<a title="Change picture" href="" data-target="modal16"
 					class="modal-trigger waves-effect" style="min-width: 100%">
+					</c:if>
 					<h3 class="image-cover-t">${event.name}</h3> <img
 					class="my-picture-club" src="${imagePath}" id="ava">
 				</a>

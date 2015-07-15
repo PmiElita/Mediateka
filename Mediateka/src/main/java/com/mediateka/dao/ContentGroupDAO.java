@@ -10,7 +10,6 @@ import java.sql.SQLException;
 
 import java.util.List;
 
-
 import com.mediateka.dao.statement.ContentGroupStatements;
 import com.mediateka.model.ContentGroup;
 import com.mediateka.model.enums.ContentGroupType;
@@ -179,8 +178,10 @@ public class ContentGroupDAO {
 					ContentGroup.class);
 		}
 	}
-	
-	public static List<ContentGroup> getContentGroupByClubIdAndState(Integer clubId, State state) throws SQLException, ReflectiveOperationException{
+
+	public static List<ContentGroup> getContentGroupByClubIdAndState(
+			Integer clubId, State state) throws SQLException,
+			ReflectiveOperationException {
 		try (Connection connection = ConnectionManager.getConnection()) {
 			PreparedStatement statement = connection
 					.prepareStatement(SELECT_CONTENT_GROUP_BY_CLUB_ID_AND_STATE);
@@ -194,8 +195,10 @@ public class ContentGroupDAO {
 					ContentGroup.class);
 		}
 	}
-	
-	public static List<ContentGroup> getContentGroupByEventIdAndState(Integer eventId, State state) throws SQLException, ReflectiveOperationException{
+
+	public static List<ContentGroup> getContentGroupByEventIdAndState(
+			Integer eventId, State state) throws SQLException,
+			ReflectiveOperationException {
 		try (Connection connection = ConnectionManager.getConnection()) {
 			PreparedStatement statement = connection
 					.prepareStatement(SELECT_CONTENT_GROUP_BY_EVENT_ID_AND_STATE);
@@ -209,8 +212,10 @@ public class ContentGroupDAO {
 					ContentGroup.class);
 		}
 	}
-	
-	public static List<ContentGroup> getContentGroupByClubIdAndStateAndType(Integer clubId, State state, ContentGroupType contentGroupType) throws SQLException, ReflectiveOperationException{
+
+	public static List<ContentGroup> getContentGroupByClubIdAndStateAndType(
+			Integer clubId, State state, ContentGroupType contentGroupType)
+			throws SQLException, ReflectiveOperationException {
 		try (Connection connection = ConnectionManager.getConnection()) {
 			PreparedStatement statement = connection
 					.prepareStatement(SELECT_CONTENT_GROUP_BY_CLUB_ID_AND_STATE_AND_TYPE);
@@ -225,8 +230,10 @@ public class ContentGroupDAO {
 					ContentGroup.class);
 		}
 	}
-	
-	public static List<ContentGroup> getContentGroupByEventIdAndStateAndType(Integer eventId, State state, ContentGroupType contentGroupType) throws SQLException, ReflectiveOperationException{
+
+	public static List<ContentGroup> getContentGroupByEventIdAndStateAndType(
+			Integer eventId, State state, ContentGroupType contentGroupType)
+			throws SQLException, ReflectiveOperationException {
 		try (Connection connection = ConnectionManager.getConnection()) {
 			PreparedStatement statement = connection
 					.prepareStatement(SELECT_CONTENT_GROUP_BY_EVENT_ID_AND_STATE_AND_TYPE);
@@ -251,6 +258,42 @@ public class ContentGroupDAO {
 			Transformer.valueIntoPreparedStatement(statement, contentGroup,
 					UPDATE_CONTENT_GROUP_ORDER);
 			statement.executeUpdate();
+		}
+	}
+
+	public static List<ContentGroup> getContentGroupByClubIdAndStateAndTypeLimited(
+			Integer clubId, State state, ContentGroupType contentGroupType,
+			Integer offset, Integer limit) throws SQLException,
+			ReflectiveOperationException {
+		try (Connection connection = ConnectionManager.getConnection()) {
+			PreparedStatement statement = connection
+					.prepareStatement(SELECT_CONTENT_GROUP_BY_CLUB_ID_AND_STATE_AND_TYPE_LIMITED);
+			statement.setInt(1, clubId);
+			statement.setString(2, state.toString());
+			statement.setString(3, contentGroupType.toString());
+			statement.setInt(4, offset);
+			statement.setInt(5, limit);
+			ResultSet resultSet = statement.executeQuery();
+			return Transformer.transformResultSetIntoList(resultSet,
+					ContentGroup.class);
+		}
+	}
+
+	public static List<ContentGroup> getContentGroupByEventIdAndStateAndTypeLimited(
+			Integer eventId, State state, ContentGroupType contentGroupType,
+			Integer offset, Integer limit) throws SQLException,
+			ReflectiveOperationException {
+		try (Connection connection = ConnectionManager.getConnection()) {
+			PreparedStatement statement = connection
+					.prepareStatement(SELECT_CONTENT_GROUP_BY_EVENT_ID_AND_STATE_AND_TYPE_LIMITED);
+			statement.setInt(1, eventId);
+			statement.setString(2, state.toString());
+			statement.setString(3, contentGroupType.toString());
+			statement.setInt(4, offset);
+			statement.setInt(5, limit);
+			ResultSet resultSet = statement.executeQuery();
+			return Transformer.transformResultSetIntoList(resultSet,
+					ContentGroup.class);
 		}
 	}
 

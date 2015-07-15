@@ -26,11 +26,12 @@
 
 <jsp:include page="../../js/record.js.jsp" />
 <script src="js/record.js"></script>
+<c:if test="${isSigned eq 'true' }">
 <div class="collapsible-header" style="font-size: 2em">+</div>
 <div class="collapsible-body">
 	<div id="record_form"><jsp:include page="record_form.jsp" /></div>
 </div>
-
+</c:if>
 <!-- <form id="clubForm" action="record" method="post"></form> -->
 <div id="record_central">
 	<div id="recordList" style="margin-top: 0em"><jsp:include

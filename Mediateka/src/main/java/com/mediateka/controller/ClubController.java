@@ -70,7 +70,7 @@ import com.mediateka.util.ObjectFiller;
 public class ClubController {
 
 	private static Logger logger = Logger.getLogger(ClubController.class);
-
+	public static final int RECORD_COUNT = 10;
 	@Request(url = "createClub", method = "post")
 	@Roles({ Role.USER, Role.ADMIN })
 	public static void createClubPost(HttpServletRequest request,
@@ -320,12 +320,25 @@ public class ClubController {
 	public static void clubVideosGet(HttpServletRequest request,
 			HttpServletResponse response) throws SQLException,
 			ReflectiveOperationException, ServletException, IOException {
+		Integer userId = null;
+		try {
+			userId = Integer.parseInt( request.getSession().getAttribute("userId").toString());
+		} catch (NullPointerException|NumberFormatException e){
+			logger.info("unlogined user get photos", e);
+		}
 		Integer clubId = Integer.parseInt(request.getParameter("clubId"));
+		ClubEventMember clubEventMember = ClubEventMemberService.getClubEventMemberByUserIdAndClubId(userId, clubId);
+		ClubEventMemberType userMemberType= null;
+		if (clubEventMember!=null){
+		 userMemberType = clubEventMember.getType();
+		}
 		List<ContentGroup> contentGroups = ContentGroupService
 				.getContentGroupByClubIdAndStateAndType(clubId, State.ACTIVE,
 						ContentGroupType.VIDEO);
 		CreateContent.setContent(request, response, contentGroups);
 		Club club = ClubService.getClubById(clubId);
+		
+		request.setAttribute("memberType", userMemberType);
 		request.setAttribute("clubName", club.getName());
 		request.setAttribute("clubId", clubId);
 		request.getRequestDispatcher("pages/content/videos.jsp").forward(
@@ -338,13 +351,27 @@ public class ClubController {
 	public static void clubAudiosGet(HttpServletRequest request,
 			HttpServletResponse response) throws SQLException,
 			ReflectiveOperationException, ServletException, IOException {
+		Integer userId = null;
+		try {
+			userId = Integer.parseInt( request.getSession().getAttribute("userId").toString());
+		} catch (NullPointerException|NumberFormatException e){
+			logger.info("unlogined user get photos", e);
+		}
 		Integer clubId = Integer.parseInt(request.getParameter("clubId"));
-		System.out.println("clubAudios:" + clubId);
+		ClubEventMember clubEventMember = ClubEventMemberService.getClubEventMemberByUserIdAndClubId(userId, clubId);
+		ClubEventMemberType userMemberType= null;
+		
+		if (clubEventMember!=null){
+			 userMemberType = clubEventMember.getType();
+			}
+		
 		List<ContentGroup> contentGroups = ContentGroupService
 				.getContentGroupByClubIdAndStateAndType(clubId, State.ACTIVE,
 						ContentGroupType.AUDIO);
 		CreateContent.setContent(request, response, contentGroups);
 		Club club = ClubService.getClubById(clubId);
+		
+		request.setAttribute("memberType", userMemberType);
 		request.setAttribute("clubName", club.getName());
 		request.setAttribute("clubId", clubId);
 		request.setAttribute("index", 0);
@@ -456,8 +483,8 @@ public class ClubController {
 						.toString());
 				Club club = getClubById(clubId);
 				List<ContentGroup> records = ContentGroupService
-						.getContentGroupByClubIdAndStateAndType(clubId,
-								State.ACTIVE, ContentGroupType.RECORD);
+						.getContentGroupByClubIdAndStateAndTypeLimited(clubId,
+								State.ACTIVE, ContentGroupType.RECORD, 0 ,RECORD_COUNT);
 
 				CreateContent.setContent(request, response, records);
 
@@ -495,10 +522,16 @@ public class ClubController {
 					else if (member.getState() == State.BLOCKED
 							|| member.getState() == State.DELETED)
 						request.setAttribute("badGuy", true);
-
-				Map<Integer, List<CommentUserCardPair>> comments = getComments(club
-						.getId());
+				boolean needScroll = true;
+				if (records!=null){
+				Map<Integer, List<CommentUserCardPair>> comments = getComments( records);
 				request.setAttribute("comments", comments);
+				if (records.size()<RECORD_COUNT){
+					needScroll = false;
+				}
+				} else {
+					needScroll = false;
+				}
 				List<Event> events = getEventByClubId(clubId);
 				List<ContentGroup> albums = getContentGroupByClubId(clubId);
 				if (albums != null) {
@@ -541,6 +574,9 @@ public class ClubController {
 
 				request.setAttribute("imagePath", getMediaById(club.getAvaId())
 						.getPath().replace("\\", "/"));
+				request.setAttribute("scrollIndex", 1);
+				request.setAttribute("load", true);
+				request.setAttribute("scroll", needScroll);
 				request.setAttribute("chatMessages", chatMessageUserCardList);
 				request.setAttribute("isSigned", isSigned);
 				request.setAttribute("clubId", club.getId());
@@ -576,12 +612,9 @@ public class ClubController {
 		}
 	}
 
-	private static Map<Integer, List<CommentUserCardPair>> getComments(
-			Integer clubId) throws SQLException, ReflectiveOperationException {
+	private static Map<Integer, List<CommentUserCardPair>> getComments( List<ContentGroup> records) throws SQLException, ReflectiveOperationException {
 		Map<Integer, List<CommentUserCardPair>> result = new HashMap<Integer, List<CommentUserCardPair>>();
-		List<ContentGroup> records = ContentGroupService
-				.getContentGroupByClubIdAndStateAndType(clubId, State.ACTIVE,
-						ContentGroupType.RECORD);
+		
 		if (records != null) {
 			for (ContentGroup record : records) {
 				List<CommentUserCardPair> commentUserCardPairs = new ArrayList<CommentUserCardPair>();

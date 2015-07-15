@@ -64,6 +64,11 @@ public class ContentGroupStatements {
 	public static final String[] SELECT_CONTENT_GROUP_BY_EVENT_ID_AND_STATE_AND_TYPE_ORDER = 
 		{ "event_id" , "state", "type" };
 	
+	public static final String SELECT_CONTENT_GROUP_BY_CLUB_ID_AND_STATE_AND_TYPE_LIMITED = 
+			"SELECT * FROM content_group WHERE club_id=? AND state = ? AND type = ? ORDER BY id DESC LIMIT ?,?";
+	
+	public static final String SELECT_CONTENT_GROUP_BY_EVENT_ID_AND_STATE_AND_TYPE_LIMITED = 
+			"SELECT * FROM content_group WHERE event_id=? AND state = ? AND type = ? ORDER BY id DESC LIMIT ?,?";
 	
 	// update
 	public static final String UPDATE_CONTENT_GROUP = "UPDATE content_group SET "

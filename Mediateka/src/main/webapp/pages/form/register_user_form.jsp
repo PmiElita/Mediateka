@@ -95,10 +95,6 @@
 
 									<option value="PRIMARY"><fmt:message bundle="${msg}"
 											key="registration.education.primary" /></option>
-									<option value="LOWER_SECONDARY"><fmt:message
-											bundle="${msg}" key="registration.education.lower_secondary" /></option>
-									<option value="UPPER_SECONDARY"><fmt:message
-											bundle="${msg}" key="registration.education.upper_secondary" /></option>
 									<option value="BACHELOR"><fmt:message bundle="${msg}"
 											key="registration.education.bachelor" /></option>
 									<option value="MASTER"><fmt:message bundle="${msg}"

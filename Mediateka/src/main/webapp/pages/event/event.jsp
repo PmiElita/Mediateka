@@ -15,9 +15,12 @@
 <jsp:include page="../index/index_modal_login.jsp" />
 <jsp:include page="../index/index_modal_register.jsp" />
 <jsp:include page="../../js/record.js.jsp" />
+<link type="text/css" rel="stylesheet" href="css/oleh_style.css"
+	media="screen,projection" />
 </head>
 
 <body>
+	<script type="text/javascript" src="js/eventComment.js"></script>
 	<div class="main">
 		<jsp:include page="../general/nav.jsp" />
 
@@ -49,7 +52,10 @@
 				</ul>
 			</div>
 		</div>
+		<input type="text" hidden="true" value="${userId}" id="userId" />
 	</div>
+	<label hidden id="currentUserId">${userId }</label>
 	<jsp:include page="../general/footer.jsp" />
+
 </body>
 </html>

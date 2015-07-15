@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.mail.MessagingException;
 import javax.servlet.ServletException;
@@ -41,7 +42,6 @@ import com.mediateka.content.CreateContent;
 import com.mediateka.exception.WrongInputException;
 import com.mediateka.form.ExhibitionRegistrationForm;
 import com.mediateka.form.MeetingRegistrationForm;
-import com.mediateka.model.Club;
 import com.mediateka.model.ClubEventMember;
 import com.mediateka.model.ContentGroup;
 import com.mediateka.model.Event;
@@ -53,12 +53,14 @@ import com.mediateka.model.enums.EventType;
 import com.mediateka.model.enums.MediaType;
 import com.mediateka.model.enums.Role;
 import com.mediateka.model.enums.State;
+import com.mediateka.pair.CommentUserCardPair;
 import com.mediateka.service.ClubEventMemberService;
 import com.mediateka.service.ClubService;
 import com.mediateka.service.ContentGroupService;
 import com.mediateka.service.EventService;
 import com.mediateka.service.MediaService;
 import com.mediateka.service.ProfessionService;
+import com.mediateka.service.UserCardService;
 import com.mediateka.service.UserService;
 import com.mediateka.util.DateConverter;
 import com.mediateka.util.EmailSender;
@@ -94,7 +96,7 @@ public class EventController {
 						.toString());
 				Event event = getEventById(eventId);
 				List<ContentGroup> records = ContentGroupService
-						.getContentGroupByEventIdAndState(eventId, State.ACTIVE);
+						.getContentGroupByEventIdAndStateAndTypeLimited(eventId, State.ACTIVE,ContentGroupType.RECORD, 0 ,ClubController.RECORD_COUNT);
 
 				CreateContent.setContent(request, response, records);
 
@@ -155,7 +157,20 @@ public class EventController {
 					if (neededMusic != 0)
 						request.setAttribute("music", neededMusic);
 				}
-
+				boolean needScroll = true;
+				if (records!=null){
+				Map<Integer, List<CommentUserCardPair>> comments = getComments( records);
+				request.setAttribute("comments", comments);
+				if (records.size()<ClubController.RECORD_COUNT){
+					needScroll = false;
+				}
+				} else {
+					needScroll = false;
+				}
+				request.setAttribute("scrollIndex", 1);
+				request.setAttribute("load", true);
+				request.setAttribute("scroll", needScroll);
+	
 				request.setAttribute(
 						"imagePath",
 						getMediaById(event.getAvaId()).getPath().replace("\\",
@@ -192,7 +207,27 @@ public class EventController {
 	}
 
 	// create event
-
+	private static Map<Integer, List<CommentUserCardPair>> getComments( List<ContentGroup> records) throws SQLException, ReflectiveOperationException {
+		Map<Integer, List<CommentUserCardPair>> result = new HashMap<Integer, List<CommentUserCardPair>>();
+		
+		if (records != null) {
+			for (ContentGroup record : records) {
+				List<CommentUserCardPair> commentUserCardPairs = new ArrayList<CommentUserCardPair>();
+				List<ContentGroup> comments = ContentGroupService
+						.getContentGroupByParentId(record.getId());
+				if (comments != null) {
+					for (ContentGroup comment : comments) {
+						commentUserCardPairs.add(new CommentUserCardPair(
+								comment, UserCardService
+										.getUserCardByUserId(comment
+												.getCreatorId())));
+					}
+				}
+				result.put(record.getId(), commentUserCardPairs);
+			}
+		}
+		return result;
+	}
 	@Request(url = "CreateExhibition", method = "get")
 	@Roles({ Role.USER, Role.ADMIN })
 	public static void exhibitionCreateGet(HttpServletRequest request,
@@ -1118,7 +1153,7 @@ public class EventController {
 		Event event = null;
 		try {
 			userId = (Integer) request.getSession().getAttribute("userId");
-			eventId = Integer.parseInt(request.getParameter("clubId"));
+			eventId = Integer.parseInt(request.getParameter("eventId"));
 			event = getEventById(eventId);
 			if (event == null)
 				throw new NumberFormatException();
@@ -1196,8 +1231,8 @@ public class EventController {
 				.getContentGroupByEventIdAndStateAndType(eventId, State.ACTIVE,
 						ContentGroupType.AUDIO);
 		CreateContent.setContent(request, response, contentGroups);
-		Club club = ClubService.getClubById(eventId);
-		request.setAttribute("eventName", club.getName());
+		Event event = EventService.getEventById(eventId);
+		request.setAttribute("eventName", event.getName());
 		request.setAttribute("eventId", eventId);
 		request.setAttribute("index", 0);
 		request.getRequestDispatcher("pages/content/audios.jsp").forward(

@@ -6,7 +6,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <%@page import="com.mediateka.model.enums.Role"%>
-
+<%@page import="com.mediateka.model.enums.ClubEventMemberType"%>
 <fmt:setLocale value="${cookie.lang.value}" />
 <fmt:setBundle basename="translations/club_page" var="msg" />
 
@@ -23,9 +23,21 @@
 <jsp:include page="../general/head.jsp" />
 <jsp:include page="../../js/record.js.jsp" />
 <script src="js/record.js"></script>
-
+<style>
+.image-cover-t {
+	color: white;
+	position: relative;
+	margin-top: 1em;
+	text-shadow: black 1.0px 0.0px, black 1.0px 1.0px, black 0.0px 1.0px,
+		black -1.0px 1.0px, black -1.0px 0.0px, black -1.0px -1.0px, black
+		0.0px -1.0px, black 1.0px -1.0px, black 0.0 0.0 3.0px, black 0.0 0.0
+		3.0px, black 0.0 0.0 3.0px, black 0.0 0.0 3.0px, black 0.0 0.0 3.0px,
+		black 0.0 0.0 3.0px, black 0.0 0.0 3.0px, black 0.0 0.0 3.0px;
+}
+</style>
 </head>
 
+<c:if test="${memberType eq ClubEventMemberType.CREATOR }">
 <script>
 	$(document).ready(function() {
 		$("#loadAudioForm").on("submit", handleAudio);
@@ -110,6 +122,7 @@
 
 	}
 </script>
+</c:if>
 <script src="audiojs/audio.min.js"></script>
 <body>
 
@@ -136,6 +149,7 @@
 						<h4 class="image-cover-t">
 							<fmt:message bundle="${msg }" key="club_audios.audios" />
 						</h4>
+						<c:if test="${memberType eq ClubEventMemberType.CREATOR }">
 						<div class="col s9">
 							<a
 								title='<fmt:message bundle="${msg }" key="club_audios.add_file"/>'
@@ -143,6 +157,7 @@
 									class="medium mdi-av-queue"></i></span>
 							</a>
 						</div>
+						</c:if>
 					</div>
 				</div>
 			</div>
@@ -161,6 +176,7 @@
 		</div>
 		<jsp:include page="../general/footer.jsp" />
 	</div>
+	<c:if test="${memberType eq ClubEventMemberType.CREATOR }">
 	<div id="addAudio" class="modal">
 		<div class="modal-content">
 
@@ -206,6 +222,7 @@
 			</form>
 		</div>
 	</div>
+	</c:if>
 </body>
 <script>
 	var audio;

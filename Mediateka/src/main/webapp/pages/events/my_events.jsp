@@ -32,15 +32,14 @@
 								<a href="event?eventId=${item.id}">
 									<div align="center">
 										<h2 class="image-cover-t">
-											<div class="row">
-												<c:out value="${item.name} " />
-												<c:out
-													value=" (${myActiveEventsMemberNumber[status.index]})" />
-											</div>
+										<div class="row" style="line-height:3.0rem;">
+											<c:out value="${item.name} " />
+										<div class="col s1 offset-s11" style="font-size:0.5em; color:#039be5;"><c:out value="${myActiveEventsMemberNumber[status.index]}" /></div>
+										</div>
 										</h2>
 										<img class="my-picture-club"
 											src="${myActiveEventsAvas[status.index]}" align="middle"
-											style="margin-top: -10.2em;">
+											style="margin-top: -14.2em;">
 									</div>
 								</a>
 							</div>
@@ -85,7 +84,7 @@
 										</h2>
 										<img class="my-picture-club"
 											src="${myBlockedEventsAvas[status.index]}" align="middle"
-											style="margin-top: -10.2em;">
+											style="margin-top: -14.2em;">
 									</div>
 								</a>
 							</div>
@@ -100,7 +99,7 @@
 							<div class="col s12">
 								<div
 									class="waves-effect waves-block waves-light my-picture-wrap"
-									style="border: 3px solid #008080; background: grey">
+									>
 									<div align="center">
 										<h2>
 											<fmt:message bundle="${msg}" key="there_are_no_such_events" />
@@ -131,7 +130,7 @@
 										</h2>
 										<img class="my-picture-club"
 											src="${myRequestedEventsAvas[status.index]}" align="middle"
-											style="margin-top: -10.2em;">
+											style="margin-top: -14.2em;">
 									</div>
 								</a>
 							</div>

@@ -23,7 +23,7 @@
 				<div class="col s10" style="margin-top: 2em">
 					<div class="input-field image-cover-t">
 						<i class="mdi-editor-mode-edit prefix"></i>
-						<textarea class="materialize-textarea" name="text" id="text"></textarea>
+						<textarea class="materialize-textarea" style="color:black;" name="text" id="text"></textarea>
 						<label for="text" style="font-size: 1.5em" style="color:white"><fmt:message
 								bundle="${msg}" key="record_form.message" /></label>
 					</div>
@@ -82,7 +82,7 @@
 							<div class="col s10" style="margin-top: 2em">
 								<div class="input-field image-cover-t">
 									<i class="small mdi-editor-insert-link prefix"></i>
-									<textarea id="likedTextarea" class="materialize-textarea"
+									<textarea id="likedTextarea" style="color:black;" class="materialize-textarea"
 										name="contentFromInternet"></textarea>
 									<label for="text" style="font-size: 1.5em" style="color:black;">
 										<fmt:message bundle="${msg }" key="insert_video_link" />

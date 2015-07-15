@@ -6,7 +6,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <%@page import="com.mediateka.model.enums.Role"%>
-
+<%@page import="com.mediateka.model.enums.ClubEventMemberType"%>
 
 <fmt:setLocale value="${cookie.lang.value}" />
 <fmt:setBundle basename="translations/club_page" var="msg" />
@@ -59,6 +59,7 @@
 						<h4 class="image-cover-t center">
 							<fmt:message bundle="${msg }" key="club_videos.videos" />
 						</h4>
+					<c:if test="${memberType eq ClubEventMemberType.CREATOR }">
 						<div class="col s9" style="margin-top: -3em">
 							<a
 								title='<fmt:message bundle="${msg }" key="club_videos.add_file"/>'
@@ -66,6 +67,7 @@
 									class="medium mdi-av-queue"></i></span>
 							</a>
 						</div>
+						</c:if>
 					</div>
 
 					<ul>
@@ -82,6 +84,7 @@
 		</div>
 		<jsp:include page="../general/footer.jsp" />
 	</div>
+	<c:if test="${memberType eq ClubEventMemberType.CREATOR }">
 	<div id="addVideo" class="modal">
 		<div class="modal-content">
 
@@ -129,7 +132,9 @@
 			</form>
 		</div>
 	</div>
+	</c:if>
 </body>
+<c:if test="${memberType eq ClubEventMemberType.CREATOR }">
 <script>
 	$(document).ready(function() {
 		$("#loadVideoForm").on("submit", handleVideo);
@@ -207,4 +212,5 @@
 
 	}
 </script>
+</c:if>
 </html>

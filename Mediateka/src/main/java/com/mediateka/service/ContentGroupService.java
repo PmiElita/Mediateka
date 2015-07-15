@@ -13,8 +13,9 @@ public class ContentGroupService {
 			throws SQLException, ReflectiveOperationException {
 		ContentGroupDAO.saveContentGroup(contentGroup);
 	}
-	
-	public static ContentGroup callSaveContentGroup(ContentGroup contentGroup) throws SQLException, ReflectiveOperationException{
+
+	public static ContentGroup callSaveContentGroup(ContentGroup contentGroup)
+			throws SQLException, ReflectiveOperationException {
 		return ContentGroupDAO.callSaveContentGroup(contentGroup);
 	}
 
@@ -58,22 +59,31 @@ public class ContentGroupService {
 			String nameRegex) throws ReflectiveOperationException, SQLException {
 		return ContentGroupDAO.getContentGroupByNameRegexId(nameRegex);
 	}
-	
-	public static List<ContentGroup> getContentGroupByClubIdAndState(Integer clubId, State state) throws SQLException, ReflectiveOperationException{
+
+	public static List<ContentGroup> getContentGroupByClubIdAndState(
+			Integer clubId, State state) throws SQLException,
+			ReflectiveOperationException {
 		return ContentGroupDAO.getContentGroupByClubIdAndState(clubId, state);
 	}
-	
-	public static List<ContentGroup> getContentGroupByEventIdAndState(Integer eventId, State state) throws SQLException, ReflectiveOperationException{
+
+	public static List<ContentGroup> getContentGroupByEventIdAndState(
+			Integer eventId, State state) throws SQLException,
+			ReflectiveOperationException {
 		return ContentGroupDAO.getContentGroupByEventIdAndState(eventId, state);
 	}
-	
-	public static List<ContentGroup> getContentGroupByClubIdAndStateAndType(Integer clubId, State state, ContentGroupType contentGroupType) throws SQLException, ReflectiveOperationException{
-		return ContentGroupDAO.getContentGroupByClubIdAndStateAndType(clubId, state, contentGroupType);
+
+	public static List<ContentGroup> getContentGroupByClubIdAndStateAndType(
+			Integer clubId, State state, ContentGroupType contentGroupType)
+			throws SQLException, ReflectiveOperationException {
+		return ContentGroupDAO.getContentGroupByClubIdAndStateAndType(clubId,
+				state, contentGroupType);
 	}
-	
-	
-	public static List<ContentGroup> getContentGroupByEventIdAndStateAndType(Integer eventId, State state, ContentGroupType contentGroupType) throws SQLException, ReflectiveOperationException{
-		return ContentGroupDAO.getContentGroupByEventIdAndStateAndType(eventId, state, contentGroupType);
+
+	public static List<ContentGroup> getContentGroupByEventIdAndStateAndType(
+			Integer eventId, State state, ContentGroupType contentGroupType)
+			throws SQLException, ReflectiveOperationException {
+		return ContentGroupDAO.getContentGroupByEventIdAndStateAndType(eventId,
+				state, contentGroupType);
 	}
 
 	public static List<ContentGroup> getContentGroupAll()
@@ -85,5 +95,20 @@ public class ContentGroupService {
 			throws ReflectiveOperationException, SQLException {
 		ContentGroupDAO.updateContentGroup(contentGroup);
 	}
-	
+
+	public static List<ContentGroup> getContentGroupByClubIdAndStateAndTypeLimited(
+			Integer clubId, State state, ContentGroupType contentGroupType,
+			Integer offset, Integer limit) throws SQLException,
+			ReflectiveOperationException {
+		return ContentGroupDAO.getContentGroupByClubIdAndStateAndTypeLimited(
+				clubId, state, contentGroupType, offset, limit);
+	}
+
+	public static List<ContentGroup> getContentGroupByEventIdAndStateAndTypeLimited(
+			Integer eventId, State state, ContentGroupType contentGroupType,
+			Integer offset, Integer limit) throws SQLException,
+			ReflectiveOperationException {
+		return ContentGroupDAO.getContentGroupByEventIdAndStateAndTypeLimited(
+				eventId, state, contentGroupType, offset, limit);
+	}
 }

@@ -21,14 +21,14 @@
 							<a href="event?eventId=${item.id}">
 								<div align="center">
 									<h2 class="image-cover-t">
-										<div class="row">
+										<div class="row" style="line-height:3.0rem;">
 											<c:out value="${item.name} " />
-											<c:out value=" (${allEventsMemberNumber[status.index]})" />
+										<div class="col s1 offset-s11" style="font-size:0.5em; color:#039be5;"><c:out value="${allEventsMemberNumber[status.index]}" /></div>
 										</div>
 									</h2>
 									<img class="my-picture-club"
 										src="${allEventsAvas[status.index]}" align="middle"
-										style="margin-top: -10.2em;">
+										style="margin-top: -14.2em;">
 								</div>
 							</a>
 						</div>

@@ -11,7 +11,9 @@
 
 
 <head>
+<c:if test="${!(creator==null)}">
 <jsp:include page="crop/crop.jsp" />
+</c:if>
 <jsp:include page="../club/club_create_event.jsp" />
 
 <style>
@@ -37,9 +39,10 @@
 		<div class="row my-picture-row">
 			<div class="col s12" style="background-color: #212121;">
 				<div class="waves-effect waves-block waves-light my-picture-wrap">
-
-					<a title="Change picture" href="" data-target="modal15"
+<c:if test="${!(creator==null)}">
+					<a title="Change picture" href=""  data-target="modal15"
 						class="modal-trigger waves-effect" style="min-width: 100%">
+						</c:if>
 						<h3 class="image-cover-t">${club.name}</h3> <img
 						class="my-picture-club" src="${imagePath}" id="ava">
 					</a>

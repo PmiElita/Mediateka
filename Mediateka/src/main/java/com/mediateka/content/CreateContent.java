@@ -123,7 +123,6 @@ public class CreateContent {
 
 		int clubId = 0;
 		int eventId = 0;
-		System.out.println(request.getParameter("recordId"));
 		Integer recordId = Integer.parseInt(request.getParameter("recordId"));
 		ContentGroup contentGroup = ContentGroupService
 				.getContentGroupById(recordId);
@@ -143,6 +142,9 @@ public class CreateContent {
 		if (eventId != 0) {
 			request.setAttribute("eventId", eventId);
 		}
+		request.setAttribute("isSigned", true);
+		request.setAttribute("load", true);
+		request.setAttribute("scroll", false);
 		request.setAttribute("index", request.getParameter("index"));
 		request.setAttribute("isNew", true);
 		request.getRequestDispatcher("pages/content/record_central.jsp")
