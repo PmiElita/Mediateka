@@ -13,6 +13,15 @@
 <head>
 <jsp:include page="../general/head.jsp" />
 <jsp:include page="../../js/record.js.jsp" />
+
+<script type="text/javascript">
+
+formRecordJsTranslations = {
+	'select_event' : "<fmt:message bundle="${msg }" key="create_form_record.toast.select_event" />",	
+	
+};
+
+</script>
 <script type="text/javascript" src="js/form_record.js"></script>
 </head>
 <body>
@@ -125,7 +134,7 @@
 						<fmt:message bundle="${msg }" key="create_form_record.comment" />
 						<textarea name="comment" class="materialize-textarea info">
 					</textarea>
-						<input type="submit" value="Create form record" class="btn">
+						<input type="submit" value="<fmt:message bundle="${msg }" key="create_form_record.button" />" class="btn">
 					</div>
 				</form>
 			</div>

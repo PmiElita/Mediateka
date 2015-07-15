@@ -75,7 +75,7 @@ function checkFormRecordValidity(){
 			
 			form.submit()
 		}else {
-			Materialize.toast("Select event!",2000);
+			Materialize.toast(formRecordJsTranslations['select_event'],2000);
 		}
 	} else {
 		form.submit();
