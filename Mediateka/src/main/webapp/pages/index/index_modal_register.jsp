@@ -184,10 +184,20 @@
 									</div>
 									<div class="input-field col s3">
 										<p>
-											<fmt:message bundle="${msg}" key="registration.phone" />
+											<fmt:message bundle="${msg}" key="registration.phone"  />
 										</p>
-										<input id="phone" name="phone" type="text" required
-											pattern="${consts.getPhoneNumber() }" class="validate">
+										<input id="phone" name="phone" type="text" required 
+											pattern="${consts.getPhoneNumber() }" class="validate" onchange="
+											console.log(this.validity);
+											console.log(this.validity.valid); 
+											if (this.value.match('${consts.getPhoneNumber() }')){
+												this.setCustomValidity('');
+												alert('aaa');
+											} else {
+											alert('bbb');
+												this.setCustomValidity('<fmt:message bundle="${msg}" key="registration.phone_requirements" />');
+											}
+											">
 									</div>
 
 								</div>
