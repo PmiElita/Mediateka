@@ -192,9 +192,7 @@
 											console.log(this.validity.valid); 
 											if (this.value.match('${consts.getPhoneNumber() }')){
 												this.setCustomValidity('');
-												alert('aaa');
 											} else {
-											alert('bbb');
 												this.setCustomValidity('<fmt:message bundle="${msg}" key="registration.phone_requirements" />');
 											}
 											">
