@@ -20,31 +20,35 @@
 <jsp:include page="../../js/eventCreation.js.jsp"></jsp:include>
 <script src="js/eventCreation.js"></script>
 
-</script>
 
 <jsp:include page="../general/head.jsp" />
 </head>
 
 <body>
+	<jsp:include page="../general/nav.jsp" />
 	<div class="main">
-		<jsp:include page="../general/nav.jsp" />
-		<div id="creation_form">
-			<div class="container">
+		<div class="parallax-container my-parallax">
+			<div class="parallax">
+				<img src="images/parallax1.jpg">
+			</div>
 
-				<form id="editClub" action="editClub" name="editClub" method="post">
-					<div class="row">
-						<fmt:message bundle="${msg}" key="edit_club.club_name" />
-						<input name="club_name" id="club_name" type="text"
-							value="${club_name}" form="editClub" /> <br>
-					</div>
-					<div class="row">
-						<textarea name="club_description" id="club_description " cols="40"
-							rows="5" form="editClub">${club_description}</textarea>
-					</div>
-					<input type="submit" id="subbut" name="subbut" value="save"
-						form="editClub"> <input hidden="true" name="clubId"
-						value="${clubId}">
-				</form>
+			<div id="creation_form">
+				<div class="container section white">
+					<form id="editClub" action="editClub" name="editClub" method="post">
+						<div class="row">
+							<fmt:message bundle="${msg}" key="edit_club.club_name" />
+							<input name="club_name" id="club_name" type="text"
+								value="${club_name}" form="editClub" /> <br>
+						</div>
+						<div class="row">
+							<textarea name="club_description" id="club_description "
+								cols="40" class="materialize-textarea" rows="5" form="editClub">${club_description}</textarea>
+						</div>
+						<input type="submit" id="subbut" name="subbut" value="save"
+							class="btn" form="editClub"> <input hidden="true"
+							name="clubId" value="${clubId}">
+					</form>
+				</div>
 			</div>
 		</div>
 	</div>
