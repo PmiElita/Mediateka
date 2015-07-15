@@ -18,6 +18,8 @@
 	src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.0/jquery-ui.min.js"></script>
 <script src="js/jquery-2.1.4.min.js"></script>
 <script src="js/date.js"></script>
+<jsp:include page="../../js/eventCreation.js.jsp"></jsp:include>
+
 <script src="js/eventCreation.js"></script>
 <jsp:include page="../general/head.jsp" />
 </head>

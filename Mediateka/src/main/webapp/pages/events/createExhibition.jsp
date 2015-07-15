@@ -11,6 +11,8 @@
 <html>
 
 <head>
+<jsp:include page="../../js/eventCreation.js.jsp"></jsp:include>
+
 <script src="js/eventCreation.js"></script>
 <jsp:include page="../general/head.jsp" />
 </head>

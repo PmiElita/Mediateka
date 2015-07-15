@@ -7,14 +7,13 @@
 <script type="text/javascript" src="js/materialize.js"></script>
 
 <script src="js/imageView.js"></script>
+<jsp:include page="../../js/eventCreation.js.jsp"></jsp:include>
 
 <script src="js/eventCreation.js"></script>
 
 <script src="js/date.js"></script>
 
 <script src="js/crop.js"></script>
-
-<script src= "js/eventCreation.js"></script>
 
 <script type="text/javascript" src="js/DateTimePicker.js"></script>
 
