@@ -172,7 +172,7 @@
 								document.getElementById("determinate").style.width = percentComplete
 										+ "%";
 								if (percentComplete === 100) {
-									document.getElementById("progress").hidden = true;
+									
 								}
 
 							}
@@ -181,12 +181,11 @@
 
 		xhr.onload = function(e, data) {
 			if (this.status == 200) {
+				document.getElementById("progress").hidden = true;
 				document.getElementById("loadVideoForm").reset();
 				document.getElementById("selectedFiles").innerHTML = "";
 				storedVideos = [];
-				alert(JSON.stringify(e.currentTarget));
 				var responseJSON = JSON.parse(e.currentTarget.responseText);
-				alert(responseJSON);
 				loadIndex = document.getElementById('index').textContent;
 				var loadEl = document.getElementById("load");
 				loadIndex++;

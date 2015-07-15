@@ -45,9 +45,9 @@
 			</div>
 		</div>
 		<div id="restore${photo.id}" hidden="true">
-			<div title="${photo.name }" class="col s4"
-				style="margin-bottom: 3.0em;">
-				<a
+			<div title="${photo.name }" class="col s4 "
+				style="height: 12em; margin-bottom: 3em;" align="center">
+				<a style="margin-top:5em" 
 					onclick="restoreMedia(${photo.id }); Materialize.toast('<fmt:message bundle="${msg}" key="record_central.restored" />', 4000)"
 					class="waves-effect waves-light btn"><fmt:message
 						bundle="${msg}" key="record_central.restore" /></a>

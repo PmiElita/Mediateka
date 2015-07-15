@@ -122,12 +122,13 @@ li.playing:before {
 		});
 
 		// Load in the first track
+		if(a.length > 0){
 		var audio = a[0];
 
 				first = $('ol a').attr('data-src');
 				$('ol li').first().addClass('playing');
 				audio.load(first);
-
+		}
 		// Load in a track on click
 		$('ol li').click(function(e) {
 			e.preventDefault();
@@ -157,18 +158,30 @@ li.playing:before {
 				audio.playPause();
 			}
 		})
+		
+		$('#delete').click(function(){
+			$('.playing').removeClass('playing');
+			audio.pause();
+		});
 	});
+function stopMedia(){
+	$('.playing').removeClass('playing');
+	audio.pause();
+}
 </script>
 
 
 
 
-<div  id="load"></div>
+<div id="load"></div>
 <label id="index" hidden="true">${index}</label>
-<div style="position: fixed; top: 20%; z-index: 1; right: 2%"
-	class="row col s1" align="left">
-	<audio id='audioPlayer' preload="auto"></audio>
-</div>
+
+<c:if test="${audioMap.get(records[0].id) ne null}">
+	<div style="position: fixed; top: 20%; z-index: 1; right: 2%"
+		class="row col s1" align="left">
+		<audio id='audioPlayer' preload="none"></audio>
+	</div>
+</c:if>
 <div id="uploaded">
 	<c:forEach var="audios" items="${records }">
 		<c:forEach var="audio" items="${audioMap.get(audios.id) }">
@@ -182,8 +195,8 @@ li.playing:before {
 					<div class="col s2" style="margin: -20px 0px 0px 0px;">
 						<c:if test="${userId eq audios.creatorId}">
 
-							<span
-								onclick="deleteMedia(${audio.id}); Materialize.toast('<fmt:message bundle="${msg}" key="record_central.deleted" />', 4000);"
+							<span id="delete"
+								onclick="deleteMedia(${audio.id}); stopMedia(); Materialize.toast('<fmt:message bundle="${msg}" key="record_central.deleted" />', 4000);"
 								onmouseover="this.style.color = 'red';"
 								onmouseleave="this.style.color = 'black';"
 								class="waves-effect waves-circle waves-red">X</span>

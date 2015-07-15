@@ -16,17 +16,17 @@
 		<div id="uploaded">
 			<div style="margin-left: 2em">
 				<c:forEach var="record" items="${records }">
-					<c:forEach var="video" items="${videoMap.get(record.id) }">										
+					<c:forEach var="video" items="${videoMap.get(record.id) }">
 						<div id="restore${video.id}" hidden="true">
 							<div title="${video.name }" class="card-panel col s6"
-								style="height:350px;" align="center">
+								style="height: 350px;" align="center">
 								<a style="margin: 50% 0 0 0"
 									onclick="restoreMedia(${video.id }); Materialize.toast('<fmt:message bundle="${msg}" key="record_central.restored" />', 4000)"
 									class="waves-effect waves-light btn"><fmt:message
 										bundle="${msg}" key="record_central.restore" /></a>
 
 							</div>
-						</div>					
+						</div>
 						<li id="mediaId${video.id}" class="card-panel col s6"
 							style="font-size: 1.0em;"><div class="row">
 								<div class="col s9 offset-s1">
@@ -46,8 +46,7 @@
 										<pre> </pre>
 									</c:if>
 								</div>
-							</div> <video height="300px"
-								 width="100%"
+							</div> <video height="300px" width="100%"
 								poster="${posterMap.get(video.id).path }" onclick="this.play();"
 								controls="controls" preload="none"
 								title='<c:out value="${video.name}"></c:out>'>
@@ -57,7 +56,10 @@
 									type="video/ogg">
 								<source src='<c:out value="${video.path}"></c:out>'
 									type="video/webm">
-							</video></li>						
+								<object src="http://blip.tv/play/AYGLzBmU8hw"
+									type="application/x-shockwave-flash" width="500" height="396"
+									allowscriptaccess="always" allowfullscreen="true" ></object>
+							</video></li>
 					</c:forEach>
 				</c:forEach>
 			</div>

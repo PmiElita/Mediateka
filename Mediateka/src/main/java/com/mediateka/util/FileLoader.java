@@ -112,6 +112,8 @@ public class FileLoader {
 								e.printStackTrace();
 							}
 							g.stop();
+							g.flush();
+							Runtime.getRuntime().gc();
 						} catch (Exception e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -181,17 +183,18 @@ public class FileLoader {
 
 				FileItem item = (FileItem) iter.next();
 
-				if (item.getSize() > 0 && !item.isFormField()) {
+				if (item.getSize() > 0 && item.getSize() < (MAX_REQUEST_SIZE)
+						&& !item.isFormField()) {
 
-					 mediaTypes.add(MediaType.valueOf(item.getFieldName()
-					 .toUpperCase()));
+					mediaTypes.add(MediaType.valueOf(item.getFieldName()
+							.toUpperCase()));
 					String fileName = SecurityStringGenerator
 							.generateString(16);
 					defaultFileNames.add(new File(item.getName()).getName());
 					String extention = "";
 					if (defaultFileNames.get(i).indexOf('.') != -1) {
 						extention = defaultFileNames.get(i).substring(
-								defaultFileNames.get(i).indexOf('.'));
+								defaultFileNames.get(i).lastIndexOf('.'));
 					}
 					if (extention == "") {
 						extention = ".jpg";
@@ -213,30 +216,52 @@ public class FileLoader {
 					isUploaded = true;
 					i++;
 					// open file
-					Metadata metadata = new Metadata();
-					try (FileInputStream fileInputStream = new FileInputStream(
-							uploadedFile)) {
-						AutoDetectParser parser = new AutoDetectParser();
-						ContentHandler contenthandler = new BodyContentHandler();
-						metadata.set(Metadata.RESOURCE_NAME_KEY,
-								uploadedFile.getName());
-						parser.parse(fileInputStream, contenthandler, metadata);
-					}
-					String contentType = item.getContentType();
-					String fileContentTypeString = Files.probeContentType(Paths
-							.get(filePath));
-					String realContentType = metadata
-							.get(Metadata.CONTENT_TYPE);
+					if ((item.getContentType().substring(0, item.getContentType().indexOf('/'))
+							.equals("video") == true)) {
+					} else {
+						Metadata metadata = new Metadata();
+						try (FileInputStream fileInputStream = new FileInputStream(
+								uploadedFile)) {
+							AutoDetectParser parser = new AutoDetectParser();
+							ContentHandler contenthandler = new BodyContentHandler();
+							metadata.set(Metadata.RESOURCE_NAME_KEY,
+									uploadedFile.getName());
+							parser.parse(fileInputStream, contenthandler,
+									metadata);
+						}
+						String contentType = item.getContentType();
+						String fileContentTypeString = Files
+								.probeContentType(Paths.get(filePath));
+						String realContentType = metadata
+								.get(Metadata.CONTENT_TYPE);
 
-					if ((contentType.substring(contentType.indexOf('/'))
-							.equals(realContentType.substring(realContentType
-									.indexOf('/'))) == false)
-							&& (fileContentTypeString.substring(
-									contentType.indexOf('/')).equals(
-									realContentType.substring(realContentType
-											.indexOf('/'))) == false)) {
-						uploadedFile.delete();
-						throw new WrongInputException("wrong file type");
+						if ((contentType
+								.substring(contentType.indexOf('/'))
+								.equals(realContentType
+										.substring(realContentType.indexOf('/'))) == false)
+								&& (fileContentTypeString.substring(
+										contentType.indexOf('/')).equals(
+										realContentType
+												.substring(realContentType
+														.indexOf('/'))) == false)) {
+							System.out
+									.println(contentType.substring(contentType
+											.indexOf('/'))
+											+ " "
+											+ (realContentType
+													.substring(realContentType
+															.indexOf('/')))
+											+ " "
+											+ fileContentTypeString
+													.substring(contentType
+															.indexOf('/'))
+											+ " "
+											+ realContentType
+													.substring(realContentType
+															.indexOf('/')));
+							uploadedFile.delete();
+							throw new WrongInputException("wrong file type");
+						}
 					}
 				} else {
 
@@ -266,7 +291,9 @@ public class FileLoader {
 		if (defaultFileNames.size() == 0) {
 			throw new WrongInputException("wrong file type");
 		}
-		return defaultFileNames.get(0);
+		String name = defaultFileNames.get(0).substring(0,
+				defaultFileNames.get(0).lastIndexOf('.'));
+		return name;
 	}
 
 	public void setDefaultFileName(String defaultFileName) {
@@ -317,7 +344,11 @@ public class FileLoader {
 		if (defaultFileNames.size() == 0) {
 			throw new WrongInputException("wrong file type");
 		}
-		return defaultFileNames;
+		List<String> names = new ArrayList<String>();
+		for (String string : defaultFileNames) {
+			names.add(string.substring(0, string.lastIndexOf('.')));
+		}
+		return names;
 	}
 
 	public List<MediaType> getMediaTypes() {
