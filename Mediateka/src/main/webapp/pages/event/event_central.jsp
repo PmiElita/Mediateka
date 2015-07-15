@@ -11,7 +11,7 @@
 
 <head>
 <c:if test="${!(creator==null)}">
-<jsp:include page="crop/crop.jsp" />
+	<jsp:include page="crop/crop.jsp" />
 </c:if>
 <style>
 .image-cover-t {
@@ -36,13 +36,12 @@
 		<div class="col s12" style="background-color: #212121;">
 			<div
 				class="waves-effect waves-block waves-light my-picture-wrap col s12">
-<c:if test="${!(creator==null)}">
-				<a title="Change picture" href="" data-target="modal16"
-					class="modal-trigger waves-effect" style="min-width: 100%">
-					</c:if>
-					<h3 class="image-cover-t">${event.name}</h3> <img
-					class="my-picture-club" src="${imagePath}" id="ava">
-				</a>
+				<c:if test="${!(creator==null)}">
+					<a title="Change picture" href="" data-target="modal16"
+						class="modal-trigger waves-effect" style="min-width: 100%">
+				</c:if>
+				<h3 class="image-cover-t">${event.name}</h3>
+				<img class="my-picture-club" src="${imagePath}" id="ava"> </a>
 			</div>
 		</div>
 	</div>
@@ -93,7 +92,7 @@
 											style="width: 15em"><fmt:message bundle="${msg}"
 												key="update_event" /></a>
 									</div>
-									<div class="col s4" id="5">
+									<div class="col s6" id="5">
 										<a class="btn" href="EventUsers?eventId=${event.id }"
 											style="width: 15em"><fmt:message bundle="${msg}"
 												key="look_participants" /></a>
@@ -107,12 +106,12 @@
 									</div>
 								</c:if>
 								<c:if test="${event.state eq State.BLOCKED}">
-									<div class="col s3" id="1">
+									<div class="col s4" id="1">
 										<a class="btn" href="creatorUnblockEvent?eventId=${event.id}"
 											style="width: 15em"><fmt:message bundle="${msg}"
-												key="block_event" /></a>
+												key="unblock_event" /></a>
 									</div>
-									<div class="col s3" id="2">
+									<div class="col s4" id="2">
 										<a class="btn" onclick="deleteEventAjax(${event.id})"
 											style="width: 15em"><fmt:message bundle="${msg}"
 												key="delete_event" /></a>
@@ -122,12 +121,12 @@
 											style="width: 30em; color: red"><fmt:message
 												bundle="${msg}" key="restore_event" /></a>
 									</div>
-									<div class="col s3" id="4">
+									<div class="col s4" id="4">
 										<a class="btn" href="UpdateEvent?eventId=${event.id}"
 											style="width: 15em"><fmt:message bundle="${msg}"
 												key="update_event" /></a>
 									</div>
-									<div class="col s3" id="5">
+									<div class="col s6" id="5">
 										<a class="btn" href="EventUsers?eventId=${event.id }"
 											style="width: 15em"><fmt:message bundle="${msg}"
 												key="look_participants" /></a>
