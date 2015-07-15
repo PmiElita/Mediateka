@@ -50,18 +50,19 @@ public class PasswordChangingController {
 		String token = request.getParameter("token");
 		if (token == null) {
 			logger.warn("trying to get password changing form without a token");
-			response.sendRedirect("index");
+			response.sendError(404);
 			return;
 		}
 		if (token.length() != 64) {
 			logger.warn("wrong token length");
-			response.sendRedirect("index");
+			response.sendError(404);
 			return;
 		}
 
 		User user = UserService.getUserByToken(token);
 		if (user == null) {
 			logger.warn("no user with suck token");
+			response.sendError(404);
 			return;
 		}
 		
