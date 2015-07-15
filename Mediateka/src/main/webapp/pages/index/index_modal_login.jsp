@@ -88,6 +88,13 @@
 </div>
 <script type="text/javascript">
 		function show() {
+			
+			if ( document.getElementById("emailFP").value.match("${consts.getEmail() }") == null ){
+				Materialize.toast("<fmt:message bundle="${msg1}" key="wrong_email" />", 4000);
+				return;
+			}
+	
+			
 			wrongEmail = false;
 			$.ajax({
 				url : 'checkemail',
@@ -96,16 +103,16 @@
 				},
 				success : function(data) {
 					if (data == 'true') {
-						Materialize.toast("wrong email", 1000);
+						Materialize.toast("<fmt:message bundle="${msg1}" key="wrong_email" />", 4000);
 					} else {
-						Materialize.toast("check your email", 3000);
+						Materialize.toast("<fmt:message bundle="${msg1}" key="check_your_email" />", 4000);
 
 						$.ajax({
 							url : 'invalidatePassword',
 							type : 'post',
 							dataType : 'json',
 							data : {
-								email : document.getElementById("email").value
+								email : document.getElementById("emailFP").value
 							}
 						});
 

@@ -28,6 +28,7 @@ import com.mediateka.service.UserService;
 import com.mediateka.util.FormValidator;
 import com.mediateka.util.ObjectFiller;
 import com.mediateka.util.SaltedPasswordGenerator;
+import com.mediateka.util.Translator;
 
 /**
  * 
@@ -152,24 +153,28 @@ public class LogInController {
 		String email = request.getParameter("email");
 		User user = UserService.getUserByEmail(email);
 		String message = "success";
+		
+		
+		Translator translator = new Translator("translations/login_messages", request);
+		
 		if (user == null||user.getSocialId()!=null) {
 			logger.warn("no user with such email");
-			message = "invalid email or password";
+			message = translator.getMessage("invalid_email_or_password");
 
 		} else {
 			String saltedPassword = SaltedPasswordGenerator.generate(
 					request.getParameter("password"), user.getSalt());
 			if (!user.getPassword().equals(saltedPassword)) {
 				logger.warn("failed to log in");
-				message = "invalid email or password";
+				message = translator.getMessage("invalid_email_or_password");
 			} else if (user.getState() != State.ACTIVE
 					&& user.getPasswordChangingToken() != null) {
 				logger.warn("trying to log in as non-active user");
-				message = "your account is inactive";
+				message = translator.getMessage("inactive");
 			} else if ((user.getState() != State.ACTIVE && user
 					.getPasswordChangingToken() == null)) {
 				logger.warn("trying to log in as blocked user");
-				message = "your account is blocked";
+				message = translator.getMessage("blocked");
 			}
 		}
 		Map<String, String> map = new HashMap<String, String>();

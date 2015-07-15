@@ -122,15 +122,12 @@ public class PasswordManagementController {
 			request.setAttribute("notification", "no_user_with_such_email");
 			request.getRequestDispatcher("pages/index/index.jsp").forward(
 					request, response);
-			
 			return;
 		}
 		
 		User user = UserService.getUserByEmail(form.getEmail());
 		
 		if (user == null){
-			logger.warn("no user with such email");
-			System.out.println("HEREEEEEE");
 			request.setAttribute("notification", "no_user_with_such_email");
 			request.getRequestDispatcher("pages/index/index.jsp").forward(
 					request, response);

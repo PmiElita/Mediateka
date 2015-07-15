@@ -58,8 +58,9 @@ public class EmailSender {
 
 					Transport.send(message);
 				} catch (MessagingException e) {
-					// don't know what to do
+					logger.error("failed to send email", e);
 				}
+				
 			}
 		};
 

@@ -277,7 +277,7 @@
 <div class="row main-books">
 			<button class="  waves-effect btn book-scroll"
 				onclick="scrollRecords()">
-				<fmt:message bundle="${msg}" key="show_more_results" />
+				<fmt:message bundle="${msg}" key="record_central.show_more_results" />
 			</button>
 			<p id="scrollIndex" hidden="true">${scrollIndex }</p>
 		</div>

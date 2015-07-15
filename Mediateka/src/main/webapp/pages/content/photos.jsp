@@ -2,6 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<fmt:setLocale value="${cookie.lang.value}" />
+<fmt:setBundle basename="translations/club_page" var="msg" />
 <script src="js/jssor.js"></script>
 <script src="js/jssor.slider.js"></script>
 <div id="photoList">
