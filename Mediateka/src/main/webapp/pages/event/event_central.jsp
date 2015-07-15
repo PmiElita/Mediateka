@@ -74,12 +74,12 @@
 								<c:if test="${event.state eq State.ACTIVE}">
 									<div class="col s4" id="1">
 										<a class="btn" href="creatorBlockEvent?eventId=${event.id}"
-											style="width: 15em"><fmt:message bundle="${msg}"
+											style="width: 20em"><fmt:message bundle="${msg}"
 												key="block_event" /></a>
 									</div>
 									<div class="col s4" id="2">
 										<a class="btn" onclick="deleteEventAjax(${event.id})"
-											style="width: 15em"><fmt:message bundle="${msg}"
+											style="width: 20em"><fmt:message bundle="${msg}"
 												key="delete_event" /></a>
 									</div>
 									<div class="col s12" id="3" hidden>
@@ -89,7 +89,7 @@
 									</div>
 									<div class="col s4" id="4">
 										<a class="btn" href="UpdateEvent?eventId=${event.id}"
-											style="width: 15em"><fmt:message bundle="${msg}"
+											style="width: 20em"><fmt:message bundle="${msg}"
 												key="update_event" /></a>
 									</div>
 									<div class="col s6" id="5">
@@ -99,7 +99,7 @@
 									</div>
 									<div class="col s6" id="6" style="align: center;">
 										<a href="" data-target="modal_send_email_to_event_members"
-											class="modal-trigger waves-effect btn" style="width: 15em">
+											class="modal-trigger waves-effect btn" style="width: 20em">
 											<fmt:message bundle="${msg}"
 												key="send_email_to_event_members" />
 										</a>
@@ -108,12 +108,12 @@
 								<c:if test="${event.state eq State.BLOCKED}">
 									<div class="col s4" id="1">
 										<a class="btn" href="creatorUnblockEvent?eventId=${event.id}"
-											style="width: 15em"><fmt:message bundle="${msg}"
+											style="width: 20em"><fmt:message bundle="${msg}"
 												key="unblock_event" /></a>
 									</div>
 									<div class="col s4" id="2">
 										<a class="btn" onclick="deleteEventAjax(${event.id})"
-											style="width: 15em"><fmt:message bundle="${msg}"
+											style="width: 20em"><fmt:message bundle="${msg}"
 												key="delete_event" /></a>
 									</div>
 									<div class="col s12" id="3" hidden>
@@ -123,17 +123,17 @@
 									</div>
 									<div class="col s4" id="4">
 										<a class="btn" href="UpdateEvent?eventId=${event.id}"
-											style="width: 15em"><fmt:message bundle="${msg}"
+											style="width: 20em"><fmt:message bundle="${msg}"
 												key="update_event" /></a>
 									</div>
 									<div class="col s6" id="5">
 										<a class="btn" href="EventUsers?eventId=${event.id }"
-											style="width: 15em"><fmt:message bundle="${msg}"
+											style="width: 20em"><fmt:message bundle="${msg}"
 												key="look_participants" /></a>
 									</div>
 									<div class="col s6" id="6" style="align: center;">
 										<a href="" data-target="modal_send_email_to_event_members"
-											class="modal-trigger waves-effect btn" style="width: 15em">
+											class="modal-trigger waves-effect btn" style="width: 20em">
 											<fmt:message bundle="${msg}"
 												key="send_email_to_event_members" />
 										</a>

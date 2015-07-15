@@ -23,7 +23,9 @@
 									<h2 class="image-cover-t">
 										<div class="row" style="line-height:3.0rem;">
 											<c:out value="${item.name} " />
-										<div class="col s1 offset-s11" style="font-size:0.5em; color:#039be5;"><c:out value="${allEventsMemberNumber[status.index]}" /></div>
+										<div class="col s1 offset-s11" style="font-size:0.5em; color:#039be5;">
+												<c:out value="${allEventsMemberNumber[status.index]}" />
+											</div>
 										</div>
 									</h2>
 									<img class="my-picture-club"

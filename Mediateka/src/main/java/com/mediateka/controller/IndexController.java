@@ -38,18 +38,19 @@ public class IndexController {
 
 		long currentTime = new java.util.Date().getTime();
 		List<Event> events = getEventByState(State.ACTIVE);
-		List<Event> currentEvents = new ArrayList<>();
+		List<Event> currentEventss = new ArrayList<>();
 		if (events != null)
 			for (Event event : events)
 				if (event.getDateTill().getTime() > currentTime)
-					currentEvents.add(event);
-		Collections.sort(currentEvents, new EventsByDate());
+					currentEventss.add(event);
+		Collections.sort(currentEventss, new EventsByDate());
 
-		int size = currentEvents.size();
+		int size = currentEventss.size();
 
+		List<Event> currentEvents = new ArrayList<>();
 		if (size > 3)
-			for (int i = 3; i < currentEvents.size(); i++)
-				currentEvents.remove(i);
+			for (int i = 0; i < 3; i++)
+				currentEvents.add(currentEventss.get(i));
 		else if (size < 3) {
 			int difference = 3 - size;
 			List<Event> oldEvents = new ArrayList<>();
@@ -58,20 +59,25 @@ public class IndexController {
 					if (event.getDateTill().getTime() < currentTime)
 						oldEvents.add(event);
 			Collections.sort(oldEvents, new EventsByDate());
-			if (oldEvents.size() >= difference)
+			if (oldEvents.size() >= difference) {
 				for (int i = 0; i < difference; i++)
-					currentEvents.add(oldEvents.get(i));
+					currentEventss.add(oldEvents.get(i));
+				currentEvents.addAll(currentEventss);
+			} else {
+				currentEventss.addAll(oldEvents);
+				currentEvents.addAll(currentEvents);
+			}
 			if (oldEvents.size() < difference)
-				currentEvents.addAll(oldEvents);
+				currentEventss.addAll(oldEvents);
 		}
 
 		List<String> dates = new ArrayList<>();
 		List<String> times = new ArrayList<>();
 		Timestamp dateFrom;
 		Timestamp dateTill;
-		String date = "It goes right now!";
-		String time = "It goes right now!";
-		SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd");
+		String date = "";
+		String time = "";
+		SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
 		SimpleDateFormat formatMeeting = new SimpleDateFormat("hh:mm");
 		for (Event event : currentEvents) {
 			dateFrom = event.getDateFrom();

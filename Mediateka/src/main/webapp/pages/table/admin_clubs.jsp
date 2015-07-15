@@ -88,8 +88,7 @@
 									<li id="clubNo${current.id}">
 										<div class="collapsible-header">
 											<a class="button" href="club?clubId=${current.id}"> <c:out
-													value="${current.name} " />
-												<c:out value="( ${clubsMemberNumber[status.index]})" /></a>
+													value="${current.name} " /></a>
 										</div>
 										<div class="collapsible-body">
 											<p>

@@ -103,8 +103,7 @@
 									<li id="eventNo${current.id}">
 										<div class="collapsible-header">
 											<a class="button" href="event?eventId=${current.id}"> <c:out
-													value="${current.name} " />
-												<c:out value=" (${allEventsMemberNumber[status.index]})" /></a>
+													value="${current.name} " /></a>
 										</div>
 										<div class="collapsible-body">
 											<p>

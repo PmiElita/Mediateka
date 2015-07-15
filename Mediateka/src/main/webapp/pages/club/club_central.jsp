@@ -12,7 +12,7 @@
 
 <head>
 <c:if test="${!(creator==null)}">
-<jsp:include page="crop/crop.jsp" />
+	<jsp:include page="crop/crop.jsp" />
 </c:if>
 <jsp:include page="../club/club_create_event.jsp" />
 
@@ -39,13 +39,12 @@
 		<div class="row my-picture-row">
 			<div class="col s12" style="background-color: #212121;">
 				<div class="waves-effect waves-block waves-light my-picture-wrap">
-<c:if test="${!(creator==null)}">
-					<a title="Change picture" href=""  data-target="modal15"
-						class="modal-trigger waves-effect" style="min-width: 100%">
-						</c:if>
-						<h3 class="image-cover-t">${club.name}</h3> <img
-						class="my-picture-club" src="${imagePath}" id="ava">
-					</a>
+					<c:if test="${!(creator==null)}">
+						<a title="Change picture" href="" data-target="modal15"
+							class="modal-trigger waves-effect" style="min-width: 100%">
+					</c:if>
+					<h3 class="image-cover-t">${club.name}</h3>
+					<img class="my-picture-club" src="${imagePath}" id="ava"> </a>
 				</div>
 			</div>
 		</div>
@@ -103,15 +102,15 @@
 												style="width: 20em"><fmt:message bundle="${msg}"
 													key="look_participants" /></a>
 										</div>
-										<div class="col s4" id="6">
+										<div class="col s6" id="6">
 											<a href="" data-target="modal18" class="btn modal-trigger"
 												style="width: 20em"><fmt:message bundle="${msg}"
 													key="create_event" /></a>
 										</div>
-										<div class="col s4" id="7">
+										<div class="col s6" id="7">
 											<a href="" data-target="modal_send_email_to_club_members"
-												class="modal-trigger btn" style="width: 20em"> <fmt:message bundle="${msg}"
-													key="send_email_to_club_members" />
+												class="modal-trigger btn" style="width: 20em"> <fmt:message
+													bundle="${msg}" key="send_email_to_club_members" />
 											</a>
 										</div>
 									</c:if>
@@ -126,7 +125,7 @@
 												style="width: 20em"><fmt:message bundle="${msg}"
 													key="delete_club" /></a>
 										</div>
-										<div class="col s12" id="3">
+										<div class="col s12" id="3" hidden>
 											<a class="btn" onclick="restoreClubAjax(${club.id})"
 												style="width: 30em; color: red"><fmt:message
 													bundle="${msg}" key="restore_club" /></a>
@@ -137,12 +136,12 @@
 													key="edit_club" /></a>
 										</div>
 										<br>
-										<div class="col s4" id="5">
+										<div class="col s6" id="5">
 											<a class="btn" href="ClubUsers?clubId=${club.id}"
 												style="width: 20em"><fmt:message bundle="${msg}"
 													key="look_participants" /></a>
 										</div>
-										<div class="col s4" id="6">
+										<div class="col s6" id="6">
 											<a href="" data-target="modal18" class="btn modal-trigger"
 												style="width: 20em"><fmt:message bundle="${msg}"
 													key="create_event" /></a>
