@@ -56,7 +56,7 @@
 
 						<div class="col s6">
 							<label for="dateTill" id="labelDateTill"><fmt:message
-									bundle="${msg}" key="date_till" /></label> <input id="dateTill"
+									bundle="${msg}" key="update_exhibition.date_till" /></label> <input id="dateTill"
 								name="dateTill" type="text" data-field="date" required
 								onchange="dateChangeExhibition()" value="${dateTill}">
 						</div>

@@ -46,12 +46,12 @@
 			<div class="row input-field">
 				<form onsubmit="return butt_click();"
 					onkeydown=" enterPress(event);">
-					<input placeholder="Type an event's name"
+					<input placeholder="<fmt:message bundle="${msg }" key="placeholder.event_name" />"
 						ng-model="dummyInputs.inputFieldInput" id="event_name" type="text"
 						maxlength="101" required> <input
-						placeholder="Type an event's description" id="event_descr"
+						placeholder="<fmt:message bundle="${msg }" key="placeholder.event_description" />" id="event_descr"
 						type="text" maxlength="125" required> <input
-						placeholder="Type an event's adress" id="event_adress" type="text"
+						placeholder="<fmt:message bundle="${msg }" key="placeholder.event_address" />" id="event_adress" type="text"
 						maxlength="101" required>
 					<button class="btn" id="map_button">
 						<fmt:message bundle="${msg }" key="add_new_event" />
