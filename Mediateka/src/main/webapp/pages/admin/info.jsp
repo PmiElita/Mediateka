@@ -4,8 +4,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<fmt:setLocale value="${locale}" />
-<fmt:setBundle basename="menu" />
+<fmt:setLocale value="${cookie.lang.value}" />
+<fmt:setBundle basename="translations/info_editor" var="msg" />
 <fmt:requestEncoding value="utf-8" />
 
 <html>
@@ -27,14 +27,14 @@
 			<div class="main-info">
 				<div class="section white">
 					<div class="container">
-						<h3>Edit main page info</h3>
-						<button class="btn" onclick="saveInfo()">Save info</button>
+						<h3><fmt:message bundle="${msg }" key="header" /> </h3>
+						<button class="btn" onclick="saveInfo()"><fmt:message bundle="${msg }" key="save" /> </button>
 						<div class="row">
-							<h5>Ua text:</h5>
+							<h5><fmt:message bundle="${msg }" key="ua_text" /> </h5>
 							<textarea id="infoText1" name="infoText1"
 								class="materialize-textarea info"><c:out
 									value="${text1}" /></textarea>
-							<h5>En text:</h5>
+							<h5><fmt:message bundle="${msg }" key="en_text" /> </h5>
 							<textarea id="infoText2" name="infoText2"
 								class="materialize-textarea info"><c:out
 									value="${text2}" /></textarea>
@@ -45,10 +45,10 @@
 							<div class="row">
 								<div class="col s6">
 									<fieldset>
-										<h4>1 slide text</h4>
-										<p style="color: black; padding-top: 5em;">Ua</p>
+										<h4><fmt:message bundle="${msg }" key="slide1" /></h4>
+										<p style="color: black; padding-top: 5em;"><fmt:message bundle="${msg }" key="ua_text" /> </p>
 										<input type="text" name="ua1" value="${ua1}">
-										<p style="color: black; padding-top: 5em;">En</p>
+										<p style="color: black; padding-top: 5em;"><fmt:message bundle="${msg }" key="en_text" /></p>
 										<input type="text" name="en1" value="${en1}">
 									</fieldset>
 								</div>
@@ -58,10 +58,10 @@
 							<div class="row">
 								<div class="col s6">
 									<fieldset>
-										<h4>2 slide text</h4>
-										<p style="color: black; padding-top: 5em;">Ua</p>
+										<h4><fmt:message bundle="${msg }" key="slide2" /></h4>
+										<p style="color: black; padding-top: 5em;"><fmt:message bundle="${msg }" key="ua_text" /></p>
 										<input type="text" name="ua2" value="${ua2}">
-										<p style="color: black; padding-top: 5em;">En</p>
+										<p style="color: black; padding-top: 5em;"><fmt:message bundle="${msg }" key="en_text" /></p>
 										<input type="text" name="en2" value="${en2}">
 									</fieldset>
 								</div>
@@ -71,10 +71,10 @@
 							<div class="row">
 								<div class="col s6">
 									<fieldset>
-										<h4>3 slide text</h4>
-										<p style="color: black; padding-top: 5em;">Ua</p>
+										<h4><fmt:message bundle="${msg }" key="slide3" /></h4>
+										<p style="color: black; padding-top: 5em;"><fmt:message bundle="${msg }" key="ua_text" /></p>
 										<input type="text" name="ua3" value="${ua3}">
-										<p style="color: black; padding-top: 5em;">En</p>
+										<p style="color: black; padding-top: 5em;"><fmt:message bundle="${msg }" key="en_text" /></p>
 										<input type="text" name="en3" value="${en3}">
 									</fieldset>
 								</div>
@@ -112,7 +112,7 @@
 					en3 : en3,
 				},
 				success : function(data) {
-					Materialize.toast('Info saved!', 2000)
+					Materialize.toast("<fmt:message bundle="${msg }" key="toaster.saved" />", 2000)
 				}
 			});
 		}
