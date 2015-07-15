@@ -150,7 +150,7 @@
 					<c:forEach var="audio" items="${audioMap.get(record.id) }">
 						<div class="row">
 							<div class="col s6 offset-s2">
-								<audio title="<c:out value="${audio.name}"></c:out>" controls
+								<audio preload="none" title="<c:out value="${audio.name}"></c:out>" controls
 									style="width: 100%; float: left;">
 									<source src='<c:out value="${audio.path}"></c:out>'>
 								</audio>
