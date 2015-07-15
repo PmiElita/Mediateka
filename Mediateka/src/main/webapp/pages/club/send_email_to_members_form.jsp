@@ -46,7 +46,6 @@
 
 <script type="text/javascript">
 	function send() {
-		alert('ololo');
 
 		var requestBody = {
 			'clubId' : document.getElementById('clubId').innerHTML,

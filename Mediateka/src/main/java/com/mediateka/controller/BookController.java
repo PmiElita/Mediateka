@@ -448,7 +448,6 @@ public class BookController {
 			book.setDescription(parameterMap.get("description"));
 			book.setMediaId(media.getId());
 			if ((!parameterMap.get("libraryBookId").equals(book.getLibraryBookId()))&&(BookService.getBookByLibraryBookId(parameterMap.get("libraryBookId"))!=null)){
-				System.out.println(new Translator("translations/create_book", request).getMessage("book_id_is_in_use"));
 				throw new WrongInputException(new Translator("translations/create_book", request).getMessage("book_id_is_in_use"));
 			}
 			book.setLibraryBookId(parameterMap.get("libraryBookId"));

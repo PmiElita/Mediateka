@@ -64,7 +64,6 @@
 	});
 
 	function handleAlbum(e) {
-		alert(1);
 
 		e.preventDefault();
 		var data = new FormData();
@@ -110,7 +109,6 @@
 				document.getElementById("name").value = "";
 				document.getElementById("selectedFiles").innerHTML = "";
 				storedImages = [];
-				alert(JSON.stringify(e.currentTarget));
 				var responseJSON = JSON.parse(e.currentTarget.responseText);
 
 				loadIndex = document.getElementById('index').textContent;
@@ -125,7 +123,6 @@
 
 				$('#addAlbum').closeModal();
 
-				alert(' items uploaded.');
 			}
 		}
 

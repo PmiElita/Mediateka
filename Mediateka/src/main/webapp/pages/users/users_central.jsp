@@ -36,7 +36,7 @@
 </style>
 	
 	
-<div class="main-activity container white section" onscroll="alert(10);">
+<div class="main-activity container white section">
 	<h4>
 		<fmt:message bundle="${msg}" key="searchUser" />
 	</h4>

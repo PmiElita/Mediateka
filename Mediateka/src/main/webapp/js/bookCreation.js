@@ -38,7 +38,6 @@ $(function () {
 	    maxHeight: 400,
 	    width: 300,
 	    onSelect: function(suggestion){ 
-	    	  alert(10);
 	    	 } // Callback функция, срабатывающая на выбор одного из предложенных вариантов,
 	 
 	});

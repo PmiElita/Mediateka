@@ -35,8 +35,8 @@
 
 <c:forEach var="album" items="${albums}">
 	<div id="restore${album.key.id}" hidden="true">
-		<div title="${album.key.name }" class="col s3"
-			style="margin-bottom: 3.0em;">
+		<div title="${album.key.name }" class="col s4 "
+			style="height: 12em; margin-bottom: 3em;" align="center">
 			<a
 				onclick="restoreRecord(${album.key.id }); Materialize.toast('<fmt:message bundle="${msg}" key="record_central.restored" />', 4000)"
 				class="waves-effect waves-light btn"><fmt:message

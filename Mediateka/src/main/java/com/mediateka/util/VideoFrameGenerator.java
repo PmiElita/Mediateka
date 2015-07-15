@@ -71,8 +71,7 @@ public class VideoFrameGenerator {
 	
 	public static void main(String[] args) throws MalformedURLException, WrongInputException {
 		String urlString = "https://www.youtube.com/watch?v=INIaa1eee18";
-		System.out.println(urlString);
-		System.out.println(generateByURL(urlString));
+	
 		
 	}
 }

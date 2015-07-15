@@ -68,7 +68,6 @@ public class ChatServerEndpoint {
 	@OnClose
 	public void onClose(Session userSession) {
 		Integer clubId=Integer.parseInt(userSession.getRequestParameterMap().get("clubId").get(0));
-		System.out.println(clubId);
 		clubChats.get(clubId).remove(userSession);
 	}
 

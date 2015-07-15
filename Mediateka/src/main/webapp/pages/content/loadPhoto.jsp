@@ -103,7 +103,6 @@
 				document.getElementById("loadPhotoForm").reset();
 				document.getElementById("selectedFiles").innerHTML = "";
 				storedImages = [];
-				alert(JSON.stringify(e.currentTarget));
 				var responseJSON = JSON.parse(e.currentTarget.responseText);
 
 				$('#photoList').load(

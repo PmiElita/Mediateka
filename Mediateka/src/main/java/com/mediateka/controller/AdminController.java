@@ -334,7 +334,6 @@ public class AdminController {
 		
 		ObjectFiller.fill(form, request);
 		
-		System.out.println(form);
 		Integer userId = Integer.parseInt(request.getParameter("userId"));
 		User user = UserService.getUserById(userId);
 		

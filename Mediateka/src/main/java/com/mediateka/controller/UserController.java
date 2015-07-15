@@ -636,7 +636,6 @@ public class UserController {
 			if (fileLoader.getAllFilePathes() != null) {
 				Map<String, String> imgMap = fileLoader
 						.getAllRelativePathseMap();
-				System.out.println(imgMap);
 				if (imgMap.containsKey("image1")) {
 					media.get(0).setPath(imgMap.get("image1"));
 					MediaService.updateMedia(media.get(0));
@@ -671,13 +670,11 @@ public class UserController {
 	public static void loadClubAvaPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException,
 			ReflectiveOperationException, SQLException, WrongInputException {
-		System.out.println("loadAva");
 		FileLoader fileLoader = new FileLoader();
 		fileLoader.loadFile(request);
 		User user = UserService.getUserById((Integer) request.getSession()
 				.getAttribute("userId"));
 		Media media = new Media();
-		System.out.println(fileLoader.getFilePath());
 		media.setType(fileLoader.getMediaType());
 		media.setState(State.ACTIVE);
 		media.setPath(fileLoader.getRelativePath());

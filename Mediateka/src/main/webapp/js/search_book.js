@@ -70,7 +70,6 @@ function blockBook(bookId) {
 					"bookId" : bookId
 				},
 				complete : function(data) {
-					alert(JSON.stringify(data));
 					document.getElementById("blockBook").innerHTML = data.responseJSON.buttonText
 							.toString();
 					Materialize.toast(data.responseJSON.toastText.toString(),
@@ -89,7 +88,6 @@ function deleteBook(bookId) {
 					"bookId" : bookId
 				},
 				complete : function(data) {
-					alert(JSON.stringify(data));
 					document.getElementById("deleteBook").innerHTML = data.responseJSON.buttonText
 							.toString();
 					document.getElementById("blockBook").innerHTML = data.responseJSON.blockButton

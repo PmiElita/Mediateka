@@ -60,7 +60,6 @@ public class ClubCommentsServerEndpoint {
 			@OnClose
 			public void onClose(Session userSession) {
 				Integer clubId=Integer.parseInt(userSession.getRequestParameterMap().get("clubId").get(0));
-				System.out.println(clubId);
 				clubComments.get(clubId).remove(userSession);
 			}
 

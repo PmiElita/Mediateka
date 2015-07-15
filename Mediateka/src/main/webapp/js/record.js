@@ -14,7 +14,6 @@ function deleteMedia(mediaId) {
 		},
 		complete : function(data) {
 			// document.getElementById('recordId' + recordId).innerHTML = "";
-			alert(mediaId);
 			document.getElementById('mediaId' + mediaId).hidden = true;
 			if (document.getElementById('restore' + mediaId) != null) {
 				document.getElementById('restore' + mediaId).hidden = false;
@@ -88,9 +87,7 @@ function like(value, id) {
 				complete : function(data) {
 
 					var id = data.responseJSON.id;
-					alert(document.getElementById("recordLike" + id).innerHTML);
 					document.getElementById("recordLike" + id).innerHTML = data.responseJSON.like;
-					alert(document.getElementById("recordLike" + id).innerHTML);
 					document.getElementById("recordDislike" + id).innerHTML = data.responseJSON.dislike;
 				}
 			});
@@ -318,7 +315,6 @@ function linkedVideoForm() {
 	selDiv = $("#selectedFiles");
 
 	var links = document.getElementById("likedTextarea").value;
-	alert(links);
 	var link = links.match(/\S+/g);
 	for (var i = 0; i < link.length; i++) {
 		if ((link[i].indexOf("https://www.youtube.com/watch?v=") > -1)

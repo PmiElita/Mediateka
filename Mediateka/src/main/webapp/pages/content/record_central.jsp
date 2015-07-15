@@ -7,13 +7,15 @@
 <fmt:setBundle basename="translations/club_page" var="msg" />
 <fmt:setBundle basename="translations/club_chat" var="msg1" />
 <!-- fotorama.css & fotorama.js. -->
-<link
-	href="http://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.css"
-	rel="stylesheet">
+<!-- <link -->
+<!-- 	href="http://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.css" -->
+<!-- 	rel="stylesheet"> -->
+	<link href="fotorama-4.6.4/fotorama.css" rel="stylesheet">
 <!-- 3 KB -->
-<script
-	src="http://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.js"></script>
+<!-- <script -->
+<!-- 	src="http://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.js"></script> -->
 <!-- 16 KB -->
+<script src="fotorama-4.6.4/fotorama.js"></script>
 
 
 <style>

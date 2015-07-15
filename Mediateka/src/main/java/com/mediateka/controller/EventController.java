@@ -761,7 +761,6 @@ public class EventController {
 			return;
 		}
 
-		System.out.println("5");
 		String idString = request.getParameter("id");
 
 		if (idString == null) {
@@ -839,13 +838,10 @@ public class EventController {
 			HttpServletResponse response) throws ServletException,
 			ReflectiveOperationException, SQLException, WrongInputException {
 		FileLoader fileLoader = new FileLoader();
-		fileLoader.loadFile(request);
-		System.out.println(Integer.parseInt(fileLoader.getParameterMap().get(
-				"eventId")));
+		fileLoader.loadFile(request);		
 		Event event = EventService.getEventById(Integer.parseInt(fileLoader
 				.getParameterMap().get("eventId")));
 		Media media = new Media();
-		System.out.println(fileLoader.getFilePath());
 		media.setType(fileLoader.getMediaType());
 		media.setState(State.ACTIVE);
 		media.setPath(fileLoader.getRelativePath());

@@ -43,7 +43,6 @@ public class ResponseController {
 			HttpServletResponse response) throws ServletException, IOException,
 			SQLException, ReflectiveOperationException {
 
-		System.out.println("sending response");
 
 		String name = request.getParameter("name");
 		String email = request.getParameter("email");
@@ -81,7 +80,6 @@ public class ResponseController {
 			HttpServletResponse response) throws ServletException, IOException,
 			SQLException, ReflectiveOperationException {
 
-		System.out.println("show responses page");
 		Role myRole = (Role) request.getSession().getAttribute("userRole");
 
 		if (myRole == null) {
@@ -148,7 +146,6 @@ public class ResponseController {
 			HttpServletResponse response) throws ServletException, IOException,
 			SQLException, ReflectiveOperationException {
 
-		System.out.println("mark response as readed");
 
 		Role myRole = (Role) request.getSession().getAttribute("userRole");
 
@@ -184,7 +181,6 @@ public class ResponseController {
 			HttpServletResponse response) throws ServletException, IOException,
 			SQLException, ReflectiveOperationException {
 
-		System.out.println("delete response");
 		Role myRole = (Role) request.getSession().getAttribute("userRole");
 
 		if (myRole == null) {
@@ -219,7 +215,6 @@ public class ResponseController {
 			HttpServletResponse response) throws ServletException, IOException,
 			SQLException, ReflectiveOperationException, MessagingException {
 
-		System.out.println("sendResponseToReport");
 		Role myRole = (Role) request.getSession().getAttribute("userRole");
 
 		if (myRole == null) {
@@ -235,24 +230,20 @@ public class ResponseController {
 		String email;
 		String text;
 		
-		System.out.println(request.getParameterMap());
 
 		try {
 			reportId = Integer.parseInt(request.getParameter("reportId"));
 		} catch (Exception e) {
-			System.out.println("r1");
 			return;
 		}
 
 		Report report =ReportService.getReportById(reportId); 
 		if (report == null) {
-			System.out.println("r3");
 			return;
 		}
 		email = report.getEmail();
 		text = request.getParameter("text");
 		if ((email == null) || (text == null)) {
-			System.out.println("r2");
 			return;
 		}
 
@@ -275,7 +266,6 @@ public class ResponseController {
 
 		String mailBody = sb.toString();
 
-		System.out.println(mailBody);
 		EmailSender.sendMail(email, "Mediateka", mailBody);
 
 		report.setAdminId((Integer)request.getSession().getAttribute("userId"));

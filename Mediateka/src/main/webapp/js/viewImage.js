@@ -17,7 +17,6 @@ function viewFile() {
 	}
 	var numb = document.getElementById('number').innerText;
 	document.getElementById('number').innerText++;
-	alert(document.getElementById('number').innerText)
 	$('<img>').attr('id', 'photo' + numb).appendTo(
 			document.getElementById('selectedFiles'));	
 

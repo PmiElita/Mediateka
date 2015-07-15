@@ -26,7 +26,6 @@ public class LikeRecordController {
 			HttpServletResponse response) throws SQLException,
 			ReflectiveOperationException, IOException {
 		Integer likeState = Integer.parseInt(request.getParameter("likeState"));
-		System.out.println(likeState);
 		HttpSession session = request.getSession();
 		Integer userId = (Integer) session.getAttribute("userId");
 		if(userId == null){

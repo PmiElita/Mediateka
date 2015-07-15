@@ -142,7 +142,6 @@
 	});
 
 	function handleVideo(e) {
-		alert(1);
 
 		e.preventDefault();
 		var data = new FormData();

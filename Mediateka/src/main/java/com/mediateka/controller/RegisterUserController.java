@@ -352,8 +352,6 @@ public class RegisterUserController {
 		if (myId == null) {
 			request.getSession().invalidate();
 			response.sendRedirect("index");
-			System.out.println("ID = "
-					+ request.getSession().getAttribute("userId"));
 			return;
 		}
 
@@ -362,8 +360,6 @@ public class RegisterUserController {
 		if (me == null) {
 			request.getSession().invalidate();
 			response.sendRedirect("index");
-			System.out.println("ID = "
-					+ request.getSession().getAttribute("userId"));
 			return;
 		}
 

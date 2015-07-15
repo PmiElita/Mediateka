@@ -3,14 +3,14 @@
 <%@ taglib prefix="u" uri="../../WEB-INF/tld/showUsers.tld"%>
 <!-- change path, remove one ../-->
 <!DOCTYPE html >
-<html onscroll="alert(3);">
+<html>
 <head>
 <jsp:include page="../general/head.jsp" />
 <script src="js/admin_search_user.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 </head>
-<body onscroll="alert(1);">
+<body>
 	<div class="main">
 		<jsp:include page="../general/nav.jsp" />
 

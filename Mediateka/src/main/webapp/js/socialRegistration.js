@@ -8,7 +8,6 @@ function checkEmail(){
 				data : { email : email.value}, 
 				success : 
 					function(data){
-					alert(data);
 						if (data == 'true'){
 							email.setCustomValidity('');
 							email.setAttribute('class', 'validate valid');

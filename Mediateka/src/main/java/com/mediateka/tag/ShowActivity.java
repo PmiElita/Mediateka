@@ -48,9 +48,7 @@ public class ShowActivity extends SimpleTagSupport {
 				out.write("<th>" + messages.getString("comment") + "</th>");
 
 				out.write("</tr>");
-				System.out.println(2);
 				for (FormRecord formRecord : formRecords) {
-					System.out.println(3);
 					out.write("<tr>");
 					out.write("<td>"
 							+ new SimpleDateFormat("dd.MM.yyyy")

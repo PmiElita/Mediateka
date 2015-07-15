@@ -243,22 +243,7 @@ public class FileLoader {
 										contentType.indexOf('/')).equals(
 										realContentType
 												.substring(realContentType
-														.indexOf('/'))) == false)) {
-							System.out
-									.println(contentType.substring(contentType
-											.indexOf('/'))
-											+ " "
-											+ (realContentType
-													.substring(realContentType
-															.indexOf('/')))
-											+ " "
-											+ fileContentTypeString
-													.substring(contentType
-															.indexOf('/'))
-											+ " "
-											+ realContentType
-													.substring(realContentType
-															.indexOf('/')));
+														.indexOf('/'))) == false)) {						
 							uploadedFile.delete();
 							throw new WrongInputException("wrong file type");
 						}

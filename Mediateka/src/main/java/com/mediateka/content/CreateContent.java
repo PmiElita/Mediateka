@@ -263,9 +263,7 @@ public class CreateContent {
 
 		List<Media> medias = new ArrayList<Media>();
 		if (linksString != null) {
-			System.out.println(linksString);
 			String[] links = linksString.split("\\s+");
-			System.out.println(links);
 			for (String link : links) {
 				if (link.contains("https://www.youtube.com/watch?v=")
 						|| link.contains("https://vimeo.com/")) {
