@@ -17,7 +17,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -600,63 +599,32 @@ public class UserController {
 		}
 	}
 
-	@Request(url = "updateInfo", method = "post")
+	@Request(url = "updateInfo", method = "get")
 	@Roles({ Role.ADMIN })
 	public static void infoPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			ReflectiveOperationException, SQLException {
-		FileLoader fileLoader = new FileLoader();
-		fileLoader.loadFile(request, "info image");
-		Map<String, String> map = fileLoader.getParameterMap();
 		List<ContentGroup> infos = ContentGroupService
 				.getContentGroupByType(ContentGroupType.INFO);
 		ContentGroup info = infos.get(0);
-		String textUa = whiteSpaceReturner(map, "infoText1");
-		String textEn = whiteSpaceReturner(map, "infoText2");
+		String textUa = whiteSpaceReturner(request, "infoText1");
+		String textEn = whiteSpaceReturner(request, "infoText2");
 		info.setText(textUa + "<info!split!info>" + textEn);
 		ContentGroupService.updateContentGroup(info);
 		List<ContentGroup> all = ContentGroupService
 				.getContentGroupByParentId(info.getId());
-		String ua1 = whiteSpaceReturner(map, "ua1");
-		String ua2 = whiteSpaceReturner(map, "ua2");
-		String ua3 = whiteSpaceReturner(map, "ua3");
-		String en1 = whiteSpaceReturner(map, "en1");
-		String en2 = whiteSpaceReturner(map, "en2");
-		String en3 = whiteSpaceReturner(map, "en3");
+		String ua1 = whiteSpaceReturner(request, "ua1");
+		String ua2 = whiteSpaceReturner(request, "ua2");
+		String ua3 = whiteSpaceReturner(request, "ua3");
+		String en1 = whiteSpaceReturner(request, "en1");
+		String en2 = whiteSpaceReturner(request, "en2");
+		String en3 = whiteSpaceReturner(request, "en3");
 		all.get(0).setText(ua1 + "<info!split!info>" + en1);
 		all.get(1).setText(ua2 + "<info!split!info>" + en2);
 		all.get(2).setText(ua3 + "<info!split!info>" + en3);
 		for (ContentGroup content : all)
 			ContentGroupService.updateContentGroup(content);
-		List<Media> media = new ArrayList<>();
-		for (ContentGroup content : all)
-			media.add(MediaService.getMediaByContentGroupId(content.getId())
-					.get(0));
-		try {
-			if (fileLoader.getAllFilePathes() != null) {
-				Map<String, String> imgMap = fileLoader
-						.getAllRelativePathseMap();
-				if (imgMap.containsKey("image1")) {
-					media.get(0).setPath(imgMap.get("image1"));
-					MediaService.updateMedia(media.get(0));
-				}
-				if (imgMap.containsKey("image2")) {
-					media.get(1).setPath(imgMap.get("image2"));
-					MediaService.updateMedia(media.get(1));
-				}
-				if (imgMap.containsKey("image3")) {
-					media.get(2).setPath(imgMap.get("image3"));
-					MediaService.updateMedia(media.get(2));
-				}
-			}
-		} catch (WrongInputException e) {
-			logger.warn(e);
-			response.sendError(404);
-			return;
-		}
-
-		request.getSession().setAttribute("goody", "not_null");
-		response.sendRedirect("cabinet");
+		return;
 	}
 
 	@Request(url = "post_register", method = "get")
@@ -684,13 +652,14 @@ public class UserController {
 		UserService.updateUser(user);
 	}
 
-	private static String whiteSpaceReturner(Map<String, String> map,
+	private static String whiteSpaceReturner(HttpServletRequest request,
 			String attributeName) {
 		String result;
-		if (map.get(attributeName) == null || map.get(attributeName).equals(""))
+		if (request.getParameter(attributeName) == null
+				|| request.getParameter(attributeName).equals(""))
 			result = " ";
 		else
-			result = map.get(attributeName);
+			result = request.getParameter(attributeName);
 		return result;
 	}
 

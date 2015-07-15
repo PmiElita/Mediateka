@@ -24,108 +24,97 @@
 			</div>
 			<jsp:include page="admin_side_nav.jsp" />
 
-			<form name="updateInfo" action="updateInfo" method="post"
-				enctype="multipart/form-data">
-				<div class="main-info">
-					<div class="section white">
-						<div class="container">
-							<h3>Edit main page info</h3>
-							<input type="submit" value="Save changes" class="btn primary">
-							<div class="row">
-								<h5>Ua text:</h5>
-								<textarea id="infoText1" name="infoText1"
-									class="materialize-textarea info"><c:out
-										value="${text1}" /></textarea>
-								<h5>En text:</h5>
-								<textarea id="infoText2" name="infoText2"
-									class="materialize-textarea info"><c:out
-										value="${text2}" /></textarea>
-							</div>
+			<div class="main-info">
+				<div class="section white">
+					<div class="container">
+						<h3>Edit main page info</h3>
+						<button class="btn" onclick="saveInfo()">Save info</button>
+						<div class="row">
+							<h5>Ua text:</h5>
+							<textarea id="infoText1" name="infoText1"
+								class="materialize-textarea info"><c:out
+									value="${text1}" /></textarea>
+							<h5>En text:</h5>
+							<textarea id="infoText2" name="infoText2"
+								class="materialize-textarea info"><c:out
+									value="${text2}" /></textarea>
 						</div>
-						<div class="container">
+					</div>
+					<div class="container">
+						<div class="row">
 							<div class="row">
-								<h3>Edit slider images</h3>
-
-								<div class="row">
-									<div class="col s6">
-										<img src="${imagePath1}" style="width: 20em; height: 20em"
-											id="photo1" />
-										<div class="file-field input-field">
-											<input class="file-path validate" type="hidden" />
-											<div class="btn">
-												<span>Change image</span><input name="image1" type="file"
-													name="image" onchange="readURL(this,1);" />
-											</div>
-										</div>
-									</div>
-									<div class="col s6">
-										<p style="color: black; padding-top: 5em;">Ua sign</p>
+								<div class="col s6">
+									<fieldset>
+										<h4>1 slide text</h4>
+										<p style="color: black; padding-top: 5em;">Ua</p>
 										<input type="text" name="ua1" value="${ua1}">
-										<p style="color: black; padding-top: 5em;">En sign</p>
+										<p style="color: black; padding-top: 5em;">En</p>
 										<input type="text" name="en1" value="${en1}">
-									</div>
+									</fieldset>
 								</div>
-
-								<br>
-								<div class="row">
-									<div class="col s6">
-										<img src="${imagePath2}" style="width: 20em; height: 20em"
-											id="photo2" />
-										<div class="file-field input-field">
-											<input class="file-path validate" type="hidden" />
-											<div class="btn">
-												<span>Change image</span><input name="image2" type="file"
-													name="image" onchange="readURL(this,2);" />
-											</div>
-										</div>
-									</div>
-									<div class="col s6">
-										<p style="color: black; padding-top: 5em;">Ua sign</p>
-										<input type="text" name="ua2" value="${ua2}">
-										<p style="color: black; padding-top: 5em;">En sign</p>
-										<input type="text" name="en2" value="${en2}">
-									</div>
-								</div>
-
-								<br>
-								<div class="row">
-									<div class="col s6">
-										<img src="${imagePath3}" style="width: 20em; height: 20em"
-											id="photo3" />
-										<div class="file-field input-field">
-											<input class="file-path validate" type="hidden" />
-											<div class="btn">
-												<span>Change image</span><input name="image3" type="file"
-													name="image" onchange="readURL(this,3);" />
-											</div>
-										</div>
-									</div>
-									<div class="col s6">
-										<p style="color: black; padding-top: 5em;">Ua sign</p>
-										<input type="text" name="ua3" value="${ua3}">
-										<p style="color: black; padding-top: 5em;">En sign</p>
-										<input type="text" name="en3" value="${en3}">
-									</div>
-								</div>
-
 							</div>
+
+							<br>
+							<div class="row">
+								<div class="col s6">
+									<fieldset>
+										<h4>2 slide text</h4>
+										<p style="color: black; padding-top: 5em;">Ua</p>
+										<input type="text" name="ua2" value="${ua2}">
+										<p style="color: black; padding-top: 5em;">En</p>
+										<input type="text" name="en2" value="${en2}">
+									</fieldset>
+								</div>
+							</div>
+
+							<br>
+							<div class="row">
+								<div class="col s6">
+									<fieldset>
+										<h4>3 slide text</h4>
+										<p style="color: black; padding-top: 5em;">Ua</p>
+										<input type="text" name="ua3" value="${ua3}">
+										<p style="color: black; padding-top: 5em;">En</p>
+										<input type="text" name="en3" value="${en3}">
+									</fieldset>
+								</div>
+							</div>
+
 						</div>
 					</div>
 				</div>
-			</form>
+			</div>
 		</div>
 	</div>
 
 	<jsp:include page="../general/footer.jsp" />
-	<script>
-		function readURL(input, id) {
-			if (input.files && input.files[0]) {
-				var reader = new FileReader();
-				reader.onload = function(e) {
-					$('#photo' + id).attr('src', e.target.result);
-				};
-				reader.readAsDataURL(input.files[0]);
-			}
+	<script type="text/javascript">
+		function saveInfo() {
+			var infoText1 = document.getElementsByName("infoText1")[0].value;
+			var infoText2 = document.getElementsByName("infoText2")[0].value;
+			var ua1 = document.getElementsByName("ua1")[0].value;
+			var ua2 = document.getElementsByName("ua2")[0].value;
+			var ua3 = document.getElementsByName("ua3")[0].value;
+			var en1 = document.getElementsByName("en1")[0].value;
+			var en2 = document.getElementsByName("en2")[0].value;
+			var en3 = document.getElementsByName("en3")[0].value;
+			$.ajax({
+				url : 'updateInfo',
+				type : 'get',
+				data : {
+					infoText1 : infoText1,
+					infoText2 : infoText2,
+					ua1 : ua1,
+					ua2 : ua2,
+					ua3 : ua3,
+					en1 : en1,
+					en2 : en2,
+					en3 : en3,
+				},
+				success : function(data) {
+					Materialize.toast('Info saved!', 2000)
+				}
+			});
 		}
 	</script>
 </body>
